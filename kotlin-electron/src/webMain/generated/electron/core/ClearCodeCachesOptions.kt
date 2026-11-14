@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface ClearCodeCachesOptions {
+    /**
+     * An array of url corresponding to the resource whose generated code cache needs
+     * to be removed. If the list is empty then all entries in the cache directory will
+     * be removed.
+     */
+    var urls: js.array.ReadonlyArray<String>?
+}

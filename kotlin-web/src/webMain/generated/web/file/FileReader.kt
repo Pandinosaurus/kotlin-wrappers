@@ -1,0 +1,145 @@
+// Automatically generated - do not modify!
+
+package web.file
+
+import web.blob.Blob
+import web.errors.DOMException
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+import web.events.ProgressEvent
+
+/**
+ * The **`FileReader`** interface lets web applications asynchronously read the contents of files (or raw data buffers) stored on the user's computer, using File or Blob objects to specify the file or data to read.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader)
+ */
+open external class FileReader :
+    EventTarget {
+    /**
+     * The **`error`** read-only property of the FileReader interface returns the error that occurred while reading the file.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/error)
+     */
+    open val error: DOMException?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/abort_event)
+     */
+    open var onabort: EventHandler<ProgressEvent, FileReader, FileReader>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/error_event)
+     */
+    open var onerror: EventHandler<ProgressEvent, FileReader, FileReader>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/load_event)
+     */
+    open var onload: EventHandler<ProgressEvent, FileReader, FileReader>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/loadend_event)
+     */
+    open var onloadend: EventHandler<ProgressEvent, FileReader, FileReader>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/loadstart_event)
+     */
+    open var onloadstart: EventHandler<ProgressEvent, FileReader, FileReader>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/progress_event)
+     */
+    open var onprogress: EventHandler<ProgressEvent, FileReader, FileReader>?
+
+    /**
+     * The **`readyState`** read-only property of the FileReader interface provides the current state of the reading operation. This will be one of the states: EMPTY, LOADING, or DONE.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/readyState)
+     */
+    open val readyState: ReadyState
+
+    /**
+     * The **`result`** read-only property of the FileReader interface returns the file's contents. This property is only valid after the read operation is complete, and the format of the data depends on which of the methods was used to initiate the read operation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/result)
+     */
+    open val result: JsAny /* string | ArrayBuffer */?
+
+    /**
+     * The **`abort()`** method of the FileReader interface aborts the read operation. Upon return, the readyState will be DONE.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/abort)
+     */
+    open fun abort()
+
+    /**
+     * The **`readAsArrayBuffer()`** method of the FileReader interface is used to start reading the contents of a specified Blob or File. When the read operation is finished, the readyState property becomes DONE, and the loadend event is triggered. At that time, the result property contains an ArrayBuffer representing the file's data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/readAsArrayBuffer)
+     */
+    open fun readAsArrayBuffer(blob: Blob)
+
+    /**
+     * The **`readAsDataURL()`** method of the FileReader interface is used to read the contents of the specified Blob or File. When the read operation is finished, the readyState property becomes DONE, and the loadend event is triggered. At that time, the result attribute contains the data as a data: URL representing the file's data as a base64 encoded string.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/readAsDataURL)
+     */
+    open fun readAsDataURL(blob: Blob)
+
+    /**
+     * The **`readAsText()`** method of the FileReader interface is used to read the contents of the specified Blob or File. When the read operation is complete, the readyState property is changed to DONE, the loadend event is triggered, and the result property contains the contents of the file as a text string.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/readAsText)
+     */
+    open fun readAsText(
+        blob: Blob,
+        encoding: String = definedExternally,
+    )
+
+    companion object {
+        val EMPTY: ReadyState
+        val LOADING: ReadyState
+        val DONE: ReadyState
+    }
+
+    sealed /* enum */
+    interface ReadyState
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/abort_event)
+ */
+inline val <C : FileReader> C.abortEvent: EventInstance<ProgressEvent, C, C>
+    get() = EventInstance(this, "abort")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/error_event)
+ */
+inline val <C : FileReader> C.errorEvent: EventInstance<ProgressEvent, C, C>
+    get() = EventInstance(this, "error")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/load_event)
+ */
+inline val <C : FileReader> C.loadEvent: EventInstance<ProgressEvent, C, C>
+    get() = EventInstance(this, "load")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/loadend_event)
+ */
+inline val <C : FileReader> C.loadEndEvent: EventInstance<ProgressEvent, C, C>
+    get() = EventInstance(this, "loadend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/loadstart_event)
+ */
+inline val <C : FileReader> C.loadStartEvent: EventInstance<ProgressEvent, C, C>
+    get() = EventInstance(this, "loadstart")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileReader/progress_event)
+ */
+inline val <C : FileReader> C.progressEvent: EventInstance<ProgressEvent, C, C>
+    get() = EventInstance(this, "progress")

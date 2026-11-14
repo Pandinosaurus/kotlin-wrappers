@@ -1,0 +1,38 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:test")
+@file:JsQualifier("test.suite")
+
+package node.test.suite
+
+import node.test.SuiteFn
+import node.test.TestOptions
+
+/**
+ * Shorthand for marking a suite as `only`. This is the same as calling {@link suite} with `options.only` set to `true`.
+ * @since v20.13.0
+ */
+@JsName("only")
+external fun onlyAsync(
+    name: String = definedExternally,
+    options: TestOptions = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.promise.Promise<js.void.Void>
+
+@JsName("only")
+external fun onlyAsync(
+    name: String = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.promise.Promise<js.void.Void>
+
+@JsName("only")
+external fun onlyAsync(
+    options: TestOptions = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.promise.Promise<js.void.Void>
+
+@JsName("only")
+external fun onlyAsync(fn: SuiteFn = definedExternally): js.promise.Promise<js.void.Void>
+
+@JsName("only")
+external fun onlyAsync(): js.promise.Promise<js.void.Void>

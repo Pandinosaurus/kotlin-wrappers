@@ -1,0 +1,28 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface TitleBarOverlay {
+    /**
+     * The CSS color of the Window Controls Overlay when enabled. Default is the system
+     * color.
+     *
+     * @platform win32,linux
+     */
+    var color: String?
+
+    /**
+     * The CSS color of the symbols on the Window Controls Overlay when enabled.
+     * Default is the system color.
+     *
+     * @platform win32,linux
+     */
+    var symbolColor: String?
+
+    /**
+     * The height of the title bar and Window Controls Overlay in pixels. Default is
+     * system height.
+     */
+    var height: Double?
+}

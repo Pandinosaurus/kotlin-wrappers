@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface AdjustSelectionOptions {
+    /**
+     * Amount to shift the start index of the current selection.
+     */
+    var start: Double?
+
+    /**
+     * Amount to shift the end index of the current selection.
+     */
+    var end: Double?
+}

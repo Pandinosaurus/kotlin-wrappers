@@ -1,0 +1,86 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/OutlinedInput")
+
+package mui.material
+
+import mui.material.styles.Theme
+import mui.system.PropsWithSx
+import mui.system.StandardProps
+import mui.system.SxProps
+import react.ElementType
+import react.FC
+import react.Props
+import react.ReactNode
+import react.dom.html.FieldsetHTMLAttributes
+import web.html.HTMLFieldSetElement
+
+external interface OutlinedInputProps :
+    StandardProps,
+    InputBaseProps,
+    OutlinedInputSlotsAndSlotProps,
+    PropsWithSx {
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var slots: OutlinedInputSlots?
+
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var slotProps: OutlinedInputSlotProps?
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var classes: OutlinedInputClasses?
+
+    /**
+     * The label of the `input`. It is only used for layout. The actual labelling
+     * is handled by `InputLabel`.
+     */
+    var label: ReactNode?
+
+    /**
+     * If `true`, the outline is notched to accommodate the label.
+     */
+    var notched: Boolean?
+
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    override var sx: SxProps<Theme>?
+}
+
+external interface OutlinedInputSlots : InputBaseProps.Slots {
+    /**
+     * The component that renders the notchedOutline slot.
+     * @default NotchedOutline
+     */
+    var notchedOutline: ElementType<*>
+}
+
+external interface OutlinedInputSlotProps : InputBaseProps.SlotProps {
+    /** TS: SlotProps<'fieldset', OutlinedInputNotchedOutlineSlotPropsOverrides, OutlinedInputOwnerState> */
+    var notchedOutline: FieldsetHTMLAttributes<HTMLFieldSetElement>?
+}
+
+external interface OutlinedInputSlotsAndSlotProps : Props {
+    var slots: OutlinedInputSlots?
+
+    var slotProps: OutlinedInputSlotProps?
+}
+
+external interface OutlinedInputOwnerState
+
+/**
+ *
+ * Demos:
+ *
+ * - [Number Field](https://mui.com/material-ui/react-number-field/)
+ * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ *
+ * API:
+ *
+ * - [OutlinedInput API](https://mui.com/material-ui/api/outlined-input/)
+ * - inherits [InputBase API](https://mui.com/material-ui/api/input-base/)
+ */
+@JsName("default")
+external val OutlinedInput: FC<OutlinedInputProps>

@@ -1,0 +1,22 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface FilesystemPermissionRequest : PermissionRequest {
+// Docs: https://electronjs.org/docs/api/structures/filesystem-permission-request
+    /**
+     * The access type of the `fileSystem` request. Can be `writable` or `readable`.
+     */
+    var fileAccessType: (FilesystemPermissionRequestFileAccessType)?
+
+    /**
+     * The path of the `fileSystem` request.
+     */
+    var filePath: String?
+
+    /**
+     * Whether the `fileSystem` request is a directory.
+     */
+    var isDirectory: Boolean?
+}

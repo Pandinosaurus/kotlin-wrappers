@@ -1,0 +1,150 @@
+// Automatically generated - do not modify!
+
+package web.remoteplayback
+
+import js.numbers.JsInt
+import js.numbers.JsNumbers.toKotlinInt
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+
+/**
+ * The **`RemotePlayback`** interface of the Remote Playback API allows the page to detect availability of remote playback devices, then connect to and control playing on these devices.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback)
+ */
+open external class RemotePlayback
+private constructor() :
+    EventTarget {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/connect_event)
+     */
+    open var onconnect: EventHandler<Event, RemotePlayback, RemotePlayback>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/connecting_event)
+     */
+    open var onconnecting: EventHandler<Event, RemotePlayback, RemotePlayback>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/disconnect_event)
+     */
+    open var ondisconnect: EventHandler<Event, RemotePlayback, RemotePlayback>?
+
+    /**
+     * The **`state`** read-only property of the RemotePlayback interface returns the current state of the RemotePlayback connection.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/state)
+     */
+    open val state: RemotePlaybackState
+
+    /**
+     * The **`cancelWatchAvailability()`** method of the RemotePlayback interface cancels the request to watch for one or all available devices.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/cancelWatchAvailability)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotFoundError::class)
+    @JsName("cancelWatchAvailability")
+    open fun cancelWatchAvailabilityAsync(id: Int = definedExternally): Promise<Void>
+
+    /**
+     * The **`prompt()`** method of the RemotePlayback interface prompts the user to select an available remote playback device and give permission for the current media to be played using that device.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/prompt)
+     */
+    @JsThrows(InvalidAccessError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(NotFoundError::class)
+    @JsThrows(NotSupportedError::class)
+    @JsThrows(OperationError::class)
+    @JsName("prompt")
+    open fun promptAsync(): Promise<Void>
+
+    /**
+     * The **`watchAvailability()`** method of the RemotePlayback interface watches the list of available remote playback devices and returns a Promise that resolves with the callbackId of a remote playback device.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/watchAvailability)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotSupportedError::class)
+    @JsName("watchAvailability")
+    open fun watchAvailabilityAsync(callback: RemotePlaybackAvailabilityCallback): Promise<JsInt>
+}
+
+/**
+ * The **`cancelWatchAvailability()`** method of the RemotePlayback interface cancels the request to watch for one or all available devices.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/cancelWatchAvailability)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun RemotePlayback.cancelWatchAvailability() {
+    cancelWatchAvailabilityAsync().await()
+}
+
+/**
+ * The **`cancelWatchAvailability()`** method of the RemotePlayback interface cancels the request to watch for one or all available devices.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/cancelWatchAvailability)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun RemotePlayback.cancelWatchAvailability(id: Int) {
+    cancelWatchAvailabilityAsync(
+        id = id,
+    ).await()
+}
+
+/**
+ * The **`prompt()`** method of the RemotePlayback interface prompts the user to select an available remote playback device and give permission for the current media to be played using that device.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/prompt)
+ */
+@JsThrows(InvalidAccessError::class)
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(NotFoundError::class)
+@JsThrows(NotSupportedError::class)
+@JsThrows(OperationError::class)
+suspend inline fun RemotePlayback.prompt() {
+    promptAsync().await()
+}
+
+/**
+ * The **`watchAvailability()`** method of the RemotePlayback interface watches the list of available remote playback devices and returns a Promise that resolves with the callbackId of a remote playback device.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/watchAvailability)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotSupportedError::class)
+suspend inline fun RemotePlayback.watchAvailability(noinline callback: RemotePlaybackAvailabilityCallback): Int {
+    return watchAvailabilityAsync(
+        callback = callback,
+    ).await().toKotlinInt()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/connect_event)
+ */
+inline val <C : RemotePlayback> C.connectEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "connect")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/connecting_event)
+ */
+inline val <C : RemotePlayback> C.connectingEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "connecting")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RemotePlayback/disconnect_event)
+ */
+inline val <C : RemotePlayback> C.disconnectEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "disconnect")

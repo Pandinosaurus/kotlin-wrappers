@@ -1,0 +1,257 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:diagnostics_channel")
+
+package node.diagnosticsChannel
+
+/**
+ * The class `TracingChannel` is a collection of `TracingChannel Channels` which
+ * together express a single traceable action. It is used to formalize and
+ * simplify the process of producing events for tracing application flow. {@link tracingChannel} is used to construct a `TracingChannel`. As with `Channel` it is recommended to create and reuse a
+ * single `TracingChannel` at the top-level of the file rather than creating them
+ * dynamically.
+ * @since v19.9.0
+ * @experimental
+ */
+external class TracingChannel<StoreType /* default is Any? */, ContextType : Any /* default is Any */> :
+    TracingChannelCollection<StoreType, ContextType> {
+    override var start: Channel<StoreType, ContextType>
+    override var end: Channel<StoreType, ContextType>
+    override var asyncStart: Channel<StoreType, ContextType>
+    override var asyncEnd: Channel<StoreType, ContextType>
+    override var error: Channel<StoreType, ContextType>
+
+    /**
+     * Helper to subscribe a collection of functions to the corresponding channels.
+     * This is the same as calling `channel.subscribe(onMessage)` on each channel
+     * individually.
+     *
+     * ```js
+     * import diagnostics_channel from 'node:diagnostics_channel';
+     *
+     * const channels = diagnostics_channel.tracingChannel('my-channel');
+     *
+     * channels.subscribe({
+     *   start(message) {
+     *     // Handle start message
+     *   },
+     *   end(message) {
+     *     // Handle end message
+     *   },
+     *   asyncStart(message) {
+     *     // Handle asyncStart message
+     *   },
+     *   asyncEnd(message) {
+     *     // Handle asyncEnd message
+     *   },
+     *   error(message) {
+     *     // Handle error message
+     *   },
+     * });
+     * ```
+     * @since v19.9.0
+     * @experimental
+     * @param subscribers Set of `TracingChannel Channels` subscribers
+     */
+    fun subscribe(subscribers: TracingChannelSubscribers<ContextType>)
+
+    /**
+     * Helper to unsubscribe a collection of functions from the corresponding channels.
+     * This is the same as calling `channel.unsubscribe(onMessage)` on each channel
+     * individually.
+     *
+     * ```js
+     * import diagnostics_channel from 'node:diagnostics_channel';
+     *
+     * const channels = diagnostics_channel.tracingChannel('my-channel');
+     *
+     * channels.unsubscribe({
+     *   start(message) {
+     *     // Handle start message
+     *   },
+     *   end(message) {
+     *     // Handle end message
+     *   },
+     *   asyncStart(message) {
+     *     // Handle asyncStart message
+     *   },
+     *   asyncEnd(message) {
+     *     // Handle asyncEnd message
+     *   },
+     *   error(message) {
+     *     // Handle error message
+     *   },
+     * });
+     * ```
+     * @since v19.9.0
+     * @experimental
+     * @param subscribers Set of `TracingChannel Channels` subscribers
+     * @return `true` if all handlers were successfully unsubscribed, and `false` otherwise.
+     */
+    fun unsubscribe(subscribers: TracingChannelSubscribers<ContextType>)
+
+    /**
+     * Trace a synchronous function call. This will always produce a `start event` and `end event` around the execution and may produce an `error event` if the given function throws an error.
+     * This will run the given function using `channel.runStores(context, ...)` on the `start` channel which ensures all
+     * events should have any bound stores set to match this trace context.
+     *
+     * To ensure only correct trace graphs are formed, events will only be published if subscribers are present prior to starting the trace. Subscriptions
+     * which are added after the trace begins will not receive future events from that trace, only future traces will be seen.
+     *
+     * ```js
+     * import diagnostics_channel from 'node:diagnostics_channel';
+     *
+     * const channels = diagnostics_channel.tracingChannel('my-channel');
+     *
+     * channels.traceSync(() => {
+     *   // Do something
+     * }, {
+     *   some: 'thing',
+     * });
+     * ```
+     * @since v19.9.0
+     * @experimental
+     * @param fn Function to wrap a trace around
+     * @param context Shared object to correlate events through
+     * @param thisArg The receiver to be used for the function call
+     * @param args Optional arguments to pass to the function
+     * @return The return value of the given function
+     */
+    fun <ThisArg /* default is Any? */, Args : js.array.ReadonlyArray<Any?> /* default is js.array.ReadonlyArray<Any?> */, Result /* default is Any? */> traceSync(
+        fn: Function<Result>, /* (this: ThisArg, ...args: Args) => Result */
+        context: ContextType = definedExternally,
+        thisArg: ThisArg = definedExternally,
+        vararg args: Any?, /* Args */
+    ): Result
+
+    /**
+     * Trace a promise-returning function call. This will always produce a `start event` and `end event` around the synchronous portion of the
+     * function execution, and will produce an `asyncStart event` and `asyncEnd event` when a promise continuation is reached. It may also
+     * produce an `error event` if the given function throws an error or the
+     * returned promise rejects. This will run the given function using `channel.runStores(context, ...)` on the `start` channel which ensures all
+     * events should have any bound stores set to match this trace context.
+     *
+     * To ensure only correct trace graphs are formed, events will only be published if subscribers are present prior to starting the trace. Subscriptions
+     * which are added after the trace begins will not receive future events from that trace, only future traces will be seen.
+     *
+     * ```js
+     * import diagnostics_channel from 'node:diagnostics_channel';
+     *
+     * const channels = diagnostics_channel.tracingChannel('my-channel');
+     *
+     * channels.tracePromise(async () => {
+     *   // Do something
+     * }, {
+     *   some: 'thing',
+     * });
+     * ```
+     * @since v19.9.0
+     * @experimental
+     * @param fn Promise-returning function to wrap a trace around
+     * @param context Shared object to correlate trace events through
+     * @param thisArg The receiver to be used for the function call
+     * @param args Optional arguments to pass to the function
+     * @return Chained from promise returned by the given function
+     */
+    @JsName("tracePromise")
+    fun <ThisArg /* default is Any? */, Args : js.array.ReadonlyArray<Any?> /* default is js.array.ReadonlyArray<Any?> */, Result /* default is Any? */> tracePromiseAsync(
+        fn: Function<js.promise.Promise<Result>>, /* (this: ThisArg, ...args: Args) => Promise<Result> */
+        context: ContextType = definedExternally,
+        thisArg: ThisArg = definedExternally,
+        vararg args: Any?, /* Args */
+    ): js.promise.Promise<Result>
+
+    @seskar.js.JsAsync
+    suspend fun <ThisArg /* default is Any? */, Args : js.array.ReadonlyArray<Any?> /* default is js.array.ReadonlyArray<Any?> */, Result /* default is Any? */> tracePromise(
+        fn: Function<js.promise.Promise<Result>>, /* (this: ThisArg, ...args: Args) => Promise<Result> */
+        context: ContextType = definedExternally,
+        thisArg: ThisArg = definedExternally,
+        vararg args: Any?, /* Args */
+    ): Result
+
+    /**
+     * Trace a callback-receiving function call. This will always produce a `start event` and `end event` around the synchronous portion of the
+     * function execution, and will produce a `asyncStart event` and `asyncEnd event` around the callback execution. It may also produce an `error event` if the given function throws an error or
+     * the returned
+     * promise rejects. This will run the given function using `channel.runStores(context, ...)` on the `start` channel which ensures all
+     * events should have any bound stores set to match this trace context.
+     *
+     * The `position` will be -1 by default to indicate the final argument should
+     * be used as the callback.
+     *
+     * ```js
+     * import diagnostics_channel from 'node:diagnostics_channel';
+     *
+     * const channels = diagnostics_channel.tracingChannel('my-channel');
+     *
+     * channels.traceCallback((arg1, callback) => {
+     *   // Do something
+     *   callback(null, 'result');
+     * }, 1, {
+     *   some: 'thing',
+     * }, thisArg, arg1, callback);
+     * ```
+     *
+     * The callback will also be run with `channel.runStores(context, ...)` which
+     * enables context loss recovery in some cases.
+     *
+     * To ensure only correct trace graphs are formed, events will only be published if subscribers are present prior to starting the trace. Subscriptions
+     * which are added after the trace begins will not receive future events from that trace, only future traces will be seen.
+     *
+     * ```js
+     * import diagnostics_channel from 'node:diagnostics_channel';
+     * import { AsyncLocalStorage } from 'node:async_hooks';
+     *
+     * const channels = diagnostics_channel.tracingChannel('my-channel');
+     * const myStore = new AsyncLocalStorage();
+     *
+     * // The start channel sets the initial store data to something
+     * // and stores that store data value on the trace context object
+     * channels.start.bindStore(myStore, (data) => {
+     *   const span = new Span(data);
+     *   data.span = span;
+     *   return span;
+     * });
+     *
+     * // Then asyncStart can restore from that data it stored previously
+     * channels.asyncStart.bindStore(myStore, (data) => {
+     *   return data.span;
+     * });
+     * ```
+     * @since v19.9.0
+     * @experimental
+     * @param fn callback using function to wrap a trace around
+     * @param position Zero-indexed argument position of expected callback
+     * @param context Shared object to correlate trace events through
+     * @param thisArg The receiver to be used for the function call
+     * @param args Optional arguments to pass to the function
+     * @return The return value of the given function
+     */
+    fun <ThisArg /* default is Any? */, Args : js.array.ReadonlyArray<Any?> /* default is js.array.ReadonlyArray<Any?> */, Result /* default is Any? */> traceCallback(
+        fn: Function<Result>, /* (this: ThisArg, ...args: Args) => Result */
+        position: Number = definedExternally,
+        context: ContextType = definedExternally,
+        thisArg: ThisArg = definedExternally,
+        vararg args: Any?, /* Args */
+    ): Result
+
+    /**
+     * `true` if any of the individual channels has a subscriber, `false` if not.
+     *
+     * This is a helper method available on a {@link TracingChannel} instance to check
+     * if any of the [TracingChannel Channels](https://nodejs.org/api/diagnostics_channel.html#tracingchannel-channels) have subscribers.
+     * A `true` is returned if any of them have at least one subscriber, a `false` is returned otherwise.
+     *
+     * ```js
+     * const diagnostics_channel = require('node:diagnostics_channel');
+     *
+     * const channels = diagnostics_channel.tracingChannel('my-channel');
+     *
+     * if (channels.hasSubscribers) {
+     *   // Do something
+     * }
+     * ```
+     * @since v22.0.0, v20.13.0
+     */
+    val hasSubscribers: Boolean
+}

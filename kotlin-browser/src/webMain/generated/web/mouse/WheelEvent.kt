@@ -1,0 +1,52 @@
+// Automatically generated - do not modify!
+
+package web.mouse
+
+import web.events.EventType
+
+/**
+ * The **`WheelEvent`** interface represents events that occur due to the user moving a mouse wheel or similar input device.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WheelEvent)
+ */
+open external class WheelEvent(
+    override val type: EventType<WheelEvent>,
+    init: WheelEventInit = definedExternally,
+) : MouseEvent {
+    /**
+     * The **`WheelEvent.deltaMode`** read-only property returns an unsigned long representing the unit of the delta values scroll amount. Permitted values are:
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WheelEvent/deltaMode)
+     */
+    open val deltaMode: DeltaMode
+
+    /**
+     * The **`WheelEvent.deltaX`** read-only property is a double representing the horizontal scroll amount in the WheelEvent.deltaMode unit.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WheelEvent/deltaX)
+     */
+    open val deltaX: Double
+
+    /**
+     * The **`WheelEvent.deltaY`** read-only property is a double representing the vertical scroll amount in the WheelEvent.deltaMode unit.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WheelEvent/deltaY)
+     */
+    open val deltaY: Double
+
+    /**
+     * The **`WheelEvent.deltaZ`** read-only property is a double representing the scroll amount along the z-axis, in the WheelEvent.deltaMode unit.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WheelEvent/deltaZ)
+     */
+    open val deltaZ: Double
+
+    companion object {
+        val DOM_DELTA_PIXEL: DeltaMode
+        val DOM_DELTA_LINE: DeltaMode
+        val DOM_DELTA_PAGE: DeltaMode
+    }
+}
+
+inline val WheelEvent.Companion.WHEEL: EventType<WheelEvent>
+    get() = EventType("wheel")

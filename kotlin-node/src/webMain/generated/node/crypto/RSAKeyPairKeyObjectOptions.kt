@@ -1,0 +1,17 @@
+// Automatically generated - do not modify!
+
+package node.crypto
+
+@kotlinx.js.JsPlainObject
+external interface RSAKeyPairKeyObjectOptions {
+    /**
+     * Key size in bits
+     */
+    var modulusLength: Double
+
+    /**
+     * Public exponent
+     * @default 0x10001
+     */
+    var publicExponent: Double?
+}

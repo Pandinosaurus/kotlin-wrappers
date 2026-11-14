@@ -1,0 +1,22 @@
+// Automatically generated - do not modify!
+
+package js.intl
+
+import js.reflect.unsafeCast
+import js.union.JsUnion
+
+@JsUnion
+sealed /* union */
+external interface Notation
+
+inline val Notation.Companion.standard: Notation
+    get() = unsafeCast("standard")
+
+inline val Notation.Companion.scientific: Notation
+    get() = unsafeCast("scientific")
+
+inline val Notation.Companion.engineering: Notation
+    get() = unsafeCast("engineering")
+
+inline val Notation.Companion.compact: Notation
+    get() = unsafeCast("compact")

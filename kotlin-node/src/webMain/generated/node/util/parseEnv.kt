@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util")
+
+package node.util
+
+/**
+ * Stability: 1.1 - Active development
+ * Given an example `.env` file:
+ *
+ * ```js
+ * import { parseEnv } from 'node:util';
+ *
+ * parseEnv('HELLO=world\nHELLO=oh my\n');
+ * // Returns: { HELLO: 'oh my' }
+ * ```
+ * @param content The raw contents of a `.env` file.
+ * @since v20.12.0
+ */
+external fun parseEnv(content: String): node.Dict<String>

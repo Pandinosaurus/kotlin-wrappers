@@ -1,0 +1,1352 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface App : node.events.EventEmitter {
+    /**
+     * Adds `path` to the recent documents list.
+     *
+     * This list is managed by the OS. On Windows, you can visit the list from the task
+     * bar, and on macOS, you can visit it from dock menu.
+     *
+     * @platform darwin,win32
+     */
+    fun addRecentDocument(path: String)
+
+    /**
+     * Clears the recent documents list.
+     *
+     * @platform darwin,win32
+     */
+    fun clearRecentDocuments()
+
+    /**
+     * Configures host resolution (DNS and DNS-over-HTTPS). By default, the following
+     * resolvers will be used, in order:
+     *
+     * * DNS-over-HTTPS, if the DNS provider supports it, then
+     * * the built-in resolver (enabled on macOS only by default), then
+     * * the system's resolver (e.g. `getaddrinfo`).
+     *
+     * This can be configured to either restrict usage of non-encrypted DNS
+     * (`secureDnsMode: "secure"`), or disable DNS-over-HTTPS (`secureDnsMode: "off"`).
+     * It is also possible to enable or disable the built-in resolver.
+     *
+     * To disable insecure DNS, you can specify a `secureDnsMode` of `"secure"`. If you
+     * do so, you should make sure to provide a list of DNS-over-HTTPS servers to use,
+     * in case the user's DNS configuration does not include a provider that supports
+     * DoH.
+     *
+     * This API must be called after the `ready` event is emitted.
+     */
+    fun configureHostResolver(options: ConfigureHostResolverOptions)
+
+    /**
+     * Configures platform authenticators for the Web Authentication API
+     * (`navigator.credentials.create()` / `navigator.credentials.get()`). Until this
+     * is called, `PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()`
+     * resolves to `false` and platform-authenticator requests are not serviced.
+     *
+     * When `touchID` is provided, WebAuthn credentials are stored in the macOS
+     * keychain and bound to this device's Secure Enclave. Electron automatically
+     * generates and persists a per-`session` metadata secret so that credentials
+     * created in one partition are not visible to another.
+     *
+     * When `platformPasskeys` is `true`, passkey operations use Apple's
+     * `ASAuthorizationController` which delegates to the system's configured
+     * Credential Provider Extensions. This enables the same passkey experience as
+     * Safari — credentials are available across all devices signed into the same
+     * account. Unlike Touch ID credentials, platform passkeys are stored by the
+     * credential provider and scoped to the relying party, not to Electron: they are
+     * shared across all `session` partitions and with any other app or browser
+     * associated with the same domain. Platform passkeys cannot serve cross-origin
+     * (iframe) requests; those requests are left to the other available authenticators
+     * (Touch ID supports iframes) and a warning is logged to the DevTools console. The
+     * `prf` and `largeBlob` WebAuthn extensions are not currently supported by this
+     * authenticator — `prf` inputs are ignored, and a `create()` call with `largeBlob:
+     * { support: 'required' }` fails.
+     *
+     * With the matching entitlements in your app's `entitlements.plist`:
+     *
+     * For platform passkeys, your app needs the Associated Domains entitlement plus an
+     * application identifier, both in the same `entitlements.plist`:
+     *
+     * Listing these entitlements is **not** sufficient on its own — unlike most
+     * entitlements, `com.apple.developer.associated-domains` is _provisioning-profile
+     * backed_. For platform passkeys to work, **all** of the following must hold:
+     *
+     * * In the Apple Developer portal, your App ID (`com.example.app`) has the
+     * **Associated Domains** capability enabled, and you have created a provisioning
+     * profile for that App ID.
+     * * That provisioning profile is **embedded in the built app bundle** at
+     * `Contents/embedded.provisionprofile`. This is what authorizes the
+     * associated-domains entitlement at runtime; without an embedded profile macOS
+     * silently ignores the `webcredentials` association and the request fails. (Xcode
+     * and `@electron/osx-sign` embed the profile for you; if you sign manually, copy
+     * it into the bundle before signing.)
+     * * The app is signed (ad-hoc / unsigned builds do not qualify). Both distribution
+     * and development signing work — for development builds, use the developer-mode
+     * path described below.
+     * * `com.apple.application-identifier` matches the profile's App ID. Without it,
+     * `ASAuthorizationController` fails with "The calling process does not have an
+     * application identifier" — this is `ASAuthorizationError` code 1004.
+     * * The relying party's domain (`example.com` above) serves a valid
+     * `apple-app-site-association` file over HTTPS at
+     * `/.well-known/apple-app-site-association` containing a `webcredentials` entry
+     * whose `apps` array lists this app's `<TEAM_ID>.<BUNDLE_ID>`.
+     * * The relying party ID of each request matches that associated domain.
+     *
+     * If these aren't satisfied, `ASAuthorizationController` fails before it can
+     * present the passkey sheet. The request surfaces to the page as a bare
+     * `NotAllowedError` with no further detail (Electron logs an explanatory message
+     * to the DevTools console on this path). Because the association is domain-based,
+     * platform passkeys always require a real associated domain and its AASA file —
+     * there is no `localhost` rpId escape hatch as there is in browsers.
+     *
+     * To test against your domain with a development-signed build (before shipping a
+     * distribution profile), append `?mode=developer` to the entitlement value and
+     * enable developer mode on the machine with `swcutil developer-mode -e true`. This
+     * makes macOS fetch the AASA directly from the domain — bypassing Apple's CDN
+     * cache — and honor the association for a development-signed app. You still need
+     * the embedded development provisioning profile described above:
+     *
+     * > [!NOTE] Because the request is fulfilled by the system credential provider
+     * (not a browser), the `clientDataJSON` returned to the page reports `origin:
+     * "https://<rpId>"` — the associated domain — rather than the page's own origin.
+     * Relying-party servers that enforce a strict `expectedOrigin` allowlist must
+     * include `https://<rpId>` for verification to succeed. This also means the
+     * relying party cannot distinguish which subdomain of the associated domain
+     * initiated the ceremony.
+     *
+     * > [!NOTE] Touch ID WebAuthn credentials are device-bound and are not synced via
+     * iCloud Keychain. They are only available on Macs with a Secure Enclave (Apple
+     * silicon, or Intel Macs with a T2 chip).
+     *
+     * @platform darwin
+     */
+    fun configureWebAuthn(options: ConfigureWebAuthnOptions)
+
+    /**
+     * By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain
+     * basis if the GPU process crashes too frequently. This function disables that
+     * behavior.
+     *
+     * This method can only be called before app is ready.
+     */
+    fun disableDomainBlockingFor3DAPIs()
+
+    /**
+     * Disables hardware acceleration for current app.
+     *
+     * This method can only be called before app is ready.
+     */
+    fun disableHardwareAcceleration()
+
+    /**
+     * Enables full sandbox mode on the app. This means that all renderers will be
+     * launched sandboxed, regardless of the value of the `sandbox` flag in
+     * `WebPreferences`.
+     *
+     * This method can only be called before app is ready.
+     */
+    fun enableSandbox()
+
+    /**
+     * Exits immediately with `exitCode`. `exitCode` defaults to 0.
+     *
+     * All windows will be closed immediately without asking the user, and the
+     * `before-quit` and `will-quit` events will not be emitted.
+     */
+    fun exit(exitCode: Double = definedExternally)
+
+    /**
+     * On macOS, makes the application the active app. On Windows, focuses on the
+     * application's first window. On Linux, either focuses on the first visible window
+     * (X11) or requests focus but may instead show a notification or flash the app
+     * icon (Wayland).
+     *
+     * You should seek to use the `steal` option as sparingly as possible.
+     */
+    fun focus(options: FocusOptions = definedExternally)
+
+    /**
+     * Array of strings naming currently enabled accessibility support components.
+     * Possible values:
+     *
+     * * `nativeAPIs` - Native OS accessibility APIs integration enabled.
+     * * `webContents` - Web contents accessibility tree exposure enabled.
+     * * `inlineTextBoxes` - Inline text boxes (character bounding boxes) enabled.
+     * * `extendedProperties` - Extended accessibility properties enabled.
+     * * `screenReader` - Screen reader specific mode enabled.
+     * * `html` - HTML accessibility tree construction enabled.
+     * * `labelImages` - Accessibility support for automatic image annotations.
+     * * `pdfPrinting` - Accessibility support for PDF printing enabled.
+     *
+     * Notes:
+     *
+     * * The array may be empty if no accessibility modes are active.
+     * * Use `app.isAccessibilitySupportEnabled()` for the legacy boolean check; prefer
+     * this method for granular diagnostics or telemetry.
+     *
+     * Example:
+     *
+     * @platform darwin,win32
+     */
+    fun getAccessibilitySupportFeatures(): js.array.ReadonlyArray<String>
+
+    /**
+     * Resolve with an object containing the following:
+     *
+     * * `icon` NativeImage - the display icon of the app handling the protocol.
+     * * `path` string  - installation path of the app handling the protocol.
+     * * `name` string - display name of the app handling the protocol.
+     *
+     * This method returns a promise that contains the application name, icon and path
+     * of the default handler for the protocol (aka URI scheme) of a URL.
+     */
+    fun getApplicationInfoForProtocol(url: String): js.promise.Promise<ApplicationInfoForProtocolReturnValue>
+
+    /**
+     * Name of the application handling the protocol, or an empty string if there is no
+     * handler. For instance, if Electron is the default handler of the URL, this could
+     * be `Electron` on Windows and Mac. However, don't rely on the precise format
+     * which is not guaranteed to remain unchanged. Expect a different format on Linux,
+     * possibly with a `.desktop` suffix.
+     *
+     * This method returns the application name of the default handler for the protocol
+     * (aka URI scheme) of a URL.
+     */
+    fun getApplicationNameForProtocol(url: String): String
+
+    /**
+     * Array of `ProcessMetric` objects that correspond to memory and CPU usage
+     * statistics of all the processes associated with the app.
+     *
+     * > [!NOTE] `cpu.percentCPUUsage` and `cpu.idleWakeupsPerSecond` are averages over
+     * the time since the last call to `app.getAppMetrics()`, and each call starts a
+     * new measurement interval for every process at once. Other code in the main
+     * process, including dependencies, shares those intervals. See `CPUUsage` for more
+     * details.
+     */
+    fun getAppMetrics(): js.array.ReadonlyArray<ProcessMetric>
+
+    /**
+     * The current application directory.
+     */
+    fun getAppPath(): String
+
+    /**
+     * The current value displayed in the counter badge.
+     *
+     * @platform darwin
+     */
+    fun getBadgeCount(): Double
+
+    /**
+     * The type of the currently running activity.
+     *
+     * @platform darwin
+     */
+    fun getCurrentActivityType(): String
+
+    /**
+     * fulfilled with the app's icon, which is a NativeImage.
+     *
+     * Fetches a path's associated icon.
+     *
+     * On _Windows_, there are 2 kinds of icons:
+     *
+     * * Icons associated with certain file extensions, like `.mp3`, `.png`, etc.
+     * * Icons inside the file itself, like `.exe`, `.dll`, `.ico`.
+     *
+     * On _Linux_ and _macOS_, icons depend on the application associated with file
+     * mime type.
+     */
+    fun getFileIcon(
+        path: String,
+        options: FileIconOptions = definedExternally,
+    ): js.promise.Promise<NativeImage>
+
+    /**
+     * The Graphics Feature Status from `chrome://gpu/`.
+     *
+     * > [!NOTE] This information is only usable after the `gpu-info-update` event is
+     * emitted.
+     */
+    fun getGPUFeatureStatus(): GPUFeatureStatus
+
+    /**
+     * For `infoType` equal to `complete`: Promise is fulfilled with `Object`
+     * containing all the GPU Information as in chromium's GPUInfo object. This
+     * includes the version and driver information that's shown on `chrome://gpu` page.
+     *
+     * For `infoType` equal to `basic`: Promise is fulfilled with `Object` containing
+     * fewer attributes than when requested with `complete`. Here's an example of basic
+     * response:
+     *
+     * Using `basic` should be preferred if only basic information like `vendorId` or
+     * `deviceId` is needed.
+     *
+     * Promise is rejected if the GPU is completely disabled, i.e. no hardware and
+     * software implementations are available.
+     */
+    fun getGPUInfo(infoType: AppGetGPUInfoInfoType): js.promise.Promise<Any?>
+
+    /**
+     * * `minItems` Integer - The minimum number of items that will be shown in the
+     * Jump List (for a more detailed description of this value see the MSDN docs).
+     * * `removedItems` JumpListItem[] - Array of `JumpListItem` objects that
+     * correspond to items that the user has explicitly removed from custom categories
+     * in the Jump List. These items must not be re-added to the Jump List in the
+     * **next** call to `app.setJumpList()`, Windows will not display any custom
+     * category that contains any of the removed items.
+     *
+     * @platform win32
+     */
+    fun getJumpListSettings(): JumpListSettings
+
+    /**
+     * The current application locale, fetched using Chromium's `l10n_util` library.
+     * Possible return values are documented here.
+     *
+     * To set the locale, you'll want to use a command line switch at app startup,
+     * which may be found here.
+     *
+     * > [!NOTE] When distributing your packaged app, you have to also ship the
+     * `locales` folder.
+     *
+     * > [!NOTE] This API must be called after the `ready` event is emitted.
+     *
+     * > [!NOTE] To see example return values of this API compared to other locale and
+     * language APIs, see `app.getPreferredSystemLanguages()`.
+     */
+    fun getLocale(): String
+
+    /**
+     * User operating system's locale two-letter ISO 3166 country code. The value is
+     * taken from native OS APIs.
+     *
+     * > [!NOTE] When unable to detect locale country code, it returns empty string.
+     */
+    fun getLocaleCountryCode(): String
+
+    /**
+     * If you provided `path` and `args` options to `app.setLoginItemSettings`, then
+     * you need to pass the same arguments here for `openAtLogin` to be set correctly.
+     *
+     *
+     * * `openAtLogin` boolean - `true` if the app is set to open at login.
+     * * `wasOpenedAtLogin` boolean _macOS_ - `true` if the app was opened at login
+     * automatically.
+     * * `status` string _macOS_ - can be `not-registered`, `enabled`,
+     * `requires-approval`, or `not-found`.
+     * * `executableWillLaunchAtLogin` boolean _Windows_ - `true` if app is set to open
+     * at login and its run key is not deactivated. This differs from `openAtLogin` as
+     * it ignores the `args` option, this property will be true if the given executable
+     * would be launched at login with **any** arguments.
+     * * `launchItems` Object[] _Windows_
+     *   * `name` string _Windows_ - name value of a registry entry.
+     *   * `path` string _Windows_ - The executable to an app that corresponds to a
+     * registry entry.
+     *   * `args` string[] _Windows_ - the command-line arguments to pass to the
+     * executable.
+     *   * `scope` string _Windows_ - can be `user` or `machine`. Indicates whether the
+     * registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
+     *   * `enabled` boolean _Windows_ - `true` if the app registry key is startup
+     * approved and therefore shows as `enabled` in Task Manager and Windows settings.
+     *
+     * @platform darwin,win32
+     */
+    fun getLoginItemSettings(options: LoginItemSettingsOptions = definedExternally): LoginItemSettings
+
+    /**
+     * The current application's name, which is the name in the application's
+     * `package.json` file.
+     *
+     * Usually the `name` field of `package.json` is a short lowercase name, according
+     * to the npm modules spec. You should usually also specify a `productName` field,
+     * which is your application's full capitalized name, and which will be preferred
+     * over `name` by Electron.
+     *
+     * Electron uses the application's name to construct the default `userData`
+     * directory. On Windows, neither `productName` nor `name` should contain the
+     * following special characters, which cannot be used in directory or file names:
+     * `<`, `>`, `:`, `"`, `\`, `/`, `|`, `?`, `*`. Using these characters in the
+     * application's name can prevent Electron from creating the default `userData`
+     * directory and cause the application to crash on startup.
+     */
+    fun getName(): String
+
+    /**
+     * A path to a special directory or file associated with `name`. On failure, an
+     * `Error` is thrown.
+     *
+     * If `app.getPath('logs')` is called without calling `app.setAppLogsPath()` being
+     * called first, a default log directory will be created equivalent to calling
+     * `app.setAppLogsPath()` without a `path` parameter.
+     */
+    fun getPath(name: AppGetPathName): String
+
+    /**
+     * The user's preferred system languages from most preferred to least preferred,
+     * including the country codes if applicable. A user can modify and add to this
+     * list on Windows or macOS through the Language and Region settings.
+     *
+     * The API uses `GlobalizationPreferences` (with a fallback to
+     * `GetSystemPreferredUILanguages`) on Windows, `\[NSLocale preferredLanguages\]`
+     * on macOS, and `g_get_language_names` on Linux.
+     *
+     * This API can be used for purposes such as deciding what language to present the
+     * application in.
+     *
+     * Here are some examples of return values of the various language and locale APIs
+     * with different configurations:
+     *
+     * On Windows, given application locale is German, the regional format is Finnish
+     * (Finland), and the preferred system languages from most to least preferred are
+     * French (Canada), English (US), Simplified Chinese (China), Finnish, and Spanish
+     * (Latin America):
+     *
+     * On macOS, given the application locale is German, the region is Finland, and the
+     * preferred system languages from most to least preferred are French (Canada),
+     * English (US), Simplified Chinese, and Spanish (Latin America):
+     *
+     * Both the available languages and regions and the possible return values differ
+     * between the two operating systems.
+     *
+     * As can be seen with the example above, on Windows, it is possible that a
+     * preferred system language has no country code, and that one of the preferred
+     * system languages corresponds with the language used for the regional format. On
+     * macOS, the region serves more as a default country code: the user doesn't need
+     * to have Finnish as a preferred language to use Finland as the region, and the
+     * country code `FI` is used as the country code for preferred system languages
+     * that do not have associated countries in the language name.
+     */
+    fun getPreferredSystemLanguages(): js.array.ReadonlyArray<String>
+
+    /**
+     * An array containing documents in the most recent documents list.
+     *
+     * @platform darwin,win32
+     */
+    fun getRecentDocuments(): js.array.ReadonlyArray<String>
+
+    /**
+     * The current system locale. On Windows and Linux, it is fetched using Chromium's
+     * `i18n` library. On macOS, `[NSLocale currentLocale]` is used instead. To get the
+     * user's current system language, which is not always the same as the locale, it
+     * is better to use `app.getPreferredSystemLanguages()`.
+     *
+     * Different operating systems also use the regional data differently:
+     *
+     * * Windows 11 uses the regional format for numbers, dates, and times.
+     * * macOS Monterey uses the region for formatting numbers, dates, times, and for
+     * selecting the currency symbol to use.
+     *
+     * Therefore, this API can be used for purposes such as choosing a format for
+     * rendering dates and times in a calendar app, especially when the developer wants
+     * the format to be consistent with the OS.
+     *
+     * > [!NOTE] This API must be called after the `ready` event is emitted.
+     *
+     * > [!NOTE] To see example return values of this API compared to other locale and
+     * language APIs, see `app.getPreferredSystemLanguages()`.
+     */
+    fun getSystemLocale(): String
+
+    /**
+     * The version of the loaded application. If no version is found in the
+     * application's `package.json` file, the version of the current bundle or
+     * executable is returned.
+     */
+    fun getVersion(): String
+
+    /**
+     * This method returns whether or not this instance of your app is currently
+     * holding the single instance lock.  You can request the lock with
+     * `app.requestSingleInstanceLock()` and release with
+     * `app.releaseSingleInstanceLock()`
+     */
+    fun hasSingleInstanceLock(): Boolean
+
+    /**
+     * Hides all application windows without minimizing them.
+     *
+     * @platform darwin
+     */
+    fun hide()
+
+    /**
+     * Imports the certificate in pkcs12 format into the platform certificate store.
+     * `callback` is called with the `result` of import operation, a value of `0`
+     * indicates success while any other value indicates failure according to Chromium
+     * net_error_list.
+     *
+     * @platform linux
+     */
+    fun importCertificate(
+        options: ImportCertificateOptions,
+        callback: (result: Double) -> Unit,
+    )
+
+    /**
+     * Invalidates the current Handoff user activity.
+     *
+     * @platform darwin
+     */
+    fun invalidateCurrentActivity()
+
+    /**
+     * `true` if Chromium's accessibility support is enabled, `false` otherwise. This
+     * API will return `true` if the use of assistive technologies, such as screen
+     * readers, has been detected. See
+     * https://www.chromium.org/developers/design-documents/accessibility for more
+     * details.
+     *
+     * @platform darwin,win32
+     */
+    fun isAccessibilitySupportEnabled(): Boolean
+
+    /**
+     * `true` if the application is active (i.e. focused).
+     *
+     * @platform darwin
+     */
+    fun isActive(): Boolean
+
+    /**
+     * Whether the current executable is the default handler for a protocol (aka URI
+     * scheme).
+     *
+     * > [!NOTE] On macOS, you can use this method to check if the app has been
+     * registered as the default protocol handler for a protocol. You can also verify
+     * this by checking `~/Library/Preferences/com.apple.LaunchServices.plist` on the
+     * macOS machine. Please refer to Apple's documentation for details.
+     *
+     * The API uses the Windows Registry and `LSCopyDefaultHandlerForURLScheme`
+     * internally.
+     */
+    fun isDefaultProtocolClient(
+        protocol: String,
+        path: String = definedExternally,
+        args: js.array.ReadonlyArray<String> = definedExternally,
+    ): Boolean
+
+    /**
+     * whether or not the current OS version allows for native emoji pickers.
+     */
+    fun isEmojiPanelSupported(): Boolean
+
+    /**
+     * whether hardware acceleration is currently enabled.
+     *
+     * > [!NOTE] This information is only usable after the `gpu-info-update` event is
+     * emitted.
+     */
+    fun isHardwareAccelerationEnabled(): Boolean
+
+    /**
+     * `true` if the application—including all of its windows—is hidden (e.g. with
+     * `Command-H`), `false` otherwise.
+     *
+     * @platform darwin
+     */
+    fun isHidden(): Boolean
+
+    /**
+     * Whether the application is currently running from the systems Application
+     * folder. Use in combination with `app.moveToApplicationsFolder()`
+     *
+     * @platform darwin
+     */
+    fun isInApplicationsFolder(): Boolean
+
+    /**
+     * `true` if Electron has finished initializing, `false` otherwise. See also
+     * `app.whenReady()`.
+     */
+    fun isReady(): Boolean
+
+    /**
+     * whether `Secure Keyboard Entry` is enabled.
+     *
+     * By default this API will return `false`.
+     *
+     * @platform darwin
+     */
+    fun isSecureKeyboardEntryEnabled(): Boolean
+
+    /**
+     * Whether the move was successful. Please note that if the move is successful,
+     * your application will quit and relaunch.
+     *
+     * No confirmation dialog will be presented by default. If you wish to allow the
+     * user to confirm the operation, you may do so using the `dialog` API.
+     *
+     * **NOTE:** This method throws errors if anything other than the user causes the
+     * move to fail. For instance if the user cancels the authorization dialog, this
+     * method returns false. If we fail to perform the copy, then this method will
+     * throw an error. The message in the error should be informative and tell you
+     * exactly what went wrong.
+     *
+     * By default, if an app of the same name as the one being moved exists in the
+     * Applications directory and is _not_ running, the existing app will be trashed
+     * and the active app moved into its place. If it _is_ running, the preexisting
+     * running app will assume focus and the previously active app will quit itself.
+     * This behavior can be changed by providing the optional conflict handler, where
+     * the boolean returned by the handler determines whether or not the move conflict
+     * is resolved with default behavior.  i.e. returning `false` will ensure no
+     * further action is taken, returning `true` will result in the default behavior
+     * and the method continuing.
+     *
+     * For example:
+     *
+     * Would mean that if an app already exists in the user directory, if the user
+     * chooses to 'Continue Move' then the function would continue with its default
+     * behavior and the existing app will be trashed and the active app moved into its
+     * place.
+     *
+     * @platform darwin
+     */
+    fun moveToApplicationsFolder(options: MoveToApplicationsFolderOptions = definedExternally): Boolean
+
+    /**
+     * Try to close all windows. The `before-quit` event will be emitted first. If all
+     * windows are successfully closed, the `will-quit` event will be emitted and by
+     * default the application will terminate.
+     *
+     * This method guarantees that all `beforeunload` and `unload` event handlers are
+     * correctly executed. It is possible that a window cancels the quitting by
+     * returning `false` in the `beforeunload` event handler.
+     */
+    fun quit()
+
+    /**
+     * Relaunches the app when the current instance exits.
+     *
+     * By default, the new instance will use the same working directory and command
+     * line arguments as the current instance. When `args` is specified, the `args`
+     * will be passed as the command line arguments instead. When `execPath` is
+     * specified, the `execPath` will be executed for the relaunch instead of the
+     * current app.
+     *
+     * Note that this method does not quit the app when executed. You have to call
+     * `app.quit` or `app.exit` after calling `app.relaunch` to make the app restart.
+     *
+     * When `app.relaunch` is called multiple times, multiple instances will be started
+     * after the current instance exits.
+     *
+     * An example of restarting the current instance immediately and adding a new
+     * command line argument to the new instance:
+     */
+    fun relaunch(options: RelaunchOptions = definedExternally)
+
+    /**
+     * Releases all locks that were created by `requestSingleInstanceLock`. This will
+     * allow multiple instances of the application to once again run side by side.
+     */
+    fun releaseSingleInstanceLock()
+
+    /**
+     * Whether the call succeeded.
+     *
+     * This method checks if the current executable as the default handler for a
+     * protocol (aka URI scheme). If so, it will remove the app as the default handler.
+     *
+     * @platform darwin,win32
+     */
+    fun removeAsDefaultProtocolClient(
+        protocol: String,
+        path: String = definedExternally,
+        args: js.array.ReadonlyArray<String> = definedExternally,
+    ): Boolean
+
+    /**
+     * The return value of this method indicates whether or not this instance of your
+     * application successfully obtained the lock.  If it failed to obtain the lock,
+     * you can assume that another instance of your application is already running with
+     * the lock and exit immediately.
+     *
+     * I.e. This method returns `true` if your process is the primary instance of your
+     * application and your app should continue loading.  It returns `false` if your
+     * process should immediately quit as it has sent its parameters to another
+     * instance that has already acquired the lock.
+     *
+     * On macOS, the system enforces single instance automatically when users try to
+     * open a second instance of your app in Finder, and the `open-file` and `open-url`
+     * events will be emitted for that. However when users start your app in command
+     * line, the system's single instance mechanism will be bypassed, and you have to
+     * use this method to ensure single instance.
+     *
+     * > [!NOTE] On macOS and Linux, the second instance's command line arguments and
+     * `additionalData` are sent to the primary instance in a single message that is
+     * limited to 32 MB. Larger messages are dropped: this method still returns
+     * `false`, but the primary instance does not emit `second-instance`.
+     *
+     * An example of activating the window of primary instance when a second instance
+     * starts:
+     */
+    fun requestSingleInstanceLock(additionalData: js.objects.ReadonlyRecord<Any, Any?> = definedExternally): Boolean
+
+    /**
+     * Marks the current Handoff user activity as inactive without invalidating it.
+     *
+     * @platform darwin
+     */
+    fun resignCurrentActivity()
+
+    /**
+     * Resolves with the proxy information for `url` that will be used when attempting
+     * to make requests using Net in the utility process.
+     */
+    fun resolveProxy(url: String): js.promise.Promise<String>
+
+    /**
+     * Set the about panel options. This will override the values defined in the app's
+     * `.plist` file on macOS. See the Apple docs for more details. On Linux, values
+     * must be set in order to be shown; there are no defaults.
+     *
+     * If you do not set `credits` but still wish to surface them in your app, AppKit
+     * will look for a file named "Credits.html", "Credits.rtf", and "Credits.rtfd", in
+     * that order, in the bundle returned by the NSBundle class method main. The first
+     * file found is used, and if none is found, the info area is left blank. See Apple
+     * documentation for more information.
+     */
+    fun setAboutPanelOptions(options: AboutPanelOptionsOptions)
+
+    /**
+     * Manually enables Chromium's accessibility support, allowing to expose
+     * accessibility switch to users in application settings. See Chromium's
+     * accessibility docs for more details. Disabled by default.
+     *
+     * This API must be called after the `ready` event is emitted.
+     *
+     * > [!NOTE] Rendering accessibility tree can significantly affect the performance
+     * of your app. It should not be enabled by default. Calling this method will
+     * enable the following accessibility support features: `nativeAPIs`,
+     * `webContents`, `inlineTextBoxes`, and `extendedProperties`.
+     *
+     * @platform darwin,win32
+     */
+    fun setAccessibilitySupportEnabled(enabled: Boolean)
+
+    /**
+     * Possible values are:
+     *
+     * * `nativeAPIs` - Native OS accessibility APIs integration enabled.
+     * * `webContents` - Web contents accessibility tree exposure enabled.
+     * * `inlineTextBoxes` - Inline text boxes (character bounding boxes) enabled.
+     * * `extendedProperties` - Extended accessibility properties enabled.
+     * * `screenReader` - Screen reader specific mode enabled.
+     * * `html` - HTML accessibility tree construction enabled.
+     * * `labelImages` - Accessibility support for automatic image annotations.
+     * * `pdfPrinting` - Accessibility support for PDF printing enabled.
+     *
+     * To disable all supported features, pass an empty array `[]`.
+     *
+     * Example:
+     *
+     * @platform darwin,win32
+     */
+    fun setAccessibilitySupportFeatures(features: js.array.ReadonlyArray<String>)
+
+    /**
+     * Sets the activation policy for a given app.
+     *
+     * Activation policy types:
+     *
+     * * 'regular' - The application is an ordinary app that appears in the Dock and
+     * may have a user interface.
+     * * 'accessory' - The application doesn’t appear in the Dock and doesn’t have a
+     * menu bar, but it may be activated programmatically or by clicking on one of its
+     * windows.
+     * * 'prohibited' - The application doesn’t appear in the Dock and may not create
+     * windows or be activated.
+     *
+     * @platform darwin
+     */
+    fun setActivationPolicy(policy: AppSetActivationPolicyPolicy)
+
+    /**
+     * Sets or creates a directory your app's logs which can then be manipulated with
+     * `app.getPath()` or `app.setPath(pathName, newPath)`.
+     *
+     * Calling `app.setAppLogsPath()` without a `path` parameter will result in this
+     * directory being set to `~/Library/Logs/YourAppName` on _macOS_, and inside the
+     * `userData` directory on _Linux_ and _Windows_.
+     */
+    fun setAppLogsPath(path: String = definedExternally)
+
+    /**
+     * Changes the Application User Model ID to `id`.
+     *
+     * @platform win32
+     */
+    fun setAppUserModelId(id: String)
+
+    /**
+     * Whether the call succeeded.
+     *
+     * Sets the current executable as the default handler for a protocol (aka URI
+     * scheme). It allows you to integrate your app deeper into the operating system.
+     * Once registered, all links with `your-protocol://` will be opened with the
+     * current executable. The whole link, including protocol, will be passed to your
+     * application as a parameter.
+     *
+     * > [!NOTE] On macOS, you can only register protocols that have been added to your
+     * app's `info.plist`, which cannot be modified at runtime. However, you can change
+     * the file during build time via Electron Forge, Electron Packager, or by editing
+     * `info.plist` with a text editor. Please refer to Apple's documentation for
+     * details.
+     *
+     * > [!NOTE] In a Windows Store environment (when packaged as an `appx`) this API
+     * will return `true` for all calls but the registry key it sets won't be
+     * accessible by other applications.  In order to register your Windows Store
+     * application as a default protocol handler you must declare the protocol in your
+     * manifest.
+     *
+     * The API uses the Windows Registry and `LSSetDefaultHandlerForURLScheme`
+     * internally.
+     */
+    fun setAsDefaultProtocolClient(
+        protocol: String,
+        path: String = definedExternally,
+        args: js.array.ReadonlyArray<String> = definedExternally,
+    ): Boolean
+
+    /**
+     * Whether the call succeeded.
+     *
+     * Sets the counter badge for current app. Setting the count to `0` will hide the
+     * badge.
+     *
+     * On macOS, it shows on the Dock icon. On Linux, it shows on docks and taskbars
+     * that support the LauncherEntry D-Bus API,
+     *
+     * > [!NOTE] On Linux, the badge is associated with the app's `.desktop` file, so
+     * `app.setDesktopName` (or the `desktopName` field in `package.json`) must match
+     * the name of the app's actual `.desktop` file.
+     *
+     * > [!NOTE] On macOS, you need to ensure that your application has the permission
+     * to display notifications for this method to work.
+     *
+     * @platform linux,darwin
+     */
+    fun setBadgeCount(count: Double = definedExternally): Boolean
+
+    /**
+     * The handler is called when a password is needed to unlock a client certificate
+     * for `hostname`.
+     */
+    fun setClientCertRequestPasswordHandler(
+        handler: (clientCertRequestParams: ClientCertRequestParams) -> js.promise.Promise<String>,
+    )
+
+    /**
+     * Sets the `.desktop` filename on Linux. This must match the base filename of the
+     * app's installed `.desktop` file. The `.desktop` suffix is optional.
+     *
+     * The name (without the `.desktop` suffix) is the app's identity for Linux desktop
+     * integration. It should be a reverse-DNS style ID such as `com.example.MyApp`,
+     * following the desktop entry naming conventions. This value is used as:
+     *
+     * * the XDG application ID (`app_id`) on Wayland and `WM_CLASS` on X11, used to
+     * match the app's icon and window grouping.
+     * * the app ID that `xdg-desktop-portal` reports to portal backends such as
+     * GlobalShortcuts.
+     *
+     * Portals increasingly enforce this identity. If the name is not a valid
+     * reverse-DNS ID or does not match an installed `.desktop` file:
+     *
+     * * GNOME 50.0/50.1 (Ubuntu 26.04) rejects `globalShortcut` binds with
+     * `org.freedesktop.portal.Error.NotAllowed` — with no error surfaced to the app
+     * (see #52218).
+     * * `xdg-desktop-portal` 1.21 and later refuses portal sessions for app IDs it
+     * cannot resolve to a `.desktop` file.
+     *
+     * If this value is not set and `desktopName` is not present in `package.json`,
+     * Electron falls back to a lowercased, hyphenated slug of the app's name (e.g. `My
+     * App` → `my-app.desktop`), which is unlikely to be a valid portal identity —
+     * packaged apps should always set it explicitly.
+     *
+     * This API must be called before the `ready` event. The value can also be set
+     * using `desktopName` in `package.json`.
+     *
+     * @platform linux
+     */
+    fun setDesktopName(name: String)
+
+    /**
+     * Sets or removes a custom Jump List for the application, and returns one of the
+     * following strings:
+     *
+     * * `ok` - Nothing went wrong.
+     * * `error` - One or more errors occurred, enable runtime logging to figure out
+     * the likely cause.
+     * * `invalidSeparatorError` - An attempt was made to add a separator to a custom
+     * category in the Jump List. Separators are only allowed in the standard `Tasks`
+     * category.
+     * * `fileTypeRegistrationError` - An attempt was made to add a file link to the
+     * Jump List for a file type the app isn't registered to handle.
+     * * `customCategoryAccessDeniedError` - Custom categories can't be added to the
+     * Jump List due to user privacy or group policy settings.
+     *
+     * If `categories` is `null` the previously set custom Jump List (if any) will be
+     * replaced by the standard Jump List for the app (managed by Windows).
+     *
+     * > [!NOTE] If a `JumpListCategory` object has neither the `type` nor the `name`
+     * property set then its `type` is assumed to be `tasks`. If the `name` property is
+     * set but the `type` property is omitted then the `type` is assumed to be
+     * `custom`.
+     *
+     * > [!NOTE] Users can remove items from custom categories, and Windows will not
+     * allow a removed item to be added back into a custom category until **after** the
+     * next successful call to `app.setJumpList(categories)`. Any attempt to re-add a
+     * removed item to a custom category earlier than that will result in the entire
+     * custom category being omitted from the Jump List. The list of removed items can
+     * be obtained using `app.getJumpListSettings()`.
+     *
+     * > [!NOTE] The maximum length of a Jump List item's `description` property is 260
+     * characters. Beyond this limit, the item will not be added to the Jump List, nor
+     * will it be displayed.
+     *
+     * Here's a very simple example of creating a custom Jump List:
+     *
+     * @platform win32
+     */
+    fun setJumpList(categories: js.array.ReadonlyArray<JumpListCategory>?): (AppSetJumpListResult)
+
+    /**
+     * Set the app's login item settings.
+     *
+     * To work with Electron's `autoUpdater` on Windows, which uses Squirrel, you'll
+     * want to set the launch path to your executable's name but a directory up, which
+     * is a stub application automatically generated by Squirrel which will
+     * automatically launch the latest version.
+     *
+     * For more information about setting different services as login items on macOS,
+     * see `SMAppService`.
+     *
+     * @platform darwin,win32
+     */
+    fun setLoginItemSettings(settings: Settings)
+
+    /**
+     * Overrides the current application's name.
+     *
+     * On Windows, avoid the reserved filename characters in `name`.
+     *
+     * > [!NOTE] This function overrides the name used internally by Electron; it does
+     * not affect the name that the OS uses.
+     */
+    fun setName(name: String)
+
+    /**
+     * Overrides the `path` to a special directory or file associated with `name`. If
+     * the path specifies a directory that does not exist, an `Error` is thrown. In
+     * that case, the directory should be created with `fs.mkdirSync` or similar.
+     *
+     * You can only override paths of a `name` defined in `app.getPath`.
+     *
+     * By default, web pages' cookies and caches will be stored under the `sessionData`
+     * directory. If you want to change this location, you have to override the
+     * `sessionData` path before the `ready` event of the `app` module is emitted.
+     */
+    fun setPath(
+        name: String,
+        path: String,
+    )
+
+    /**
+     * Resolves when the proxy setting process is complete.
+     *
+     * Sets the proxy settings for networks requests made without an associated
+     * Session. Currently this will affect requests made with Net in the utility
+     * process and internal requests made by the runtime (ex: geolocation queries).
+     *
+     * This method can only be called after app is ready.
+     */
+    fun setProxy(config: ProxyConfig): js.promise.Promise<js.void.Void>
+
+    /**
+     * Set the `Secure Keyboard Entry` is enabled in your application.
+     *
+     * By using this API, important information such as password and other sensitive
+     * information can be prevented from being intercepted by other processes.
+     *
+     * See Apple's documentation for more details.
+     *
+     * > [!NOTE] Enable `Secure Keyboard Entry` only when it is needed and disable it
+     * when it is no longer needed.
+     *
+     * @platform darwin
+     */
+    fun setSecureKeyboardEntryEnabled(enabled: Boolean)
+
+    /**
+     * Changes the Toast Activator CLSID to `id`. If one is not set via this method, it
+     * will be randomly generated for the app.
+     *
+     * * The value must be a valid GUID/CLSID in one of the following forms:
+     *   * Canonical brace-wrapped: `{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}`
+     * (preferred)
+     *   * Canonical without braces: `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` (braces
+     * will be added automatically)
+     * * Hex digits are case-insensitive.
+     *
+     * This method should be called early (before showing notifications) so the value
+     * is baked into the registration/shortcut. Supplying an empty string or an
+     * unparsable value throws and leaves the existing (or generated) CLSID unchanged.
+     * If this method is never called, a random CLSID is generated once per run and
+     * exposed via `app.toastActivatorCLSID`.
+     *
+     * @platform win32
+     */
+    fun setToastActivatorCLSID(id: String)
+
+    /**
+     * Creates an `NSUserActivity` and sets it as the current activity. The activity is
+     * eligible for Handoff to another device afterward.
+     *
+     * @platform darwin
+     */
+    fun setUserActivity(
+        type: String,
+        userInfo: Any?,
+        webpageURL: String = definedExternally,
+    )
+
+    /**
+     * Adds `tasks` to the Tasks category of the Jump List on Windows.
+     *
+     * `tasks` is an array of `Task` objects.
+     *
+     * Whether the call succeeded.
+     *
+     * > [!NOTE] If you'd like to customize the Jump List even more use
+     * `app.setJumpList(categories)` instead.
+     *
+     * @platform win32
+     */
+    fun setUserTasks(tasks: js.array.ReadonlyArray<Task>): Boolean
+
+    /**
+     * Shows application windows after they were hidden. Does not automatically focus
+     * them.
+     *
+     * @platform darwin
+     */
+    fun show()
+
+    /**
+     * Show the app's about panel options. These options can be overridden with
+     * `app.setAboutPanelOptions(options)`. This function runs asynchronously.
+     */
+    fun showAboutPanel()
+
+    /**
+     * Show the platform's native emoji picker.
+     *
+     * @platform darwin,win32
+     */
+    fun showEmojiPanel()
+
+    /**
+     * This function **must** be called once you have finished accessing the security
+     * scoped file. If you do not remember to stop accessing the bookmark, kernel
+     * resources will be leaked and your app will lose its ability to reach outside the
+     * sandbox completely, until your app is restarted.
+     *
+     * Start accessing a security scoped resource. With this method, Electron
+     * applications that are packaged for the Mac App Store may reach outside their
+     * sandbox to access files chosen by the user. See Apple's documentation for a
+     * description of how this system works.
+     *
+     * @platform mas
+     */
+    fun startAccessingSecurityScopedResource(bookmarkData: String): Function<*>
+
+    /**
+     * Starts accepting connections from app shims. An `app-shim-connected` event is
+     * emitted for each shim that connects.
+     *
+     * Throws if the server cannot be started, for example because another copy of your
+     * app has already started a server with the same `name`.
+     *
+     * This method can only be called after the app is ready. It is not available in
+     * Mac App Store builds.
+     *
+     * @experimental
+     * @platform darwin
+     */
+    fun startAppShimServer(options: StartAppShimServerOptions = definedExternally)
+
+    /**
+     * Stops accepting connections from app shims. Shims that have already connected
+     * stay connected.
+     *
+     * @experimental
+     * @platform darwin
+     */
+    fun stopAppShimServer()
+
+    /**
+     * Updates the current activity if its type matches `type`, merging the entries
+     * from `userInfo` into its current `userInfo` dictionary.
+     *
+     * @platform darwin
+     */
+    fun updateCurrentActivity(
+        type: String,
+        userInfo: Any?,
+    )
+
+    /**
+     * fulfilled when Electron is initialized. May be used as a convenient alternative
+     * to checking `app.isReady()` and subscribing to the `ready` event if the app is
+     * not ready yet.
+     */
+    fun whenReady(): js.promise.Promise<js.void.Void>
+
+    /**
+     * A `boolean` property that's `true` if Chromium's accessibility support is
+     * enabled, `false` otherwise. This property will be `true` if the use of assistive
+     * technologies, such as screen readers, has been detected. Setting this property
+     * to `true` manually enables Chromium's accessibility support, allowing developers
+     * to expose accessibility switch to users in application settings.
+     *
+     * See Chromium's accessibility docs for more details. Disabled by default.
+     *
+     * This API must be called after the `ready` event is emitted.
+     *
+     * > [!NOTE] Rendering accessibility tree can significantly affect the performance
+     * of your app. It should not be enabled by default.
+     *
+     * @platform darwin,win32
+     */
+    var accessibilitySupportEnabled: Boolean
+
+    /**
+     * A `Menu | null` property that returns `Menu` if one has been set and `null`
+     * otherwise. Users can pass a Menu to set this property.
+     */
+    var applicationMenu: Menu?
+
+    /**
+     * An `Integer` property that returns the badge count for current app. Setting the
+     * count to `0` will hide the badge. Setting this with any nonzero integer shows
+     * the count on the Dock icon on macOS, or on the launcher on Linux.
+     *
+     * > [!NOTE] On macOS, you need to ensure that your application has the permission
+     * to display notifications for this property to take effect.
+     *
+     * @platform linux,darwin
+     */
+    var badgeCount: Double
+
+    /**
+     * A `CommandLine` object that allows you to read and manipulate the command line
+     * arguments that Chromium uses.
+     *
+     */
+    val commandLine: CommandLine
+
+    /**
+     * A `Dock | undefined` property (`Dock` on macOS, `undefined` on all other
+     * platforms) that allows you to perform actions on your app icon in the user's
+     * dock.
+     *
+     * @platform darwin
+     */
+    val dock: Dock?
+
+    /**
+     * A `boolean` property that returns  `true` if the app is packaged, `false`
+     * otherwise. For many apps, this property can be used to distinguish development
+     * and production environments.
+     *
+     */
+    val isPackaged: Boolean
+
+    /**
+     * A `string` property that indicates the current application's name, which is the
+     * name in the application's `package.json` file.
+     *
+     * Usually the `name` field of `package.json` is a short lowercase name, according
+     * to the npm modules spec. You should usually also specify a `productName` field,
+     * which is your application's full capitalized name, and which will be preferred
+     * over `name` by Electron.
+     *
+     * On Windows, the application's name must not contain reserved filename
+     * characters, because it is used to construct the default `userData` directory.
+     */
+    var name: String
+
+    /**
+     * A `boolean` which when `true` indicates that the app is currently running under
+     * an ARM64 translator (like the macOS Rosetta Translator Environment or Windows
+     * WOW).
+     *
+     * You can use this property to prompt users to download the arm64 version of your
+     * application when they are mistakenly running the x64 version under Rosetta or
+     * WOW.
+     *
+     * @platform darwin,win32
+     */
+    val runningUnderARM64Translation: Boolean
+
+    /**
+     * A `string` property that returns the app's Toast Activator CLSID.
+     *
+     * @platform win32
+     */
+    val toastActivatorCLSID: String
+
+    /**
+     * A `string` which is the user agent string Electron will use as a global
+     * fallback.
+     *
+     * This is the user agent that will be used when no user agent is set at the
+     * `webContents` or `session` level.  It is useful for ensuring that your entire
+     * app has the same user agent.  Set to a custom value as early as possible in your
+     * app's initialization to ensure that your overridden value is used.
+     */
+    var userAgentFallback: String
+
+    @web.events.JsEvent("accessibility-support-changed")
+    val accessibilitySupportChangedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Boolean>>
+
+    @web.events.JsEvent("activate")
+    val activateEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Boolean>>
+
+    @web.events.JsEvent("activity-was-continued")
+    val activityWasContinuedEvent: node.events.EventInstance<js.array.Tuple3<Event<*>, String, Any?>>
+
+    @web.events.JsEvent("app-shim-connected")
+    val appShimConnectedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, AppShimHost>>
+
+    @web.events.JsEvent("app-shim-version-mismatch")
+    val appShimVersionMismatchEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("before-quit")
+    val beforeQuitEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("browser-window-blur")
+    val browserWindowBlurEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, BrowserWindow>>
+
+    @web.events.JsEvent("browser-window-created")
+    val browserWindowCreatedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, BrowserWindow>>
+
+    @web.events.JsEvent("browser-window-focus")
+    val browserWindowFocusEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, BrowserWindow>>
+
+    @web.events.JsEvent("certificate-error")
+    val certificateErrorEvent:
+            node.events.EventInstance<
+                    js.array.Tuple7<
+                            Event<*>,
+                            WebContents,
+                            String,
+                            String,
+                            Certificate,
+                                (
+                        isTrusted: Boolean,
+                    ) -> Unit,
+                            Boolean,
+                            >,
+                    >
+
+    @web.events.JsEvent("child-process-gone")
+    val childProcessGoneEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Details>>
+
+    @web.events.JsEvent("continue-activity")
+    val continueActivityEvent:
+            node.events.EventInstance<js.array.Tuple4<Event<*>, String, Any?, ContinueActivityDetails>>
+
+    @web.events.JsEvent("continue-activity-error")
+    val continueActivityErrorEvent: node.events.EventInstance<js.array.Tuple3<Event<*>, String, String>>
+
+    @web.events.JsEvent("did-become-active")
+    val didBecomeActiveEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("did-resign-active")
+    val didResignActiveEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("gpu-info-update")
+    val gpuInfoUpdateEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("login")
+    val loginEvent:
+            node.events.EventInstance<
+                    js.array.Tuple5<
+                            Event<*>,
+                            WebContents?,
+                            AuthenticationResponseDetails,
+                            AuthInfo,
+                                (
+                        username: String?, /* use undefined for default */
+                        password: String?, /* use undefined for default */
+                    ) -> Unit,
+                            >,
+                    >
+
+    @web.events.JsEvent("new-window-for-tab")
+    val newWindowForTabEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("open-file")
+    val openFileEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("open-url")
+    val openUrlEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("quit")
+    val quitEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Double>>
+
+    @web.events.JsEvent("ready")
+    val readyEvent:
+            node.events.EventInstance<js.array.Tuple2<Event<*>, Any /* (Record<string, any>) | (NotificationResponse) */>>
+
+    @web.events.JsEvent("render-process-gone")
+    val renderProcessGoneEvent:
+            node.events.EventInstance<js.array.Tuple3<Event<*>, WebContents, RenderProcessGoneDetails>>
+
+    @web.events.JsEvent("second-instance")
+    val secondInstanceEvent:
+            node.events.EventInstance<js.array.Tuple4<Event<*>, js.array.ReadonlyArray<String>, String, Any?>>
+
+    @web.events.JsEvent("select-client-certificate")
+    val selectClientCertificateEvent:
+            node.events.EventInstance<
+                    js.array.Tuple5<
+                            Event<*>,
+                            WebContents?,
+                            String,
+                            js.array.ReadonlyArray<Certificate>,
+                                (
+                        certificate: Certificate?, /* use undefined for default */
+                    ) -> Unit,
+                            >,
+                    >
+
+    @web.events.JsEvent("session-created")
+    val sessionCreatedEvent: node.events.EventInstance<js.array.Tuple1<Session>>
+
+    @web.events.JsEvent("update-activity-state")
+    val updateActivityStateEvent: node.events.EventInstance<js.array.Tuple3<Event<*>, String, Any?>>
+
+    @web.events.JsEvent("web-contents-created")
+    val webContentsCreatedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, WebContents>>
+
+    @web.events.JsEvent("will-continue-activity")
+    val willContinueActivityEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("will-finish-launching")
+    val willFinishLaunchingEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("will-quit")
+    val willQuitEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("window-all-closed")
+    val windowAllClosedEvent: node.events.EventInstance<js.array.Tuple>
+}

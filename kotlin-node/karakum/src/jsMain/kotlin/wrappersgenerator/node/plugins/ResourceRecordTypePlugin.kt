@@ -1,0 +1,134 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.impure
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.*
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import io.github.sgrishchenko.karakum.structure.derived.DerivedDeclaration
+import io.github.sgrishchenko.karakum.structure.derived.generateDerivedDeclarations
+import js.array.ReadonlyArray
+import js.reflect.invoke
+import typescript.*
+
+private fun extractRrtypes(node: Node) = nullable {
+    val parameter = ensureNotNull(node.parent)
+    ensure(isParameter(parameter))
+    ensure(parameter.type === node)
+
+    val parameterName = parameter.name
+    ensure(isIdentifier(parameterName))
+    ensure(parameterName.text == "rrtype")
+
+    val resolveSignature = ensureNotNull(parameter.parent)
+    ensureNotNull(
+        nullable {
+            ensure(isFunctionDeclaration(resolveSignature))
+
+            val functionName = ensureNotNull(resolveSignature.name)
+            ensure(functionName.text == "resolve")
+        } ?: nullable {
+            ensure(isCallSignatureDeclaration(resolveSignature))
+        }
+    )
+
+    nullable {
+        ensure(isLiteralTypeNode(node))
+
+        val literal = node.literal
+        ensure(isStringLiteral(literal))
+
+        listOf(literal.text)
+    } ?: nullable {
+        ensure(isUnionTypeNode(node))
+        ensure(node.types.all { isLiteralTypeNode(it) })
+
+        node.types.mapNotNull {
+            nullable {
+                ensure(isLiteralTypeNode(it))
+
+                val literal = it.literal
+                ensure(isStringLiteral(literal))
+
+                literal.text
+            }
+        }
+    }
+}
+
+class ResourceRecordTypePlugin : Plugin {
+    private lateinit var sourceFileName: String
+    private var namespace: ModuleDeclaration? = null
+    private val rrtypes = mutableSetOf<String>()
+    private val stringRrtypes = mutableSetOf<String>()
+    private val promiseApiDeclarations = mutableListOf<DerivedDeclaration>()
+
+    override suspend fun setup(context: Context) = Unit
+
+    override suspend fun traverse(node: Node, context: Context) = impure {
+        val types = ensureNotNull(extractRrtypes(node))
+
+        rrtypes += types
+        if (types.size > 1) stringRrtypes += types
+
+        val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+
+        val sourceFileName = ensureNotNull(node.getSourceFile()).fileName
+        // generate the same entity for promise and callback API
+        ensure(!sourceFileName.endsWith("promises.d.ts"))
+
+        this@ResourceRecordTypePlugin.sourceFileName = sourceFileName
+        namespace = typeScriptService.findClosestNamespace(node)
+    }
+
+    override suspend fun render(node: Node, context: Context, next: Render<Node>) = nullable {
+        val types = ensureNotNull(extractRrtypes(node))
+
+        nullable {
+            ensure(types.size == 1)
+
+            "ResourceRecordType.${types.first()}"
+        } ?: run {
+            "ResourceRecordType.StringRecord"
+        }
+    }
+
+    override suspend fun generate(context: Context, render: Render<Node>): ReadonlyArray<GeneratedFile> {
+        val name = "ResourceRecordType"
+
+        val body = rrtypes.joinToString("\n") {
+            val marker = if (it in stringRrtypes) "StringRecord" else ""
+
+            "sealed interface $it : $name${ifPresent(marker) { ", $marker"}}"
+        }
+
+        val companionBody = rrtypes.joinToString("\n") {
+            """
+                @seskar.js.JsValue("$it")
+                val ${it}: $it
+            """.trimIndent()
+        }
+
+        val fileBody = """
+            sealed external interface $name {
+
+            sealed interface StringRecord : $name
+
+            $body
+
+            companion object {
+            $companionBody
+            }
+            }
+        """.trimIndent()
+
+        val declaration = DerivedDeclaration(
+            sourceFileName,
+            namespace,
+            fileName = "${name}.kt",
+            fileBody,
+        )
+
+        return generateDerivedDeclarations(promiseApiDeclarations.toTypedArray() + declaration, context)
+    }
+
+}

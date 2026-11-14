@@ -1,0 +1,36 @@
+// Automatically generated - do not modify!
+
+package web.cookie
+
+import js.array.ReadonlyArray
+import web.events.EventType
+import web.serviceworker.ExtendableEvent
+
+/**
+ * The **`ExtendableCookieChangeEvent`** interface of the Cookie Store API is the event type passed to cookiechange event fired at the ServiceWorkerGlobalScope when any cookie changes occur which match the service worker's cookie change subscription list. A cookie change event consists of a cookie and a type (either "changed" or "deleted").
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ExtendableCookieChangeEvent)
+ */
+open external class ExtendableCookieChangeEvent(
+    override val type: EventType<ExtendableCookieChangeEvent>,
+    init: ExtendableCookieChangeEventInit = definedExternally,
+) : ExtendableEvent {
+    /**
+     * The **`changed`** read-only property of the ExtendableCookieChangeEvent interface returns any cookies that have been changed by the given ExtendableCookieChangeEvent instance.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ExtendableCookieChangeEvent/changed)
+     */
+    open val changed: ReadonlyArray<CookieListItem>
+
+    /**
+     * The **`deleted`** read-only property of the ExtendableCookieChangeEvent interface returns any cookies that have been deleted by the given ExtendableCookieChangeEvent instance.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ExtendableCookieChangeEvent/deleted)
+     */
+    open val deleted: ReadonlyArray<CookieListItem>
+
+    companion object
+}
+
+inline val ExtendableCookieChangeEvent.Companion.COOKIE_CHANGE: EventType<ExtendableCookieChangeEvent>
+    get() = EventType("cookiechange")

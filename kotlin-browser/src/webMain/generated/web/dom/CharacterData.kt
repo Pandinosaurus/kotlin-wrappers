@@ -1,0 +1,99 @@
+// Automatically generated - do not modify!
+
+package web.dom
+
+import web.errors.DOMExceptionType.IndexSizeError
+import web.errors.JsThrows
+
+/**
+ * The **`CharacterData`** abstract interface represents a Node object that contains characters. This is an abstract interface, meaning there aren't any objects of type CharacterData: it is implemented by other interfaces like Text, Comment, CDATASection, or ProcessingInstruction, which aren't abstract.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData)
+ */
+open external class CharacterData
+private constructor() :
+    Node,
+    ChildNode,
+    NonDocumentTypeChildNode {
+    /**
+     * The **`data`** property of the CharacterData interface represents the value of the current object's data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData/data)
+     */
+    open var data: String
+
+    /**
+     * The read-only **`CharacterData.length`** property returns the number of characters in the contained data, as a positive integer.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData/length)
+     */
+    open val length: Int
+    override val ownerDocument: Document
+
+    /**
+     * The **`appendData()`** method of the CharacterData interface adds the provided data to the end of the node's current data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData/appendData)
+     */
+    open fun appendData(data: String)
+
+    /**
+     * The **`deleteData()`** method of the CharacterData interface removes all or part of the data from this CharacterData node.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData/deleteData)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun deleteData(
+        offset: Int,
+        count: Int,
+    )
+
+    /**
+     * The **`insertData()`** method of the CharacterData interface inserts the provided data into this CharacterData node's current data, at the provided offset from the start of the existing data. The provided data is spliced into the existing data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData/insertData)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun insertData(
+        offset: Int,
+        data: String,
+    )
+
+    /**
+     * The **`replaceData()`** method of the CharacterData interface removes a certain number of characters of the existing text in a given CharacterData node and replaces those characters with the text provided.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData/replaceData)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun replaceData(
+        offset: Int,
+        count: Int,
+        data: String,
+    )
+
+    /**
+     * The **`substringData()`** method of the CharacterData interface returns a portion of the existing data, starting at the specified index and extending for a given number of characters afterwards.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CharacterData/substringData)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun substringData(
+        offset: Int,
+        count: Int,
+    ): String
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/textContent)
+     */
+    override var textContent: String
+
+    /* `ChildNode` overrides */
+
+    override fun after(vararg nodes: Node)
+    override fun after(vararg nodes: String)
+    override fun before(vararg nodes: Node)
+    override fun before(vararg nodes: String)
+    override fun remove()
+    override fun replaceWith(vararg nodes: Node)
+    override fun replaceWith(vararg nodes: String)
+}

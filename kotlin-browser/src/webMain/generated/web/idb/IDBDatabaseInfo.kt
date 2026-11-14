@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package web.idb
+
+import js.numbers.UInt53
+import kotlinx.js.JsPlainObject
+
+@JsPlainObject
+external interface IDBDatabaseInfo {
+    var name: String?
+    var version: UInt53?
+}

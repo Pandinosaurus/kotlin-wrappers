@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`Uint8ClampedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray) instance.
+ *
+ * ```js
+ * util.types.isUint8ClampedArray(new ArrayBuffer());  // Returns false
+ * util.types.isUint8ClampedArray(new Uint8ClampedArray());  // Returns true
+ * util.types.isUint8ClampedArray(new Float64Array());  // Returns false
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isUint8ClampedArray")
+external fun isUint8ClampedArrayRaw(value: Any?): Boolean /* object is Uint8ClampedArray */

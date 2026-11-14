@@ -1,0 +1,9 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:crypto")
+@file:JsQualifier("constants")
+
+package node.crypto.constants
+
+/** Instructs OpenSSL to disable encrypt-then-MAC. */
+external val SSL_OP_NO_ENCRYPT_THEN_MAC: Double

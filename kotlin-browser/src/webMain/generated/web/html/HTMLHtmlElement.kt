@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package web.html
+
+/**
+ * The **`HTMLHtmlElement`** interface serves as the root node for a given HTML document. This object inherits the properties and methods described in the HTMLElement interface.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLHtmlElement)
+ */
+open external class HTMLHtmlElement
+protected constructor() :
+    HTMLElement

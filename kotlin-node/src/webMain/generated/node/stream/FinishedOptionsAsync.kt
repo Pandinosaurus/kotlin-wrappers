@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.stream
+
+@kotlinx.js.JsPlainObject
+external interface FinishedOptions : _FinishedOptions {
+    /**
+     * If true, removes the listeners registered by this function before the promise is fulfilled.
+     * @default false
+     */
+    var cleanup: Boolean?
+}

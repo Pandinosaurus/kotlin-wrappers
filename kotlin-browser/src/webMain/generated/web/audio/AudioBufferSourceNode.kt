@@ -1,0 +1,70 @@
+// Automatically generated - do not modify!
+
+package web.audio
+
+import web.errors.DOMExceptionType.InvalidStateError
+import web.errors.JsThrows
+
+/**
+ * The **`AudioBufferSourceNode`** interface is an AudioScheduledSourceNode which represents an audio source consisting of in-memory audio data, stored in an AudioBuffer.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode)
+ */
+open external class AudioBufferSourceNode(
+    context: BaseAudioContext,
+    options: AudioBufferSourceOptions = definedExternally,
+) : AudioScheduledSourceNode {
+    /**
+     * The **`buffer`** property of the AudioBufferSourceNode interface provides the ability to play back audio using an AudioBuffer as the source of the sound data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode/buffer)
+     */
+    open var buffer: AudioBuffer?
+
+    /**
+     * The **`detune`** property of the AudioBufferSourceNode interface is a k-rate AudioParam representing detuning of oscillation in cents.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode/detune)
+     */
+    open val detune: AudioParam
+
+    /**
+     * The **`loop`** property of the AudioBufferSourceNode interface is a Boolean indicating if the audio asset must be replayed when the end of the AudioBuffer is reached.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode/loop)
+     */
+    open var loop: Boolean
+
+    /**
+     * The **`loopEnd`** property of the AudioBufferSourceNode interface specifies is a floating point number specifying, in seconds, at what offset into playing the AudioBuffer playback should loop back to the time indicated by the loopStart property. This is only used if the loop property is true.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode/loopEnd)
+     */
+    open var loopEnd: Double
+
+    /**
+     * The **`loopStart`** property of the AudioBufferSourceNode interface is a floating-point value indicating, in seconds, where in the AudioBuffer the restart of the play must happen.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode/loopStart)
+     */
+    open var loopStart: Double
+
+    /**
+     * The **`playbackRate`** read-only property of the AudioBufferSourceNode interface is a k-rate AudioParam that defines the speed at which the audio asset will be played.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode/playbackRate)
+     */
+    open val playbackRate: AudioParam
+
+    /**
+     * The **`start()`** method of the AudioBufferSourceNode Interface is used to schedule playback of the audio data contained in the buffer, or to begin playback immediately.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioBufferSourceNode/start)
+     */
+    @JsThrows(InvalidStateError::class)
+    open fun start(
+        `when`: Double = definedExternally,
+        offset: Double = definedExternally,
+        duration: Double = definedExternally,
+    )
+}

@@ -1,0 +1,26 @@
+// Automatically generated - do not modify!
+
+package node.module
+
+@kotlinx.js.JsPlainObject
+external interface SourceOrigin {
+    /**
+     * The name of the range in the source map, if one was provided
+     */
+    var name: String?
+
+    /**
+     * The file name of the original source, as reported in the SourceMap
+     */
+    var fileName: String
+
+    /**
+     * The 1-indexed lineNumber of the corresponding call site in the original source
+     */
+    var lineNumber: Double
+
+    /**
+     * The 1-indexed columnNumber of the corresponding call site in the original source
+     */
+    var columnNumber: Double
+}

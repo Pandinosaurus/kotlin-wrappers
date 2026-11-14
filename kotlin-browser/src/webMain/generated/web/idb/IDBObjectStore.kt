@@ -1,0 +1,340 @@
+// Automatically generated - do not modify!
+
+package web.idb
+
+import js.array.ReadonlyArray
+import js.numbers.JsInt
+import js.void.Void
+import web.dom.DOMStringList
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+
+/**
+ * The **`IDBObjectStore`** interface of the IndexedDB API represents an object store in a database. Records within an object store are sorted according to their keys. This sorting enables fast insertion, look-up, and ordered retrieval.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore)
+ */
+open external class IDBObjectStore
+private constructor() {
+    /**
+     * The **`autoIncrement`** read-only property of the IDBObjectStore interface returns the value of the auto increment flag for this object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/autoIncrement)
+     */
+    open val autoIncrement: Boolean
+
+    /**
+     * The **`indexNames`** read-only property of the IDBObjectStore interface returns a list of the names of indexes on objects in this object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/indexNames)
+     */
+    open val indexNames: DOMStringList
+
+    /**
+     * The **`keyPath`** read-only property of the IDBObjectStore interface returns the key path of this object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/keyPath)
+     */
+    open val keyPath: JsAny /* string | string[] */?
+
+    /**
+     * The **`name`** property of the IDBObjectStore interface indicates the name of this object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/name)
+     */
+    open var name: String
+
+    /**
+     * The **`transaction`** read-only property of the IDBObjectStore interface returns the transaction object to which this object store belongs.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/transaction)
+     */
+    open val transaction: IDBTransaction
+
+    /**
+     * The **`add()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, creates a structured clone of the value, and stores the cloned value in the object store. This is for adding new records to an object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/add)
+     */
+    @JsThrows(ConstraintError::class)
+    @JsThrows(DataCloneError::class)
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(ReadOnlyError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun add(
+        value: JsAny?,
+        key: IDBValidKey = definedExternally,
+    ): IDBRequest<IDBValidKey>
+
+    /**
+     * The **`clear()`** method of the IDBObjectStore interface creates and immediately returns an IDBRequest object, and clears this object store in a separate thread. This is for deleting all the current data out of an object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/clear)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(ReadOnlyError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun clear(): IDBRequest<Void>
+
+    /**
+     * The **`count()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns the total number of records that match the provided key or IDBKeyRange. If no arguments are provided, it returns the total number of records in the store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/count)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun count(query: IDBValidKey = definedExternally): IDBRequest<JsInt>
+
+    /**
+     * The **`count()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns the total number of records that match the provided key or IDBKeyRange. If no arguments are provided, it returns the total number of records in the store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/count)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun count(query: IDBKeyRange): IDBRequest<JsInt>
+
+    /**
+     * The **`createIndex()`** method of the IDBObjectStore interface creates and returns a new IDBIndex object in the connected database. It creates a new field/column defining a new data point for each database record to contain.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/createIndex)
+     */
+    @JsThrows(ConstraintError::class)
+    @JsThrows(InvalidAccessError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(SyntaxError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun createIndex(
+        name: String,
+        keyPath: String,
+        options: IDBIndexParameters = definedExternally,
+    ): IDBIndex
+
+    /**
+     * The **`createIndex()`** method of the IDBObjectStore interface creates and returns a new IDBIndex object in the connected database. It creates a new field/column defining a new data point for each database record to contain.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/createIndex)
+     */
+    @JsThrows(ConstraintError::class)
+    @JsThrows(InvalidAccessError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(SyntaxError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun createIndex(
+        name: String,
+        keyPath: ReadonlyArray<JsString>,
+        options: IDBIndexParameters = definedExternally,
+    ): IDBIndex
+
+    /**
+     * The **`delete()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, deletes the specified record or records.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/delete)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(ReadOnlyError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun delete(query: IDBValidKey): IDBRequest<Void>
+
+    /**
+     * The **`delete()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, deletes the specified record or records.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/delete)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(ReadOnlyError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun delete(query: IDBKeyRange): IDBRequest<Void>
+
+    /**
+     * The **`deleteIndex()`** method of the IDBObjectStore interface destroys the index with the specified name in the connected database, used during a version upgrade.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/deleteIndex)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotFoundError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun deleteIndex(name: String)
+
+    /**
+     * The **`get()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns the object selected by the specified key. This is for retrieving specific records from an object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/get)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun get(query: IDBValidKey): IDBRequest<*>
+
+    /**
+     * The **`get()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns the object selected by the specified key. This is for retrieving specific records from an object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/get)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun get(query: IDBKeyRange): IDBRequest<*>
+
+    /**
+     * The **`getAll()`** method of the IDBObjectStore interface returns an IDBRequest object containing all objects in the object store matching the specified parameter or all objects in the store if no parameters are given.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/getAll)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAll(
+        queryOrOptions: IDBValidKey? = definedExternally,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<*>>
+
+    /**
+     * The **`getAll()`** method of the IDBObjectStore interface returns an IDBRequest object containing all objects in the object store matching the specified parameter or all objects in the store if no parameters are given.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/getAll)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAll(
+        queryOrOptions: IDBKeyRange?,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<*>>
+
+    /**
+     * The **`getAllKeys()`** method of the IDBObjectStore interface returns an IDBRequest object retrieves record keys for all objects in the object store matching the specified parameter or all objects in the store if no parameters are given.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/getAllKeys)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAllKeys(
+        queryOrOptions: IDBValidKey? = definedExternally,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<IDBValidKey>>
+
+    /**
+     * The **`getAllKeys()`** method of the IDBObjectStore interface returns an IDBRequest object retrieves record keys for all objects in the object store matching the specified parameter or all objects in the store if no parameters are given.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/getAllKeys)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAllKeys(
+        queryOrOptions: IDBKeyRange?,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<IDBValidKey>>
+
+    /**
+     * The **`getAllRecords()`** method of the IDBObjectStore interface retrieves all records (including primary keys and values) from the object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/getAllRecords)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAllRecords(options: IDBGetAllOptions = definedExternally): IDBRequest<*>
+
+    /**
+     * The **`getKey()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns the key selected by the specified query. This is for retrieving specific records from an object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/getKey)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getKey(query: IDBValidKey): IDBRequest<IDBValidKey?>
+
+    /**
+     * The **`getKey()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns the key selected by the specified query. This is for retrieving specific records from an object store.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/getKey)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getKey(query: IDBKeyRange): IDBRequest<IDBValidKey?>
+
+    /**
+     * The **`index()`** method of the IDBObjectStore interface opens a named index in the current object store, after which it can be used to, for example, return a series of records sorted by that index using a cursor.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/index)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotFoundError::class)
+    open fun index(name: String): IDBIndex
+
+    /**
+     * The **`openCursor()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns a new IDBCursorWithValue object. Used for iterating through an object store with a cursor.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/openCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openCursor(
+        query: IDBValidKey? = definedExternally,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursorWithValue?>
+
+    /**
+     * The **`openCursor()`** method of the IDBObjectStore interface returns an IDBRequest object, and, in a separate thread, returns a new IDBCursorWithValue object. Used for iterating through an object store with a cursor.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/openCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openCursor(
+        query: IDBKeyRange?,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursorWithValue?>
+
+    /**
+     * The **`openKeyCursor()`** method of the IDBObjectStore interface returns an IDBRequest object whose result will be set to an IDBCursor that can be used to iterate through matching results. Used for iterating through the keys of an object store with a cursor.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/openKeyCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openKeyCursor(
+        query: IDBValidKey? = definedExternally,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursor?>
+
+    /**
+     * The **`openKeyCursor()`** method of the IDBObjectStore interface returns an IDBRequest object whose result will be set to an IDBCursor that can be used to iterate through matching results. Used for iterating through the keys of an object store with a cursor.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/openKeyCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openKeyCursor(
+        query: IDBKeyRange?,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursor?>
+
+    /**
+     * The **`put()`** method of the IDBObjectStore interface updates a given record in a database, or inserts a new record if the given item does not already exist.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBObjectStore/put)
+     */
+    @JsThrows(DataCloneError::class)
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(ReadOnlyError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun put(
+        value: JsAny?,
+        key: IDBValidKey = definedExternally,
+    ): IDBRequest<IDBValidKey>
+}

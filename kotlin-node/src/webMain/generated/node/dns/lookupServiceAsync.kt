@@ -1,0 +1,29 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:dns/promises")
+
+package node.dns
+
+/**
+ * Resolves the given `address` and `port` into a host name and service using
+ * the operating system's underlying `getnameinfo` implementation.
+ *
+ * If `address` is not a valid IP address, a `TypeError` will be thrown.
+ * The `port` will be coerced to a number. If it is not a legal port, a `TypeError` will be thrown.
+ *
+ * On error, the `Promise` is rejected with an [`Error`](https://nodejs.org/docs/latest-v20.x/api/errors.html#class-error) object, where `err.code` is the error code.
+ *
+ * ```js
+ * import dnsPromises from 'node:dns';
+ * dnsPromises.lookupService('127.0.0.1', 22).then((result) => {
+ *   console.log(result.hostname, result.service);
+ *   // Prints: localhost ssh
+ * });
+ * ```
+ * @since v10.6.0
+ */
+@JsName("lookupService")
+external fun lookupServiceAsync(
+    address: String,
+    port: Number,
+): js.promise.Promise<LookupServiceResultPayload>

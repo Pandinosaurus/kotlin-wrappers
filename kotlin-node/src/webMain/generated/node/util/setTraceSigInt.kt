@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util")
+
+package node.util
+
+/**
+ * Enable or disable printing a stack trace on `SIGINT`. The API is only available on the main thread.
+ * @since 24.6.0
+ */
+external fun setTraceSigInt(enable: Boolean)

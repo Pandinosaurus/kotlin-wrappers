@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package node.http2
+
+import node.http.IncomingMessage
+import node.http.ServerResponse
+
+@kotlinx.js.JsPlainObject
+external interface ServerSessionOptions<Http1Request : IncomingMessage, Http1Response : ServerResponse<*>, Http2Request : Http2ServerRequest, Http2Response : Http2ServerResponse<*>> :
+    SessionOptions {
+    var maxSessionRejectedStreams: Double?
+    var maxSessionInvalidFrames: Double?
+    var streamResetBurst: Double?
+    var streamResetRate: Double?
+    var Http1IncomingMessage: JsClass<Http1Request>?
+    var Http1ServerResponse: JsClass<Http1Response>?
+    var Http2ServerRequest: JsClass<Http2Request>?
+    var Http2ServerResponse: JsClass<Http2Response>?
+}

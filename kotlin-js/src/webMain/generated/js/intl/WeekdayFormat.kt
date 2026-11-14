@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package js.intl
+
+import js.reflect.unsafeCast
+import js.union.JsUnion
+
+@JsUnion
+sealed /* union */
+external interface WeekdayFormat
+
+inline val WeekdayFormat.Companion.long: WeekdayFormat
+    get() = unsafeCast("long")
+
+inline val WeekdayFormat.Companion.short: WeekdayFormat
+    get() = unsafeCast("short")
+
+inline val WeekdayFormat.Companion.narrow: WeekdayFormat
+    get() = unsafeCast("narrow")

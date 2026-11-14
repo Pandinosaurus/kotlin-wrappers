@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:test")
+@file:JsQualifier("test.snapshot")
+
+package node.test.snapshot
+
+/**
+ * This function is used to customize the default serialization mechanism used by the test runner.
+ *
+ * By default, the test runner performs serialization by calling `JSON.stringify(value, null, 2)` on the provided value.
+ * `JSON.stringify()` does have limitations regarding circular structures and supported data types.
+ * If a more robust serialization mechanism is required, this function should be used to specify a list of custom serializers.
+ *
+ * Serializers are called in order, with the output of the previous serializer passed as input to the next.
+ * The final result must be a string value.
+ * @since v22.3.0
+ * @param serializers An array of synchronous functions used as the default serializers for snapshot tests.
+ */
+external fun setDefaultSnapshotSerializers(serializers: js.array.ReadonlyArray<(value: Any?) -> Any?>)

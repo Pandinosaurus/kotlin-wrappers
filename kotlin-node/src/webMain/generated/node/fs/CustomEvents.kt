@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package node.fs
+
+/**
+ * string & {} allows to allow any kind of strings for the event
+ * but still allows to have auto completion for the normal events.
+ */
+external interface CustomEvents {
+    operator fun <Key : Any /* string & {} | symbol */> get(key: Key): (Function<Unit> /* (...args: any[]) => void */)?
+
+    operator fun <Key : Any /* string & {} | symbol */> set(
+        key: Key,
+        value: (Function<Unit> /* (...args: any[]) => void */)?,
+    )
+}

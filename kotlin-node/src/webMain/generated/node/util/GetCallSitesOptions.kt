@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.util
+
+@kotlinx.js.JsPlainObject
+external interface GetCallSitesOptions {
+    /**
+     * Reconstruct the original location in the stacktrace from the source-map.
+     * Enabled by default with the flag `--enable-source-maps`.
+     */
+    var sourceMap: Boolean?
+}

@@ -1,0 +1,68 @@
+// Automatically generated - do not modify!
+
+package web.serviceworker
+
+import js.array.ReadonlyArray
+import js.serialization.Transferable
+import web.serialization.StructuredSerializeOptions
+
+/**
+ * The **`Client`** interface represents an executable context such as a Worker, or a SharedWorker. Window clients are represented by the more-specific WindowClient. You can get Client/WindowClient objects from methods such as Clients.matchAll() and Clients.get().
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Client)
+ */
+open external class Client
+private constructor() {
+    /**
+     * The **`frameType`** read-only property of the Client interface indicates the type of browsing context of the current Client. This value can be one of "auxiliary", "top-level", "nested", or "none".
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Client/frameType)
+     */
+    open val frameType: FrameType
+
+    /**
+     * The **`id`** read-only property of the Client interface returns the universally unique identifier of the Client object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Client/id)
+     */
+    open val id: String
+
+    /**
+     * The **`type`** read-only property of the Client interface indicates the type of client the service worker is controlling.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Client/type)
+     */
+    open val type: ClientTypes
+
+    /**
+     * The **`url`** read-only property of the Client interface returns the URL of the current service worker client.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Client/url)
+     */
+    open val url: String
+
+    /**
+     * The **`postMessage()`** method of the Client interface allows a service worker to send a message to a client (a Window, Worker, or SharedWorker). The message is received in the message event on navigator.serviceWorker.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Client/postMessage)
+     */
+    open fun postMessage(
+        message: JsAny?,
+        transfer: ReadonlyArray<Transferable>,
+    )
+
+    open fun postMessage(
+        message: String,
+        transfer: ReadonlyArray<Transferable>,
+    )
+
+    open fun postMessage(
+        message: JsAny?,
+        options: StructuredSerializeOptions = definedExternally,
+    )
+
+    open fun postMessage(
+        message: String,
+        options: StructuredSerializeOptions = definedExternally,
+    )
+}

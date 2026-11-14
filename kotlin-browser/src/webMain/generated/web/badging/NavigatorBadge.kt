@@ -1,0 +1,72 @@
+// Automatically generated - do not modify!
+
+@file:Suppress(
+    "NON_ABSTRACT_MEMBER_OF_EXTERNAL_INTERFACE",
+)
+
+package web.badging
+
+import js.internal.InternalApi
+import js.numbers.UInt53
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+
+/**
+ * Available only in secure contexts.
+ */
+/* mixin */
+@SubclassOptInRequired(InternalApi::class)
+external interface NavigatorBadge {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/clearAppBadge)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("clearAppBadge")
+    fun clearAppBadgeAsync(): Promise<Void> = definedExternally
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/setAppBadge)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("setAppBadge")
+    fun setAppBadgeAsync(contents: UInt53 = definedExternally): Promise<Void> = definedExternally
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/clearAppBadge)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun NavigatorBadge.clearAppBadge() {
+    clearAppBadgeAsync().await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/setAppBadge)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun NavigatorBadge.setAppBadge() {
+    setAppBadgeAsync().await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/setAppBadge)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun NavigatorBadge.setAppBadge(contents: UInt53) {
+    setAppBadgeAsync(
+        contents = contents,
+    ).await()
+}

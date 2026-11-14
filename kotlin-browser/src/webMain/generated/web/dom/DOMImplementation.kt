@@ -1,0 +1,47 @@
+// Automatically generated - do not modify!
+
+package web.dom
+
+import web.errors.DOMExceptionType.InvalidCharacterError
+import web.errors.DOMExceptionType.NamespaceError
+import web.errors.JsThrows
+import web.xml.XMLDocument
+
+/**
+ * The **`DOMImplementation`** interface represents an object providing methods which are not dependent on any particular document. Such an object is returned by the Document.implementation property.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMImplementation)
+ */
+open external class DOMImplementation
+private constructor() {
+    /**
+     * The **`createDocument()`** method of the DOMImplementation interface creates and returns an XMLDocument.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMImplementation/createDocument)
+     */
+    @JsThrows(InvalidCharacterError::class)
+    @JsThrows(NamespaceError::class)
+    open fun createDocument(
+        namespace: String?,
+        qualifiedName: String?,
+        doctype: DocumentType? = definedExternally,
+    ): XMLDocument
+
+    /**
+     * The **`DOMImplementation.createDocumentType()`** method returns a DocumentType object which can either be used with DOMImplementation.createDocument upon document creation or can be put into the document via methods like Node.insertBefore() or Node.replaceChild().
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMImplementation/createDocumentType)
+     */
+    open fun createDocumentType(
+        name: String,
+        publicId: String,
+        systemId: String,
+    ): DocumentType
+
+    /**
+     * The **`DOMImplementation.createHTMLDocument()`** method creates a new HTML Document.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMImplementation/createHTMLDocument)
+     */
+    open fun createHTMLDocument(title: String = definedExternally): Document
+}

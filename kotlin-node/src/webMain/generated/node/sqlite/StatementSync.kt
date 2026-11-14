@@ -1,0 +1,167 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:sqlite")
+
+package node.sqlite
+
+/**
+ * This class represents a single [prepared statement](https://www.sqlite.org/c3ref/stmt.html). This class cannot be
+ * instantiated via its constructor. Instead, instances are created via the`database.prepare()` method. All APIs exposed by this class execute
+ * synchronously.
+ *
+ * A prepared statement is an efficient binary representation of the SQL used to
+ * create it. Prepared statements are parameterizable, and can be invoked multiple
+ * times with different bound values. Parameters also offer protection against [SQL injection](https://en.wikipedia.org/wiki/SQL_injection) attacks. For these reasons, prepared statements are
+ * preferred
+ * over hand-crafted SQL strings when handling user input.
+ * @since v22.5.0
+ */
+external class StatementSync {
+    /**
+     * This method executes a prepared statement and returns all results as an array of
+     * objects. If the prepared statement does not return any results, this method
+     * returns an empty array. The prepared statement [parameters are bound](https://www.sqlite.org/c3ref/bind_blob.html) using
+     * the values in `namedParameters` and `anonymousParameters`.
+     * @since v22.5.0
+     * @param namedParameters An optional object used to bind named parameters. The keys of this object are used to configure the mapping.
+     * @param anonymousParameters Zero or more values to bind to anonymous parameters.
+     * @return An array of objects. Each object corresponds to a row returned by executing the prepared statement. The keys and values of each object correspond to the column names and values of
+     * the row.
+     */
+    fun all(
+        vararg anonymousParameters: SQLInputValue,
+    ): js.array.ReadonlyArray<js.objects.ReadonlyRecord<String, SQLOutputValue>>
+
+    fun all(
+        namedParameters: js.objects.ReadonlyRecord<String, SQLInputValue>,
+        vararg anonymousParameters: SQLInputValue,
+    ): js.array.ReadonlyArray<js.objects.ReadonlyRecord<String, SQLOutputValue>>
+
+    /**
+     * This method is used to retrieve information about the columns returned by the
+     * prepared statement.
+     * @since v23.11.0
+     * @returns An array of objects. Each object corresponds to a column
+     * in the prepared statement, and contains the following properties:
+     */
+    fun columns(): js.array.ReadonlyArray<StatementColumnMetadata>
+
+    /**
+     * The source SQL text of the prepared statement with parameter
+     * placeholders replaced by the values that were used during the most recent
+     * execution of this prepared statement. This property is a wrapper around
+     * [`sqlite3_expanded_sql()`](https://www.sqlite.org/c3ref/expanded_sql.html).
+     * @since v22.5.0
+     */
+    val expandedSQL: String
+
+    /**
+     * This method executes a prepared statement and returns the first result as an
+     * object. If the prepared statement does not return any results, this method
+     * returns `undefined`. The prepared statement [parameters are bound](https://www.sqlite.org/c3ref/bind_blob.html) using the
+     * values in `namedParameters` and `anonymousParameters`.
+     * @since v22.5.0
+     * @param namedParameters An optional object used to bind named parameters. The keys of this object are used to configure the mapping.
+     * @param anonymousParameters Zero or more values to bind to anonymous parameters.
+     * @return An object corresponding to the first row returned by executing the prepared statement. The keys and values of the object correspond to the column names and values of the row. If no
+     * rows were returned from the database then this method returns `undefined`.
+     */
+    fun get(vararg anonymousParameters: SQLInputValue): js.objects.ReadonlyRecord<String, SQLOutputValue>?
+
+    fun get(
+        namedParameters: js.objects.ReadonlyRecord<String, SQLInputValue>,
+        vararg anonymousParameters: SQLInputValue,
+    ): js.objects.ReadonlyRecord<String, SQLOutputValue>?
+
+    /**
+     * This method executes a prepared statement and returns an iterator of
+     * objects. If the prepared statement does not return any results, this method
+     * returns an empty iterator. The prepared statement [parameters are bound](https://www.sqlite.org/c3ref/bind_blob.html) using
+     * the values in `namedParameters` and `anonymousParameters`.
+     * @since v22.13.0
+     * @param namedParameters An optional object used to bind named parameters.
+     * The keys of this object are used to configure the mapping.
+     * @param anonymousParameters Zero or more values to bind to anonymous parameters.
+     * @returns An iterable iterator of objects. Each object corresponds to a row
+     * returned by executing the prepared statement. The keys and values of each
+     * object correspond to the column names and values of the row.
+     */
+    fun iterate(
+        vararg anonymousParameters: SQLInputValue,
+    ): js.iterable.JsIterator<js.objects.ReadonlyRecord<String, SQLOutputValue>>
+
+    fun iterate(
+        namedParameters: js.objects.ReadonlyRecord<String, SQLInputValue>,
+        vararg anonymousParameters: SQLInputValue,
+    ): js.iterable.JsIterator<js.objects.ReadonlyRecord<String, SQLOutputValue>>
+
+    /**
+     * This method executes a prepared statement and returns an object summarizing the
+     * resulting changes. The prepared statement [parameters are bound](https://www.sqlite.org/c3ref/bind_blob.html) using the
+     * values in `namedParameters` and `anonymousParameters`.
+     * @since v22.5.0
+     * @param namedParameters An optional object used to bind named parameters. The keys of this object are used to configure the mapping.
+     * @param anonymousParameters Zero or more values to bind to anonymous parameters.
+     */
+    fun run(vararg anonymousParameters: SQLInputValue): StatementResultingChanges
+
+    fun run(
+        namedParameters: js.objects.ReadonlyRecord<String, SQLInputValue>,
+        vararg anonymousParameters: SQLInputValue,
+    ): StatementResultingChanges
+
+    /**
+     * The names of SQLite parameters begin with a prefix character. By default,`node:sqlite` requires that this prefix character is present when binding
+     * parameters. However, with the exception of dollar sign character, these
+     * prefix characters also require extra quoting when used in object keys.
+     *
+     * To improve ergonomics, this method can be used to also allow bare named
+     * parameters, which do not require the prefix character in JavaScript code. There
+     * are several caveats to be aware of when enabling bare named parameters:
+     *
+     * * The prefix character is still required in SQL.
+     * * The prefix character is still allowed in JavaScript. In fact, prefixed names
+     * will have slightly better binding performance.
+     * * Using ambiguous named parameters, such as `$k` and `@k`, in the same prepared
+     * statement will result in an exception as it cannot be determined how to bind
+     * a bare name.
+     * @since v22.5.0
+     * @param enabled Enables or disables support for binding named parameters without the prefix character.
+     */
+    fun setAllowBareNamedParameters(enabled: Boolean)
+
+    /**
+     * By default, if an unknown name is encountered while binding parameters, an
+     * exception is thrown. This method allows unknown named parameters to be ignored.
+     * @since v22.15.0
+     * @param enabled Enables or disables support for unknown named parameters.
+     */
+    fun setAllowUnknownNamedParameters(enabled: Boolean)
+
+    /**
+     * When enabled, query results returned by the `all()`, `get()`, and `iterate()` methods will be returned as arrays instead
+     * of objects.
+     * @since v24.0.0
+     * @param enabled Enables or disables the return of query results as arrays.
+     */
+    fun setReturnArrays(enabled: Boolean)
+
+    /**
+     * When reading from the database, SQLite `INTEGER`s are mapped to JavaScript
+     * numbers by default. However, SQLite `INTEGER`s can store values larger than
+     * JavaScript numbers are capable of representing. In such cases, this method can
+     * be used to read `INTEGER` data using JavaScript `BigInt`s. This method has no
+     * impact on database write operations where numbers and `BigInt`s are both
+     * supported at all times.
+     * @since v22.5.0
+     * @param enabled Enables or disables the use of `BigInt`s when reading `INTEGER` fields from the database.
+     */
+    fun setReadBigInts(enabled: Boolean)
+
+    /**
+     * The source SQL text of the prepared statement. This property is a
+     * wrapper around [`sqlite3_sql()`](https://www.sqlite.org/c3ref/expanded_sql.html).
+     * @since v22.5.0
+     */
+    val sourceSQL: String
+}

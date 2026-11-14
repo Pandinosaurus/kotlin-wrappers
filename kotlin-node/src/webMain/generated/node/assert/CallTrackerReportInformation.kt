@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+package node.assert
+
+@kotlinx.js.JsPlainObject
+external interface CallTrackerReportInformation {
+    var message: String
+
+    /** The actual number of times the function was called. */
+    var actual: Double
+
+    /** The number of times the function was expected to be called. */
+    var expected: Double
+
+    /** The name of the function that is wrapped. */
+    var operator: String
+
+    /** A stack trace of the function. */
+    var stack: Any
+}

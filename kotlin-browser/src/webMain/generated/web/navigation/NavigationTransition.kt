@@ -1,0 +1,42 @@
+// Automatically generated - do not modify!
+
+package web.navigation
+
+import js.promise.Promise
+import js.void.Void
+
+/**
+ * The **`NavigationTransition`** interface of the Navigation API represents an ongoing navigation — a navigation that hasn't yet reached the navigatesuccess or navigateerror stage.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationTransition)
+ */
+open external class NavigationTransition
+private constructor() {
+    /**
+     * The **`committed`** read-only property of the NavigationTransition interface returns a Promise that fulfills when Navigation.currentEntry is updated and the new URL is displayed in the browser, marking the navigation as committed. This happens after all precommit handlers for the navigation are fulfilled.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationTransition/committed)
+     */
+    open val committed: Promise<Void>
+
+    /**
+     * The **`finished`** read-only property of the NavigationTransition interface returns a Promise that fulfills at the same time the navigatesuccess event fires, or rejects at the same time the navigateerror event fires.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationTransition/finished)
+     */
+    open val finished: Promise<Void>
+
+    /**
+     * The **`from`** read-only property of the NavigationTransition interface returns the NavigationHistoryEntry that the transition is coming from.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationTransition/from)
+     */
+    open val from: NavigationHistoryEntry
+
+    /**
+     * The **`navigationType`** read-only property of the NavigationTransition interface returns the type of the ongoing navigation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationTransition/navigationType)
+     */
+    open val navigationType: NavigationType
+}

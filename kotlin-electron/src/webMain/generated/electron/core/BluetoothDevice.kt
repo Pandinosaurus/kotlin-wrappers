@@ -1,0 +1,10 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface BluetoothDevice {
+    // Docs: https://electronjs.org/docs/api/structures/bluetooth-device
+    var deviceId: String
+    var deviceName: String
+}

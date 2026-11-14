@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package node.inspector.runtime
+
+/**
+ * Object internal property descriptor. This property isn't normally visible in JavaScript code.
+ */
+@kotlinx.js.JsPlainObject
+external interface InternalPropertyDescriptor {
+    /**
+     * Conventional property name.
+     */
+    var name: String
+
+    /**
+     * The value associated with the property.
+     */
+    var value: RemoteObject?
+}

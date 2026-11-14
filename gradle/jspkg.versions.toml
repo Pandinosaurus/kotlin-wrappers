@@ -1,0 +1,220 @@
+[versions]
+actions-artifact = "^6.2.1"
+actions-cache = "^6.2.0"
+actions-core = "^3.0.1"
+actions-exec = "^3.0.0"
+actions-github = "^9.1.1"
+actions-glob = "^0.7.0"
+actions-http-client = "^4.0.1"
+actions-io = "^3.0.2"
+actions-tool-cache = "^4.0.0"
+ajv = "^8.20.0"
+cesium-core = "^0.1.0"
+cesium-engine = "^26.4.0"
+cesium-widgets = "^16.3.0"
+csstype = "^3.2.3"
+electron = "^45.2.1"
+emotion-cache = "^11.14.0"
+emotion-css = "^11.13.5"
+emotion-react = "^11.14.0"
+emotion-styled = "^11.14.1"
+emotion-utils = "^1.4.2"
+floating-ui-core = "^1.7.5"
+floating-ui-dom = "^1.7.6"
+floating-ui-react-dom = "^2.1.8"
+floating-ui-utils = "^0.2.11"
+jszip = "3.10.1"
+mui-base = "5.0.0-beta.70"
+mui-icons-material = "9.5.0"
+mui-lab = "9.0.0-beta.10"
+mui-material = "9.5.0"
+mui-system = "9.5.0"
+muix-date-pickers = "9.17.0"
+muix-tree-view = "9.17.0"
+node = "^24.13.6"
+pako = "^2.2.0"
+popperjs-core = "^2.11.8"
+prantlf-jsonlint = "^17.0.1"
+preact-signals-core = "^1.14.3"
+preact-signals-react = "^3.10.2"
+react = "^19.3.1"
+react-dom = "^19.3.1"
+react-select = "^5.10.2"
+semver = "^7.7.4"
+tanstack-history = "^1.162.0"
+tanstack-query-core = "^5.101.4"
+tanstack-react-query = "^5.101.4"
+tanstack-react-query-devtools = "^5.101.4"
+tanstack-react-router = "^1.170.17"
+tanstack-react-router-devtools = "^1.167.0"
+tanstack-react-table = "^8.21.3"
+tanstack-react-virtual = "^3.14.9"
+tanstack-router-core = "^1.171.14"
+tanstack-table-core = "^8.21.3"
+tanstack-virtual-core = "^3.17.7"
+tauri-apps-api = "^2.12.4"
+testing-library-dom = "^10.4.1"
+testing-library-react = "^16.3.2"
+testing-library-user-event = "^14.6.1"
+typescript = "^6.0.3"
+vercel-ncc = "^0.44.1"
+vscode = "^1.145.0"
+yaml = "^2.8.3"
+
+types-ecma = "7.0.2"
+types-web = "0.0.366"
+types-webworker = "0.0.88"
+types-serviceworker = "0.0.209"
+types-audioworklet = "0.0.102"
+types-webxr = "0.5.24"
+webref-events = "1.27.1"
+webref-idl = "3.86.0"
+
+types-react = "19.3.0"
+types-semver = "7.7.1"
+
+[libraries]
+# https://npmx.dev/package/@actions/artifact
+actions-artifact = { group = "npm", name = "@actions/artifact", version.ref = "actions-artifact" }
+# https://npmx.dev/package/@actions/cache
+actions-cache = { group = "npm", name = "@actions/cache", version.ref = "actions-cache" }
+# https://npmx.dev/package/@actions/core
+actions-core = { group = "npm", name = "@actions/core", version.ref = "actions-core" }
+# https://npmx.dev/package/@actions/exec
+actions-exec = { group = "npm", name = "@actions/exec", version.ref = "actions-exec" }
+# https://npmx.dev/package/@actions/github
+actions-github = { group = "npm", name = "@actions/github", version.ref = "actions-github" }
+# https://npmx.dev/package/@actions/glob
+actions-glob = { group = "npm", name = "@actions/glob", version.ref = "actions-glob" }
+# https://npmx.dev/package/@actions/http-client
+actions-httpClient = { group = "npm", name = "@actions/http-client", version.ref = "actions-http-client" }
+# https://npmx.dev/package/@actions/io
+actions-io = { group = "npm", name = "@actions/io", version.ref = "actions-io" }
+# https://npmx.dev/package/@actions/tool-cache
+actions-toolCache = { group = "npm", name = "@actions/tool-cache", version.ref = "actions-tool-cache" }
+# https://npmx.dev/package/ajv
+ajv = { group = "npm", name = "ajv", version.ref = "ajv" }
+# https://npmx.dev/package/@cesium/core
+cesium-core = { group = "npm", name = "@cesium/core", version.ref = "cesium-core" }
+# https://npmx.dev/package/@cesium/engine
+cesium-engine = { group = "npm", name = "@cesium/engine", version.ref = "cesium-engine" }
+# https://npmx.dev/package/@cesium/widgets
+cesium-widgets = { group = "npm", name = "@cesium/widgets", version.ref = "cesium-widgets" }
+# https://npmx.dev/package/csstype
+csstype = { group = "npm", name = "csstype", version.ref = "csstype" }
+# https://npmx.dev/package/electron
+electron = { group = "npm", name = "electron", version.ref = "electron" }
+# https://npmx.dev/package/@emotion/cache
+emotion-cache = { group = "npm", name = "@emotion/cache", version.ref = "emotion-cache" }
+# https://npmx.dev/package/@emotion/css
+emotion-css = { group = "npm", name = "@emotion/css", version.ref = "emotion-css" }
+# https://npmx.dev/package/@emotion/react
+emotion-react = { group = "npm", name = "@emotion/react", version.ref = "emotion-react" }
+# https://npmx.dev/package/@emotion/styled
+emotion-styled = { group = "npm", name = "@emotion/styled", version.ref = "emotion-styled" }
+# https://npmx.dev/package/@emotion/utils
+emotion-utils = { group = "npm", name = "@emotion/utils", version.ref = "emotion-utils" }
+# https://npmx.dev/package/@floating-ui/core
+floatingUi-core = { group = "npm", name = "@floating-ui/core", version.ref = "floating-ui-core" }
+# https://npmx.dev/package/@floating-ui/dom
+floatingUi-dom = { group = "npm", name = "@floating-ui/dom", version.ref = "floating-ui-dom" }
+# https://npmx.dev/package/@floating-ui/react-dom
+floatingUi-reactDom = { group = "npm", name = "@floating-ui/react-dom", version.ref = "floating-ui-react-dom" }
+# https://npmx.dev/package/@floating-ui/utils
+floatingUi-utils = { group = "npm", name = "@floating-ui/utils", version.ref = "floating-ui-utils" }
+# https://npmx.dev/package/jszip
+jszip = { group = "npm", name = "jszip", version.ref = "jszip" }
+# https://npmx.dev/package/@mui/base
+mui-base = { group = "npm", name = "@mui/base", version.ref = "mui-base" }
+# https://npmx.dev/package/@mui/icons-material
+mui-iconsMaterial = { group = "npm", name = "@mui/icons-material", version.ref = "mui-icons-material" }
+# https://npmx.dev/package/@mui/lab
+mui-lab = { group = "npm", name = "@mui/lab", version.ref = "mui-lab" }
+# https://npmx.dev/package/@mui/material
+mui-material = { group = "npm", name = "@mui/material", version.ref = "mui-material" }
+# https://npmx.dev/package/@mui/system
+mui-system = { group = "npm", name = "@mui/system", version.ref = "mui-system" }
+# https://npmx.dev/package/@mui/x-date-pickers
+mui-xDatePickers = { group = "npm", name = "@mui/x-date-pickers", version.ref = "muix-date-pickers" }
+# https://npmx.dev/package/@mui/x-tree-view
+mui-xTreeView = { group = "npm", name = "@mui/x-tree-view", version.ref = "muix-tree-view" }
+# https://npmx.dev/package/@types/node
+types-node = { group = "npm", name = "@types/node", version.ref = "node" }
+# https://npmx.dev/package/pako
+pako = { group = "npm", name = "pako", version.ref = "pako" }
+# https://npmx.dev/package/@popperjs/core
+popperjs-core = { group = "npm", name = "@popperjs/core", version.ref = "popperjs-core" }
+# https://npmx.dev/package/@prantlf/jsonlint
+prantlf-jsonlint = { group = "npm", name = "@prantlf/jsonlint", version.ref = "prantlf-jsonlint" }
+# https://npmx.dev/package/@preact/signals-core
+preact-signalsCore = { group = "npm", name = "@preact/signals-core", version.ref = "preact-signals-core" }
+# https://npmx.dev/package/@preact/signals-react
+preact-signalsReact = { group = "npm", name = "@preact/signals-react", version.ref = "preact-signals-react" }
+# https://npmx.dev/package/react
+react = { group = "npm", name = "react", version.ref = "react" }
+# https://npmx.dev/package/react-dom
+reactDom = { group = "npm", name = "react-dom", version.ref = "react-dom" }
+# https://npmx.dev/package/react-select
+reactSelect = { group = "npm", name = "react-select", version.ref = "react-select" }
+# https://npmx.dev/package/semver
+semver = { group = "npm", name = "semver", version.ref = "semver" }
+# https://npmx.dev/package/@tanstack/history
+tanstack-history = { group = "npm", name = "@tanstack/history", version.ref = "tanstack-history" }
+# https://npmx.dev/package/@tanstack/query-core
+tanstack-queryCore = { group = "npm", name = "@tanstack/query-core", version.ref = "tanstack-query-core" }
+# https://npmx.dev/package/@tanstack/react-query
+tanstack-reactQuery = { group = "npm", name = "@tanstack/react-query", version.ref = "tanstack-react-query" }
+# https://npmx.dev/package/@tanstack/react-query-devtools
+tanstack-reactQueryDevtools = { group = "npm", name = "@tanstack/react-query-devtools", version.ref = "tanstack-react-query-devtools" }
+# https://npmx.dev/package/@tanstack/react-router
+tanstack-reactRouter = { group = "npm", name = "@tanstack/react-router", version.ref = "tanstack-react-router" }
+# https://npmx.dev/package/@tanstack/react-router-devtools
+tanstack-reactRouterDevtools = { group = "npm", name = "@tanstack/react-router-devtools", version.ref = "tanstack-react-router-devtools" }
+# https://npmx.dev/package/@tanstack/react-table
+tanstack-reactTable = { group = "npm", name = "@tanstack/react-table", version.ref = "tanstack-react-table" }
+# https://npmx.dev/package/@tanstack/react-virtual
+tanstack-reactVirtual = { group = "npm", name = "@tanstack/react-virtual", version.ref = "tanstack-react-virtual" }
+# https://npmx.dev/package/@tanstack/router-core
+tanstack-routerCore = { group = "npm", name = "@tanstack/router-core", version.ref = "tanstack-router-core" }
+# https://npmx.dev/package/@tanstack/table-core
+tanstack-tableCore = { group = "npm", name = "@tanstack/table-core", version.ref = "tanstack-table-core" }
+# https://npmx.dev/package/@tanstack/virtual-core
+tanstack-virtualCore = { group = "npm", name = "@tanstack/virtual-core", version.ref = "tanstack-virtual-core" }
+# https://npmx.dev/package/@tauri-apps/api
+tauriApps-api = { group = "npm", name = "@tauri-apps/api", version.ref = "tauri-apps-api" }
+# https://npmx.dev/package/@testing-library/dom
+testingLibrary-dom = { group = "npm", name = "@testing-library/dom", version.ref = "testing-library-dom" }
+# https://npmx.dev/package/@testing-library/react
+testingLibrary-react = { group = "npm", name = "@testing-library/react", version.ref = "testing-library-react" }
+# https://npmx.dev/package/@testing-library/user-event
+testingLibrary-userEvent = { group = "npm", name = "@testing-library/user-event", version.ref = "testing-library-user-event" }
+# https://npmx.dev/package/typescript
+typescript = { group = "npm", name = "typescript", version.ref = "typescript" }
+# https://npmx.dev/package/@vercel/ncc
+vercel-ncc = { group = "npm", name = "@vercel/ncc", version.ref = "vercel-ncc" }
+# https://npmx.dev/package/@types/vscode
+types-vscode = { group = "npm", name = "@types/vscode", version.ref = "vscode" }
+# https://npmx.dev/package/yaml
+yaml = { group = "npm", name = "yaml", version.ref = "yaml" }
+
+# https://npmx.dev/package/typescript
+types-ecma = { group = "npm", name = "typescript", version.ref = "types-ecma" }
+# https://npmx.dev/package/@types/web
+types-web = { group = "npm", name = "@types/web", version.ref = "types-web" }
+# https://npmx.dev/package/@types/webworker
+types-webworker = { group = "npm", name = "@types/webworker", version.ref = "types-webworker" }
+# https://npmx.dev/package/@types/serviceworker
+types-serviceworker = { group = "npm", name = "@types/serviceworker", version.ref = "types-serviceworker" }
+# https://npmx.dev/package/@types/audioworklet
+types-audioworklet = { group = "npm", name = "@types/audioworklet", version.ref = "types-audioworklet" }
+# https://npmx.dev/package/@types/webxr
+types-webxr = { group = "npm", name = "@types/webxr", version.ref = "types-webxr" }
+# https://npmx.dev/package/@webref/events
+webref-events = { group = "npm", name = "@webref/events", version.ref = "webref-events" }
+# https://npmx.dev/package/@webref/idl
+webref-idl = { group = "npm", name = "@webref/idl", version.ref = "webref-idl" }
+
+# https://npmx.dev/package/@types/react
+types-react = { group = "npm", name = "@types/react", version.ref = "types-react" }
+# https://npmx.dev/package/@types/semver
+types-semver = { group = "npm", name = "@types/semver", version.ref = "types-semver" }

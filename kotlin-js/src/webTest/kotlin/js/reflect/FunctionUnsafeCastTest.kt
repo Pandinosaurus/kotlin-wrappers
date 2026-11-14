@@ -1,0 +1,29 @@
+package js.reflect
+
+import js.globals.globalThis
+import js.numbers.BigInt
+import js.numbers.n
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+external fun externalFunctionWithUnitReturn()
+
+external fun externalFunctionWithBigIntReturn(): BigInt
+
+external interface F
+
+class FunctionUnsafeCastTest {
+    @Test
+    fun `function with zero parameters with 'Unit' return type`() {
+        globalThis["externalFunctionWithUnitReturn"] = unsafeCast<F>(value = { 37.n })
+
+        assertEquals(Unit, externalFunctionWithUnitReturn())
+    }
+
+    @Test
+    fun `function with zero parameters with 'BigInt' return type`() {
+        globalThis["externalFunctionWithBigIntReturn"] = unsafeCast<F>(provider = { 42.n })
+
+        assertEquals(42.n, externalFunctionWithBigIntReturn())
+    }
+}

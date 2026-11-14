@@ -1,0 +1,27 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+external interface IpcMainServiceWorkerInvokeEvent : Event<Any> {
+// Docs: https://electronjs.org/docs/api/structures/ipc-main-service-worker-invoke-event
+    /**
+     * The service worker that sent this message
+     *
+     */
+    val serviceWorker: ServiceWorkerMain
+
+    /**
+     * The `Session` instance with which the event is associated.
+     */
+    var session: Session
+
+    /**
+     * Possible values include `service-worker`.
+     */
+    var type: (String /* 'service-worker' */)
+
+    /**
+     * The service worker version ID.
+     */
+    var versionId: Double
+}

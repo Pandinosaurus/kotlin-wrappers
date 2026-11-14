@@ -1,0 +1,29 @@
+// Automatically generated - do not modify!
+
+package web.form
+
+import web.events.Event
+import web.events.EventType
+import web.html.HTMLElement
+
+/**
+ * The **`SubmitEvent`** interface defines the object used to represent an HTML form's submit event. This event is fired at the <form> when the form's submit action is invoked.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubmitEvent)
+ */
+open external class SubmitEvent(
+    override val type: EventType<SubmitEvent>,
+    init: SubmitEventInit = definedExternally,
+) : Event {
+    /**
+     * The read-only **`submitter`** property found on the SubmitEvent interface specifies the submit button or other element that was invoked to cause the form to be submitted.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubmitEvent/submitter)
+     */
+    open val submitter: HTMLElement?
+
+    companion object
+}
+
+inline val SubmitEvent.Companion.SUBMIT: EventType<SubmitEvent>
+    get() = EventType("submit")

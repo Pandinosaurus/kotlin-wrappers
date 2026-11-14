@@ -1,0 +1,11 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.jetbrains.kotlin-wrappers/kotlin-typescript)](https://central.sonatype.com/artifact/org.jetbrains.kotlin-wrappers/kotlin-typescript)
+
+# Module kotlin-typescript
+
+Kotlin wrapper for [TypeScript](https://npmx.dev/package/typescript).
+
+### Internals
+
+Declarations in [src/webMain/generated](./src/webMain/generated) are generated.
+
+Manual changes are prohibited.

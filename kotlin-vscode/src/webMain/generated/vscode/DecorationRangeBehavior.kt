@@ -1,0 +1,34 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("vscode")
+
+package vscode
+
+/**
+ * Describes the behavior of decorations when typing/editing at their edges.
+ *
+ * [Online Documentation](https://code.visualstudio.com/api/references/vscode-api#DecorationRangeBehavior)
+ */
+/* enum */
+external class DecorationRangeBehavior
+private constructor() {
+    /**
+     * The decoration's range will widen when edits occur at the start or end.
+     */
+    val OpenOpen: DecorationRangeBehavior // 0
+
+    /**
+     * The decoration's range will not widen when edits occur at the start or end.
+     */
+    val ClosedClosed: DecorationRangeBehavior // 1
+
+    /**
+     * The decoration's range will widen when edits occur at the start, but not at the end.
+     */
+    val OpenClosed: DecorationRangeBehavior // 2
+
+    /**
+     * The decoration's range will widen when edits occur at the end, but not at the start.
+     */
+    val ClosedOpen: DecorationRangeBehavior // 3
+}

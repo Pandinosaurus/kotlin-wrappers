@@ -1,0 +1,29 @@
+// Automatically generated - do not modify!
+
+package node.inspector.runtime
+
+/**
+ * Description of an isolated world.
+ */
+@kotlinx.js.JsPlainObject
+external interface ExecutionContextDescription {
+    /**
+     * Unique id of the execution context. It can be used to specify in which execution context script evaluation should be performed.
+     */
+    var id: ExecutionContextId
+
+    /**
+     * Execution context origin.
+     */
+    var origin: String
+
+    /**
+     * Human readable name describing given context.
+     */
+    var name: String
+
+    /**
+     * Embedder-specific auxiliary data.
+     */
+    var auxData: Any?
+}

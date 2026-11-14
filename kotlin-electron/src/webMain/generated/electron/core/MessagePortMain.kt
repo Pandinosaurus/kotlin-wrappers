@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("INTERNAL_ENTITY")
+
+package electron.core
+
+import node.events.EventEmitter as NodeEventEmitter
+
+external class MessagePortMain : NodeEventEmitter {
+    /**
+     * Disconnects the port, so it is no longer active.
+     */
+    fun close()
+
+    /**
+     * Sends a message from the port, and optionally, transfers ownership of objects to
+     * other browsing contexts.
+     */
+    fun postMessage(
+        message: Any?,
+        transfer: js.array.ReadonlyArray<MessagePortMain> = definedExternally,
+    )
+
+    /**
+     * Starts the sending of messages queued on the port. Messages will be queued until
+     * this method is called.
+     */
+    fun start()
+
+    @web.events.JsEvent("close")
+    val closeEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("message")
+    val messageEvent: node.events.EventInstance<js.array.Tuple1<MessageEvent>>
+}

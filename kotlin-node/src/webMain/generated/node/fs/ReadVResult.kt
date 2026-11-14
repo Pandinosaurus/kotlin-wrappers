@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package node.fs
+
+// Providing a default type parameter doesn't provide true BC for userland consumers, but at least suppresses TS2314
+// TODO: remove default in future major version
+@kotlinx.js.JsPlainObject
+external interface ReadVResult<T : js.array.ReadonlyArray<js.buffer.ArrayBufferView<*>> /* default is js.array.ReadonlyArray<js.buffer.ArrayBufferView<*>> */> {
+    var bytesRead: Double
+    var buffers: T
+}

@@ -1,0 +1,23 @@
+// Automatically generated - do not modify!
+
+package web.cssom
+
+/**
+ * The **`CSSUnitValue`** interface of the CSS Typed Object Model API represents values that contain a single unit type.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSUnitValue)
+ */
+open external class CSSUnitValue(
+    /**
+     * The **`value`** property of the CSSUnitValue interface represents the number of units.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSUnitValue/value)
+     */
+    open var value: Double,
+    /**
+     * The **`unit`** read-only property of the CSSUnitValue interface returns a string indicating the unit type.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSUnitValue/unit)
+     */
+    open val unit: String,
+) : CSSNumericValue

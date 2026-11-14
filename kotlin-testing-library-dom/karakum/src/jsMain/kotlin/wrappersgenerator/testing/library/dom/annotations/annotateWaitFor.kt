@@ -1,0 +1,14 @@
+package wrappersgenerator.testing.library.dom.annotations
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.AnnotationContext
+import js.reflect.invoke
+import typescript.Node
+import typescript.isFunctionDeclaration
+
+suspend fun annotateWaitFor(node: Node, context: AnnotationContext) = nullable {
+    ensure(isFunctionDeclaration(node))
+    ensure(node.name?.text == "waitFor")
+
+    "@JsName(\"waitFor\")"
+}

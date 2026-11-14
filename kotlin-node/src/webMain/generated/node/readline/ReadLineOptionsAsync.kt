@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.readline
+
+@kotlinx.js.JsPlainObject
+external interface ReadLineOptions : _ReadLineOptions {
+    /**
+     * An optional function used for Tab autocompletion.
+     */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var completer: Completer?
+}

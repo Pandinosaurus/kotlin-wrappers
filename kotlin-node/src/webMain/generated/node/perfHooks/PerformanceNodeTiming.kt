@@ -1,0 +1,85 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:perf_hooks")
+
+package node.perfHooks
+
+import web.performance.PerformanceEntry
+
+// TODO: PerformanceNodeEntry is missing
+
+/**
+ * _This property is an extension by Node.js. It is not available in Web browsers._
+ *
+ * Provides timing details for Node.js itself. The constructor of this class
+ * is not exposed to users.
+ * @since v8.5.0
+ */
+external class PerformanceNodeTiming : PerformanceEntry {
+    constructor ()
+
+    /**
+     * The high resolution millisecond timestamp at which the Node.js process
+     * completed bootstrapping. If bootstrapping has not yet finished, the property
+     * has the value of -1.
+     * @since v8.5.0
+     */
+    val bootstrapComplete: Double
+
+    /**
+     * The high resolution millisecond timestamp at which the Node.js environment was
+     * initialized.
+     * @since v8.5.0
+     */
+    val environment: Double
+
+    /**
+     * The high resolution millisecond timestamp of the amount of time the event loop
+     * has been idle within the event loop's event provider (e.g. `epoll_wait`). This
+     * does not take CPU usage into consideration. If the event loop has not yet
+     * started (e.g., in the first tick of the main script), the property has the
+     * value of 0.
+     * @since v14.10.0, v12.19.0
+     */
+    val idleTime: Double
+
+    /**
+     * The high resolution millisecond timestamp at which the Node.js event loop
+     * exited. If the event loop has not yet exited, the property has the value of -1\.
+     * It can only have a value of not -1 in a handler of the `'exit'` event.
+     * @since v8.5.0
+     */
+    val loopExit: Double
+
+    /**
+     * The high resolution millisecond timestamp at which the Node.js event loop
+     * started. If the event loop has not yet started (e.g., in the first tick of the
+     * main script), the property has the value of -1.
+     * @since v8.5.0
+     */
+    val loopStart: Double
+
+    /**
+     * The high resolution millisecond timestamp at which the Node.js process was initialized.
+     * @since v8.5.0
+     */
+    val nodeStart: Double
+
+    /**
+     * This is a wrapper to the `uv_metrics_info` function.
+     * It returns the current set of event loop metrics.
+     *
+     * It is recommended to use this property inside a function whose execution was
+     * scheduled using `setImmediate` to avoid collecting metrics before finishing all
+     * operations scheduled during the current loop iteration.
+     * @since v22.8.0, v20.18.0
+     */
+    val uvMetricsInfo: UVMetrics
+
+    /**
+     * The high resolution millisecond timestamp at which the V8 platform was
+     * initialized.
+     * @since v8.5.0
+     */
+    val v8Start: Double
+}

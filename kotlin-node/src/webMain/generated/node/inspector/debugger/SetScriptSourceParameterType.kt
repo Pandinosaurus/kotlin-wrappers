@@ -1,0 +1,21 @@
+// Automatically generated - do not modify!
+
+package node.inspector.debugger
+
+@kotlinx.js.JsPlainObject
+external interface SetScriptSourceParameterType {
+    /**
+     * Id of the script to edit.
+     */
+    var scriptId: node.inspector.runtime.ScriptId
+
+    /**
+     * New content of the script.
+     */
+    var scriptSource: String
+
+    /**
+     *  If true the change will not actually be applied. Dry run may be used to get result description without actually modifying the code.
+     */
+    var dryRun: Boolean?
+}

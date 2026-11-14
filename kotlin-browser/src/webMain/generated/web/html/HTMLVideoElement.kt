@@ -1,0 +1,139 @@
+// Automatically generated - do not modify!
+
+package web.html
+
+import js.promise.Promise
+import js.promise.await
+import web.canvas.CanvasImageSource
+import web.dom.Node
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.events.EventHandler
+import web.events.EventInstance
+import web.gl.TexImageSource
+import web.gpu.GPUCopyExternalImageSource
+import web.pip.PictureInPictureEvent
+import web.pip.PictureInPictureWindow
+
+/**
+ * Implemented by the <video> element, the **`HTMLVideoElement`** interface provides special properties and methods for manipulating video objects. It also inherits properties and methods of HTMLMediaElement and HTMLElement.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement)
+ */
+open external class HTMLVideoElement
+protected constructor() :
+    HTMLMediaElement,
+    CanvasImageSource,
+    TexImageSource,
+    GPUCopyExternalImageSource {
+    /**
+     * The **`disablePictureInPicture`** property of the HTMLVideoElement interface reflects the disablepictureinpicture HTML attribute indicating whether the picture-in-picture feature is disabled for the current element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/disablePictureInPicture)
+     */
+    open var disablePictureInPicture: Boolean
+
+    /**
+     * The **`height`** property of the HTMLVideoElement interface returns an integer that reflects the height attribute of the <video> element, specifying the displayed height of the resource in CSS pixels.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/height)
+     */
+    open var height: Int
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/enterpictureinpicture_event)
+     */
+    open var onenterpictureinpicture: EventHandler<PictureInPictureEvent, HTMLVideoElement, Node>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/leavepictureinpicture_event)
+     */
+    open var onleavepictureinpicture: EventHandler<PictureInPictureEvent, HTMLVideoElement, Node>?
+    open var playsInline: Boolean
+
+    /**
+     * The **`poster`** property of the HTMLVideoElement interface is a string that reflects the URL for an image to be shown while no video data is available. If the property does not represent a valid URL, no poster frame will be shown.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/poster)
+     */
+    open var poster: String
+
+    /**
+     * The HTMLVideoElement interface's read-only **`videoHeight`** property indicates the intrinsic height of the video, expressed in CSS pixels. In simple terms, this is the height of the media in its natural size.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/videoHeight)
+     */
+    open val videoHeight: Int
+
+    /**
+     * The HTMLVideoElement interface's read-only **`videoWidth`** property indicates the intrinsic width of the video, expressed in CSS pixels. In simple terms, this is the width of the media in its natural size.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/videoWidth)
+     */
+    open val videoWidth: Int
+
+    /**
+     * The **`width`** property of the HTMLVideoElement interface returns an integer that reflects the width attribute of the <video> element, specifying the displayed width of the resource in CSS pixels.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/width)
+     */
+    open var width: Int
+
+    /**
+     * The **`cancelVideoFrameCallback()`** method of the HTMLVideoElement interface cancels a previously-registered video frame callback.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/cancelVideoFrameCallback)
+     */
+    open fun cancelVideoFrameCallback(requestId: VideoFrameRequestId)
+
+    /**
+     * The HTMLVideoElement method **`getVideoPlaybackQuality()`** creates and returns a VideoPlaybackQuality object containing metrics including how many frames have been lost.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/getVideoPlaybackQuality)
+     */
+    open fun getVideoPlaybackQuality(): VideoPlaybackQuality
+
+    /**
+     * The **`requestPictureInPicture()`** method of the HTMLVideoElement interface issues an asynchronous request to display the video in picture-in-picture mode.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/requestPictureInPicture)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(NotSupportedError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("requestPictureInPicture")
+    open fun requestPictureInPictureAsync(): Promise<PictureInPictureWindow>
+
+    /**
+     * The **`requestVideoFrameCallback()`** method of the HTMLVideoElement interface registers a callback function that runs when a new video frame is sent to the compositor. This enables developers to perform efficient operations on each video frame.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/requestVideoFrameCallback)
+     */
+    open fun requestVideoFrameCallback(callback: VideoFrameRequestCallback): VideoFrameRequestId
+}
+
+/**
+ * The **`requestPictureInPicture()`** method of the HTMLVideoElement interface issues an asynchronous request to display the video in picture-in-picture mode.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/requestPictureInPicture)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(NotSupportedError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun HTMLVideoElement.requestPictureInPicture(): PictureInPictureWindow {
+    return requestPictureInPictureAsync().await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/enterpictureinpicture_event)
+ */
+inline val <C : HTMLVideoElement> C.enterPictureInPictureEvent: EventInstance<PictureInPictureEvent, C, Node>
+    get() = EventInstance(this, "enterpictureinpicture")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/leavepictureinpicture_event)
+ */
+inline val <C : HTMLVideoElement> C.leavePictureInPictureEvent: EventInstance<PictureInPictureEvent, C, Node>
+    get() = EventInstance(this, "leavepictureinpicture")

@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.v8
+
+@kotlinx.js.JsPlainObject
+external interface HeapSpaceInfo {
+    var space_name: String
+    var space_size: Double
+    var space_used_size: Double
+    var space_available_size: Double
+    var physical_space_size: Double
+}

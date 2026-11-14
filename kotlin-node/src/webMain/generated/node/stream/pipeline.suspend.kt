@@ -1,0 +1,68 @@
+// Automatically generated - do not modify!
+
+package node.stream
+
+@seskar.js.JsAsync
+external suspend fun <A : PipelineSource<Any?>, B : PipelineDestination<A, Any?>> pipeline(
+    source: A,
+    destination: B,
+    options: PipelineOptions = definedExternally,
+): Any?
+
+@seskar.js.JsAsync
+external suspend fun <A : PipelineSource<Any?>, T1 : PipelineTransform<A, Any?>, B : PipelineDestination<T1, Any?>> pipeline(
+    source: A,
+    transform1: T1,
+    destination: B,
+    options: PipelineOptions = definedExternally,
+): Any?
+
+@seskar.js.JsAsync
+external suspend fun <A : PipelineSource<Any?>, T1 : PipelineTransform<A, Any?>, T2 : PipelineTransform<T1, Any?>, B : PipelineDestination<T2, Any?>> pipeline(
+    source: A,
+    transform1: T1,
+    transform2: T2,
+    destination: B,
+    options: PipelineOptions = definedExternally,
+): Any?
+
+@seskar.js.JsAsync
+external suspend fun <A : PipelineSource<Any?>, T1 : PipelineTransform<A, Any?>, T2 : PipelineTransform<T1, Any?>, T3 : PipelineTransform<T2, Any?>, B : PipelineDestination<T3, Any?>> pipeline(
+    source: A,
+    transform1: T1,
+    transform2: T2,
+    transform3: T3,
+    destination: B,
+    options: PipelineOptions = definedExternally,
+): Any?
+
+@seskar.js.JsAsync
+external suspend fun <A : PipelineSource<Any?>, T1 : PipelineTransform<A, Any?>, T2 : PipelineTransform<T1, Any?>, T3 : PipelineTransform<T2, Any?>, T4 : PipelineTransform<T3, Any?>, B : PipelineDestination<T4, Any?>> pipeline(
+    source: A,
+    transform1: T1,
+    transform2: T2,
+    transform3: T3,
+    transform4: T4,
+    destination: B,
+    options: PipelineOptions = definedExternally,
+): Any?
+
+@seskar.js.JsAsync
+external suspend fun pipeline(
+    streams: js.array.ReadonlyArray<Any /* NodeJS.ReadableStream | NodeJS.WritableStream | NodeJS.ReadWriteStream */>,
+    options: PipelineOptions = definedExternally,
+): js.void.Void
+
+@seskar.js.JsAsync
+external suspend fun pipeline(
+    stream1: node.ReadableStream,
+    stream2: node.ReadWriteStream,
+    vararg streams: Any, /* NodeJS.ReadWriteStream | NodeJS.WritableStream | PipelineOptions */
+): js.void.Void
+
+@seskar.js.JsAsync
+external suspend fun pipeline(
+    stream1: node.ReadableStream,
+    stream2: node.WritableStream,
+    vararg streams: Any, /* NodeJS.ReadWriteStream | NodeJS.WritableStream | PipelineOptions */
+): js.void.Void

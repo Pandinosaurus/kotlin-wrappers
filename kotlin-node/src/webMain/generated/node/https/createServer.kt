@@ -1,0 +1,54 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:https")
+
+package node.https
+
+import node.http.IncomingMessage
+import node.http.ServerResponse
+
+/**
+ * ```js
+ * // curl -k https://localhost:8000/
+ * import https from 'node:https';
+ * import fs from 'node:fs';
+ *
+ * const options = {
+ *   key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+ *   cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem'),
+ * };
+ *
+ * https.createServer(options, (req, res) => {
+ *   res.writeHead(200);
+ *   res.end('hello world\n');
+ * }).listen(8000);
+ * ```
+ *
+ * Or
+ *
+ * ```js
+ * import https from 'node:https';
+ * import fs from 'node:fs';
+ *
+ * const options = {
+ *   pfx: fs.readFileSync('test/fixtures/test_cert.pfx'),
+ *   passphrase: 'sample',
+ * };
+ *
+ * https.createServer(options, (req, res) => {
+ *   res.writeHead(200);
+ *   res.end('hello world\n');
+ * }).listen(8000);
+ * ```
+ * @since v0.3.4
+ * @param options Accepts `options` from `createServer`, `createSecureContext` and `createServer`.
+ * @param requestListener A listener to be added to the `'request'` event.
+ */
+external fun <Request : IncomingMessage, Response : ServerResponse<*>> createServer(
+    requestListener: node.http.RequestListener<Request, Response> = definedExternally,
+): Server<Request, Response>
+
+external fun <Request : IncomingMessage, Response : ServerResponse<*>> createServer(
+    options: ServerOptions<Request, Response>,
+    requestListener: node.http.RequestListener<Request, Response> = definedExternally,
+): Server<Request, Response>

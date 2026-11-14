@@ -1,0 +1,1561 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("INTERNAL_ENTITY")
+
+package electron.core
+
+import node.buffer.Buffer
+
+open external class BrowserWindow : BaseWindow {
+    /**
+     * BrowserWindow
+     */
+    constructor (options: BrowserWindowConstructorOptions = definedExternally)
+
+    /**
+     * Adds a window as a tab on this window, after the tab for the window instance.
+     *
+     * @platform darwin
+     */
+    fun addTabbedWindow(browserWindow: BrowserWindow)
+
+    /**
+     * Removes focus from the window.
+     *
+     * Not supported on Wayland (Linux).
+     */
+    override fun blur()
+
+    fun blurWebView()
+
+    /**
+     * Resolves with a NativeImage
+     *
+     * Captures a snapshot of the page within `rect`. Omitting `rect` will capture the
+     * whole visible page. If the page is not visible, `rect` may be empty. The page is
+     * considered visible when its browser window is hidden and the capturer count is
+     * non-zero. If you would like the page to stay hidden, you should ensure that
+     * `stayHidden` is set to true.
+     */
+    fun capturePage(
+        rect: Rectangle = definedExternally,
+        opts: Opts = definedExternally,
+    ): js.promise.Promise<NativeImage>
+
+    /**
+     * Moves window to the center of the screen.
+     *
+     * Not supported on Wayland (Linux).
+     */
+    override fun center()
+
+    /**
+     * Try to close the window. This has the same effect as a user manually clicking
+     * the close button of the window. The web page may cancel the close though. See
+     * the close event.
+     */
+    override fun close()
+
+    /**
+     * Closes the currently open Quick Look panel.
+     *
+     * @platform darwin
+     */
+    override fun closeFilePreview()
+
+    /**
+     * Force closing the window, the `unload` and `beforeunload` event won't be emitted
+     * for the web page, and `close` event will also not be emitted for this window,
+     * but it guarantees the `closed` event will be emitted.
+     */
+    override fun destroy()
+
+    /**
+     * Starts or stops flashing the window to attract user's attention.
+     */
+    override fun flashFrame(flag: Boolean)
+
+    /**
+     * Focuses on the window.
+     *
+     * On Wayland (Linux), the desktop environment may show a notification or flash the
+     * app icon if the window or app is not already focused.
+     */
+    override fun focus()
+
+    fun focusOnWebView()
+
+    /**
+     * the system accent color and highlighting of active window border in Hex RGB
+     * format.
+     *
+     * If a color has been set for the window that differs from the system accent
+     * color, the window accent color will be returned. Otherwise, a boolean will be
+     * returned, with `true` indicating that the window uses the global system accent
+     * color, and `false` indicating that accent color highlighting is disabled for
+     * this window.
+     *
+     * @platform win32
+     */
+    override fun getAccentColor(): Any /* (string) | (boolean) */
+
+    /**
+     * Gets the background color of the window in Hex (`#RRGGBB`) format.
+     *
+     * See Setting `backgroundColor`.
+     *
+     * > [!NOTE] The alpha value is _not_ returned alongside the red, green, and blue
+     * values.
+     */
+    override fun getBackgroundColor(): String
+
+    /**
+     * The `bounds` of the window as `Object`.
+     *
+     * > [!NOTE] On macOS, the y-coordinate value returned will be at minimum the Tray
+     * height. For example, calling `win.setBounds({ x: 25, y: 20, width: 800, height:
+     * 600 })` with a tray height of 38 means that `win.getBounds()` will return `{ x:
+     * 25, y: 38, width: 800, height: 600 }`.
+     *
+     * > [!NOTE] On Wayland, this method will return `{ x: 0, y: 0, ... }` as
+     * introspecting or programmatically changing the global window coordinates is
+     * prohibited.
+     */
+    override fun getBounds(): Rectangle
+
+    /**
+     * All child windows.
+     */
+    override fun getChildWindows(): js.array.ReadonlyArray<BrowserWindow>
+
+    /**
+     * The `bounds` of the window's client area as `Object`.
+     */
+    override fun getContentBounds(): Rectangle
+
+    /**
+     * Contains the window's client area's width and height.
+     */
+    override fun getContentSize(): js.array.ReadonlyArray<Double>
+
+    /**
+     * Contains the window's maximum width and height.
+     */
+    override fun getMaximumSize(): js.array.ReadonlyArray<Double>
+
+    /**
+     * Window id in the format of DesktopCapturerSource's id. For example
+     * "window:1324:0".
+     *
+     * More precisely the format is `window:id:other_id` where `id` is `HWND` on
+     * Windows, `CGWindowID` (`uint64_t`) on macOS and `Window` (`unsigned long`) on
+     * Linux. `other_id` is used to identify web contents (tabs) so within the same top
+     * level window.
+     */
+    override fun getMediaSourceId(): String
+
+    /**
+     * Contains the window's minimum width and height.
+     */
+    override fun getMinimumSize(): js.array.ReadonlyArray<Double>
+
+    /**
+     * The platform-specific handle of the window.
+     *
+     * The native type of the handle is `HWND` on Windows, `NSView*` on macOS, and
+     * `Window` (`unsigned long`) on Linux.
+     */
+    override fun getNativeWindowHandle(): Buffer<*>
+
+    /**
+     * Contains the window bounds of the normal state
+     *
+     * > [!NOTE] Whatever the current state of the window (maximized, minimized or in
+     * fullscreen), this function always returns the position and size of the window in
+     * normal state. In normal state, `getBounds` and `getNormalBounds` return the same
+     * `Rectangle`.
+     */
+    override fun getNormalBounds(): Rectangle
+
+    /**
+     * between 0.0 (fully transparent) and 1.0 (fully opaque).
+     */
+    override fun getOpacity(): Double
+
+    /**
+     * The parent window or `null` if there is no parent.
+     */
+    override fun getParentWindow(): BrowserWindow?
+
+    /**
+     * Contains the window's current position.
+     *
+     * > [!NOTE] On Wayland, this method will return `[0, 0]` as introspecting or
+     * programmatically changing the global window coordinates is prohibited.
+     */
+    override fun getPosition(): js.array.ReadonlyArray<Double>
+
+    /**
+     * The pathname of the file the window represents.
+     *
+     * @platform darwin
+     */
+    override fun getRepresentedFilename(): String
+
+    /**
+     * Contains the window's width and height.
+     */
+    override fun getSize(): js.array.ReadonlyArray<Double>
+
+    /**
+     * The title of the native window.
+     *
+     * > [!NOTE] The title of the web page can be different from the title of the
+     * native window.
+     */
+    override fun getTitle(): String
+
+    /**
+     * The custom position for the traffic light buttons in frameless window, `null`
+     * will be returned when there is no custom position.
+     *
+     * @platform darwin
+     */
+    override fun getWindowButtonPosition(): Point?
+
+    /**
+     * Whether the window has a shadow.
+     */
+    override fun hasShadow(): Boolean
+
+    /**
+     * Hides the window.
+     */
+    override fun hide()
+
+    /**
+     * Hooks a windows message. The `callback` is called when the message is received
+     * in the WndProc.
+     *
+     * @platform win32
+     */
+    override fun hookWindowMessage(
+        message: Double,
+        callback: (wParam: Buffer<*>, lParam: Buffer<*>) -> Unit,
+    )
+
+    /**
+     * Invalidates the window shadow so that it is recomputed based on the current
+     * window shape.
+     *
+     * `BrowserWindows` that are transparent can sometimes leave behind visual
+     * artifacts on macOS. This method can be used to clear these artifacts when, for
+     * example, performing an animation.
+     *
+     * @platform darwin
+     */
+    override fun invalidateShadow()
+
+    /**
+     * Whether the window is always on top of other windows.
+     *
+     * Not supported on Wayland (Linux).
+     */
+    override fun isAlwaysOnTop(): Boolean
+
+    /**
+     * Whether the window can be manually closed by user.
+     *
+     * On Linux always returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override fun isClosable(): Boolean
+
+    /**
+     * whether or not content protection is currently enabled.
+     *
+     * @platform darwin,win32
+     */
+    override fun isContentProtected(): Boolean
+
+    /**
+     * Whether the window is destroyed.
+     */
+    override fun isDestroyed(): Boolean
+
+    /**
+     * Whether the window's document has been edited.
+     *
+     * @platform darwin
+     */
+    override fun isDocumentEdited(): Boolean
+
+    /**
+     * whether the window is enabled.
+     */
+    override fun isEnabled(): Boolean
+
+    /**
+     * Whether the window can be focused.
+     *
+     * @platform darwin,win32
+     */
+    override fun isFocusable(): Boolean
+
+    /**
+     * Whether the window is focused.
+     */
+    override fun isFocused(): Boolean
+
+    /**
+     * Whether the window is in fullscreen mode.
+     *
+     * > [!NOTE] On macOS, fullscreen transitions take place asynchronously. When
+     * querying for a BrowserWindow's fullscreen status, you should ensure that either
+     * the 'enter-full-screen' or 'leave-full-screen' events have been emitted.
+     */
+    override fun isFullScreen(): Boolean
+
+    /**
+     * Whether the maximize/zoom window button toggles fullscreen mode or maximizes the
+     * window.
+     */
+    override fun isFullScreenable(): Boolean
+
+    /**
+     * Whether the window will be hidden when the user toggles into mission control.
+     *
+     * @platform darwin
+     */
+    override fun isHiddenInMissionControl(): Boolean
+
+    /**
+     * Whether the window is in kiosk mode.
+     */
+    override fun isKiosk(): Boolean
+
+    /**
+     * Whether the window can be manually maximized by user.
+     *
+     * On Linux always returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override fun isMaximizable(): Boolean
+
+    /**
+     * Whether the window is maximized.
+     */
+    override fun isMaximized(): Boolean
+
+    /**
+     * Whether menu bar automatically hides itself.
+     *
+     * @platform win32,linux
+     */
+    override fun isMenuBarAutoHide(): Boolean
+
+    /**
+     * Whether the menu bar is visible.
+     *
+     * @platform win32,linux
+     */
+    override fun isMenuBarVisible(): Boolean
+
+    /**
+     * Whether the window can be manually minimized by the user.
+     *
+     * On Linux always returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override fun isMinimizable(): Boolean
+
+    /**
+     * Whether the window is minimized.
+     */
+    override fun isMinimized(): Boolean
+
+    /**
+     * Whether current window is a modal window.
+     */
+    override fun isModal(): Boolean
+
+    /**
+     * Whether the window can be moved by user.
+     *
+     * On Linux always returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override fun isMovable(): Boolean
+
+    /**
+     * Whether the window is in normal state (not maximized, not minimized, not in
+     * fullscreen mode).
+     */
+    override fun isNormal(): Boolean
+
+    /**
+     * Whether the window can be manually resized by the user.
+     */
+    override fun isResizable(): Boolean
+
+    /**
+     * Whether the window is in simple (pre-Lion) fullscreen mode.
+     *
+     * @platform darwin
+     */
+    override fun isSimpleFullScreen(): Boolean
+
+    /**
+     * whether the window is arranged via Snap.
+     *
+     * The window is snapped via buttons shown when the mouse is hovered over window
+     * maximize button, or by dragging it to the edges of the screen.
+     *
+     * @platform win32
+     */
+    override fun isSnapped(): Boolean
+
+    /**
+     * Whether the window is in Windows 10 tablet mode.
+     *
+     * Since Windows 10 users can use their PC as tablet, under this mode apps can
+     * choose to optimize their UI for tablets, such as enlarging the titlebar and
+     * hiding titlebar buttons.
+     *
+     * This API returns whether the window is in tablet mode, and the `resize` event
+     * can be used to listen to changes to tablet mode.
+     *
+     * @platform win32
+     */
+    override fun isTabletMode(): Boolean
+
+    /**
+     * Whether the window is visible to the user in the foreground of the app.
+     */
+    override fun isVisible(): Boolean
+
+    /**
+     * Whether the window is visible on all workspaces.
+     *
+     * > [!NOTE] This API always returns false on Windows.
+     *
+     * @platform darwin,linux
+     */
+    override fun isVisibleOnAllWorkspaces(): Boolean
+
+    /**
+     * `true` or `false` depending on whether the message is hooked.
+     *
+     * @platform win32
+     */
+    override fun isWindowMessageHooked(message: Double): Boolean
+
+    /**
+     * the promise will resolve when the page has finished loading (see
+     * `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
+     *
+     * Same as `webContents.loadFile`, `filePath` should be a path to an HTML file
+     * relative to the root of your application.  See the `webContents` docs for more
+     * information.
+     */
+    fun loadFile(
+        filePath: String,
+        options: LoadFileOptions = definedExternally,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * the promise will resolve when the page has finished loading (see
+     * `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
+     * A noop rejection handler is already attached, which avoids unhandled rejection
+     * errors. If the existing page has a beforeUnload handler, `did-fail-load` will be
+     * called unless `will-prevent-unload` is handled.
+     *
+     * Same as `webContents.loadURL(url[, options])`.
+     *
+     * The `url` can be a remote address (e.g. `http://`) or a path to a local HTML
+     * file using the `file://` protocol.
+     *
+     * To ensure that file URLs are properly formatted, it is recommended to use Node's
+     * `url.format` method:
+     *
+     * You can load a URL using a `POST` request with URL-encoded data by doing the
+     * following:
+     */
+    fun loadURL(
+        url: String,
+        options: LoadURLOptions = definedExternally,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * Maximizes the window. This will also show (but not focus) the window if it isn't
+     * being displayed already.
+     */
+    override fun maximize()
+
+    /**
+     * Merges all windows into one window with multiple tabs when native tabs are
+     * enabled and there is more than one open window.
+     *
+     * @platform darwin
+     */
+    override fun mergeAllWindows()
+
+    /**
+     * Minimizes the window. On some platforms the minimized window will be shown in
+     * the Dock.
+     */
+    override fun minimize()
+
+    /**
+     * Moves window above the source window in the sense of z-order. If the
+     * `mediaSourceId` is not of type window or if the window does not exist then this
+     * method throws an error.
+     */
+    override fun moveAbove(mediaSourceId: String)
+
+    /**
+     * Moves the current tab into a new window if native tabs are enabled and there is
+     * more than one tab in the current window.
+     *
+     * @platform darwin
+     */
+    override fun moveTabToNewWindow()
+
+    /**
+     * Moves window to top(z-order) regardless of focus.
+     *
+     * Not supported on Wayland (Linux).
+     */
+    override fun moveTop()
+
+    /**
+     * Uses Quick Look to preview a file at a given path.
+     *
+     * @platform darwin
+     */
+    override fun previewFile(
+        path: String,
+        displayName: String,
+    )
+
+    /**
+     * Same as `webContents.reload`.
+     */
+    fun reload()
+
+    /**
+     * Remove the window's menu bar.
+     *
+     * @platform linux,win32
+     */
+    override fun removeMenu()
+
+    /**
+     * Restores the window from minimized state to its previous state.
+     */
+    override fun restore()
+
+    /**
+     * Selects the next tab when native tabs are enabled and there are other tabs in
+     * the window.
+     *
+     * @platform darwin
+     */
+    override fun selectNextTab()
+
+    /**
+     * Selects the previous tab when native tabs are enabled and there are other tabs
+     * in the window.
+     *
+     * @platform darwin
+     */
+    override fun selectPreviousTab()
+
+    /**
+     * Sets the system accent color and highlighting of active window border.
+     *
+     * The `accentColor` parameter accepts the following values:
+     *
+     * * **Color string** - Like `true`, but sets a custom accent color using standard
+     * CSS color formats (Hex, RGB, RGBA, HSL, HSLA, or named colors). Alpha values in
+     * RGBA/HSLA formats are ignored and the color is treated as fully opaque.
+     * * **`true`** - Enable accent color highlighting for the window with the system
+     * accent color regardless of whether accent colors are enabled for windows in
+     * System `Settings.`
+     * * **`false`** - Disable accent color highlighting for the window regardless of
+     * whether accent colors are currently enabled for windows in System Settings.
+     * * **`null`** - Reset window accent color behavior to follow behavior set in
+     * System Settings.
+     *
+     * Examples:
+     *
+     * @platform win32
+     */
+    override fun setAccentColor(accentColor: Boolean?)
+
+    /**
+     * Sets the system accent color and highlighting of active window border.
+     *
+     * The `accentColor` parameter accepts the following values:
+     *
+     * * **Color string** - Like `true`, but sets a custom accent color using standard
+     * CSS color formats (Hex, RGB, RGBA, HSL, HSLA, or named colors). Alpha values in
+     * RGBA/HSLA formats are ignored and the color is treated as fully opaque.
+     * * **`true`** - Enable accent color highlighting for the window with the system
+     * accent color regardless of whether accent colors are enabled for windows in
+     * System `Settings.`
+     * * **`false`** - Disable accent color highlighting for the window regardless of
+     * whether accent colors are currently enabled for windows in System Settings.
+     * * **`null`** - Reset window accent color behavior to follow behavior set in
+     * System Settings.
+     *
+     * Examples:
+     *
+     * @platform win32
+     */
+    override fun setAccentColor(accentColor: String?)
+
+    /**
+     * Sets whether the window should show always on top of other windows. After
+     * setting this, the window is still a normal window, not a toolbox window which
+     * can not be focused on.
+     *
+     * Not supported on Wayland (Linux).
+     */
+    fun setAlwaysOnTop(
+        flag: Boolean,
+        level: BrowserWindowSetAlwaysOnTopLevel = definedExternally,
+        relativeLevel: Double = definedExternally,
+    )
+
+    /**
+     * Sets the properties for the window's taskbar button.
+     *
+     * > [!NOTE] `relaunchCommand` and `relaunchDisplayName` must always be set
+     * together. If one of those properties is not set, then neither will be used.
+     *
+     * @platform win32
+     */
+    override fun setAppDetails(options: AppDetailsOptions)
+
+    /**
+     * This will make a window maintain an aspect ratio. The extra size allows a
+     * developer to have space, specified in pixels, not included within the aspect
+     * ratio calculations. This API already takes into account the difference between a
+     * window's size and its content size.
+     *
+     * Consider a normal window with an HD video player and associated controls.
+     * Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls
+     * on the right edge and 50 pixels of controls below the player. In order to
+     * maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within
+     * the player itself we would call this function with arguments of 16/9 and {
+     * width: 40, height: 50 }. The second argument doesn't care where the extra width
+     * and height are within the content view--only that they exist. Sum any extra
+     * width and height areas you have within the overall content view.
+     *
+     * The aspect ratio is not respected when window is resized programmatically with
+     * APIs like `win.setSize`.
+     *
+     * To reset an aspect ratio, pass 0 as the `aspectRatio` value:
+     * `win.setAspectRatio(0)`.
+     */
+    override fun setAspectRatio(
+        aspectRatio: Double,
+        extraSize: Size,
+    )
+
+    /**
+     * Controls whether to hide cursor when typing.
+     *
+     * @platform darwin
+     */
+    override fun setAutoHideCursor(autoHide: Boolean)
+
+    /**
+     * Sets whether the window menu bar should hide itself automatically. Once set the
+     * menu bar will only show when users press the single `Alt` key.
+     *
+     * If the menu bar is already visible, calling `setAutoHideMenuBar(true)` won't
+     * hide it immediately.
+     *
+     * @platform win32,linux
+     */
+    override fun setAutoHideMenuBar(hide: Boolean)
+
+    /**
+     * Examples of valid `backgroundColor` values:
+     *
+     * * Hex
+     *   * #fff (shorthand RGB)
+     *   * #ffff (shorthand ARGB)
+     *   * #ffffff (RGB)
+     *   * #ffffffff (ARGB)
+     * * RGB
+     *   * `rgb\(([\d]+),\s*([\d]+),\s*([\d]+)\)`
+     *     * e.g. rgb(255, 255, 255)
+     * * RGBA
+     *   * `rgba\(([\d]+),\s*([\d]+),\s*([\d]+),\s*([\d.]+)\)`
+     *     * e.g. rgba(255, 255, 255, 1.0)
+     * * HSL
+     *   * `hsl\((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%\)`
+     *     * e.g. hsl(200, 20%, 50%)
+     * * HSLA
+     *   * `hsla\((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)`
+     *     * e.g. hsla(200, 20%, 50%, 0.5)
+     * * Color name
+     *   * Options are listed in SkParseColor.cpp
+     *   * Similar to CSS Color Module Level 3 keywords, but case-sensitive.
+     *     * e.g. `blueviolet` or `red`
+     *
+     * Sets the background color of the window. See Setting `backgroundColor`.
+     */
+    override fun setBackgroundColor(backgroundColor: String)
+
+    /**
+     * This method sets the browser window's system-drawn background material,
+     * including behind the non-client area.
+     *
+     * See the Windows documentation for more details.
+     *
+     * > [!NOTE] This method is only supported on Windows 11 22H2 and up.
+     *
+     * @platform win32
+     */
+    fun setBackgroundMaterial(material: BrowserWindowSetBackgroundMaterialMaterial)
+
+    /**
+     * Resizes and moves the window to the supplied bounds. Any properties that are not
+     * supplied will default to their current values.
+     *
+     * On Wayland (Linux), has the same limitations as `setSize` and `setPosition`.
+     *
+     * > [!NOTE] On macOS, the y-coordinate value cannot be smaller than the Tray
+     * height. The tray height has changed over time and depends on the operating
+     * system, but is between 20-40px. Passing a value lower than the tray height will
+     * result in a window that is flush to the tray.
+     */
+    override fun setBounds(
+        bounds: Rectangle,
+        animate: Boolean,
+    )
+
+    /**
+     * Sets whether the window can be manually closed by user. On Linux does nothing.
+     *
+     * @platform darwin,win32
+     */
+    override fun setClosable(closable: Boolean)
+
+    /**
+     * Resizes and moves the window's client area (e.g. the web page) to the supplied
+     * bounds.
+     *
+     * On Wayland (Linux), has the same limitations as `setContentSize` and
+     * `setPosition`.
+     */
+    override fun setContentBounds(
+        bounds: Rectangle,
+        animate: Boolean,
+    )
+
+    /**
+     * Prevents the window contents from being captured by other apps.
+     *
+     * On Windows, it calls `SetWindowDisplayAffinity` with `WDA_EXCLUDEFROMCAPTURE`.
+     * For Windows 10 version 2004 and up the window will be removed from capture
+     * entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing
+     * a black window. The change takes effect with the next desktop composition, not
+     * when the call returns, so a capture started immediately afterwards can still
+     * contain the window.
+     *
+     * Protection also applies in a Windows remote session. A Remote Desktop client
+     * still shows the window to the remote user, but remote access software that works
+     * by capturing the desktop cannot. To leave windows unprotected in remote sessions
+     * instead, disable the `AllowWindowCaptureExclusionInRemoteSessions` Chromium
+     * feature at the start of your main script. `win.isContentProtected()` still
+     * returns `true` in that case.
+     *
+     * On macOS, it sets the `NSWindow`'s `sharingType` to `NSWindowSharingNone`.
+     * Unfortunately, due to an intentional change in macOS, newer Mac applications
+     * that use `ScreenCaptureKit` will capture your window despite
+     * `win.setContentProtection(true)`. See here.
+     *
+     * @platform darwin,win32
+     */
+    override fun setContentProtection(enable: Boolean)
+
+    /**
+     * Resizes the window's client area (e.g. the web page) to `width` and `height`.
+     *
+     * On Wayland (Linux), may not work as some window managers restrict programmatic
+     * window resizing.
+     */
+    override fun setContentSize(
+        width: Double,
+        height: Double,
+        animate: Boolean,
+    )
+
+    /**
+     * Specifies whether the window’s document has been edited, and the icon in title
+     * bar will become gray when set to `true`.
+     *
+     * @platform darwin
+     */
+    override fun setDocumentEdited(edited: Boolean)
+
+    /**
+     * Disable or enable the window.
+     */
+    override fun setEnabled(enable: Boolean)
+
+    /**
+     * Changes whether the window can be focused.
+     *
+     * On macOS it does not remove the focus from the window.
+     *
+     * @platform darwin,win32
+     */
+    override fun setFocusable(focusable: Boolean)
+
+    /**
+     * Sets whether the window should be in fullscreen mode.
+     *
+     * > [!NOTE] On macOS, fullscreen transitions take place asynchronously. If further
+     * actions depend on the fullscreen state, use the 'enter-full-screen' or
+     * 'leave-full-screen' events.
+     */
+    override fun setFullScreen(flag: Boolean)
+
+    /**
+     * Sets whether the maximize/zoom window button toggles fullscreen mode or
+     * maximizes the window.
+     */
+    override fun setFullScreenable(fullscreenable: Boolean)
+
+    /**
+     * Sets whether the window should have a shadow.
+     */
+    override fun setHasShadow(hasShadow: Boolean)
+
+    /**
+     * Sets whether the window will be hidden when the user toggles into mission
+     * control.
+     *
+     * @platform darwin
+     */
+    override fun setHiddenInMissionControl(hidden: Boolean)
+
+    /**
+     * Changes window icon.
+     *
+     * @platform win32,linux
+     */
+    override fun setIcon(icon: NativeImage)
+
+    /**
+     * Changes window icon.
+     *
+     * @platform win32,linux
+     */
+    override fun setIcon(icon: String)
+
+    /**
+     * Makes the window ignore all mouse events.
+     *
+     * All mouse events happened in this window will be passed to the window below this
+     * window, but if this window has focus, it will still receive keyboard events. On
+     * Linux this is supported on both X11 and Wayland. On X11 the X server has applied
+     * the window's new input shape when the call returns; on Wayland the new input
+     * region is applied with the window's next frame.
+     *
+     * > [!NOTE] On Windows, `forward: true` stops working temporarily when the active
+     * window is running at a higher integrity level (e.g., elevated/Administrator)
+     * than your Electron app. Since Electron typically runs at standard user
+     * privilege, this occurs when an elevated window—such as Task Manager or an
+     * installer—takes focus. This is due to User Interface Privacy Isolation (UIPI).
+     *
+     * To work around it, your app must be run with Administrator privileges or
+     * configured with UIAccess privileges (see the Background section under the
+     * Reference section of this page).
+     */
+    override fun setIgnoreMouseEvents(
+        ignore: Boolean,
+        options: IgnoreMouseEventsOptions,
+    )
+
+    /**
+     * Enters or leaves kiosk mode.
+     */
+    override fun setKiosk(flag: Boolean)
+
+    /**
+     * Sets whether the window can be manually maximized by user. On Linux does
+     * nothing.
+     *
+     * @platform darwin,win32
+     */
+    override fun setMaximizable(maximizable: Boolean)
+
+    /**
+     * Sets the maximum size of window to `width` and `height`.
+     */
+    override fun setMaximumSize(
+        width: Double,
+        height: Double,
+    )
+
+    /**
+     * Sets the `menu` as the window's menu bar.
+     *
+     * @platform linux,win32
+     */
+    override fun setMenu(menu: Menu?)
+
+    /**
+     * Sets whether the menu bar should be visible. If the menu bar is auto-hide, users
+     * can still bring up the menu bar by pressing the single `Alt` key.
+     *
+     * @platform win32,linux
+     */
+    override fun setMenuBarVisibility(visible: Boolean)
+
+    /**
+     * Sets whether the window can be manually minimized by user. On Linux does
+     * nothing.
+     *
+     * @platform darwin,win32
+     */
+    override fun setMinimizable(minimizable: Boolean)
+
+    /**
+     * Sets the minimum size of window to `width` and `height`.
+     */
+    override fun setMinimumSize(
+        width: Double,
+        height: Double,
+    )
+
+    /**
+     * Sets whether the window can be moved by user. On Linux does nothing.
+     *
+     * @platform darwin,win32
+     */
+    override fun setMovable(movable: Boolean)
+
+    /**
+     * Sets the opacity of the window. Out of bound number values are clamped to the
+     * [0, 1] range.
+     */
+    override fun setOpacity(opacity: Double)
+
+    /**
+     * Sets a 16 x 16 pixel overlay onto the current taskbar icon, usually used to
+     * convey some sort of application status or to passively notify the user.
+     *
+     * @platform win32
+     */
+    override fun setOverlayIcon(
+        overlay: NativeImage?,
+        description: String,
+    )
+
+    /**
+     * Sets `parent` as current window's parent window, passing `null` will turn
+     * current window into a top-level window.
+     */
+    fun setParentWindow(parent: BrowserWindow?)
+
+    /**
+     * Moves window to `x` and `y`.
+     *
+     * Not supported on Wayland (Linux).
+     */
+    override fun setPosition(
+        x: Double,
+        y: Double,
+        animate: Boolean,
+    )
+
+    /**
+     * Sets progress value in progress bar. Valid range is [0, 1.0].
+     *
+     * Remove progress bar when progress < 0; Change to indeterminate mode when
+     * progress > 1.
+     *
+     * On Windows, a mode can be passed. Accepted values are `none`, `normal`,
+     * `indeterminate`, `error`, and `paused`. If you call `setProgressBar` without a
+     * mode set (but with a value within the valid range), `normal` will be assumed.
+     *
+     * On Linux, the progress bar shows on docks and taskbars that support the
+     * LauncherEntry D-Bus API. It is associated with the app's `.desktop` file, so
+     * `app.setDesktopName` must match the name of the app's actual `.desktop` file.
+     * Indeterminate mode is not supported.
+     */
+    override fun setProgressBar(
+        progress: Double,
+        options: ProgressBarOptions,
+    )
+
+    /**
+     * Sets the pathname of the file the window represents, and the icon of the file
+     * will show in window's title bar.
+     *
+     * @platform darwin
+     */
+    override fun setRepresentedFilename(filename: String)
+
+    /**
+     * Sets whether the window can be manually resized by the user.
+     */
+    override fun setResizable(resizable: Boolean)
+
+    /**
+     * Setting a window shape determines the area within the window where the system
+     * permits drawing and user interaction. Outside of the given region, no pixels
+     * will be drawn and no mouse events will be registered. Mouse events outside of
+     * the region will not be received by that window, but will fall through to
+     * whatever is behind the window.
+     *
+     * @experimental
+     * @platform win32,linux
+     */
+    override fun setShape(rects: js.array.ReadonlyArray<Rectangle>)
+
+    /**
+     * Changes the attachment point for sheets on macOS. By default, sheets are
+     * attached just below the window frame, but you may want to display them beneath a
+     * HTML-rendered toolbar. For example:
+     *
+     * @platform darwin
+     */
+    override fun setSheetOffset(
+        offsetY: Double,
+        offsetX: Double,
+    )
+
+    /**
+     * Enters or leaves simple fullscreen mode.
+     *
+     * Simple fullscreen mode emulates the native fullscreen behavior found in versions
+     * of macOS prior to Lion (10.7).
+     *
+     * @platform darwin
+     */
+    override fun setSimpleFullScreen(flag: Boolean)
+
+    /**
+     * Resizes the window to `width` and `height`. If `width` or `height` are below any
+     * set minimum size constraints the window will snap to its minimum size.
+     *
+     * On Wayland (Linux), may not work as some window managers restrict programmatic
+     * window resizing.
+     */
+    override fun setSize(
+        width: Double,
+        height: Double,
+        animate: Boolean,
+    )
+
+    /**
+     * Makes the window not show in the taskbar.
+     *
+     * @platform darwin,win32
+     */
+    override fun setSkipTaskbar(skip: Boolean)
+
+    /**
+     * Whether the buttons were added successfully
+     *
+     * Add a thumbnail toolbar with a specified set of buttons to the thumbnail image
+     * of a window in a taskbar button layout. Returns a `boolean` object indicates
+     * whether the thumbnail has been added successfully.
+     *
+     * The number of buttons in thumbnail toolbar should be no greater than 7 due to
+     * the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be
+     * removed due to the platform's limitation. But you can call the API with an empty
+     * array to clean the buttons.
+     *
+     * The `buttons` is an array of `Button` objects:
+     *
+     * * `Button` Object
+     *   * `icon` NativeImage - The icon showing in thumbnail toolbar.
+     *   * `click` Function
+     *   * `tooltip` string (optional) - The text of the button's tooltip.
+     *   * `flags` string[] (optional) - Control specific states and behaviors of the
+     * button. By default, it is `['enabled']`.
+     *
+     * The `flags` is an array that can include following `string`s:
+     *
+     * * `enabled` - The button is active and available to the user.
+     * * `disabled` - The button is disabled. It is present, but has a visual state
+     * indicating it will not respond to user action.
+     * * `dismissonclick` - When the button is clicked, the thumbnail window closes
+     * immediately.
+     * * `nobackground` - Do not draw a button border, use only the image.
+     * * `hidden` - The button is not shown to the user.
+     * * `noninteractive` - The button is enabled but not interactive; no pressed
+     * button state is drawn. This value is intended for instances where the button is
+     * used in a notification.
+     *
+     * @platform win32
+     */
+    override fun setThumbarButtons(buttons: js.array.ReadonlyArray<ThumbarButton>): Boolean
+
+    /**
+     * Sets the region of the window to show as the thumbnail image displayed when
+     * hovering over the window in the taskbar. You can reset the thumbnail to be the
+     * entire window by specifying an empty region: `{ x: 0, y: 0, width: 0, height: 0
+     * }`.
+     *
+     * @platform win32
+     */
+    override fun setThumbnailClip(region: Rectangle)
+
+    /**
+     * Sets the toolTip that is displayed when hovering over the window thumbnail in
+     * the taskbar.
+     *
+     * @platform win32
+     */
+    override fun setThumbnailToolTip(toolTip: String)
+
+    /**
+     * Changes the title of native window to `title`.
+     */
+    override fun setTitle(title: String)
+
+    /**
+     * On a window with Window Controls Overlay already enabled, this method updates
+     * the style of the title bar overlay.
+     *
+     * On Linux, the `symbolColor` is automatically calculated to have minimum
+     * accessible contrast to the `color` if not explicitly set.
+     *
+     * @platform win32,linux
+     */
+    override fun setTitleBarOverlay(options: TitleBarOverlayOptions)
+
+    /**
+     * Sets the touchBar layout for the current window. Specifying `null` or
+     * `undefined` clears the touch bar. This method only has an effect if the machine
+     * has a touch bar.
+     *
+     * > [!NOTE] The TouchBar API is currently experimental and may change or be
+     * removed in future Electron releases.
+     *
+     * @platform darwin
+     */
+    override fun setTouchBar(touchBar: TouchBar?)
+
+    /**
+     * Adds a vibrancy effect to the browser window. Passing `null` or an empty string
+     * will remove the vibrancy effect on the window. The `animationDuration` parameter
+     * only animates fading in or fading out the vibrancy effect. Animating between
+     * different types of vibrancy is not supported.
+     *
+     * @platform darwin
+     */
+    fun setVibrancy(
+        type: BrowserWindowSetVibrancyType?,
+        options: VibrancyOptions = definedExternally,
+    )
+
+    /**
+     * Sets whether the window should be visible on all workspaces.
+     *
+     * > [!NOTE] This API does nothing on Windows.
+     *
+     * @platform darwin,linux
+     */
+    override fun setVisibleOnAllWorkspaces(
+        visible: Boolean,
+        options: VisibleOnAllWorkspacesOptions,
+    )
+
+    /**
+     * Set a custom position for the traffic light buttons in frameless window. Passing
+     * `null` will reset the position to default.
+     *
+     * @platform darwin
+     */
+    override fun setWindowButtonPosition(position: Point?)
+
+    /**
+     * Sets whether the window traffic light buttons should be visible.
+     *
+     * @platform darwin
+     */
+    override fun setWindowButtonVisibility(visible: Boolean)
+
+    /**
+     * Shows and gives focus to the window.
+     */
+    override fun show()
+
+    /**
+     * Shows or hides the tab overview when native tabs are enabled.
+     *
+     * @platform darwin
+     */
+    override fun showAllTabs()
+
+    /**
+     * Same as `webContents.showDefinitionForSelection()`.
+     *
+     * @platform darwin
+     */
+    fun showDefinitionForSelection()
+
+    /**
+     * Shows the window but doesn't focus on it.
+     *
+     * Not supported on Wayland (Linux).
+     */
+    override fun showInactive()
+
+    /**
+     * Toggles the visibility of the tab bar if native tabs are enabled and there is
+     * only one tab in the current window.
+     *
+     * @platform darwin
+     */
+    override fun toggleTabBar()
+
+    /**
+     * Unhooks all of the window messages.
+     *
+     * @platform win32
+     */
+    override fun unhookAllWindowMessages()
+
+    /**
+     * Unhook the window message.
+     *
+     * @platform win32
+     */
+    override fun unhookWindowMessage(message: Double)
+
+    /**
+     * Unmaximizes the window.
+     */
+    override fun unmaximize()
+
+    /**
+     * A `string` property that defines an alternative title provided only to
+     * accessibility tools such as screen readers. This string is not directly visible
+     * to users.
+     */
+    override var accessibleTitle: String
+
+    /**
+     * A `boolean` property that determines whether the window menu bar should hide
+     * itself automatically. Once set, the menu bar will only show when users press the
+     * single `Alt` key.
+     *
+     * If the menu bar is already visible, setting this property to `true` won't hide
+     * it immediately.
+     *
+     * @platform linux,win32
+     */
+    override var autoHideMenuBar: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window can be manually closed
+     * by user.
+     *
+     * On Linux the setter is a no-op, although the getter returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override var closable: Boolean
+
+    /**
+     * A `boolean` property that specifies whether the window’s document has been
+     * edited.
+     *
+     * The icon in title bar will become gray when set to `true`.
+     *
+     * @platform darwin
+     */
+    override var documentEdited: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window is excluded from the
+     * application’s Windows menu. `false` by default.
+     *
+     * @platform darwin
+     */
+    override var excludedFromShownWindowsMenu: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window is focusable.
+     *
+     * @platform win32,darwin
+     */
+    override var focusable: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window is in fullscreen mode.
+     */
+    override var fullScreen: Boolean
+
+    /**
+     * A `boolean` property that determines whether the maximize/zoom window button
+     * toggles fullscreen mode or maximizes the window.
+     */
+    override var fullScreenable: Boolean
+
+    /**
+     * A `Integer` property representing the unique ID of the window. Each ID is unique
+     * among all `BrowserWindow` instances of the entire Electron application.
+     *
+     */
+    override val id: Double
+
+    /**
+     * A `boolean` property that determines whether the window is in kiosk mode.
+     */
+    override var kiosk: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window can be manually
+     * maximized by user.
+     *
+     * On Linux the setter is a no-op, although the getter returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override var maximizable: Boolean
+
+    /**
+     * A `boolean` property that determines whether the menu bar should be visible.
+     *
+     * > [!NOTE] If the menu bar is auto-hide, users can still bring up the menu bar by
+     * pressing the single `Alt` key.
+     *
+     * @platform win32,linux
+     */
+    override var menuBarVisible: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window can be manually
+     * minimized by user.
+     *
+     * On Linux the setter is a no-op, although the getter returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override var minimizable: Boolean
+
+    /**
+     * A `boolean` property that determines Whether the window can be moved by user.
+     *
+     * On Linux the setter is a no-op, although the getter returns `true`.
+     *
+     * @platform darwin,win32
+     */
+    override var movable: Boolean
+
+    /**
+     * A `string` property that determines the pathname of the file the window
+     * represents, and the icon of the file will show in window's title bar.
+     *
+     * @platform darwin
+     */
+    override var representedFilename: String
+
+    /**
+     * A `boolean` property that determines whether the window can be manually resized
+     * by user.
+     */
+    override var resizable: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window has a shadow.
+     */
+    override var shadow: Boolean
+
+    /**
+     * A `boolean` property that determines whether the window is in simple (pre-Lion)
+     * fullscreen mode.
+     */
+    override var simpleFullScreen: Boolean
+
+    /**
+     * A `boolean` property that indicates whether the window is arranged via Snap.
+     *
+     * @platform win32
+     */
+    override val snapped: Boolean
+
+    /**
+     * A `string` (optional) property that is equal to the `tabbingIdentifier` passed
+     * to the `BrowserWindow` constructor or `undefined` if none was set.
+     *
+     * @platform darwin
+     */
+    override val tabbingIdentifier: String?
+
+    /**
+     * A `string` property that determines the title of the native window.
+     *
+     * > [!NOTE] The title of the web page can be different from the title of the
+     * native window.
+     */
+    override var title: String
+
+    /**
+     * A `boolean` property that determines whether the window is visible on all
+     * workspaces.
+     *
+     * > [!NOTE] Always returns false on Windows.
+     *
+     * @platform darwin,linux
+     */
+    override var visibleOnAllWorkspaces: Boolean
+
+    /**
+     * A `WebContents` object this window owns. All web page related events and
+     * operations will be done via it.
+     *
+     * See the `webContents` documentation for its methods and events.
+     *
+     * > [!NOTE] Reading this property throws `Object has been destroyed` once the
+     * window has been destroyed; see `win.isDestroyed()`.
+     *
+     */
+    val webContents: WebContents
+
+    @web.events.JsEvent("always-on-top-changed")
+    override val alwaysOnTopChangedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Boolean>>
+
+    @web.events.JsEvent("app-command")
+    override val appCommandEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("blur")
+    override val blurEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("close")
+    override val closeEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("closed")
+    override val closedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("enter-full-screen")
+    override val enterFullScreenEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("enter-html-full-screen")
+    val enterHtmlFullScreenEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("focus")
+    override val focusEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("hide")
+    override val hideEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("leave-full-screen")
+    override val leaveFullScreenEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("leave-html-full-screen")
+    val leaveHtmlFullScreenEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("maximize")
+    override val maximizeEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("minimize")
+    override val minimizeEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("move")
+    override val moveEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("moved")
+    override val movedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("new-window-for-tab")
+    override val newWindowForTabEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("page-title-updated")
+    val pageTitleUpdatedEvent: node.events.EventInstance<js.array.Tuple3<Event<*>, String, Boolean>>
+
+    @web.events.JsEvent("persisted-state-restored")
+    override val persistedStateRestoredEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("query-session-end")
+    override val querySessionEndEvent: node.events.EventInstance<js.array.Tuple1<WindowSessionEndEvent>>
+
+    @web.events.JsEvent("ready-to-show")
+    val readyToShowEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("resize")
+    override val resizeEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("resized")
+    override val resizedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("responsive")
+    val responsiveEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("restore")
+    override val restoreEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("rotate-gesture")
+    override val rotateGestureEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Double>>
+
+    @web.events.JsEvent("session-end")
+    override val sessionEndEvent: node.events.EventInstance<js.array.Tuple1<WindowSessionEndEvent>>
+
+    @web.events.JsEvent("sheet-begin")
+    override val sheetBeginEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("sheet-end")
+    override val sheetEndEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("show")
+    override val showEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("swipe")
+    override val swipeEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("system-context-menu")
+    override val systemContextMenuEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Point>>
+
+    @web.events.JsEvent("unmaximize")
+    override val unmaximizeEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("unresponsive")
+    val unresponsiveEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("will-move")
+    override val willMoveEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Rectangle>>
+
+    @web.events.JsEvent("will-resize")
+    override val willResizeEvent: node.events.EventInstance<js.array.Tuple3<Event<*>, Rectangle, WillResizeDetails>>
+
+    companion object {
+        /**
+         * The window with the given `id`.
+         */
+        fun fromId(id: Double): BrowserWindow?
+
+        /**
+         * The window that owns the given `webContents` or `null` if the contents are not
+         * owned by a window.
+         */
+        fun fromWebContents(webContents: WebContents): BrowserWindow?
+
+        /**
+         * An array of all opened browser windows.
+         */
+        fun getAllWindows(): js.array.ReadonlyArray<BrowserWindow>
+
+        /**
+         * The window that is focused in this application, otherwise returns `null`.
+         */
+        fun getFocusedWindow(): BrowserWindow?
+    }
+}

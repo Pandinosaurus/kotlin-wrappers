@@ -1,0 +1,50 @@
+// Automatically generated - do not modify!
+
+package web.navigation
+
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.url.URL
+
+/**
+ * The **`NavigationPrecommitController`** interface of the Navigation API is passed as an argument to a navigation precommit handler callback.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationPrecommitController)
+ */
+open external class NavigationPrecommitController
+private constructor() {
+    /**
+     * The **`addHandler()`** method of the NavigationPrecommitController interface allows you to dynamically add a handler callback function in precommit code, which will then be run after the navigation has committed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationPrecommitController/addHandler)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(SecurityError::class)
+    open fun addHandler(handler: NavigationInterceptHandler)
+
+    /**
+     * The **`redirect()`** method of the NavigationPrecommitController interface redirects the browser to a specified URL and specifies history behavior and any desired state information.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationPrecommitController/redirect)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(SecurityError::class)
+    @JsThrows(SyntaxError::class)
+    open fun redirect(
+        url: String,
+        options: NavigationNavigateOptions = definedExternally,
+    )
+
+    /**
+     * The **`redirect()`** method of the NavigationPrecommitController interface redirects the browser to a specified URL and specifies history behavior and any desired state information.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/NavigationPrecommitController/redirect)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(SecurityError::class)
+    @JsThrows(SyntaxError::class)
+    open fun redirect(
+        url: URL,
+        options: NavigationNavigateOptions = definedExternally,
+    )
+}

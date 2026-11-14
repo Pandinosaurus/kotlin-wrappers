@@ -1,0 +1,47 @@
+// Automatically generated - do not modify!
+
+package node
+
+external interface CallSite {
+    fun getColumnNumber(): Double?
+
+    fun getEnclosingColumnNumber(): Double?
+
+    fun getEnclosingLineNumber(): Double?
+
+    fun getEvalOrigin(): String?
+
+    fun getFileName(): String?
+
+    fun getFunction(): Function<*>?
+
+    fun getFunctionName(): String?
+
+    fun getLineNumber(): Double?
+
+    fun getMethodName(): String?
+
+    fun getPosition(): Double
+
+    fun getPromiseIndex(): Double?
+
+    fun getScriptHash(): String
+
+    fun getScriptNameOrSourceURL(): String?
+
+    fun getThis(): Any?
+
+    fun getTypeName(): String?
+
+    fun isAsync(): Boolean
+
+    fun isConstructor(): Boolean
+
+    fun isEval(): Boolean
+
+    fun isNative(): Boolean
+
+    fun isPromiseAll(): Boolean
+
+    fun isToplevel(): Boolean
+}

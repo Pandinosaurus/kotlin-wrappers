@@ -1,0 +1,39 @@
+// Automatically generated - do not modify!
+
+package web.speech
+
+import web.events.Event
+import web.events.EventType
+
+/**
+ * The **`SpeechRecognitionEvent`** interface of the Web Speech API represents the event object for the result and nomatch events, and contains all the data associated with an interim or final speech recognition result.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SpeechRecognitionEvent)
+ */
+open external class SpeechRecognitionEvent(
+    override val type: EventType<SpeechRecognitionEvent>,
+    init: SpeechRecognitionEventInit,
+) : Event {
+    /**
+     * The **`resultIndex`** read-only property of the SpeechRecognitionEvent interface returns the lowest index value result in the SpeechRecognitionResultList "array" that has actually changed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SpeechRecognitionEvent/resultIndex)
+     */
+    open val resultIndex: Int
+
+    /**
+     * The **`results`** read-only property of the SpeechRecognitionEvent interface returns a SpeechRecognitionResultList object representing all the speech recognition results for the current session.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SpeechRecognitionEvent/results)
+     */
+    open val results: SpeechRecognitionResultList
+
+    companion object
+}
+
+inline val SpeechRecognitionEvent.Companion.NO_MATCH: EventType<SpeechRecognitionEvent>
+    get() = EventType("nomatch")
+
+inline val SpeechRecognitionEvent.Companion.RESULT: EventType<SpeechRecognitionEvent>
+    get() = EventType("result")

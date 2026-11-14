@@ -1,0 +1,918 @@
+package karakum.browser
+
+private const val SVG_ANIMATED_ENUMERATION_BEFORE = "\ninterface SVGAnimatedEnumeration {"
+private const val SVG_ANIMATED_ENUMERATION_AFTER = "\ninterface SVGAnimatedEnumeration<T> {"
+
+internal fun String.applyPatches(): String {
+    return patchVideoFrameCallback()
+        .removeDuplicatedInstanceConstants()
+        .applyReadyStatePatches()
+        .applyEnumPatches()
+        // TODO: report nullability problem
+        .replace("  toJSON(): any;", "  toJSON(): object;")
+        .replace(" extends NodeListOf<", " extends NodeList<")
+        .replace(": NodeListOf<", ": NodeList<")
+        .replace(" extends HTMLCollectionOf<", " extends HTMLCollection<")
+        .replace(": HTMLCollectionOf<", ": HTMLCollection<")
+        .patchQuerySelectors()
+        .patchInterface("Element") {
+            it.replace(
+                """
+            matches<K extends keyof HTMLElementTagNameMap>(selectors: K): this is HTMLElementTagNameMap[K];
+            matches<K extends keyof SVGElementTagNameMap>(selectors: K): this is SVGElementTagNameMap[K];
+            matches<K extends keyof MathMLElementTagNameMap>(selectors: K): this is MathMLElementTagNameMap[K];
+            """.trimIndent().prependIndent("    ") + "\n",
+                "",
+            )
+        }
+        .replace(Regex("""(\n\s+)get (.+)\(\)(: string;)\n\s+set .+\(.+: string \| null\);"""), "$1$2$3")
+        .replace(Regex("""(\n\s+)get (.+)\(\)(: .+;)"""), "$1readonly $2$3")
+        .replace(Regex("""\n\s+set .+\(.+: string\);"""), "")
+        .replace("    autocapitalize: string;", "    autocapitalize: $AUTO_CAPITALIZE;")
+        .replace("""    fetchPriority: "high" | "low" | "auto";""", "    fetchPriority: $FETCH_PRIORITY;")
+        .replace("""    hidden: boolean | "until-found";""", "    hidden: $HIDDEN;")
+        .replace(Regex("""(\ninterface \w+Error) \{"""), "$1 extends JsErrorLike {")
+        .patchInterfaces("Request", "RequestInit", "XMLHttpRequest") {
+            it.replace(Regex("""([( ]method\??: )string([;,])"""), "$1$REQUEST_METHOD$2")
+        }
+        .patchInterface("HTMLElement") {
+            it.replace("    popover: string | null;", "    popover: $POPOVER | null;")
+        }
+        .patchInterface("PopoverTargetAttributes") {
+            it.replace(
+                "    popoverTargetAction: string;",
+                "    popoverTargetAction: $POPOVER_TARGET_ACTION;",
+            )
+        }
+        .patchInterfaces("ToggleEvent", "ToggleEventInit") {
+            it.replace("State: string;", "State: $TOGGLE_STATE;")
+                .replace("State?: string;", "State?: $TOGGLE_STATE;")
+        }
+        .patchInterface("HTMLFormElement") {
+            it.replace("    method: string;", "    method: $FORM_METHOD;")
+                .replace("    enctype: string;", "    enctype: $FORM_ENCTYPE;")
+        }
+        .replace("    formMethod: string;", "    formMethod: $FORM_METHOD;")
+        .replace("    formEnctype: string;", "    formEnctype: $FORM_ENCTYPE;")
+        .patchInterface("ProgressEvent") {
+            it.replace("\n    readonly target: T | null;", "")
+        }
+        .replace("ProgressEvent<T extends EventTarget = EventTarget>", "ProgressEvent")
+        .replace("ProgressEvent<FileReader>", "ProgressEvent")
+        .patchInterface("CustomEvent") {
+            it.replace("\n    readonly detail: T;", "\n    readonly detail: D;")
+        }
+        .replace(" CustomEvent<T = any>", " CustomEvent<D = any>")
+        .patchInterface("CustomEventInit") {
+            it.replace("\n    detail?: T;", "\n    detail?: D;")
+        }
+        .replace(" CustomEventInit<T = any>", " CustomEventInit<D = any>")
+        .replace(" CustomEventInit<T>", " CustomEventInit<D>")
+        .patchInterface("MessageEvent") {
+            it.replace("\n    readonly data: T;", "\n    readonly data: D;")
+        }
+        .replace(" MessageEvent<T = any>", " MessageEvent<D = any>")
+        .patchInterface("MessageEventInit") {
+            it.replace("\n    data?: T;", "\n    data?: D;")
+        }
+        .replace(" MessageEventInit<T = any>", " MessageEventInit<D = any>")
+        .replace(" MessageEventInit<T>", " MessageEventInit<D>")
+        .patchInterface("URLSearchParams") {
+            it.replace("name: string", "key: string")
+                .replace(
+                    "    has(key: string, value?: string): boolean;",
+                    "    has(key: string): boolean;" +
+                            "\n    has(key: string, value: string): boolean;",
+                )
+        }
+        .patchInterface("MediaKeyStatusMap") {
+            it.replace("(keyId: ", "(key: ")
+        }
+        .patchInterface("StylePropertyMapReadOnly") {
+            it.replace("has(property: ", "has(key: ")
+        }
+        .patchInterface("EventModifierInit") {
+            it.replace("    ", "    readonly ")
+        }
+        // FormData
+        .replace(
+            "\n    append(name: string, value: string | Blob): void;\n" +
+                    "    append(name: string, value: string): void;\n",
+            "\n    append(name: string, value: string | Blob): void;\n",
+        )
+        .replace(
+            "\n    set(name: string, value: string | Blob): void;\n" +
+                    "    set(name: string, value: string): void;\n",
+            "\n    set(name: string, value: string | Blob): void;\n",
+        )
+        .replace("    getReader(options: { mode: \"byob\" }): ReadableStreamBYOBReader;\n", "")
+        .replace(
+            ", strategy?: { highWaterMark?: number }): ReadableStream<",
+            ", strategy?: QueuingStrategy<R>): ReadableStream<",
+        )
+        .patchInterface("ReadableStream") {
+            "$it\n    values(options?: ReadableStreamIteratorOptions): AsyncIterator<R>"
+        }
+        // TRUSTED TYPES START
+        .replace(
+            "parseFromString(string: string,",
+            "parseFromString(string: TrustedHTML | string,",
+        )
+        .replace(
+            "innerHTML: string;",
+            "innerHTML: TrustedHTML | string;",
+        )
+        .replace(
+            "outerHTML: string;",
+            "outerHTML: TrustedHTML | string;",
+        )
+        .replace(
+            "srcdoc: string;",
+            "srcdoc: TrustedHTML | string;",
+        )
+        .replace(
+            "parseHTMLUnsafe(html: string, ",
+            "parseHTMLUnsafe(html: TrustedHTML | string, ",
+        )
+        .replace(
+            "setHTMLUnsafe(html: string, ",
+            "setHTMLUnsafe(html: TrustedHTML | string, ",
+        )
+        .replace(
+            "insertAdjacentHTML(position: InsertPosition, string: string): void;",
+            "insertAdjacentHTML(position: InsertPosition, string: TrustedHTML | string): void;",
+        )
+        .replace(
+            "createContextualFragment(string: string)",
+            "createContextualFragment(string: TrustedHTML | string)",
+        )
+        .replace(
+            "register(scriptURL: string | URL,",
+            "register(scriptURL: TrustedScriptURL | string | URL,",
+        )
+        .replace(
+            "new(scriptURL: string | URL,",
+            "new(scriptURL: TrustedScriptURL | string | URL,",
+        )
+        .splitUnion("TrustedHTML | string")
+        .splitUnion("TrustedScriptURL | string | URL")
+        .splitUnion("(TrustedHTML | string)[]", "TrustedHTML[] | string[]")
+        // TRUSTED TYPES END
+        .replace(""""$Ed25519" | { name: "$Ed25519" }""", "${Ed25519}Algorithm")
+        .replace(""""$X25519" | { name: "$X25519" }""", "${X25519}Algorithm")
+        .replace("    reason?: any;", "    reason?: JsError | undefined;")
+        .replace("readonly reason: any;", "readonly reason: JsErrorLike | undefined;")
+        .replace("(reason?: any)", "(reason?: JsError | undefined)")
+        .replace("\n    exportKey(format: KeyFormat, key: CryptoKey): Promise<ArrayBuffer | JsonWebKey>;", "")
+        .splitUnion("string | string[]")
+        .splitUnion("string | number[]")
+        .splitUnion("string | BufferSource")
+        .splitUnion("number[] | Float32Array")
+        .splitUnion("string | WorkerOptions")
+        .splitUnion("string | ElementCreationOptions")
+        .splitUnion("TogglePopoverOptions | boolean")
+        .splitUnion("(Element | Text)[]", "Element[] | Text[]")
+        .splitUnion("(Node | string)[]", "Node[] | string[]")
+        .patchInterface("ParentNode") {
+            it.replace(
+                "\n    replaceChildren(...nodes: string[]): void;",
+                "\n    replaceChildren(...nodes: string[]): void;" +
+                        "\n    replaceChildren(): void;",
+            )
+        }
+        .splitUnion("(CSSStyleValue | string)[]", "CSSStyleValue[] | string[]")
+        .splitUnion("boolean | ImportNodeOptions")
+        .replace(
+            "importNode<T extends Node>(node: T, options?: boolean)",
+            "importNode<T extends Node>(node: T, subtree?: boolean)",
+        )
+        .splitUnion("HTMLOptionElement | HTMLOptGroupElement")
+        .splitUnion("ViewTransitionUpdateCallback | StartViewTransitionOptions")
+        .splitUnion("HTMLElement | number")
+        .splitUnion("string[][] | Record<string, string> | string | URLSearchParams")
+        .splitTypealias("BinaryData")
+        .splitUnion("string | ArrayBuffer | ArrayBufferView")
+        .splitUnion("Document | XMLHttpRequestBodyInit")
+        .splitTypealias("XMLHttpRequestBodyInit")
+        .splitUnion("Blob | BufferSource | FormData | URLSearchParams | string")
+        .extractUrlLike()
+        .splitUnion("string | URLLike")
+        .splitUnion("string | URL")
+        .splitUnion("string | Blob")
+        .replace("(request: RequestInfo | URL,", "(url: string | URL | Request,")
+        .replace("(request?: RequestInfo | URL,", "(url?: string | URL | Request,")
+        .replace("(request: RequestInfo | URL)", "(url: string | URL | Request)")
+        .replace("(request?: RequestInfo | URL)", "(url?: string | URL | Request)")
+        .replace("(input: RequestInfo | URL,", "(url: string | URLLike | Request,")
+        .splitUnion("string | URL | Request")
+        .splitUnion("string | URLLike | Request")
+        .replace("(url: Request,", "(request: Request,")
+        .replace("(url?: Request,", "(request?: Request,")
+        .replace("(url: Request)", "(request: Request)")
+        .replace("(url?: Request)", "(request?: Request)")
+        .splitUnion("RequestInfo | URL", "RequestInfo | URLLike")
+        .splitUnion("RequestInfo", "Request | string")
+        .splitUnion("URLPatternInput", "string | URLPatternInit")
+        .replace("(requests: string[])", "(urls: string[])")
+        .replace(", protocols?: string)", ", protocol?: string)")
+        .splitTypealias("HeadersInit", safeMode = true)
+        .replaceFirst("new(init: Headers)", "new(init: HeadersInit)")
+        .splitUnion("[string, string][] | Record<string, string> | Headers")
+        .splitUnion("MediaStreamTrack | string")
+        .splitUnion("Path2D | string")
+        .splitUnion("string | PerformanceMeasureOptions")
+        .splitUnion("BufferSource | Blob | string")
+        .splitUnion("AlgorithmIdentifier | AesDerivedKeyParams | HmacImportParams | HkdfParams | Pbkdf2Params")
+        .splitUnion("AlgorithmIdentifier | EcdhKeyDeriveParams | HkdfParams | Pbkdf2Params")
+        .splitUnion("AlgorithmIdentifier | RsaHashedImportParams | EcKeyImportParams | HmacImportParams | AesKeyAlgorithm")
+        .splitUnion("AlgorithmIdentifier | RsaOaepParams | AesCtrParams | AesCbcParams | AesGcmParams")
+        .splitUnion("AlgorithmIdentifier | RsaPssParams | EcdsaParams")
+        .splitTypealias("AlgorithmIdentifier", safeMode = true)
+        .splitUnion("RsaHashedKeyGenParams | EcKeyGenParams")
+        .splitUnion("AesKeyGenParams | HmacKeyGenParams | Pbkdf2Params")
+        .splitUnion("IDBValidKey | IDBKeyRange")
+        .splitUnion("PaymentDetailsUpdate | PromiseLike<PaymentDetailsUpdate>")
+        .splitUnion("Response | PromiseLike<Response>")
+        .splitUnion("Keyframe[] | PropertyIndexedKeyframes")
+        .splitUnion("number | KeyframeAnimationOptions")
+        .splitUnion("number | KeyframeEffectOptions")
+        .patchDomGeometry()
+        .patchDecodeAudioData()
+        .replace(GET_CONTEXT_WITH_OPTIONS_REGEX, "")
+        .replace(GET_CONTEXT_REGEX, "")
+        .replace("quality?: any", "quality?: number")
+        .replace("clearWatch(watchId: number)", "clearWatch(watchId: $GEOLOCATION_WATCH_ID)")
+        .replace(": PositionOptions): number;", ": PositionOptions): $GEOLOCATION_WATCH_ID;")
+        .replaceFirst("readonly labels: NodeList;", "readonly labels: NodeList<HTMLLabelElement>;")
+        .replaceFirst(
+            """    setFormValue(value: File | string | FormData | null, state?: File | string | FormData | null): void;""",
+            sequenceOf(
+                """    setFormValue(value: File | null, state?: File | null): void;""",
+                """    setFormValue(value: string | null, state?: string | null): void;""",
+                """    setFormValue(value: FormData | null, state?: FormData | null): void;""",
+            ).joinToString("\n"),
+        )
+        .let {
+            val lines = listOf(
+                """new(angle: CSSNumericValue): CSSRotate;""",
+                """new(x: CSSNumberish, y: CSSNumberish, z: CSSNumberish, angle: CSSNumericValue): CSSRotate;""",
+            )
+
+            it.replaceFirst(
+                lines.joinToString("\n    "),
+                lines.reversed().joinToString("\n    "),
+            )
+        }
+        // TODO: use `Error`
+        .replace("  error(e?: any)", "  error(error?: JsError)")
+        .replace(
+            Regex("""forEach\(callbackfn: \(value: ([\w\[\]]+), .+?, thisArg\?: any\): void;"""),
+            "forEach(action: (item: $1) => void): void;",
+        )
+        .replace("): undefined | CSSStyleValue", "): CSSStyleValue | undefined")
+        .replace(
+            "FileSystemWritableFileStream extends WritableStream {",
+            "FileSystemWritableFileStream extends WritableStream<FileSystemWriteChunkType> {",
+        )
+        .patchCollections()
+        .replace(
+            "arg?: boolean | ScrollIntoViewOptions",
+            "options?: ScrollIntoViewOptions",
+        )
+        .replace(""": "jwk"""", ": KeyFormat.jwk")
+        .replace(""": Exclude<KeyFormat, "jwk">""", ": KeyFormat")
+        .replace(
+            "getModifierState(keyArg: string): boolean",
+            "getModifierState(keyArg: $MODIFIER_KEY_CODE): boolean",
+        )
+        // TODO: apply for `KeyboardEvent` only
+        .replace(
+            "readonly code: string",
+            "readonly code: KeyCode",
+        )
+        .replace(
+            "code?: string",
+            "code?: KeyCode",
+        )
+        .replace(
+            "referrerPolicy: string",
+            "referrerPolicy: ReferrerPolicy",
+        )
+        .replace(
+            """decoding: "async" | "sync" | "auto";""",
+            """decoding: ImageDecoding;""",
+        )
+        .replace(
+            """loading: "eager" | "lazy";""",
+            """loading: Loading;""",
+        )
+        .replace(
+            """enterKeyHint: string;""",
+            """enterKeyHint: EnterKeyHint;""",
+        )
+        .replace(
+            """inputMode: string;""",
+            """inputMode: InputMode;""",
+        )
+        .replace(
+            "crossOrigin: string",
+            "crossOrigin: CrossOrigin",
+        )
+        .replace(
+            "closedBy: string",
+            "closedBy: ClosedBy",
+        )
+        .patchInterface("DOMTokenList") {
+            it.replace(": string", ": T")
+        }
+        .replace("interface DOMTokenList {", "interface DOMTokenList<T : JsAny> {")
+        .replace("classList: DOMTokenList;", "classList: DOMTokenList<ClassName>;")
+        .replace("blocking: DOMTokenList;", "blocking: DOMTokenList<$BLOCKING>;")
+        .replace("htmlFor: DOMTokenList;", "htmlFor: DOMTokenList<ElementId>;")
+        .replace(": DOMTokenList;", ": DOMTokenList<String>;")
+        .replace("className: string", "className: ClassName")
+        .replace("classNames: string", "classNames: ClassName")
+        .replace("elementId: string", "elementId: ElementId")
+        .patchInterface("Element") {
+            it.replace("id: string;", "id: ElementId;")
+        }
+        .patchInterface("HTMLLabelElement") {
+            it.replace("htmlFor: string;", "htmlFor: ElementId;")
+        }
+        .patchInterface("SVGAnimatedEnumeration") {
+            it.replace("Val: number;", "Val: T;")
+        }
+        // TODO: report bug
+        .replace(
+            "internalformat: GLint,",
+            "internalformat: GLenum,",
+        )
+        .replace(
+            """    texParameterf(target: GLenum, pname: GLenum, param: GLfloat): void;""",
+            sequenceOf(
+                """    texParameterf(target: GLenum, pname: GLenum, param: GLenum): void;""",
+                """    texParameterf(target: GLenum, pname: GLenum, param: GLfloat): void;""",
+            ).joinToString("\n"),
+        )
+        .replace(
+            """    texParameteri(target: GLenum, pname: GLenum, param: GLint): void;""",
+            sequenceOf(
+                """    texParameteri(target: GLenum, pname: GLenum, param: GLenum): void;""",
+                """    texParameteri(target: GLenum, pname: GLenum, param: GLint): void;""",
+            ).joinToString("\n"),
+        )
+        .replace(" MessageEventTarget<MessagePort>", " MessageEventTarget")
+        .replace(" MessageEventTarget<Worker>", " MessageEventTarget")
+        .replace(" MessageEventTarget<T>", " MessageEventTarget")
+        .replace(SVG_ANIMATED_ENUMERATION_BEFORE, SVG_ANIMATED_ENUMERATION_AFTER)
+        .applyInlineUnionPatches()
+        .patchInterface("Console") {
+            it.splitToSequence("\n")
+                .flatMap { line ->
+                    val additionalLine = line.replace(
+                        "(...data: any[])",
+                        "(...data: (string | undefined)[])",
+                    )
+
+                    sequenceOf(line, additionalLine)
+                        .distinct()
+                }
+                .joinToString("\n")
+        }
+        .addStrictPostMessageSupport()
+        .replace(
+            "new(context: BaseAudioContext, name: string, options?: AudioWorkletNodeOptions): AudioWorkletNode;",
+            "new(context: BaseAudioContext, name: AudioWorkletProcessorName, options?: AudioWorkletNodeOptions): AudioWorkletNode;",
+        )
+        .patchInterface("Document") {
+            it.replace(
+                "(unused1?: string, unused2?: string): ",
+                "(): ",
+            )
+        }
+        .patchInterfaces(
+            "HTMLButtonElement",
+            "CommandEvent",
+            "CommandEventInit",
+        ) {
+            it.replace("command: string", "command: Command")
+                .replace("command?: string", "command?: Command")
+        }
+        .patchInterface("Node") {
+            it.replace(
+                "compareDocumentPosition(other: Node): number;",
+                "compareDocumentPosition(other: Node): $NODE_POSITION;",
+            )
+        }
+        .splitUnion("SanitizerConfig | SanitizerPresets")
+        .splitUnion("GLint | GLboolean")
+        // TEMP
+        .patchInterface("WebGLRenderingContextBase") {
+            "$it\n    makeXRCompatible(): Promise<void>;"
+        }
+        // TODO: remove after fix
+        //  https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/2439
+        .replace(
+            "interface WebTransportReceiveStream extends ReadableStream {",
+            "interface WebTransportReceiveStream extends ReadableStream<Uint8Array<ArrayBuffer>> {",
+        )
+        .replace(
+            "interface WebTransportSendStream extends WritableStream {",
+            "interface WebTransportSendStream extends WritableStream<BufferSource> {",
+        )
+        .replace(
+            "interface WebTransportDatagramsWritable extends WritableStream {",
+            "interface WebTransportDatagramsWritable extends WritableStream<BufferSource> {",
+        )
+        // TODO: remove after fix
+        //  https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/2447
+        .replace(
+            "interface Memory {",
+            "interface Memory<B extends ArrayBufferLike> {",
+        )
+        .patchInterface("Memory", inNamespace = true) {
+            it.replace(": ArrayBuffer;", ": B;")
+        }
+        .replace(
+            "\n    from(value: any): Origin;",
+            "\n    from(value: OriginSource): Origin;\n    from(value: string): Origin;",
+        )
+        .plus(
+            "\n\ntype OriginSource = URL | Origin | ExtendableMessageEvent | HTMLHyperlinkElementUtils | Location | Window | WorkerGlobalScope | WorkerLocation | MessageEvent;\n",
+        )
+        .replace(", HTMLOrSVGElement, HTMLOrSVGOrMathMLElement", ", HTMLOrSVGOrMathMLElement")
+        .replace("\ndeclare var NodeFilter: {\n", "\ndeclare namespace NodeFilter {\n")
+        .replace("root: Node, whatToShow?: number,", "root: Node, whatToShow?: WhatToShow,")
+        .extractUrlSource()
+        // Details - https://developer.mozilla.org/en-US/docs/Web/API/Document/startViewTransition#updatecallback
+        .patchInterface("ViewTransitionUpdateCallback") {
+            require(it == "\n    (): any;")
+            it.replace("(): any;", "(): void | PromiseLike<void>;")
+        }
+        .patchInterface("LockGrantedCallback<T>") {
+            require(it == "\n    (lock: Lock | null): T;")
+            it.replace("(lock: Lock | null): T;", "(lock: Lock | null): PromiseResult<T>;")
+        }
+        .patchInterface("LockManager") {
+            it.replace(": Promise<Awaited<T>>;", ": Promise<T>;")
+        }
+        .patchInterfaces("Element", "Window") {
+            it.splitToSequence("\n")
+                .joinToString("\n") { line ->
+                    val patchRequired = sequenceOf(
+                        "scroll",
+                        "scrollBy",
+                        "scrollIntoView",
+                        "scrollTo",
+                    ).any { line.startsWith("    $it(") }
+
+                    if (patchRequired) {
+                        line.removeSuffix("): void;")
+                            .also { require(it != line) }
+                            .plus("): Promise<Void> ?;")
+                    } else {
+                        line
+                    }
+                }
+        }
+        .patchInterface("Body") {
+            it + "\n" + """
+            |    /**
+            |     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/textStream)
+            |     */
+            |    textStream(): ReadableStream<string>;
+            """.trimMargin()
+        }
+        .patchInterface("Blob") {
+            it + "\n" + """
+            |    /**
+            |     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Blob/textStream)
+            |     */
+            |    textStream(): ReadableStream<string>;
+            """.trimMargin()
+        }
+        .replace(
+            "from(asyncIterable: AsyncIterable<any> | Iterable<any>): ReadableStream;",
+            "from<R>(source: AsyncIterable<R> | Iterable<R> | Iterable<PromiseLike<R>>): ReadableStream<R>;",
+        )
+        .splitUnion(
+            "AsyncIterable<R> | Iterable<R> | Iterable<PromiseLike<R>>",
+            "AsyncIterable<R> | JsIterable<R> | JsIterable<PromiseLike<R>> | ReadonlyArray<R> | ReadonlyArray<PromiseLike<R>>",
+        )
+        .replace("\ntype GPUFlagsConstant = number;", "")
+        .patchInterface("GPUTexture") {
+            it.replace(
+                "\n    readonly usage: GPUFlagsConstant;",
+                "\n    readonly usage: GPUTextureUsage;",
+            )
+        }
+        .patchInterface("GPUBuffer") {
+            it.replace(
+                "\n    readonly usage: GPUFlagsConstant;",
+                "\n    readonly usage: GPUBufferUsage;",
+            )
+        }
+        .applyPerformanceFixes()
+}
+
+private fun String.applyPerformanceFixes(): String =
+    replace(
+        """
+    getEntriesByName(name: string, type: "mark"): PerformanceMark[];
+    getEntriesByName(name: string, type: "measure"): PerformanceMeasure[];
+    getEntriesByName(name: string, type: "resource"): PerformanceResourceTiming[];
+""".trimEnd(),
+        "",
+    )
+        .replace(
+            """
+    getEntriesByType(type: "mark"): PerformanceMark[];
+    getEntriesByType(type: "measure"): PerformanceMeasure[];
+    getEntriesByType(type: "resource"): PerformanceResourceTiming[];
+""".trimEnd(),
+            "",
+        )
+
+internal val DOM_GEOMETRY_ALIASES = listOf(
+    "DOMQuadInit" to "DOMQuad",
+    "DOMPointInit" to "DOMPointReadOnly",
+    "DOMRectInit" to "DOMRectReadOnly",
+    "DOMMatrixInit" to "DOMMatrixReadOnly",
+    "DOMMatrix2DInit" to "DOMMatrixReadOnly",
+)
+
+private fun String.extractUrlLike(): String =
+    let { source ->
+        val urlBody = source
+            .substringAfter("\ndeclare var URL: {\n", "")
+            .substringBefore("\n};\n", "")
+            .also { require(it.isNotEmpty()) }
+
+        source.replace(
+            urlBody,
+            urlBody
+                .replace(": string | URL,", ": string | URLLike,")
+                .replace(": string | URL)", ": string | URLLike)"),
+        )
+    }
+        .patchInterface("XMLHttpRequest") {
+            it.replace(": string | URL,", ": string | URLLike,")
+                .replace(": string | URL)", ": string | URLLike)")
+        }
+        .plus("\n")
+        .plus("type URLLike = URL | Location | WorkerLocation;")
+        .plus("\n")
+
+private fun String.extractUrlSource(): String {
+    val value = substringAfter("createObjectURL(obj: ")
+        .substringBefore(")")
+
+    return replace(
+        "createObjectURL(obj: $value)",
+        "createObjectURL(obj: URLSource)",
+    ) + "\n" +
+            "type URLSource = $value;" +
+            "\n"
+}
+
+private fun String.patchDomGeometry(): String =
+    DOM_GEOMETRY_ALIASES.fold(this) { acc, (initType, aliasType) ->
+        val aliasComment = if ("2D" in initType) " /* $initType */" else ""
+        acc.splitUnionSafety(initType, aliasType + aliasComment)
+    }
+        .replace(": DOMRectInit", ": DOMRectReadOnly")
+
+private fun String.patchVideoFrameCallback(): String =
+    replace(
+        "cancelVideoFrameCallback(handle: number): void;",
+        "cancelVideoFrameCallback(requestId: $VIDEO_FRAME_REQUEST_ID): void;",
+    )
+        .replace(
+            "requestVideoFrameCallback(callback: VideoFrameRequestCallback): number;",
+            "requestVideoFrameCallback(callback: VideoFrameRequestCallback): $VIDEO_FRAME_REQUEST_ID;",
+        )
+
+internal fun String.addStrictPostMessageSupport(): String =
+    splitToSequence("\n")
+        .flatMap { line ->
+            if (line.startsWith("    postMessage(message: any")) {
+                sequenceOf(
+                    line,
+                    line.replaceFirst(": any", ": string"),
+                )
+            } else {
+                sequenceOf(line)
+            }
+        }
+        .joinToString("\n")
+
+private fun String.patchCollections(): String {
+    var result = this
+
+    sequenceOf(
+        "NodeList" to "Node",
+        "HTMLCollectionBase" to "Element",
+        "HTMLCollection" to "Element",
+    ).forEach { (type, bound) ->
+        val body = Regex("""interface $type [\s\S]+?}""")
+            .find(this)!!
+            .value
+
+        val newBody = body
+            .replaceFirst(type, "$type<T extends $bound>")
+            .replace(": $bound", ": T")
+
+        result = result.replace(body, newBody)
+    }
+
+    return result
+}
+
+internal fun String.patchInterfaces(
+    vararg names: String,
+    transform: (String) -> String,
+): String =
+    names.fold(this) { acc, name ->
+        acc.patchInterface(name, transform = transform)
+    }
+
+internal fun String.patchInterface(
+    name: String,
+    inNamespace: Boolean = false,
+    transform: (String) -> String,
+): String {
+    val space = if (inNamespace) "    " else ""
+    val declarationStart = sequenceOf(
+        "\n${space}interface $name ",
+        "\n${space}interface $name<",
+    ).firstOrNull { it in this }
+        ?: return this
+
+    val oldBody = "\n" + substringAfter(declarationStart, "")
+        .substringAfter("{\n", "")
+        .substringBefore("\n${space}}", "")
+
+    return replaceFirst(oldBody, transform(oldBody))
+}
+
+private fun String.patchQuerySelectors(): String =
+    this
+        .replace(
+            "querySelector<K extends keyof HTMLElementTagNameMap>(selectors: K): HTMLElementTagNameMap[K] | null;",
+            "querySelector<T extends Element>(selectors: TagName<T>): T | null;",
+        )
+        .replace(
+            "querySelector<K extends keyof SVGElementTagNameMap>(selectors: K): SVGElementTagNameMap[K] | null;",
+            "",
+        )
+        .replace(
+            "querySelector<K extends keyof MathMLElementTagNameMap>(selectors: K): MathMLElementTagNameMap[K] | null;",
+            "",
+        )
+        .replace(
+            "querySelector<E extends Element = Element>(selectors: string): E | null;",
+            "querySelector(selectors: string): Element | null;",
+        )
+        .replace(
+            "querySelectorAll<K extends keyof HTMLElementTagNameMap>(selectors: K): NodeList<HTMLElementTagNameMap[K]>;",
+            "querySelectorAll<T extends Element>(selectors: TagName<T>): NodeList<T>;",
+        )
+        .replace(
+            "querySelectorAll<K extends keyof SVGElementTagNameMap>(selectors: K): NodeList<SVGElementTagNameMap[K]>;",
+            "",
+        )
+        .replace(
+            "querySelectorAll<K extends keyof MathMLElementTagNameMap>(selectors: K): NodeList<MathMLElementTagNameMap[K]>;",
+            "",
+        )
+        .replace(
+            "querySelectorAll<E extends Element = Element>(selectors: string): NodeList<E>;",
+            "querySelectorAll(selectors: string): NodeList<Element>;",
+        )
+        .replace(
+            "\"$XHTML_NAMESPACE\"",
+            "XHTML_NAMESPACE",
+        )
+        .replace(
+            "\"$SVG_NAMESPACE\"",
+            "SVG_NAMESPACE",
+        )
+        .replace(
+            "\"$MATHML_NAMESPACE\"",
+            "MATHML_NAMESPACE",
+        )
+        .replace(
+            "type ReadableStreamReadResult<T> = ReadableStreamReadValueResult<T> | ReadableStreamReadDoneResult<T>;\n",
+            "",
+        )
+        .replace(
+            "\ninterface ReadableStreamReadValueResult<T> {",
+            "\ninterface ReadableStreamReadResult<T> {",
+        )
+        .patchInterface("ReadableStreamReadResult") {
+            it.replace("done: false;", "done: boolean;")
+                .replace("value: T;", "value: T | undefined;")
+        }
+        .replace(
+            "\ninterface Worklet {",
+            "\ninterface Worklet<M extends WorkletModule> {",
+        )
+        .patchInterface("Worklet") {
+            val addModule = it.splitToSequence("\n")
+                .first { it.startsWith("    addModule(moduleURL: string | URL, ") }
+
+            it + "\n" + addModule.replaceFirst("URL: string | URL", ": M")
+        }
+        .replace(
+            "\ninterface AudioWorklet extends Worklet {",
+            "\ninterface AudioWorklet extends Worklet<AudioWorkletModule> {",
+        )
+        .patchInterface("ServiceWorkerContainer") {
+            val register = it.splitToSequence("\n")
+                .first { it.startsWith("    register(scriptURL: string | URL, ") }
+
+            it + "\n" + register.replaceFirst("scriptURL: string | URL", "module: ServiceWorkerModule")
+        }
+        .patchInterface("WebSocket") {
+            it.replace(
+                "    readonly readyState: 0 | 1 | 2 | 3;",
+                "    readonly readyState: ReadyState;",
+            )
+        }
+        .patchInterface("FileReader") {
+            it.replace(
+                "    readonly readyState: 0 | 1 | 2;",
+                "    readonly readyState: ReadyState;",
+            )
+        }
+        .replace(
+            "(workerOrWorkerAndParameters: Worker,",
+            "(worker: Worker,",
+        )
+
+private fun String.patchDecodeAudioData(): String =
+    patchInterface("BaseAudioContext") {
+        it.replace(
+            "decodeAudioData(audioData: ArrayBuffer, successCallback?: DecodeSuccessCallback | null, errorCallback?: DecodeErrorCallback | null): Promise<AudioBuffer>;",
+            "decodeAudioData(audioData: ArrayBuffer): Promise<AudioBuffer>;",
+        )
+    }
+
+private val CONST_RE = Regex("""\s+readonly [A-Z_]+: [\dA-Zx]+;""")
+
+private fun String.removeDuplicatedInstanceConstants(): String =
+    splitToSequence("\ndeclare var ")
+        .drop(1)
+        .map { it.substringBefore("\n};") }
+        .flatMap { source ->
+            val name = source.substringBefore(": {")
+            if (name.startsWith("WebGL"))
+                return@flatMap emptySequence()
+
+            val lines = source.substringAfter(": {").split("\n")
+            lines.asSequence()
+                .mapIndexedNotNull { index, line ->
+                    if (CONST_RE.matches(line)) {
+                        val previousLine = lines.getOrNull(index - 1) ?: ""
+                        if (previousLine.startsWith("    /** ")) {
+                            previousLine + "\n" + line
+                        } else line
+                    } else null
+                }
+                .map { name to it }
+        }
+        .fold(this) { result, (name, constant) ->
+            result.patchInterface(name) {
+                it.replace("\n$constant", "")
+            }
+        }
+
+private fun String.applyEnumPatches(): String {
+    val names = splitToSequence("\n")
+        .mapNotNull { line ->
+            line.removeSurrounding("type ", "Flags = number;")
+                .takeIf { it != line }
+        }
+        .toList()
+
+    var result = this
+    for (name in names) {
+        result = result
+            .replace("\ntype ${name}Flags = number;", "")
+            .replace("${name}Flags", name)
+    }
+
+    return result
+}
+
+private fun String.applyInlineUnionPatches(): String =
+    UNION_DATA_LIST.fold(this) { acc, data ->
+        val values = data.values.let {
+            if (data.name == PRELOAD) it + "" else it
+        }
+
+        val before = ": " + values.joinToString(" | ") { "\"$it\"" }
+        require(before in acc)
+        acc.replace(before, ": ${data.name}")
+    }
+
+// TODO: remove after `splitUnion` fix
+private fun String.splitUnionSafety(
+    union: String,
+    unionBody: String,
+): String {
+    val parts = unionBody.split(" | ")
+
+    return splitToSequence("\n")
+        .flatMap { line ->
+            splitUnionLine(
+                line = line,
+                union = union,
+                parts = parts,
+                optional = true,
+            )
+        }
+        .joinToString("\n")
+}
+
+internal fun String.splitTypealias(
+    name: String,
+    safeMode: Boolean = false,
+): String {
+    val aliasDeclaration = "\ntype $name = "
+    val aliasBody = substringAfter(aliasDeclaration)
+        .substringBefore("\n")
+
+    val replacement = aliasBody.removeSuffix(";")
+
+    if (safeMode) {
+        return splitUnion(name, replacement)
+    }
+
+    return replace(aliasDeclaration + aliasBody, "")
+        .replace(name, replacement)
+}
+
+internal fun String.splitUnion(
+    union: String,
+    unionBody: String? = null,
+): String {
+    val parts = (unionBody ?: union).split(" | ")
+
+    return sequence {
+        var comment = ""
+
+        for (sourceLine in splitToSequence("\n")) {
+            val isComment = sourceLine.trimStart().let {
+                it.startsWith("/*") || it.startsWith("*")
+            }
+
+            if (isComment) {
+                comment += sourceLine + "\n"
+                continue
+            }
+
+            sequenceOf(sourceLine)
+                .flatMap { line ->
+                    splitUnionLine(
+                        line = line,
+                        union = union,
+                        parts = parts,
+                        optional = true,
+                    )
+                }
+                .flatMap { line ->
+                    splitUnionLine(
+                        line = line,
+                        union = union,
+                        parts = parts,
+                        optional = false,
+                    )
+                }
+                .forEach { yield(comment + it) }
+
+            comment = ""
+        }
+    }.joinToString("\n")
+}
+
+private fun splitUnionLine(
+    line: String,
+    union: String,
+    parts: List<String>,
+    optional: Boolean,
+): Sequence<String> {
+    if ("(" !in line || (line.indexOf(":") < line.indexOf("(")))
+        return sequenceOf(line)
+
+    val optionality = if (optional) "?" else ""
+    val declaration = "$optionality: $union"
+
+    if (declaration !in line)
+        return sequenceOf(line)
+
+    return parts.asSequence()
+        .mapIndexed { index, part ->
+            line.replace(declaration, if (index == 0) "$optionality: $part" else ": $part")
+        }
+}

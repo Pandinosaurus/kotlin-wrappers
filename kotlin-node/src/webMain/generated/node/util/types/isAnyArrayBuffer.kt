@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) or
+ * [`SharedArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer) instance.
+ *
+ * See also `util.types.isArrayBuffer()` and `util.types.isSharedArrayBuffer()`.
+ *
+ * ```js
+ * util.types.isAnyArrayBuffer(new ArrayBuffer());  // Returns true
+ * util.types.isAnyArrayBuffer(new SharedArrayBuffer());  // Returns true
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isAnyArrayBuffer")
+external fun isAnyArrayBufferRaw(value: Any?): Boolean /* object is ArrayBufferLike */

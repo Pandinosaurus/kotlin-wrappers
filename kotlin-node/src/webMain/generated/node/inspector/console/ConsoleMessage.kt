@@ -1,0 +1,39 @@
+// Automatically generated - do not modify!
+
+package node.inspector.console
+
+/**
+ * Console message.
+ */
+@kotlinx.js.JsPlainObject
+external interface ConsoleMessage {
+    /**
+     * Message source.
+     */
+    var source: String
+
+    /**
+     * Message severity.
+     */
+    var level: String
+
+    /**
+     * Message text.
+     */
+    var text: String
+
+    /**
+     * URL of the message origin.
+     */
+    var url: String?
+
+    /**
+     * Line number in the resource that generated this message (1-based).
+     */
+    var line: Double?
+
+    /**
+     * Column number in the resource that generated this message (1-based).
+     */
+    var column: Double?
+}

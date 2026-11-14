@@ -1,14 +1,13 @@
 plugins {
-    kotlin("js")
-    `kotlin-conventions`
-    `publish-conventions`
+    id("wrappersbuild.kotlin-library-conventions")
 }
 
-dependencies {
-    api(project(":kotlin-extensions"))
-    api(project(":kotlin-react"))
+kotlin {
+    sourceSets.webMain.dependencies {
+        api(projects.kotlinJs)
+        api(projects.kotlinBrowser)
+        api(projects.kotlinReact)
 
-    api(kotlinxHtml("js"))
-
-    api(npmv("react-dom"))
+        npm(jspkg.reactDom)
+    }
 }

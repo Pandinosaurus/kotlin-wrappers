@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+package node.sqlite
+
+@kotlinx.js.JsPlainObject
+external interface StatementResultingChanges {
+    /**
+     * The number of rows modified, inserted, or deleted by the most recently completed `INSERT`, `UPDATE`, or `DELETE` statement.
+     * This field is either a number or a `BigInt` depending on the prepared statement's configuration.
+     * This property is the result of [`sqlite3_changes64()`](https://www.sqlite.org/c3ref/changes.html).
+     */
+    var changes: Any /* number | bigint */
+
+    /**
+     * The most recently inserted rowid.
+     * This field is either a number or a `BigInt` depending on the prepared statement's configuration.
+     * This property is the result of [`sqlite3_last_insert_rowid()`](https://www.sqlite.org/c3ref/last_insert_rowid.html).
+     */
+    var lastInsertRowid: Any /* number | bigint */
+}

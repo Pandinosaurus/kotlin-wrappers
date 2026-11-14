@@ -1,0 +1,17 @@
+// Automatically generated - do not modify!
+
+package node.events
+
+import node.asyncHooks.AsyncResourceOptions
+
+@kotlinx.js.JsPlainObject
+external interface EventEmitterAsyncResourceOptions :
+    AsyncResourceOptions,
+    EventEmitterOptions {
+    /**
+     * The type of async event, this is required when instantiating `EventEmitterAsyncResource`
+     * directly rather than as a child class.
+     * @default new.target.name if instantiated as a child class.
+     */
+    var name: String?
+}

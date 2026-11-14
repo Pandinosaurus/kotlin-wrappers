@@ -1,0 +1,148 @@
+// Automatically generated - do not modify!
+
+package js.intl
+
+import js.array.ReadonlyArray
+import js.iterable.JsIterable
+
+@JsQualifier("Intl")
+open external class ListFormat(
+    locales: UnicodeBCP47LocaleIdentifier = definedExternally,
+    options: ListFormatOptions = definedExternally,
+) {
+    constructor(
+        locales: Locale,
+        options: ListFormatOptions = definedExternally,
+    )
+
+    constructor(
+        locales: ReadonlyArray<UnicodeBCP47LocaleIdentifier>,
+        options: ListFormatOptions = definedExternally,
+    )
+
+    constructor(
+        locales: ReadonlyArray<Locale>,
+        options: ListFormatOptions = definedExternally,
+    )
+
+    /**
+     * Returns a string with a language-specific representation of the list.
+     *
+     * @param list - An iterable object, such as an [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array).
+     *
+     * @throws `TypeError` if `list` includes something other than the possible values.
+     *
+     * @return {string} A language-specific formatted string representing the elements of the list.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/format).
+     */
+    open fun format(list: JsIterable<JsString>): String
+
+    /**
+     * Returns an Array of objects representing the different components that can be used to format a list of values in a locale-aware fashion.
+     *
+     * @param list - An iterable object, such as an [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array), to be formatted according to a locale.
+     *
+     * @throws `TypeError` if `list` includes something other than the possible values.
+     *
+     * @return {{ type: "element" | "literal", value: string; }[]} An Array of components which contains the formatted parts from the list.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/formatToParts).
+     */
+    open fun formatToParts(list: JsIterable<JsString>): ReadonlyArray<JsAny /* { type; value; } */>
+
+    /**
+     * Returns a new object with properties reflecting the locale and style
+     * formatting options computed during the construction of the current
+     * `Intl.ListFormat` object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/resolvedOptions).
+     */
+    open fun resolvedOptions(): ResolvedListFormatOptions
+
+    companion object {
+        /**
+         * Returns an array containing those of the provided locales that are
+         * supported in list formatting without having to fall back to the runtime's default locale.
+         *
+         * @param locales - A string with a [BCP 47 language tag](http://tools.ietf.org/html/rfc5646), or an array of such strings.
+         *  For the general form and interpretation of the `locales` argument,
+         *  see the [`Intl` page](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation).
+         *
+         * @param options - An [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf#parameters).
+         *  with some or all possible options.
+         *
+         * @return An array of strings representing a subset of the given locale tags that are supported in list
+         *  formatting without having to fall back to the runtime's default locale.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf).
+         */
+        fun supportedLocalesOf(
+            locales: UnicodeBCP47LocaleIdentifier,
+            options: ListFormatOptions = definedExternally,
+        ): ReadonlyArray<UnicodeBCP47LocaleIdentifier>
+
+        /**
+         * Returns an array containing those of the provided locales that are
+         * supported in list formatting without having to fall back to the runtime's default locale.
+         *
+         * @param locales - A string with a [BCP 47 language tag](http://tools.ietf.org/html/rfc5646), or an array of such strings.
+         *  For the general form and interpretation of the `locales` argument,
+         *  see the [`Intl` page](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation).
+         *
+         * @param options - An [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf#parameters).
+         *  with some or all possible options.
+         *
+         * @return An array of strings representing a subset of the given locale tags that are supported in list
+         *  formatting without having to fall back to the runtime's default locale.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf).
+         */
+        fun supportedLocalesOf(
+            locales: Locale,
+            options: ListFormatOptions = definedExternally,
+        ): ReadonlyArray<UnicodeBCP47LocaleIdentifier>
+
+        /**
+         * Returns an array containing those of the provided locales that are
+         * supported in list formatting without having to fall back to the runtime's default locale.
+         *
+         * @param locales - A string with a [BCP 47 language tag](http://tools.ietf.org/html/rfc5646), or an array of such strings.
+         *  For the general form and interpretation of the `locales` argument,
+         *  see the [`Intl` page](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation).
+         *
+         * @param options - An [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf#parameters).
+         *  with some or all possible options.
+         *
+         * @return An array of strings representing a subset of the given locale tags that are supported in list
+         *  formatting without having to fall back to the runtime's default locale.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf).
+         */
+        fun supportedLocalesOf(
+            locales: ReadonlyArray<UnicodeBCP47LocaleIdentifier>,
+            options: ListFormatOptions = definedExternally,
+        ): ReadonlyArray<UnicodeBCP47LocaleIdentifier>
+
+        /**
+         * Returns an array containing those of the provided locales that are
+         * supported in list formatting without having to fall back to the runtime's default locale.
+         *
+         * @param locales - A string with a [BCP 47 language tag](http://tools.ietf.org/html/rfc5646), or an array of such strings.
+         *  For the general form and interpretation of the `locales` argument,
+         *  see the [`Intl` page](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation).
+         *
+         * @param options - An [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf#parameters).
+         *  with some or all possible options.
+         *
+         * @return An array of strings representing a subset of the given locale tags that are supported in list
+         *  formatting without having to fall back to the runtime's default locale.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf).
+         */
+        fun supportedLocalesOf(
+            locales: ReadonlyArray<Locale>,
+            options: ListFormatOptions = definedExternally,
+        ): ReadonlyArray<UnicodeBCP47LocaleIdentifier>
+    }
+}

@@ -1,0 +1,42 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@tauri-apps/api/menu/menuItem")
+
+package tauri.apps.api.menu
+
+import tauri.apps.api.menu.base.MenuItemBase
+
+/** A menu item inside a {@linkcode Menu} or {@linkcode Submenu} and contains only text. */
+external class MenuItem : MenuItemBase {
+    /** @ignore */
+    constructor (rid: Double, id: String)
+
+    /** Returns the text of this menu item. */
+    fun text(): js.promise.Promise<String>
+
+    /** Sets the text for this menu item. */
+    fun setText(text: String): js.promise.Promise<js.void.Void>
+
+    /** Returns whether this menu item is enabled or not. */
+    fun isEnabled(): js.promise.Promise<Boolean>
+
+    /** Sets whether this menu item is enabled or not. */
+    fun setEnabled(enabled: Boolean): js.promise.Promise<js.void.Void>
+
+    /**
+     * Sets the accelerator for this menu item, or removes it when given `null`.
+     *
+     * See {@linkcode MenuItemOptions.accelerator} for the accepted format.
+     *
+     * @example
+     * ```typescript
+     * await item.setAccelerator('CmdOrCtrl+Shift+K');
+     * ```
+     */
+    fun setAccelerator(accelerator: String?): js.promise.Promise<js.void.Void>
+
+    companion object {
+        /** Create a new menu item. */
+        fun new(opts: MenuItemOptions): js.promise.Promise<MenuItem>
+    }
+}

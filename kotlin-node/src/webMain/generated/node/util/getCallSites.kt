@@ -1,0 +1,87 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util")
+
+package node.util
+
+/**
+ * Returns an array of call site objects containing the stack of
+ * the caller function.
+ *
+ * Unlike accessing an `error.stack`, the result returned from this API is not
+ * interfered with `Error.prepareStackTrace`.
+ *
+ * ```js
+ * import { getCallSites } from 'node:util';
+ *
+ * function exampleFunction() {
+ *   const callSites = getCallSites();
+ *
+ *   console.log('Call Sites:');
+ *   callSites.forEach((callSite, index) => {
+ *     console.log(`CallSite ${index + 1}:`);
+ *     console.log(`Function Name: ${callSite.functionName}`);
+ *     console.log(`Script Name: ${callSite.scriptName}`);
+ *     console.log(`Line Number: ${callSite.lineNumber}`);
+ *     console.log(`Column Number: ${callSite.columnNumber}`);
+ *   });
+ *   // CallSite 1:
+ *   // Function Name: exampleFunction
+ *   // Script Name: /home/example.js
+ *   // Line Number: 5
+ *   // Column Number: 26
+ *
+ *   // CallSite 2:
+ *   // Function Name: anotherFunction
+ *   // Script Name: /home/example.js
+ *   // Line Number: 22
+ *   // Column Number: 3
+ *
+ *   // ...
+ * }
+ *
+ * // A function to simulate another stack layer
+ * function anotherFunction() {
+ *   exampleFunction();
+ * }
+ *
+ * anotherFunction();
+ * ```
+ *
+ * It is possible to reconstruct the original locations by setting the option `sourceMap` to `true`.
+ * If the source map is not available, the original location will be the same as the current location.
+ * When the `--enable-source-maps` flag is enabled, for example when using `--experimental-transform-types`,
+ * `sourceMap` will be true by default.
+ *
+ * ```ts
+ * import { getCallSites } from 'node:util';
+ *
+ * interface Foo {
+ *   foo: string;
+ * }
+ *
+ * const callSites = getCallSites({ sourceMap: true });
+ *
+ * // With sourceMap:
+ * // Function Name: ''
+ * // Script Name: example.js
+ * // Line Number: 7
+ * // Column Number: 26
+ *
+ * // Without sourceMap:
+ * // Function Name: ''
+ * // Script Name: example.js
+ * // Line Number: 2
+ * // Column Number: 26
+ * ```
+ * @param frameCount Number of frames to capture as call site objects.
+ * **Default:** `10`. Allowable range is between 1 and 200.
+ * @return An array of call site objects
+ * @since v22.9.0
+ */
+external fun getCallSites(
+    frameCount: Number = definedExternally,
+    options: GetCallSitesOptions = definedExternally,
+): js.array.ReadonlyArray<CallSiteObject>
+
+external fun getCallSites(options: GetCallSitesOptions): js.array.ReadonlyArray<CallSiteObject>

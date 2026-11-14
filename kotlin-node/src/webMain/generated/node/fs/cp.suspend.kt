@@ -1,0 +1,67 @@
+// Automatically generated - do not modify!
+
+package node.fs
+
+@seskar.js.JsAsync
+external suspend fun cp(
+    source: String,
+    destination: String,
+    opts: CopyOptions = definedExternally,
+): js.void.Void
+
+/**
+ * Asynchronously copies the entire directory structure from `src` to `dest`,
+ * including subdirectories and files.
+ *
+ * When copying a directory to another directory, globs are not supported and
+ * behavior is similar to `cp dir1/ dir2/`.
+ * @since v16.7.0
+ * @experimental
+ * @param src source path to copy.
+ * @param dest destination path to copy to.
+ * @return Fulfills with `undefined` upon success.
+ */
+@seskar.js.JsAsync
+external suspend fun cp(
+    source: String,
+    destination: web.url.URL,
+    opts: CopyOptions = definedExternally,
+): js.void.Void
+
+/**
+ * Asynchronously copies the entire directory structure from `src` to `dest`,
+ * including subdirectories and files.
+ *
+ * When copying a directory to another directory, globs are not supported and
+ * behavior is similar to `cp dir1/ dir2/`.
+ * @since v16.7.0
+ * @experimental
+ * @param src source path to copy.
+ * @param dest destination path to copy to.
+ * @return Fulfills with `undefined` upon success.
+ */
+@seskar.js.JsAsync
+external suspend fun cp(
+    source: web.url.URL,
+    destination: String,
+    opts: CopyOptions = definedExternally,
+): js.void.Void
+
+/**
+ * Asynchronously copies the entire directory structure from `src` to `dest`,
+ * including subdirectories and files.
+ *
+ * When copying a directory to another directory, globs are not supported and
+ * behavior is similar to `cp dir1/ dir2/`.
+ * @since v16.7.0
+ * @experimental
+ * @param src source path to copy.
+ * @param dest destination path to copy to.
+ * @return Fulfills with `undefined` upon success.
+ */
+@seskar.js.JsAsync
+external suspend fun cp(
+    source: web.url.URL,
+    destination: web.url.URL,
+    opts: CopyOptions = definedExternally,
+): js.void.Void

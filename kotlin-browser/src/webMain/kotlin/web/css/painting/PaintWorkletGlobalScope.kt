@@ -1,0 +1,41 @@
+package web.css.painting
+
+import js.reflect.JsClass
+import web.experimental.ExperimentalWebApi
+import web.worklets.WorkletGlobalScope
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PaintWorkletGlobalScope)
+ */
+@ExperimentalWebApi
+open external class PaintWorkletGlobalScope
+private constructor() :
+    WorkletGlobalScope {
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PaintWorkletGlobalScope/registerPaint)
+     */
+    open fun registerPaint(
+        name: PaintName,
+        classRef: JsClass<Paint>,
+    )
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PaintWorkletGlobalScope/devicePixelRatio)
+     */
+    open val devicePixelRatio: Double
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PaintWorkletGlobalScope/registerPaint)
+ */
+@ExperimentalWebApi
+inline fun PaintWorkletGlobalScope.registerPaint(
+    name: PaintName,
+    reference: PaintReference,
+) {
+    registerPaint(
+        name = name,
+        classRef = reference.value,
+    )
+}

@@ -1,0 +1,53 @@
+@file:Suppress(
+    "NON_ABSTRACT_MEMBER_OF_EXTERNAL_INTERFACE",
+)
+
+package js.objects
+
+import js.array.Tuple2
+import js.array.component1
+import js.array.component2
+
+/**
+ * [Online Documentation](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)
+ */
+external interface ReadonlyRecord<K : JsAny, out V : JsAny?> {
+    operator fun get(
+        key: K,
+    ): V? = definedExternally
+}
+
+inline operator fun <V : JsAny?> ReadonlyRecord<JsAny, V>.get(key: String): V? =
+    get(key.toJsString())
+
+inline operator fun <V : JsAny?> ReadonlyRecord<JsString, V>.get(key: String): V? =
+    get(key.toJsString())
+
+fun <K : JsAny, V : JsAny?> emptyReadonlyRecord(): ReadonlyRecord<K, V> =
+    Object.freeze(unsafeJso())
+
+fun <K : JsAny, V : JsAny?> buildReadonlyRecord(
+    block: Record<K, V>.() -> Unit,
+): ReadonlyRecord<K, V> =
+    Object.freeze(unsafeJso(block))
+
+fun <K : JsAny, V : JsAny?> Sequence<Tuple2<K, V>>.toReadonlyRecord(): ReadonlyRecord<K, V> =
+    buildReadonlyRecord {
+        forEach { [key, value] -> set(key, value) }
+    }
+
+fun <K : JsAny, V : JsAny?> Sequence<Pair<K, V>>.toReadonlyRecord(): ReadonlyRecord<K, V> =
+    buildReadonlyRecord {
+        forEach { [key, value] -> set(key, value) }
+    }
+
+fun <K : JsAny, V : JsAny?> Iterable<Pair<K, V>>.toReadonlyRecord(): ReadonlyRecord<K, V> =
+    buildReadonlyRecord {
+        forEach { [key, value] -> set(key, value) }
+    }
+
+
+fun <K : JsAny, V : JsAny?> Map<K, V>.toReadonlyRecord(): ReadonlyRecord<K, V> =
+    buildReadonlyRecord {
+        forEach { [key, value] -> set(key, value) }
+    }

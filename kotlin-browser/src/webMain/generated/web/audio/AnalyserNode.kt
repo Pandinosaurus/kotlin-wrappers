@@ -1,0 +1,80 @@
+// Automatically generated - do not modify!
+
+package web.audio
+
+import js.buffer.ArrayBuffer
+import js.typedarrays.Float32Array
+import js.typedarrays.Uint8Array
+
+/**
+ * The **`AnalyserNode`** interface represents a node able to provide real-time frequency and time-domain analysis information. It is an AudioNode that passes the audio stream unchanged from the input to the output, but allows you to take the generated data, process it, and create audio visualizations.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode)
+ */
+open external class AnalyserNode(
+    context: BaseAudioContext,
+    options: AnalyserOptions = definedExternally,
+) : AudioNode {
+    /**
+     * The **`fftSize`** property of the AnalyserNode interface is an unsigned long value and represents the window size in samples that is used when performing a Fast Fourier Transform (FFT) to get frequency domain data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/fftSize)
+     */
+    open var fftSize: Int
+
+    /**
+     * The **`frequencyBinCount`** read-only property of the AnalyserNode interface contains the total number of data points available to AudioContext sampleRate. This is half of the value of the AnalyserNode.fftSize. The two methods' indices have a linear relationship with the frequencies they represent, between 0 and the Nyquist frequency.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/frequencyBinCount)
+     */
+    open val frequencyBinCount: Int
+
+    /**
+     * The **`maxDecibels`** property of the AnalyserNode interface is a double value representing the maximum power value in the scaling range for the FFT analysis data, for conversion to unsigned byte values — basically, this specifies the maximum value for the range of results when using getByteFrequencyData().
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/maxDecibels)
+     */
+    open var maxDecibels: Double
+
+    /**
+     * The **`minDecibels`** property of the AnalyserNode interface is a double value representing the minimum power value in the scaling range for the FFT analysis data, for conversion to unsigned byte values — basically, this specifies the minimum value for the range of results when using getByteFrequencyData().
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/minDecibels)
+     */
+    open var minDecibels: Double
+
+    /**
+     * The **`smoothingTimeConstant`** property of the AnalyserNode interface is a double value representing the averaging constant with the last analysis frame. It's basically an average between the current buffer and the last buffer the AnalyserNode processed, and results in a much smoother set of value changes over time.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/smoothingTimeConstant)
+     */
+    open var smoothingTimeConstant: Double
+
+    /**
+     * The **`getByteFrequencyData()`** method of the AnalyserNode interface copies the current frequency data into a Uint8Array (unsigned byte array) passed into it.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/getByteFrequencyData)
+     */
+    open fun getByteFrequencyData(array: Uint8Array<ArrayBuffer>)
+
+    /**
+     * The **`getByteTimeDomainData()`** method of the AnalyserNode Interface copies the current waveform, or time-domain, data into a Uint8Array (unsigned byte array) passed into it.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/getByteTimeDomainData)
+     */
+    open fun getByteTimeDomainData(array: Uint8Array<ArrayBuffer>)
+
+    /**
+     * The **`getFloatFrequencyData()`** method of the AnalyserNode Interface copies the current frequency data into a Float32Array array passed into it.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/getFloatFrequencyData)
+     */
+    open fun getFloatFrequencyData(array: Float32Array<ArrayBuffer>)
+
+    /**
+     * The **`getFloatTimeDomainData()`** method of the AnalyserNode Interface copies the current waveform, or time-domain, data into a Float32Array array passed into it. Each array value is a sample, the magnitude of the signal at a particular time.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AnalyserNode/getFloatTimeDomainData)
+     */
+    open fun getFloatTimeDomainData(array: Float32Array<ArrayBuffer>)
+}

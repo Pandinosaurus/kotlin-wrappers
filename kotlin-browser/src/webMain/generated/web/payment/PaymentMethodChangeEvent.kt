@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+package web.payment
+
+import web.events.EventType
+
+/**
+ * The **`PaymentMethodChangeEvent`** interface of the Payment Request API describes the paymentmethodchange event which is fired by some payment handlers when the user switches payment instruments (e.g., a user selects a "store" card to make a purchase while using Apple Pay).
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PaymentMethodChangeEvent)
+ */
+open external class PaymentMethodChangeEvent(
+    override val type: EventType<PaymentMethodChangeEvent>,
+    init: PaymentMethodChangeEventInit = definedExternally,
+) : PaymentRequestUpdateEvent {
+    /**
+     * The read-only **`methodDetails`** property of the PaymentMethodChangeEvent interface is an object containing any data the payment handler may provide to describe the change the user has made to their payment method. The value is null if no details are available.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PaymentMethodChangeEvent/methodDetails)
+     */
+    open val methodDetails: JsAny?
+
+    /**
+     * The read-only **`methodName`** property of the PaymentMethodChangeEvent interface is a string which uniquely identifies the payment handler currently selected by the user. The payment handler may be a payment technology, such as Apple Pay or Android Pay, and each payment handler may support multiple payment methods; changes to the payment method within the payment handler are described by the PaymentMethodChangeEvent.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PaymentMethodChangeEvent/methodName)
+     */
+    open val methodName: String
+
+    companion object
+}
+
+inline val PaymentMethodChangeEvent.Companion.PAYMENT_METHOD_CHANGE: EventType<PaymentMethodChangeEvent>
+    get() = EventType("paymentmethodchange")

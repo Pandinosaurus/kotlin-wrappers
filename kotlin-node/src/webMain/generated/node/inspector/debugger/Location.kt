@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package node.inspector.debugger
+
+/**
+ * Location in the source code.
+ */
+@kotlinx.js.JsPlainObject
+external interface Location {
+    /**
+     * Script identifier as reported in the <code>Debugger.scriptParsed</code>.
+     */
+    var scriptId: node.inspector.runtime.ScriptId
+
+    /**
+     * Line number in the script (0-based).
+     */
+    var lineNumber: Double
+
+    /**
+     * Column number in the script (0-based).
+     */
+    var columnNumber: Double?
+}

@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:zlib")
+
+package node.zlib
+
+/**
+ * @since v22.15.0
+ * @experimental
+ */
+external fun zstdDecompress(
+    buf: InputType,
+    callback: CompressCallback,
+)
+
+external fun zstdDecompress(
+    buf: InputType,
+    options: ZstdOptions,
+    callback: CompressCallback,
+)

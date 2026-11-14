@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package node.fs
+
+@kotlinx.js.JsPlainObject
+external interface OpenDirOptions {
+    /**
+     * @default 'utf8'
+     */
+    var encoding: node.buffer.BufferEncoding?
+
+    /**
+     * Number of directory entries that are buffered
+     * internally when reading from the directory. Higher values lead to better
+     * performance but higher memory usage.
+     * @default 32
+     */
+    var bufferSize: Double?
+
+    /**
+     * @default false
+     */
+    var recursive: Boolean?
+}

@@ -1,0 +1,82 @@
+// Automatically generated - do not modify!
+
+package web.components
+
+import js.promise.Promise
+import js.promise.await
+import web.dom.Node
+import web.dom.TagName
+import web.errors.DOMExceptionType.NotSupportedError
+import web.errors.DOMExceptionType.SyntaxError
+import web.errors.JsThrows
+import web.html.HTMLElement
+
+/**
+ * The **`CustomElementRegistry`** interface provides methods for registering custom elements and querying registered elements. To get an instance of it, use the window.customElements property. To create a scoped registry, use the CustomElementRegistry() constructor.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry)
+ */
+open external class CustomElementRegistry {
+    /**
+     * The **`define()`** method of the CustomElementRegistry interface adds a definition for a custom element to the custom element registry, mapping its name to the constructor which will be used to create it.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/define)
+     */
+    @JsThrows(NotSupportedError::class)
+    @JsThrows(SyntaxError::class)
+    open fun <T : P, P : HTMLElement> define(
+        name: TagName<T>,
+        constructor: CustomElementConstructor<T>,
+        options: ElementDefinitionOptions<P> = definedExternally,
+    )
+
+    /**
+     * The **`get()`** method of the CustomElementRegistry interface returns the constructor for a previously-defined custom element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/get)
+     */
+    open fun <T : HTMLElement> get(name: TagName<T>): CustomElementConstructor<T>?
+
+    /**
+     * The **`getName()`** method of the CustomElementRegistry interface returns the name for a previously-defined custom element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/getName)
+     */
+    open fun <T : HTMLElement> getName(constructor: CustomElementConstructor<T>): TagName<T>?
+
+    /**
+     * The **`initialize()`** method of the CustomElementRegistry interface associates this registry with a DOM subtree, setting the customElementRegistry of each inclusive descendant that doesn't already have one, and attempting to upgrade any custom elements found.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/initialize)
+     */
+    @JsThrows(NotSupportedError::class)
+    open fun initialize(root: Node)
+
+    /**
+     * The **`upgrade()`** method of the CustomElementRegistry interface upgrades all shadow-containing custom elements in a Node subtree, even before they are connected to the main document.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/upgrade)
+     */
+    open fun upgrade(root: Node)
+
+    /**
+     * The **`whenDefined()`** method of the CustomElementRegistry interface returns a Promise that resolves when the named element is defined.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/whenDefined)
+     */
+    @JsThrows(SyntaxError::class)
+    @JsName("whenDefined")
+    open fun <T : HTMLElement> whenDefinedAsync(name: TagName<T>): Promise<CustomElementConstructor<T>>
+}
+
+/**
+ * The **`whenDefined()`** method of the CustomElementRegistry interface returns a Promise that resolves when the named element is defined.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/whenDefined)
+ */
+@JsThrows(SyntaxError::class)
+suspend inline fun <T : HTMLElement> CustomElementRegistry.whenDefined(name: TagName<T>): CustomElementConstructor<T> {
+    return whenDefinedAsync(
+        name = name,
+    ).await()
+}

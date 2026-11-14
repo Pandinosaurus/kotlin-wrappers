@@ -1,0 +1,14 @@
+// Automatically generated - do not modify!
+
+package node.childProcess
+
+@kotlinx.js.JsPlainObject
+external interface SpawnSyncReturns<T> {
+    var pid: Double
+    var output: js.array.ReadonlyArray<T?>
+    var stdout: T
+    var stderr: T
+    var status: Double?
+    var signal: node.process.Signals?
+    var error: js.errors.JsError?
+}

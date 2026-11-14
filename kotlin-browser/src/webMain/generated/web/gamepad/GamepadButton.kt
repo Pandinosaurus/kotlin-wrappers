@@ -1,0 +1,32 @@
+// Automatically generated - do not modify!
+
+package web.gamepad
+
+/**
+ * The **`GamepadButton`** interface defines an individual button of a gamepad or other controller, allowing access to the current state of different types of buttons available on the control device.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/GamepadButton)
+ */
+open external class GamepadButton
+private constructor() {
+    /**
+     * The **`GamepadButton.pressed`** property of the GamepadButton interface returns a boolean indicating whether the button is currently pressed (true) or unpressed (false).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/GamepadButton/pressed)
+     */
+    open val pressed: Boolean
+
+    /**
+     * The **`touched`** property of the GamepadButton interface returns a boolean indicating whether a button capable of detecting touch is currently touched (true) or not touched (false).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/GamepadButton/touched)
+     */
+    open val touched: Boolean
+
+    /**
+     * The **`GamepadButton.value`** property of the GamepadButton interface returns a double value used to represent the current state of analog buttons on many modern gamepads, such as the triggers.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/GamepadButton/value)
+     */
+    open val value: Double
+}

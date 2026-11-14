@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+package mui.material
+
+import seskar.js.JsRawValue
+import seskar.js.JsValue
+
+sealed /* union */
+external interface SkeletonAnimation {
+    companion object {
+        @JsValue("pulse")
+        val pulse: SkeletonAnimation
+
+        @JsValue("wave")
+        val wave: SkeletonAnimation
+
+        @JsRawValue("false")
+        val `false`: SkeletonAnimation
+    }
+}
+
+sealed /* union */
+external interface SkeletonVariant {
+    companion object {
+        @JsValue("text")
+        val text: SkeletonVariant
+
+        @JsValue("rectangular")
+        val rectangular: SkeletonVariant
+
+        @JsValue("rounded")
+        val rounded: SkeletonVariant
+
+        @JsValue("circular")
+        val circular: SkeletonVariant
+    }
+}

@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+package node.fs
+
+/**
+ * The Keys are events of the ReadStream and the values are the functions that are called when the event is emitted.
+ */
+external interface ReadStreamEvents : CustomEvents {
+    var close: () -> Unit
+    var data: (chunk: Any /* Buffer | string */) -> Unit
+    var end: () -> Unit
+    var error: (err: js.errors.JsError) -> Unit
+    var open: (fd: Number) -> Unit
+    var pause: () -> Unit
+    var readable: () -> Unit
+    var ready: () -> Unit
+    var resume: () -> Unit
+}

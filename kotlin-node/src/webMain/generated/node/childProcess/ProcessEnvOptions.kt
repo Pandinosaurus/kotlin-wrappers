@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package node.childProcess
+
+@kotlinx.js.JsPlainObject
+external interface ProcessEnvOptions {
+    var uid: Double?
+    var gid: Double?
+    var cwd: Any? /* string | URL | undefined */
+    var env: node.process.ProcessEnv?
+}

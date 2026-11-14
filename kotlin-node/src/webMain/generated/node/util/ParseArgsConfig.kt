@@ -1,0 +1,42 @@
+// Automatically generated - do not modify!
+
+package node.util
+
+@kotlinx.js.JsPlainObject
+external interface ParseArgsConfig {
+    /**
+     * Array of argument strings.
+     */
+    var args: (js.array.ReadonlyArray<String>)?
+
+    /**
+     * Used to describe arguments known to the parser.
+     */
+    var options: ParseArgsOptionsConfig?
+
+    /**
+     * Should an error be thrown when unknown arguments are encountered,
+     * or when arguments are passed that do not match the `type` configured in `options`.
+     * @default true
+     */
+    var strict: Boolean?
+
+    /**
+     * Whether this command accepts positional arguments.
+     */
+    var allowPositionals: Boolean?
+
+    /**
+     * If `true`, allows explicitly setting boolean options to `false` by prefixing the option name with `--no-`.
+     * @default false
+     * @since v22.4.0
+     */
+    var allowNegative: Boolean?
+
+    /**
+     * Return the parsed tokens. This is useful for extending the built-in behavior,
+     * from adding additional checks through to reprocessing the tokens in different ways.
+     * @default false
+     */
+    var tokens: Boolean?
+}

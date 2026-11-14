@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface DidFailLoadEvent : DOMEvent {
+    var errorCode: Double
+    var errorDescription: String
+    var validatedURL: String
+    var isMainFrame: Boolean
+}

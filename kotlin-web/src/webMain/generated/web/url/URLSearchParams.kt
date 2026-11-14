@@ -1,0 +1,92 @@
+// Automatically generated - do not modify!
+
+package web.url
+
+import js.array.ReadonlyArray
+import js.array.Tuple2
+import js.collections.ReadonlyMap
+import js.objects.ReadonlyRecord
+import web.http.BodyInit
+
+/**
+ * The **`URLSearchParams`** interface defines utility methods to work with the query string of a URL.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams)
+ */
+open external class URLSearchParams(
+    init: ReadonlyArray<Tuple2<JsString, JsString>> = definedExternally,
+) : ReadonlyMap.Mixin<JsString, JsString>,
+    BodyInit {
+    constructor(init: ReadonlyRecord<JsString, JsString>)
+    constructor(init: String)
+    constructor(init: URLSearchParams)
+
+    /**
+     * The **`size`** read-only property of the URLSearchParams interface indicates the total number of search parameter entries.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/size)
+     */
+    override val size: Int
+
+    /**
+     * The **`append()`** method of the URLSearchParams interface appends a specified key/value pair as a new search parameter.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/append)
+     */
+    open fun append(
+        key: String,
+        value: String,
+    )
+
+    /**
+     * The **`delete()`** method of the URLSearchParams interface deletes specified parameters and their associated value(s) from the list of all search parameters.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/delete)
+     */
+    open fun delete(
+        key: String,
+        value: String = definedExternally,
+    )
+
+    /**
+     * The **`get()`** method of the URLSearchParams interface returns the first value associated to the given search parameter.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/get)
+     */
+    override fun get(key: JsString): JsString?
+
+    /**
+     * The **`getAll()`** method of the URLSearchParams interface returns all the values associated with a given search parameter as an array.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/getAll)
+     */
+    open fun getAll(key: String): ReadonlyArray<JsString>
+
+    /**
+     * The **`has()`** method of the URLSearchParams interface returns a boolean value that indicates whether the specified parameter is in the search parameters.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/has)
+     */
+    override fun has(key: JsString): Boolean
+    open fun has(
+        key: String,
+        value: String,
+    ): Boolean
+
+    /**
+     * The **`set()`** method of the URLSearchParams interface sets the value associated with a given search parameter to the given value. If there were several matching values, this method deletes the others. If the search parameter doesn't exist, this method creates it.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/set)
+     */
+    open fun set(
+        key: String,
+        value: String,
+    )
+
+    /**
+     * The **`URLSearchParams.sort()`** method sorts all key/value pairs contained in this object in place and returns undefined. Key/value pairs are sorted by the values of the UTF-16 code units of the keys. This method uses a stable sorting algorithm (i.e., the relative order between key/value pairs with equal keys will be preserved).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/sort)
+     */
+    open fun sort()
+}

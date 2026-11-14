@@ -1,0 +1,44 @@
+package web.keyboard
+
+import js.array.ReadonlyArray
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.experimental.ExperimentalWebApi
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Keyboard)
+ */
+@ExperimentalWebApi
+open external class Keyboard
+private constructor() {
+
+    @JsName("getLayoutMap")
+    open fun getLayoutMapAsync(): Promise<KeyboardLayoutMap>
+
+    @JsName("lock")
+    open fun lockAsync(
+        keyCodes: ReadonlyArray<KeyCode> = definedExternally,
+    ): Promise<Void>
+
+    open fun unlock()
+}
+
+@ExperimentalWebApi
+suspend inline fun Keyboard.getLayoutMap(): KeyboardLayoutMap {
+    return getLayoutMapAsync().await()
+}
+
+@ExperimentalWebApi
+suspend inline fun Keyboard.lock() {
+    lockAsync().await()
+}
+
+@ExperimentalWebApi
+suspend inline fun Keyboard.lock(
+    keyCodes: ReadonlyArray<KeyCode>,
+) {
+    lockAsync(
+        keyCodes = keyCodes,
+    ).await()
+}

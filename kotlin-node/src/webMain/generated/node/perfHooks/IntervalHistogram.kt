@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package node.perfHooks
+
+external interface IntervalHistogram : Histogram {
+    /**
+     * Enables the update interval timer. Returns `true` if the timer was
+     * started, `false` if it was already started.
+     * @since v11.10.0
+     */
+    fun enable(): Boolean
+
+    /**
+     * Disables the update interval timer. Returns `true` if the timer was
+     * stopped, `false` if it was already stopped.
+     * @since v11.10.0
+     */
+    fun disable(): Boolean
+}

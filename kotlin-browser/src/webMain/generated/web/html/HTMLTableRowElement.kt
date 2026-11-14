@@ -1,0 +1,52 @@
+// Automatically generated - do not modify!
+
+package web.html
+
+import web.errors.DOMExceptionType.IndexSizeError
+import web.errors.JsThrows
+
+/**
+ * The **`HTMLTableRowElement`** interface provides special properties and methods (beyond the HTMLElement interface it also has available to it by inheritance) for manipulating the layout and presentation of rows in an HTML table.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableRowElement)
+ */
+open external class HTMLTableRowElement
+protected constructor() :
+    HTMLElement {
+    /**
+     * The **`cells`** read-only property of the HTMLTableRowElement interface returns a live HTMLCollection containing the cells in the row. The HTMLCollection is live and is automatically updated when cells are added or removed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableRowElement/cells)
+     */
+    open val cells: HTMLCollection<HTMLTableCellElement>
+
+    /**
+     * The **`rowIndex`** read-only property of the HTMLTableRowElement interface represents the position of a row within the whole <table>.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableRowElement/rowIndex)
+     */
+    open val rowIndex: Int
+
+    /**
+     * The **`sectionRowIndex`** read-only property of the HTMLTableRowElement interface represents the position of a row within the current section (<thead>, <tbody>, or <tfoot>).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableRowElement/sectionRowIndex)
+     */
+    open val sectionRowIndex: Int
+
+    /**
+     * The **`deleteCell()`** method of the HTMLTableRowElement interface removes a specific row cell from a given <tr>.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableRowElement/deleteCell)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun deleteCell(index: Int)
+
+    /**
+     * The **`insertCell()`** method of the HTMLTableRowElement interface creates a <td> element, inserts it at the specified position in the given <tr> element, and returns it.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableRowElement/insertCell)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun insertCell(index: Int = definedExternally): HTMLTableCellElement
+}

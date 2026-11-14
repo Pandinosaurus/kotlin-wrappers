@@ -1,0 +1,160 @@
+package wrappersgenerator.testing.library.dom.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.*
+import io.github.sgrishchenko.karakum.extension.plugins.*
+import io.github.sgrishchenko.karakum.structure.derived.DerivedDeclaration
+import io.github.sgrishchenko.karakum.structure.derived.generateDerivedDeclarations
+import js.array.ReadonlyArray
+import js.reflect.invoke
+import typescript.*
+
+private val queryFunctionTypes = setOf(
+    "QueryByBoundAttribute",
+    "AllByBoundAttribute",
+    "FindAllByBoundAttribute",
+    "GetByBoundAttribute",
+    "FindByBoundAttribute",
+    "QueryByText",
+    "AllByText",
+    "FindAllByText",
+    "GetByText",
+    "FindByText",
+    "AllByRole",
+    "GetByRole",
+    "QueryByRole",
+    "FindByRole",
+    "FindAllByRole",
+)
+
+private fun isPromiseType(node: Node) = nullable {
+    ensure(isTypeReferenceNode(node))
+
+    val typeName = node.typeName
+    ensure(isIdentifier(typeName))
+    ensure(typeName.text.endsWith("Promise"))
+} != null
+
+class QueriesPlugin : Plugin {
+    private val promiseApiDeclarations = mutableListOf<DerivedDeclaration>()
+
+    override suspend fun setup(context: Context) = Unit
+
+    override suspend fun traverse(node: Node, context: Context) = Unit
+
+    override suspend fun render(node: Node, context: Context, next: Render<Node>) = nullable {
+        ensure(isFunctionDeclaration(node))
+
+        val firstParameter = ensureNotNull(node.parameters.firstOrNull())
+        ensureNotNull(firstParameter.dotDotDotToken)
+
+        val firstParameterType = ensureNotNull(firstParameter.type)
+        ensure(isTypeReferenceNode(firstParameterType))
+
+        val firstParameterTypeName = firstParameterType.typeName
+        ensure(isIdentifier(firstParameterTypeName))
+        ensure(firstParameterTypeName.text == "Parameters")
+
+        val firstParameterTypeArgument = ensureNotNull(firstParameterType.typeArguments?.firstOrNull())
+        ensure(isTypeReferenceNode(firstParameterTypeArgument))
+
+        val firstParameterTypeArgumentName = firstParameterTypeArgument.typeName
+        ensure(isIdentifier(firstParameterTypeArgumentName))
+        ensure(firstParameterTypeArgumentName.text in queryFunctionTypes)
+
+        val returnType = ensureNotNull(node.type)
+        ensure(isTypeReferenceNode(returnType))
+
+        val returnTypeName = returnType.typeName
+        ensure(isIdentifier(returnTypeName))
+        ensure(returnTypeName.text == "ReturnType")
+
+        val returnTypeArgument = ensureNotNull(returnType.typeArguments?.firstOrNull())
+        ensure(isTypeReferenceNode(returnTypeArgument))
+
+        val returnTypeArgumentName = returnTypeArgument.typeName
+        ensure(isIdentifier(returnTypeArgumentName))
+        ensure(returnTypeArgumentName.text in queryFunctionTypes)
+
+        ensure(firstParameterTypeArgumentName.text == returnTypeArgumentName.text)
+
+        val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+        val typeChecker = typeScriptService.program.getTypeChecker()
+
+        val symbol = ensureNotNull(typeChecker.getSymbolAtLocation(returnTypeArgumentName))
+
+        val declaration = ensureNotNull(symbol.declarations?.firstOrNull())
+        ensure(isTypeAliasDeclaration(declaration))
+
+        val declarationType = declaration.type
+        ensure(isFunctionTypeNode(declarationType))
+
+        val name = next(ensureNotNull(node.name))
+
+        val typeParameters = node.typeParameters
+            ?.map { next(it) }
+            ?.filter { it.isNotEmpty() }
+            ?.joinToString(separator = ", ")
+
+        val type = declarationType.type
+        val renderedReturnType = next(type)
+
+        if (isPromiseType(type)) {
+            ensure(isTypeReferenceNode(type))
+
+            val typeArguments = requireNotNull(type.typeArguments)
+
+            val returnTypePayload = next(typeArguments.first())
+
+            val sourceFileName = node.getSourceFile()?.fileName ?: "generated.d.ts"
+
+            val namespace = typeScriptService.findClosestNamespace(node)
+
+            val body = convertParameterDeclarations(
+                declarationType, context, next,
+                ParameterDeclarationStrategy.function,
+            ) { parameters, _ ->
+                """
+                    @seskar.js.JsAsync
+                    external suspend fun ${ifPresent(typeParameters) { "<${it}> " }}${name}(${parameters})${ifPresent(returnTypePayload) { ": $it" }}
+                """.trimIndent()
+            }
+
+            val nodeInfo = DerivedDeclaration(
+                sourceFileName,
+                namespace,
+                fileName = "${name}.suspend.kt",
+                body,
+            )
+
+            promiseApiDeclarations += nodeInfo
+
+            convertParameterDeclarations(
+                declarationType, context, next,
+                ParameterDeclarationStrategy.function,
+            ) { parameters, _ ->
+                """
+                    @JsName("$name")
+                    external fun ${ifPresent(typeParameters) { "<${it}> " }}${name}Async(${parameters})${ifPresent(renderedReturnType) { ": $it" }}
+                """.trimIndent()
+            }
+        } else {
+            convertParameterDeclarations(
+                declarationType, context, next,
+                ParameterDeclarationStrategy.function,
+            ) { parameters, _ ->
+                """
+                    external fun ${ifPresent(typeParameters) { "<${it}> " }}${name}(${parameters})${ifPresent(renderedReturnType) { ": $it" }}
+                """.trimIndent()
+            }
+        }
+    }
+
+    override suspend fun generate(
+        context: Context,
+        render: Render<Node>,
+    ): ReadonlyArray<GeneratedFile> {
+        return generateDerivedDeclarations(promiseApiDeclarations.toTypedArray(), context)
+    }
+
+}

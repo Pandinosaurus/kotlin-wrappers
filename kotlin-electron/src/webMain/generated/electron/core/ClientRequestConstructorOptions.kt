@@ -1,0 +1,126 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface ClientRequestConstructorOptions {
+    /**
+     * The HTTP request method. Defaults to the GET method.
+     */
+    var method: String?
+
+    /**
+     * The request URL. Must be provided in the absolute form with the protocol scheme
+     * specified as http or https.
+     */
+    var url: String?
+
+    /**
+     * Headers to be sent with the request.
+     */
+    var headers: js.objects.ReadonlyRecord<String, Any /* (string) | (string[]) */>?
+
+    /**
+     * The `Session` instance with which the request is associated.
+     */
+    var session: Session?
+
+    /**
+     * The name of the `partition` with which the request is associated. Defaults to
+     * the empty string. The `session` option supersedes `partition`. Thus if a
+     * `session` is explicitly specified, `partition` is ignored.
+     */
+    var partition: String?
+
+    /**
+     * When set to `true`, custom protocol handlers registered for the request's URL
+     * scheme will not be called. This allows forwarding an intercepted request to the
+     * built-in handler. webRequest handlers will still be triggered when bypassing
+     * custom protocols. Defaults to `false`.
+     */
+    var bypassCustomProtocolHandlers: Boolean?
+
+    /**
+     * Can be `include`, `omit` or `same-origin`. Whether to send credentials with this
+     * request. If set to `include`, credentials from the session associated with the
+     * request will be used. If set to `omit`, credentials will not be sent with the
+     * request (and the `'login'` event will not be triggered in the event of a 401).
+     * If set to `same-origin`, `origin` must also be specified. This matches the
+     * behavior of the fetch option of the same name. If this option is not specified,
+     * authentication data from the session will be sent, and cookies will not be sent
+     * (unless `useSessionCookies` is set).
+     */
+    var credentials: (ClientRequestConstructorOptionsCredentials)?
+
+    /**
+     * Whether to send cookies with this request from the provided session. If
+     * `credentials` is specified, this option has no effect. Default is `false`.
+     */
+    var useSessionCookies: Boolean?
+
+    /**
+     * Can be `http:` or `https:`. The protocol scheme in the form 'scheme:'. Defaults
+     * to 'http:'.
+     */
+    var protocol: (ClientRequestConstructorOptionsProtocol)?
+
+    /**
+     * The server host provided as a concatenation of the hostname and the port number
+     * 'hostname:port'.
+     */
+    var host: String?
+
+    /**
+     * The server host name.
+     */
+    var hostname: String?
+
+    /**
+     * The server's listening port number.
+     */
+    var port: Double?
+
+    /**
+     * The path part of the request URL.
+     */
+    var path: String?
+
+    /**
+     * Can be `follow`, `error` or `manual`. The redirect mode for this request. When
+     * mode is `error`, any redirection will be aborted. When mode is `manual` the
+     * redirection will be cancelled unless `request.followRedirect` is invoked
+     * synchronously during the `redirect` event.  Defaults to `follow`.
+     */
+    var redirect: (ClientRequestConstructorOptionsRedirect)?
+
+    /**
+     * The origin URL of the request.
+     */
+    var origin: String?
+
+    /**
+     * can be "", `no-referrer`, `no-referrer-when-downgrade`, `origin`,
+     * `origin-when-cross-origin`, `unsafe-url`, `same-origin`, `strict-origin`, or
+     * `strict-origin-when-cross-origin`. Defaults to
+     * `strict-origin-when-cross-origin`.
+     */
+    var referrerPolicy: (ClientRequestConstructorOptionsReferrerPolicy)?
+
+    /**
+     * can be `default`, `no-store`, `reload`, `no-cache`, `force-cache` or
+     * `only-if-cached`.
+     */
+    var cache: (ClientRequestConstructorOptionsCache)?
+
+    /**
+     * can be `throttled`, `idle`, `lowest`, `low`, `medium`, or `highest`. Defaults to
+     * `idle`.
+     */
+    var priority: (ClientRequestConstructorOptionsPriority)?
+
+    /**
+     * the incremental loading flag as part of HTTP extensible priorities (RFC 9218).
+     * Default is `true`.
+     */
+    var priorityIncremental: Boolean?
+}

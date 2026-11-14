@@ -1,0 +1,34 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface ClearDataOptions {
+    /**
+     * The types of data to clear. By default, this will clear all types of data. This
+     * can potentially include data types not explicitly listed here. (See Chromium's
+     * `BrowsingDataRemover` for the full list.)
+     */
+    var dataTypes: js.array.ReadonlyArray<ClearDataOptionsDataType>?
+
+    /**
+     * Clear data for only these origins. Cannot be used with `excludeOrigins`.
+     */
+    var origins: js.array.ReadonlyArray<String>?
+
+    /**
+     * Clear data for all origins except these ones. Cannot be used with `origins`.
+     */
+    var excludeOrigins: js.array.ReadonlyArray<String>?
+
+    /**
+     * Skips deleting cookies that would close current network connections. (Default:
+     * `false`)
+     */
+    var avoidClosingConnections: Boolean?
+
+    /**
+     * The behavior for matching data to origins.
+     */
+    var originMatchingMode: (ClearDataOptionsOriginMatchingMode)?
+}

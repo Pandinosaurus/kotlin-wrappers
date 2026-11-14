@@ -1,0 +1,21 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface Item {
+    /**
+     * The path to the file being dragged.
+     */
+    var file: String
+
+    /**
+     * The paths to the files being dragged. (`files` will override `file` field)
+     */
+    var files: js.array.ReadonlyArray<String>?
+
+    /**
+     * The image must be non-empty on macOS.
+     */
+    var icon: Any /* (NativeImage) | (string) */
+}

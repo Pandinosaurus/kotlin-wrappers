@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if `value` is a `CryptoKey`, `false` otherwise.
+ * @since v16.2.0
+ */
+@JsName("isCryptoKey")
+external fun isCryptoKeyRaw(value: Any?): Boolean /* object is webcrypto.CryptoKey */

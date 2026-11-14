@@ -1,0 +1,97 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("INTERNAL_ENTITY")
+
+package electron.core
+
+import node.events.EventEmitter as NodeEventEmitter
+
+open external class View : NodeEventEmitter {
+    /**
+     * View
+     */
+    constructor ()
+
+    /**
+     * If the same View is added to a parent which already contains it, it will be
+     * reordered such that it becomes the topmost view.
+     */
+    fun addChildView(
+        view: View,
+        index: Double = definedExternally,
+    )
+
+    /**
+     * The bounds of this View, relative to its parent.
+     */
+    fun getBounds(): Rectangle
+
+    /**
+     * Whether the view should be drawn. Note that this is different from whether the
+     * view is visible on screen—it may still be obscured or out of view.
+     */
+    fun getVisible(): Boolean
+
+    /**
+     * If the view passed as a parameter is not a child of this view, this method is a
+     * no-op.
+     */
+    fun removeChildView(view: View)
+
+    /**
+     * > [!NOTE] You must set a background color with an alpha channel (e.g.
+     * `#80ffffff`) in order for the blur effect to be visible.
+     */
+    fun setBackgroundBlur(blurRadius: Double)
+
+    /**
+     * Examples of valid `color` values:
+     *
+     * * Hex
+     *   * `#fff` (RGB)
+     *   * `#ffff` (ARGB)
+     *   * `#ffffff` (RRGGBB)
+     *   * `#ffffffff` (AARRGGBB)
+     * * RGB
+     *   * `rgb\(([\d]+),\s*([\d]+),\s*([\d]+)\)`
+     *     * e.g. `rgb(255, 255, 255)`
+     * * RGBA
+     *   * `rgba\(([\d]+),\s*([\d]+),\s*([\d]+),\s*([\d.]+)\)`
+     *     * e.g. `rgba(255, 255, 255, 1.0)`
+     * * HSL
+     *   * `hsl\((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%\)`
+     *     * e.g. `hsl(200, 20%, 50%)`
+     * * HSLA
+     *   * `hsla\((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)`
+     *     * e.g. `hsla(200, 20%, 50%, 0.5)`
+     * * Color name
+     *   * Options are listed in SkParseColor.cpp
+     *   * Similar to CSS Color Module Level 3 keywords, but case-sensitive.
+     *     * e.g. `blueviolet` or `red`
+     *
+     * > [!NOTE] Hex format with alpha takes `AARRGGBB` or `ARGB`, _not_ `RRGGBBAA` or
+     * `RGB`.
+     */
+    fun setBackgroundColor(color: String)
+
+    /**
+     * > [!NOTE] The area cutout of the view's border still captures clicks.
+     */
+    fun setBorderRadius(radius: Double)
+
+    fun setBounds(
+        bounds: Rectangle,
+        options: BoundsOptions = definedExternally,
+    )
+
+    fun setVisible(visible: Boolean)
+
+    /**
+     * A `View[]` property representing the child views of this view.
+     *
+     */
+    val children: js.array.ReadonlyArray<View>
+
+    @web.events.JsEvent("bounds-changed")
+    open val boundsChangedEvent: node.events.EventInstance<js.array.Tuple>
+}

@@ -1,0 +1,269 @@
+package karakum.cesium
+
+import java.io.File
+
+private val RECORD = Regex("""\{\n\s+\[key\:\sstring\]\:\s(\w+)\;\n\s+\}""")
+private val IMPORT_EXPORT = Regex("""^(?:import \{[^}]+} from "[^"]+"|export \{[^}]+});\n""", RegexOption.MULTILINE)
+
+private val EXCLUDED = setOf(
+    "TimeConstants",
+    "WebGLConstants",
+    "addAllToArray",
+    "arrayRemoveDuplicates",
+    "assert",
+    "defined",
+    "deprecationWarning",
+    "getJsonFromTypedArray",
+    "getMagic",
+    "getStringFromTypedArray",
+    "oneTimeWarning",
+)
+
+private const val TS_FUNCTION = "(...params: any[]) => any"
+
+internal const val LIGHT: String = "Light"
+internal const val SPLINE: String = "Spline"
+internal const val TERRAIN_DATA: String = "TerrainData"
+internal const val TERRAIN_PROVIDER: String = "TerrainProvider"
+internal const val TILING_SCHEME: String = "TilingScheme"
+internal const val VISUALIZER: String = "Visualizer"
+
+internal const val PROPERTY: String = "Property"
+internal const val MATERIAL_PROPERTY: String = "MaterialProperty"
+internal const val POSITION_PROPERTY: String = "PositionProperty"
+
+internal const val APPEARANCE: String = "Appearance"
+internal const val CONTROLLER: String = "Controller"
+internal const val IMAGERY_PROVIDER: String = "ImageryProvider"
+
+private val FACTORY_MAP = mapOf(
+    Function.PREFIX to ::Function,
+    "function " to ::Function,
+    Enum.PREFIX to ::Enum,
+    Enum.CONST_PREFIX to ::Enum,
+    TopType.PREFIX to ::TopType,
+    "type " to ::TopType,
+    "interface " to ::Interface,
+    Interface.PREFIX to ::Interface,
+    Class.PREFIX to ::Class,
+    "namespace " to ::Namespace,
+    Namespace.PREFIX to ::Namespace,
+)
+
+internal fun parseDeclarations(
+    definitionsFile: File,
+): List<Declaration> {
+    val declarations = readDeclarations(definitionsFile)
+        .toMutableList()
+
+    val classMap = declarations.asSequence()
+        .filterIsInstance<Class>()
+        .associateBy { it.name }
+
+    val interfaceMap = declarations.asSequence()
+        .filterIsInstance<Interface>()
+        .associateBy { it.name }
+
+    if (definitionsFile.parentFile.name == "engine") {
+        addParentType(classMap, LIGHT)
+        addParentType(classMap, TERRAIN_DATA)
+        addParentType(classMap, TERRAIN_PROVIDER)
+        addParentType(classMap, TILING_SCHEME, { interfaceMap.getValue(it) })
+        addParentType(classMap, VISUALIZER)
+
+        addParentType(classMap, MATERIAL_PROPERTY)
+        /*
+        addParentType(classMap, POSITION_PROPERTY)
+        addParentType(classMap, PROPERTY) {
+            when {
+                it == MATERIAL_PROPERTY -> true
+                it == POSITION_PROPERTY -> true
+                it.endsWith(MATERIAL_PROPERTY) -> false
+                it.endsWith(POSITION_PROPERTY) -> false
+                else -> it.endsWith(PROPERTY)
+            }
+        }
+        */
+
+        addParentType(classMap, "TileDiscardPolicy") {
+            "Tile" in it && "Discard" in it && "Policy" in it
+        }
+
+        addParentType(classMap, "StyleExpression") {
+            it.endsWith("Expression")
+        }
+
+        addParentType(classMap, APPEARANCE) {
+            it.endsWith(APPEARANCE)
+        }
+
+        addParentType(classMap, CONTROLLER) {
+            it.endsWith(CONTROLLER) && it != "ScreenSpaceCameraController"
+        }
+
+        addParentType(classMap, IMAGERY_PROVIDER) {
+            it.endsWith(IMAGERY_PROVIDER)
+                    && it != "OpenStreetMapImageryProvider"
+                    && it != "TileMapServiceImageryProvider"
+                    || it == "GoogleEarthEnterpriseMapsProvider"
+        }
+    }
+
+    // TODO: remove temp hack
+    declarations.removeAll {
+        it.name == "HilbertOrder"
+                || it.name == "TypedArray"
+                || it.name == "TypedArrayConstructor"
+    }
+
+    declarations.removeAll { it.name in EXCLUDED }
+
+    declarations.removeAll {
+        it is Interface && classMap.containsKey(it.name)
+    }
+
+    declarations.removeAll {
+        when {
+            it !is Namespace -> false
+
+            classMap.containsKey(it.name) -> {
+                classMap.getValue(it.name).companion = it
+                true
+            }
+
+            interfaceMap.containsKey(it.name) -> {
+                interfaceMap.getValue(it.name).companion = it
+                true
+            }
+
+            else -> false
+        }
+    }
+
+    return declarations
+}
+
+private fun addParentType(
+    classMap: Map<String, Class>,
+    parentType: String,
+    getParent: (String) -> TypeBase = { classMap.getValue(it) },
+    filter: (String) -> Boolean = { it.endsWith(parentType) },
+) {
+    val abstractMembers = getParent(parentType)
+        .overridableMembers()
+        .map { it.name }
+        .toSet()
+
+    classMap.keys
+        .asSequence()
+        .filter { filter(it) && it != parentType }
+        .map(classMap::getValue)
+        .onEach { it.parents += parentType }
+        .flatMap { it.overridableMembers() }
+        .filter { it.name in abstractMembers }
+        .forEach { it.overridden = true }
+}
+
+private fun TypeBase.overridableMembers(): Sequence<Member> =
+    members.asSequence()
+        .filter { !it.static }
+        .filter { it is Property || it is Method }
+
+private fun readDeclarations(
+    definitionsFile: File,
+): List<Declaration> =
+    definitionsFile.readText()
+        .substringAfter("""declare module "@cesium/${definitionsFile.parentFile.name}" {""")
+        .substringBefore("\n\n\n}")
+        .substringBefore("\n\n\n\n\n  /**")
+        .replace(IMPORT_EXPORT, "")
+        .replace("($TS_FUNCTION)", JS_FUNCTION)
+        .replace(TS_FUNCTION, JS_FUNCTION)
+        .replace("* /**", "*")
+        .replace("[webAssemblyOptions", "[options")
+        .replace("(webAssemblyOptions", "(options")
+        .replace("The DOM element or ID", "The DOM element")
+        .replace("= (this: ImageryLayer, ", "= (")
+        .replace("= (this: Terrain, ", "= (")
+        .replace("= (this: TerrainProvider, ", "= (")
+        .replace(
+            "export function PickId(pickObjects: Map<number, object>, key: number, color: Color): void;",
+            """|/**
+                          |  * TODO: Missing description
+                          |  */
+                          |export function PickId(pickObjects: Map<number_object>, key: number, color: Color): void;
+                        """.trimMargin(),
+        )
+        .replace(
+            "interpolateHeight(rectangle: Rectangle, longitude: number, latitude: number): number | undefined;",
+            "interpolateHeight(rectangle: Rectangle, longitude: number, latitude: number): number;",
+        )
+        .replace("credits: Credit[] | undefined;", "credits: Credit[];")
+        // For version `1.146.0`. Fixed in next release in https://github.com/CesiumGS/cesium/issues/13880
+        .replace(
+            "* Gets or sets the description.\n     */\n    description: string | undefined;",
+            "* Gets or sets the description.\n     */\n    description: Property | string | undefined;",
+        )
+        .replace(
+            "velocity.\n     */\n    viewFrom: Cartesian3 | undefined;",
+            "velocity.\n     */\n    viewFrom: Property | Cartesian3 | undefined;",
+        )
+        // For version `1.146.0`. Missing parameters and return types in JSDoc
+        // Fixed by https://github.com/CesiumGS/cesium/pull/13926
+        .replace(
+            "function computeArea2D(): void;",
+            "function computeArea2D(positions: Cartesian2[]): number;",
+        )
+        .replace(
+            "function computeWindingOrder2D(): WindingOrder;",
+            "function computeWindingOrder2D(positions: Cartesian2[]): WindingOrder;",
+        )
+        .replace(
+            "function getHeight(height: number, scale: number, relativeHeight: number): void;",
+            "function getHeight(height: number, scale: number, relativeHeight: number): number;",
+        )
+        .replace(
+            "verticalExaggerationRelativeHeight: number, result?: Cartesian3): void;",
+            "verticalExaggerationRelativeHeight: number, result?: Cartesian3): Cartesian3;",
+        )
+        .replace("export class Camera {", "export class Camera extends CameraLike {")
+        .replace(
+            "loadTileDataAvailability(_x: number, _y: number, _level: number): Promise<void> | undefined;",
+            "loadTileDataAvailability(x: number, y: number, level: number): Promise<void> | undefined;",
+        )
+        // Azure2DImageryProvider
+        // Google2DImageryProvider
+        .replace(
+            "getTileCredits(x: number, y: number, level: number): Credit[] | undefined;",
+            "getTileCredits(x: number, y: number, level: number): Credit[];",
+        )
+        // For version `1.103.0`
+        .replace(" readonly targetPropertyNames: any;", " readonly targetPropertyNames: string[];")
+        .replace("};\n    type UpdaterFunction ", "};\n    /**\n     * Function\n     */\n    type UpdaterFunction ")
+        .replace(RECORD) { record(it.groupValues[1]) }
+        .let { "\n$it" }
+        .splitToSequence("\n\n/**")
+        .filter { it.isNotBlank() }
+        .map { "/**$it" }
+        .flatMap { it.split("\n\nexport ").asSequence() }
+        .flatMap { parseTopDefinition(it) }
+        // TODO: support
+        .filter { !it.body.startsWith("export var ") }
+        .filter { !it.body.startsWith("var ") }
+        // TODO: support
+        .filter { !it.body.startsWith("export const ") || it.body.startsWith("export const enum ") }
+        .filter { !it.body.startsWith("const ") || it.body.startsWith("const enum ") }
+        .map { source ->
+            val body = source.body
+            val prefix = FACTORY_MAP.keys
+                .firstOrNull { body.startsWith(it) }
+                ?: error("NOKEY\n------\n$body\n------\n")
+
+            val newSource = source.copy(body = body.removePrefix(prefix))
+            FACTORY_MAP.getValue(prefix)(newSource)
+        }
+        .toList()
+
+private fun record(valueType: String): String {
+    return "Record<String, ${kotlinType(valueType)}>"
+}

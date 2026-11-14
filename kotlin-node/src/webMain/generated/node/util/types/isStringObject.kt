@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a string object, e.g. created
+ * by `new String()`.
+ *
+ * ```js
+ * util.types.isStringObject('foo');  // Returns false
+ * util.types.isStringObject(new String('foo'));   // Returns true
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isStringObject")
+external fun isStringObjectRaw(value: Any?): Boolean /* object is String */

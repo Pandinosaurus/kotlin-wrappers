@@ -1,0 +1,32 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import js.reflect.invoke
+import typescript.*
+
+val convertEventEmitterListener = createPlugin { node, _, render ->
+    nullable {
+        val sourceFileName = ensureNotNull(node.getSourceFile()).fileName
+        ensure(sourceFileName.endsWith("events.d.ts"))
+
+        ensure(isTypeReferenceNode(node))
+
+        val name = node.typeName
+        ensure(isIdentifier(name))
+        ensure(name.text == "Function")
+
+        val typeArguments = ensureNotNull(node.typeArguments)
+        val firstTypeArgument = ensureNotNull(typeArguments.getOrNull(0))
+        ensure(firstTypeArgument.kind == SyntaxKind.AnyKeyword)
+
+        val parameter = ensureNotNull(node.parent)
+        ensure(isParameter(parameter))
+
+        val parameterName = parameter.name
+        ensure(isIdentifier(parameterName))
+        ensure(parameterName.text == "listener")
+
+        "${render(node.typeName)}<Unit>"
+    }
+}

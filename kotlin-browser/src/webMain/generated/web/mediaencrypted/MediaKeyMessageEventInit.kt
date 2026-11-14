@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package web.mediaencrypted
+
+import js.buffer.ArrayBuffer
+import kotlinx.js.JsPlainObject
+import web.events.EventInit
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MediaKeyMessageEvent/MediaKeyMessageEvent#options)
+ */
+@JsPlainObject
+external interface MediaKeyMessageEventInit :
+    EventInit {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MediaKeyMessageEvent/MediaKeyMessageEvent#message)
+     */
+    var message: ArrayBuffer
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MediaKeyMessageEvent/MediaKeyMessageEvent#messageType)
+     */
+    var messageType: MediaKeyMessageType
+}

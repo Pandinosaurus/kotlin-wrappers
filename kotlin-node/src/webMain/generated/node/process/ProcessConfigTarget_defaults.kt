@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.process
+
+@kotlinx.js.JsPlainObject
+external interface ProcessConfigTarget_defaults {
+    val cflags: js.array.ReadonlyArray<Any?>
+    val default_configuration: String
+    val defines: js.array.ReadonlyArray<String>
+    val include_dirs: js.array.ReadonlyArray<String>
+    val libraries: js.array.ReadonlyArray<String>
+}

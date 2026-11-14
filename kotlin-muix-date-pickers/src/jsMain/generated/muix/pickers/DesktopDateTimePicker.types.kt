@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+package muix.pickers
+
+import js.array.ReadonlyArray
+import react.Props
+
+external interface DesktopDateTimePickerProps : Props {
+    /**
+     * Overridable component slots.
+     * @default {}
+     */
+    var slots: DesktopDateTimePickerSlots?
+
+    /**
+     * The props used for each component slot.
+     * @default {}
+     */
+    var slotProps: DesktopDateTimePickerSlotProps?
+
+    /**
+     * Available views.
+     */
+    var views: ReadonlyArray<String /* 'year' | 'month' | 'day' | 'hours' | 'minutes' | 'seconds' */>?
+
+    /**
+     * Years rendered per row.
+     * @default 4
+     */
+    var yearsPerRow: Number? /* 3 | 4 */
+}
+
+external interface DesktopDateTimePickerSlots
+
+external interface DesktopDateTimePickerSlotProps : Props

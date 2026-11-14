@@ -1,0 +1,11 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.jetbrains.kotlin-wrappers/kotlin-tanstack-react-query)](https://central.sonatype.com/artifact/org.jetbrains.kotlin-wrappers/kotlin-tanstack-react-query)
+
+# Module kotlin-tanstack-react-query
+
+Kotlin wrapper for the [TanStack React Query](https://github.com/TanStack/query/) library.
+
+### Internals
+
+Declarations in [src/jsMain/generated](./src/jsMain/generated) are generated.
+
+Manual changes are prohibited.

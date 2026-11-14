@@ -1,0 +1,13 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.jetbrains.kotlin-wrappers/kotlin-cssom-core)](https://central.sonatype.com/artifact/org.jetbrains.kotlin-wrappers/kotlin-cssom-core)
+
+# Module kotlin-cssom-core
+
+[CSSType](https://github.com/frenic/csstype) — TypeScript and Flow definitions for CSS, generated
+by [data from MDN](https://github.com/mdn/data).
+*kotlin-cssom-core* library is *CSSType* core types adoption for *Kotlin*.
+
+### Internals
+
+Declarations in [src/webMain/generated](./src/webMain/generated) are generated.
+
+Manual changes are prohibited.

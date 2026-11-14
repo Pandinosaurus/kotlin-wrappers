@@ -1,0 +1,95 @@
+// Automatically generated - do not modify!
+
+package web.sse
+
+import js.closeable.JsCloseable
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+import web.messaging.MessageEvent
+import web.url.URL
+
+/**
+ * The **`EventSource`** interface is web content's interface to server-sent events.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource)
+ */
+open external class EventSource(
+    /**
+     * The **`url`** read-only property of the EventSource interface returns a string representing the URL of the source.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/url)
+     */
+    open val url: String,
+    init: EventSourceInit = definedExternally,
+) : EventTarget,
+    JsCloseable {
+    constructor(
+        url: URL,
+        init: EventSourceInit = definedExternally,
+    )
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/error_event)
+     */
+    open var onerror: EventHandler<Event, EventSource, EventSource>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/message_event)
+     */
+    open var onmessage: EventHandler<MessageEvent<*>, EventSource, EventSource>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/open_event)
+     */
+    open var onopen: EventHandler<Event, EventSource, EventSource>?
+
+    /**
+     * The **`readyState`** read-only property of the EventSource interface returns a number representing the state of the connection.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/readyState)
+     */
+    open val readyState: ReadyState
+
+    /**
+     * The **`withCredentials`** read-only property of the EventSource interface returns a boolean value indicating whether the EventSource object was instantiated with CORS credentials set.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/withCredentials)
+     */
+    open val withCredentials: Boolean
+
+    /**
+     * The **`close()`** method of the EventSource interface closes the connection, if one is made, and sets the EventSource.readyState attribute to 2 (closed).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/close)
+     */
+    override fun close()
+
+    companion object {
+        val CONNECTING: ReadyState
+        val OPEN: ReadyState
+        val CLOSED: ReadyState
+    }
+
+    sealed /* enum */
+    interface ReadyState
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/error_event)
+ */
+inline val <C : EventSource> C.errorEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "error")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/message_event)
+ */
+inline val <C : EventSource> C.messageEvent: EventInstance<MessageEvent<JsAny?>, C, C>
+    get() = EventInstance(this, "message")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/open_event)
+ */
+inline val <C : EventSource> C.openEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "open")

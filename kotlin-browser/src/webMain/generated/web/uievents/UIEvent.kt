@@ -1,0 +1,39 @@
+// Automatically generated - do not modify!
+
+package web.uievents
+
+import web.events.Event
+import web.events.EventType
+import web.window.Window
+
+/**
+ * The **`UIEvent`** interface represents simple user interface events. It is part of the UI Events API, which includes various event types and interfaces related to user interactions.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/UIEvent)
+ */
+open external class UIEvent(
+    override val type: EventType<UIEvent>,
+    init: UIEventInit = definedExternally,
+) : Event {
+    /**
+     * The **`UIEvent.detail`** read-only property, when non-zero, provides the current (or next, depending on the event) click count.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/UIEvent/detail)
+     */
+    open val detail: Int
+
+    /**
+     * The **`UIEvent.view`** read-only property returns the WindowProxy object from which the event was generated. In browsers, this is the Window object the event happened in.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/UIEvent/view)
+     */
+    open val view: Window?
+
+    companion object
+}
+
+inline val UIEvent.Companion.ABORT: EventType<UIEvent>
+    get() = EventType("abort")
+
+inline val UIEvent.Companion.RESIZE: EventType<UIEvent>
+    get() = EventType("resize")

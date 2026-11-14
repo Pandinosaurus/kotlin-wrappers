@@ -1,0 +1,26 @@
+// Automatically generated - do not modify!
+
+package node.inspector.debugger
+
+@kotlinx.js.JsPlainObject
+external interface SearchInContentParameterType {
+    /**
+     * Id of the script to search in.
+     */
+    var scriptId: node.inspector.runtime.ScriptId
+
+    /**
+     * String to search for.
+     */
+    var query: String
+
+    /**
+     * If true, search is case sensitive.
+     */
+    var caseSensitive: Boolean?
+
+    /**
+     * If true, treats string parameter as regex.
+     */
+    var isRegex: Boolean?
+}

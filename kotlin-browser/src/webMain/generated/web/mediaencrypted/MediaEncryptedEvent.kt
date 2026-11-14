@@ -1,0 +1,36 @@
+// Automatically generated - do not modify!
+
+package web.mediaencrypted
+
+import js.buffer.ArrayBuffer
+import web.events.Event
+import web.events.EventType
+
+/**
+ * The **`MediaEncryptedEvent`** interface of the Encrypted Media Extensions API contains the information associated with an encrypted event sent to a HTMLMediaElement when some initialization data is encountered in the media.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MediaEncryptedEvent)
+ */
+open external class MediaEncryptedEvent(
+    override val type: EventType<MediaEncryptedEvent>,
+    init: MediaEncryptedEventInit = definedExternally,
+) : Event {
+    /**
+     * The read-only **`initData`** property of the MediaKeyMessageEvent returns the initialization data contained in this event, if any.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MediaEncryptedEvent/initData)
+     */
+    open val initData: ArrayBuffer?
+
+    /**
+     * The read-only **`initDataType`** property of the MediaKeyMessageEvent returns a case-sensitive string describing the type of the initialization data associated with this event.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MediaEncryptedEvent/initDataType)
+     */
+    open val initDataType: String
+
+    companion object
+}
+
+inline val MediaEncryptedEvent.Companion.ENCRYPTED: EventType<MediaEncryptedEvent>
+    get() = EventType("encrypted")

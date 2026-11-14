@@ -1,0 +1,40 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:test")
+@file:JsQualifier("test")
+
+package node.test
+
+/**
+ * The `suite()` function is imported from the `node:test` module.
+ * @param name The name of the suite, which is displayed when reporting test results.
+ * Defaults to the `name` property of `fn`, or `'<anonymous>'` if `fn` does not have a name.
+ * @param options Configuration options for the suite. This supports the same options as {@link test}.
+ * @param fn The suite function declaring nested tests and suites. The first argument to this function is a {@link SuiteContext} object.
+ * @return Immediately fulfilled with `undefined`.
+ * @since v20.13.0
+ */
+@JsName("suite")
+external fun suiteAsync(
+    name: String = definedExternally,
+    options: TestOptions = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.promise.Promise<js.void.Void>
+
+@JsName("suite")
+external fun suiteAsync(
+    name: String = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.promise.Promise<js.void.Void>
+
+@JsName("suite")
+external fun suiteAsync(
+    options: TestOptions = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.promise.Promise<js.void.Void>
+
+@JsName("suite")
+external fun suiteAsync(fn: SuiteFn = definedExternally): js.promise.Promise<js.void.Void>
+
+@JsName("suite")
+external fun suiteAsync(): js.promise.Promise<js.void.Void>

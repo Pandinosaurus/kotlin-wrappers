@@ -1,0 +1,247 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.impure
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.*
+import io.github.sgrishchenko.karakum.extension.plugins.*
+import js.reflect.invoke
+import typescript.*
+
+private fun extractModifiers(member: Node) = when {
+    isPropertyDeclaration(member) -> member.modifiers
+    isMethodDeclaration(member) -> member.modifiers
+    isConstructorDeclaration(member) -> member.modifiers
+    isGetAccessorDeclaration(member) -> member.modifiers
+    isSetAccessorDeclaration(member) -> member.modifiers
+    isIndexSignatureDeclaration(member) -> member.modifiers
+    else -> null
+} ?: emptyArray()
+
+private fun isEventEmitterInterfaceNode(node: Node) = nullable {
+    ensure(isInterfaceDeclaration(node))
+    ensure(node.name.text == "EventEmitter")
+
+    val moduleBlock = ensureNotNull(node.parent)
+    ensure(isModuleBlock(moduleBlock))
+
+    val moduleDeclaration = ensureNotNull(moduleBlock.parent)
+    ensure(isModuleDeclaration(moduleDeclaration))
+
+    val moduleName = moduleDeclaration.name
+    ensure(isIdentifier(moduleName))
+    ensure(moduleName.text == "NodeJS")
+} != null
+
+private fun isEventEmitterClassNode(node: Node) = nullable {
+    ensure(isClassDeclaration(node))
+    ensure(node.name?.text == "EventEmitter")
+} != null
+
+class EventEmitterPlugin : Plugin {
+    private lateinit var eventEmitterInterfaceNode: InterfaceDeclaration
+
+    override suspend fun setup(context: Context) = Unit
+
+    override suspend fun traverse(node: Node, context: Context) = impure {
+        ensure(isInterfaceDeclaration(node))
+        ensure(isEventEmitterInterfaceNode(node))
+
+        eventEmitterInterfaceNode = node
+    }
+
+    override suspend fun render(node: Node, context: Context, next: Render<Node>) = nullable {
+        val sourceFileName = ensureNotNull(node.getSourceFile()).fileName
+        ensure(sourceFileName.endsWith("events.d.ts"))
+
+        val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+
+        nullable {
+            ensure(isTypeReferenceNode(node))
+
+            val typeName = node.typeName
+            ensure(isIdentifier(typeName))
+            ensure(typeName.text == "Key")
+
+            "EventType"
+        } ?: nullable {
+            ensure(isIntersectionTypeNode(node))
+
+            val secondType = ensureNotNull(node.types.getOrNull(1))
+            ensure(isTypeReferenceNode(secondType))
+
+            val typeName = secondType.typeName
+            ensure(isIdentifier(typeName))
+            ensure(typeName.text == "Key2")
+
+            "EventType"
+        } ?: nullable {
+            ensure(isTypeReferenceNode(node))
+
+            val typeName = node.typeName
+            ensure(isIdentifier(typeName))
+            ensure(
+                typeName.text == "Listener1"
+                        || typeName.text == "Listener2"
+            )
+
+            "EventListener"
+        } ?: nullable {
+            ensure(isIdentifier(node))
+            ensure(node.text == "eventName")
+
+            val parameter = ensureNotNull(node.parent)
+            ensure(isParameter(parameter))
+            ensure(parameter.name === node)
+
+            val method = ensureNotNull(parameter.parent)
+            ensure(
+                isMethodDeclaration(method)
+                        || isMethodSignature(method)
+            )
+
+            "type"
+        } ?: nullable {
+            ensure(isMethodDeclaration(node))
+
+            val classNode = ensureNotNull(node.parent)
+            ensure(isEventEmitterClassNode(classNode))
+
+            nullable {
+                ensure(isComputedPropertyName(node.name))
+
+                "/* ${typeScriptService.printNode(node)} */"
+            } ?: nullable {
+                val name = next(node.name)
+
+                val returnType = node.type?.let { next(it) }
+
+                convertParameterDeclarations(
+                    node, context, next,
+                    ParameterDeclarationStrategy.function,
+                ) { parameters, signature ->
+                    nullable {
+                        ensure(signature.any { it.type?.kind == SyntaxKind.SymbolKeyword })
+
+                        ""
+                    } ?: nullable {
+                        ensure(signature.size == 3)
+
+                        val firstParameter = signature.first()
+
+                        val firstParameterType = ensureNotNull(firstParameter.type)
+                        ensure(isTypeReferenceNode(firstParameterType))
+
+                        val firstParameterTypeName = firstParameterType.typeName
+                        ensure(isQualifiedName(firstParameterTypeName))
+                        ensure(firstParameterTypeName.right.text == "EventEmitter")
+
+                        val enhancedReturnType = if (name == "once") "js.promise.Promise<P>" else "js.iterable.AsyncIterator<P>"
+
+                        "fun <P : js.array.Tuple> ${name}(emitter: EventEmitter, type: EventType, options: StaticEventEmitterOptions = definedExternally): $enhancedReturnType"
+                    } ?: nullable {
+                        ensure(signature.size == 3)
+
+                        val firstParameter = signature.first()
+
+                        val firstParameterType = ensureNotNull(firstParameter.type)
+                        ensure(isTypeReferenceNode(firstParameterType))
+
+                        val firstParameterTypeName = firstParameterType.typeName
+                        ensure(isIdentifier(firstParameterTypeName))
+                        ensure(firstParameterTypeName.text == "EventTarget")
+
+                        val enhancedReturnType =
+                            if (name == "once") "js.promise.Promise<js.array.Tuple1<E>>" else "js.iterable.AsyncIterator<js.array.Tuple1<E>>"
+
+                        "fun <E : web.events.Event> ${name}(emitter: web.events.EventTarget, type: web.events.EventType<E>, options: StaticEventEmitterOptions = definedExternally): $enhancedReturnType"
+                    } ?: nullable {
+                        ensure(signature.size == 2)
+
+                        val firstParameter = signature.first()
+
+                        val firstParameterType = ensureNotNull(firstParameter.type)
+                        ensure(isTypeReferenceNode(firstParameterType))
+
+                        val firstParameterTypeName = firstParameterType.typeName
+                        ensure(isQualifiedName(firstParameterTypeName))
+                        ensure(firstParameterTypeName.right.text == "EventEmitter")
+
+                        "fun ${name}(emitter: EventEmitter, type: EventType)${ifPresent(returnType) { ": $it" }}"
+                    } ?: nullable {
+                        ensure(signature.size == 2)
+
+                        val firstParameter = signature.first()
+
+                        val firstParameterType = ensureNotNull(firstParameter.type)
+                        ensure(isTypeReferenceNode(firstParameterType))
+
+                        val firstParameterTypeName = firstParameterType.typeName
+                        ensure(isIdentifier(firstParameterTypeName))
+                        ensure(firstParameterTypeName.text == "EventTarget")
+
+                        "fun ${name}(emitter: web.events.EventTarget, type: web.events.EventType<*>)${ifPresent(returnType) { ": $it" }}"
+                    } ?: run {
+                        // remove generics
+                        "fun ${name}(${parameters})${ifPresent(returnType, { ": $it" })}"
+                    }
+                }
+            }
+        } ?: nullable {
+            ensure(isMethodSignature(node))
+
+            val interfaceNode = ensureNotNull(node.parent)
+            ensure(isEventEmitterInterfaceNode(interfaceNode))
+
+            nullable {
+                ensure(isComputedPropertyName(node.name))
+
+                "/* ${typeScriptService.printNode(node)} */"
+            } ?: nullable {
+                val name = next(node.name)
+
+                val returnType = node.type?.let { next(it) }
+
+                convertParameterDeclarations(
+                    node, context, next,
+                    ParameterDeclarationStrategy.function,
+                ) { parameters, _ ->
+                    // remove generics
+                    "fun ${name}(${parameters})${ifPresent(returnType, { ": $it" })}"
+                }
+            }
+        } ?: nullable {
+            ensure(isClassDeclaration(node))
+            ensure(node.name?.text == "EventEmitter")
+
+            val heritageClauses = node.heritageClauses
+                ?.map { next(it) }
+                ?.joinToString(", ")
+
+            val members = node.members
+                .filter { member -> extractModifiers(member).all { it.kind != SyntaxKind.StaticKeyword } }
+                .plus(eventEmitterInterfaceNode.members)
+                .map { next(it) }
+                .joinToString("\n")
+
+            val staticMembers = node.members
+                .filter { member -> extractModifiers(member).any { it.kind == SyntaxKind.StaticKeyword } }
+                .map { next(it) }
+                .joinToString("\n")
+
+            val companionObject = """
+                companion object {
+                $staticMembers
+                }
+            """.trimIndent()
+
+            """
+                open external class EventEmitter${ifPresent(heritageClauses, { " : $it" })} {
+                $members
+                $companionObject
+                }
+            """.trimIndent()
+        }
+    }
+
+    override suspend fun generate(context: Context, render: Render<Node>) = emptyArray<GeneratedFile>()
+}

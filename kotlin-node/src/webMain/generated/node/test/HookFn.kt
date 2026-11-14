@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.test
+
+/**
+ * The hook function. The first argument is the context in which the hook is called.
+ * If the hook uses callbacks, the callback function is passed as the second argument.
+ */
+typealias HookFn = (
+    c: Any, /* TestContext | SuiteContext */
+    done: (result: Any? /* use undefined for default */) -> Unit,
+) -> Any?

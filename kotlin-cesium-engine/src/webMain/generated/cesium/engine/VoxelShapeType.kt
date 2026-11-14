@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@cesium/engine")
+
+package cesium.engine
+
+/**
+ * An enum of voxel shapes. The shape controls how the voxel grid is mapped to 3D space.
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/global.html#VoxelShapeType">Online Documentation</a>
+ */
+/* enum */
+external class VoxelShapeType
+private constructor() {
+    companion object {
+
+        /**
+         * A box shape.
+         *
+         * Value - `"BOX"`
+         */
+        val BOX: VoxelShapeType
+
+        /**
+         * An ellipsoid shape.
+         *
+         * Value - `"ELLIPSOID"`
+         */
+        val ELLIPSOID: VoxelShapeType
+
+        /**
+         * A cylinder shape.
+         *
+         * Value - `"CYLINDER"`
+         */
+        val CYLINDER: VoxelShapeType
+    }
+}

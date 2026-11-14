@@ -1,0 +1,109 @@
+// Automatically generated - do not modify!
+
+package web.fs
+
+import js.promise.Promise
+import js.promise.await
+import js.serialization.Serializable
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.file.File
+
+/**
+ * The **`FileSystemFileHandle`** interface of the File System API represents a handle to a file system entry. The interface is accessed through the window.showOpenFilePicker() method.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle)
+ */
+open external class FileSystemFileHandle
+private constructor() :
+    FileSystemHandle,
+    Serializable {
+    override val kind: FileSystemHandleKind.file
+
+    /**
+     * The **`createSyncAccessHandle()`** method of the FileSystemFileHandle interface returns a Promise which resolves to a FileSystemSyncAccessHandle object that can be used to synchronously read from and write to a file. The synchronous nature of this method brings performance advantages, but it is only usable inside dedicated Web Workers for files within the origin private file system.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/createSyncAccessHandle)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NoModificationAllowedError::class)
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(NotFoundError::class)
+    @JsName("createSyncAccessHandle")
+    open fun createSyncAccessHandleAsync(): Promise<FileSystemSyncAccessHandle>
+
+    /**
+     * The **`createWritable()`** method of the FileSystemFileHandle interface creates a FileSystemWritableFileStream that can be used to write to a file. The method returns a Promise which resolves to this created stream.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/createWritable)
+     */
+    @JsThrows(AbortError::class)
+    @JsThrows(NoModificationAllowedError::class)
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(NotFoundError::class)
+    @JsName("createWritable")
+    open fun createWritableAsync(options: FileSystemCreateWritableOptions = definedExternally): Promise<FileSystemWritableFileStream>
+
+    /**
+     * The **`getFile()`** method of the FileSystemFileHandle interface returns a Promise which resolves to a File object representing the state on disk of the entry represented by the handle.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/getFile)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(NotFoundError::class)
+    @JsName("getFile")
+    open fun getFileAsync(): Promise<File>
+}
+
+/**
+ * The **`createSyncAccessHandle()`** method of the FileSystemFileHandle interface returns a Promise which resolves to a FileSystemSyncAccessHandle object that can be used to synchronously read from and write to a file. The synchronous nature of this method brings performance advantages, but it is only usable inside dedicated Web Workers for files within the origin private file system.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/createSyncAccessHandle)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NoModificationAllowedError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun FileSystemFileHandle.createSyncAccessHandle(): FileSystemSyncAccessHandle {
+    return createSyncAccessHandleAsync().await()
+}
+
+/**
+ * The **`createWritable()`** method of the FileSystemFileHandle interface creates a FileSystemWritableFileStream that can be used to write to a file. The method returns a Promise which resolves to this created stream.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/createWritable)
+ */
+@JsThrows(AbortError::class)
+@JsThrows(NoModificationAllowedError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun FileSystemFileHandle.createWritable(): FileSystemWritableFileStream {
+    return createWritableAsync().await()
+}
+
+/**
+ * The **`createWritable()`** method of the FileSystemFileHandle interface creates a FileSystemWritableFileStream that can be used to write to a file. The method returns a Promise which resolves to this created stream.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/createWritable)
+ */
+@JsThrows(AbortError::class)
+@JsThrows(NoModificationAllowedError::class)
+@JsThrows(NotAllowedError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun FileSystemFileHandle.createWritable(options: FileSystemCreateWritableOptions): FileSystemWritableFileStream {
+    return createWritableAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`getFile()`** method of the FileSystemFileHandle interface returns a Promise which resolves to a File object representing the state on disk of the entry represented by the handle.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/getFile)
+ */
+@JsThrows(NotAllowedError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun FileSystemFileHandle.getFile(): File {
+    return getFileAsync().await()
+}

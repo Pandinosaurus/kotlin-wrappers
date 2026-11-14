@@ -1,28 +1,55 @@
 package kotlinx.css
 
+import kotlinx.css.properties.KeyframesBuilder
+
+fun CssBuilder(
+    indent: String = "",
+    allowClasses: Boolean = true,
+    parent: RuleContainer? = null,
+    isHolder: Boolean = false,
+    isStyledComponent: Boolean = false,
+): CssBuilder = CssBuilderImpl(indent, allowClasses, parent, isHolder, isStyledComponent)
+
+fun CssBuilder.keyframes(
+    name: String,
+    block: KeyframesBuilder.() -> Unit,
+) {
+    val builder = KeyframesBuilder().apply(block)
+    "@keyframes $name" {
+        rules += builder.rules
+    }
+}
+
 interface CssBuilder : StyledElement, RuleContainer {
-    val indent: String
     val allowClasses: Boolean
-    val parent: RuleContainer?
+    var parent: RuleContainer?
     val classes: MutableList<String>
     val styleName: MutableList<String>
 
-    operator fun String.invoke(block: RuleSet) =
-        rule(this, passStaticClassesToParent = false, block = block)
+    // Indicates that the builder holds CSS for further use (forwarding, etc.)
+    val isHolder: Boolean
+
+    // Indicates that the builder was created by kotlin-styled (legacy)
+    val isStyledComponent: Boolean
+
+    operator fun String.invoke(block: RuleSet) = rule(this, passStaticClassesToParent = false, block = block)
+
+    operator fun String.invoke(css: CssBuilder) = rule(this, passStaticClassesToParent = false, css = css)
 
     operator fun TagSelector.invoke(block: RuleSet) = tagName(block)
 
     // https://developer.mozilla.org/en/docs/Web/CSS/Pseudo-classes
     // The experimental ones were omitted
     fun active(block: RuleSet) = "&:active"(block)
-
     fun checked(block: RuleSet) = "&:checked"(block)
     fun default(block: RuleSet) = "&:default"(block)
+    fun defined(block: RuleSet) = "&:defined"(block)
     fun disabled(block: RuleSet) = "&:disabled"(block)
     fun empty(block: RuleSet) = "&:empty"(block)
     fun enabled(block: RuleSet) = "&:enabled"(block)
     fun firstChild(block: RuleSet) = "&:first-child"(block)
     fun firstOfType(block: RuleSet) = "&:first-of-type"(block)
+    fun fullscreen(block: RuleSet) = "&:fullscreen"(block)
     fun focus(block: RuleSet) = "&:focus"(block)
     fun focusVisible(block: RuleSet) = "&:focus-visible"(block)
     fun focusWithin(block: RuleSet) = "&:focus-within"(block)
@@ -33,15 +60,38 @@ interface CssBuilder : StyledElement, RuleContainer {
     fun lastChild(block: RuleSet) = "&:last-child"(block)
     fun lastOfType(block: RuleSet) = "&:last-of-type"(block)
     fun link(block: RuleSet) = "&:link"(block)
-    fun not(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "&:not($selector)"(block)
-    fun nthChild(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "&:nth-child($selector)"(block)
-    fun nthLastChild(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "&:nth-last-child($selector)"(block)
-    fun nthLastOfType(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "&:nth-last-of-type($selector)"(block)
-    fun nthOfType(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "&:nth-of-type($selector)"(block)
+
+    fun not(vararg selector: String, block: RuleSet): Rule {
+        // The verbosity is necessitated by an IR bug, do not inline!
+        val selectorString = selector.joinToString { "&:not($it)" }
+        return selectorString(block)
+    }
+
+    fun nthChild(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:nth-child($it)" }
+        return selectorString(block)
+    }
+
+    fun nthLastChild(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:nth-last-child($it)" }
+        return selectorString(block)
+    }
+
+    fun nthLastOfType(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:nth-last-of-type($it)" }
+        return selectorString(block)
+    }
+
+    fun nthOfType(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:nth-of-type($it)" }
+        return selectorString(block)
+    }
+
     fun onlyChild(block: RuleSet) = "&:only-child"(block)
     fun onlyOfType(block: RuleSet) = "&:only-of-type"(block)
     fun optional(block: RuleSet) = "&:optional"(block)
     fun outOfRange(block: RuleSet) = "&:out-of-range"(block)
+    fun placeholderShown(block: RuleSet) = "&:placeholder-shown"(block)
     fun readOnly(block: RuleSet) = "&:read-only"(block)
     fun readWrite(block: RuleSet) = "&:read-write"(block)
     fun required(block: RuleSet) = "&:required"(block)
@@ -49,12 +99,57 @@ interface CssBuilder : StyledElement, RuleContainer {
     fun visited(block: RuleSet) = "&:visited"(block)
 
     // Children & descendants
-    fun children(@Suppress("UNUSED_PARAMETER") selector: String? = null, block: RuleSet) = "& > ${selector ?: "*"}"(block)
+    fun children(vararg selector: String = arrayOf("*"), block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "& > $it" }
+        return selectorString(block)
+    }
 
-    fun descendants(@Suppress("UNUSED_PARAMETER") selector: String? = null, block: RuleSet) = "& ${selector ?: "*"}"(block)
+    fun descendants(vararg selector: String = arrayOf("*"), block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "& $it" }
+        return selectorString(block)
+    }
 
-    // Temporarily using && here because of a bug introduced in version 5.2: https://github.com/styled-components/styled-components/issues/3244#issuecomment-687676703
-    fun ancestorHover(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "$selector:hover &&"(block)
+    fun dir(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:dir($it)" }
+        return selectorString(block)
+    }
+
+    fun has(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:has($it)" }
+        return selectorString(block)
+    }
+
+    fun host(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:host($it)" }
+        return selectorString(block)
+    }
+
+    fun hostContext(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:host-context($it)" }
+        return selectorString(block)
+    }
+
+    fun `is`(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:is($it)" }
+        return selectorString(block)
+    }
+
+    fun lang(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:lang($it)" }
+        return selectorString(block)
+    }
+
+    fun where(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "&:where($it)" }
+        return selectorString(block)
+    }
+
+    fun ancestorHover(vararg selector: String, block: RuleSet): Rule {
+        // https://github.com/styled-components/styled-components/issues/3244#issuecomment-687676703
+        val selectorRef = if (isStyledComponent) "&&" else "&"
+        val selectorString = selector.joinToString { "$it:hover $selectorRef" }
+        return selectorString(block)
+    }
 
     // https://developer.mozilla.org/en/docs/Web/CSS/Pseudo-elements
     fun after(block: RuleSet) = "&::after" {
@@ -67,6 +162,9 @@ interface CssBuilder : StyledElement, RuleContainer {
         block()
     }
 
+    fun firstLetter(block: RuleSet) = "&::first-letter"(block)
+    fun firstLine(block: RuleSet) = "&::first-line"(block)
+
     fun placeholder(block: RuleSet) {
         "&::placeholder"(block)
         "&::-webkit-input-placeholder"(block) // Chrome, Opera, Safari
@@ -75,12 +173,28 @@ interface CssBuilder : StyledElement, RuleContainer {
         "&:-moz-placeholder"(block) // Firefox 18-
     }
 
+    fun selection(block: RuleSet) = "&::selection"(block)
+
     // Combinators
-    fun child(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "> $selector"(block)
+    fun child(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "> $it" }
+        return selectorString(block)
+    }
 
-    fun sibling(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "~ $selector"(block)
+    fun child(vararg selector: String, css: CssBuilder): Rule {
+        val selectorString = selector.joinToString { "> $it" }
+        return selectorString(css)
+    }
 
-    fun adjacentSibling(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) = "+ $selector"(block)
+    fun sibling(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "~ $it" }
+        return selectorString(block)
+    }
+
+    fun adjacentSibling(vararg selector: String, block: RuleSet): Rule {
+        val selectorString = selector.joinToString { "+ $it" }
+        return selectorString(block)
+    }
 
     // Universal selector
     fun universal(block: RuleSet) = "*"(block)
@@ -88,35 +202,39 @@ interface CssBuilder : StyledElement, RuleContainer {
     operator fun compareTo(rule: Rule): Int {
         // remove current rule
         rules.removeAt(rules.lastIndex)
-        child(rule.selector, rule.block)
+        child(rule.selector, css = rule.css)
         return 0
     }
 
     operator fun Rule.not() {
         rules.removeAt(rules.lastIndex)
-        selector.replace(NOT_REGEX, "$1:not($2)")(block)
+        selector.replace(NOT_REGEX, "$1:not($2)")(css)
     }
 
     operator fun Rule.unaryPlus() {
         rules.removeAt(rules.lastIndex)
-        "&.$selector"(block)
+        "&.$selector"(css)
     }
 
-    fun specific(specificity: Int = 2, block: RuleSet): Rule {
-        return rule("&".repeat(specificity), passStaticClassesToParent = true, block = block)
+    fun specific(specificity: Int = 2, block: RuleSet) = rule("&".repeat(specificity), passStaticClassesToParent = true, block = block)
+
+    fun prefix(vararg selector: String, block: RuleSet): Rule {
+        // https://github.com/styled-components/styled-components/issues/3244#issuecomment-687676703
+        val selectorRef = if (isStyledComponent) "&&" else "&"
+        val selectorString = selector.joinToString { "$it $selectorRef" }
+        return selectorString(block)
     }
 
-    fun prefix(@Suppress("UNUSED_PARAMETER") selector: String, block: RuleSet) {
-        // Temporarily using && here because of a bug introduced in version 5.2: https://github.com/styled-components/styled-components/issues/3244#issuecomment-687676703
-        "$selector &&"(block)
-    }
+    // https://developer.mozilla.org/docs/Web/CSS/At-rule
+    fun media(query: String, block: RuleSet) = "@media $query"(block)
 
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
-    fun media(@Suppress("UNUSED_PARAMETER") query: String, block: RuleSet) = "@media $query"(block)
+    fun supports(query: String, block: RuleSet) = "@supports $query"(block)
 
-    fun supports(@Suppress("UNUSED_PARAMETER") query: String, block: RuleSet) = "@supports $query"(block)
+    fun supportsSelector(query: String, block: RuleSet) = "@supports selector($query)"(block)
 
-    fun container(@Suppress("UNUSED_PARAMETER") query: String, block: RuleSet) = "@container $query"(block)
+    fun container(query: String, block: RuleSet) = "@container $query"(block)
+
+    fun container(container: ContainerName, query: String, block: RuleSet) = "@container $container $query"(block)
 
     fun fontFace(block: RuleSet) = rule("@font-face", passStaticClassesToParent = false, repeatable = true, block = block)
 
@@ -147,6 +265,9 @@ interface CssBuilder : StyledElement, RuleContainer {
     fun max(v1: LinearDimension, v2: LinearDimension): LinearDimension =
         LinearDimension("max($v1, $v2)")
 
+    fun minmax(v1: LinearDimension, v2: LinearDimension): LinearDimension =
+        LinearDimension("minmax($v1, $v2)")
+
     fun clamp(min: LinearDimension, preferred: LinearDimension, max: LinearDimension): LinearDimension =
         LinearDimension("clamp($min, $preferred, $max)")
 
@@ -167,6 +288,14 @@ interface CssBuilder : StyledElement, RuleContainer {
         }
     }
 
+    fun append(other: CssBuilder) {
+        declarations.putAll(other.declarations)
+        other.classes.forEach(this::addClass)
+        styleName.addAll(other.styleName)
+        rules.addAll(other.rules)
+        multiRules.addAll(other.multiRules)
+    }
+
     companion object {
         private val NOT_REGEX by lazy { Regex("^(&?)(.*)$") }
     }
@@ -180,12 +309,12 @@ fun String.toCustomProperty(): String {
     return "var(--$this)"
 }
 
-fun CssBuilder(indent: String = "", allowClasses: Boolean = true, parent: RuleContainer? = null): CssBuilder = CssBuilderImpl(indent, allowClasses, parent)
-
 open class CssBuilderImpl(
     override val indent: String = "",
     override val allowClasses: Boolean = true,
-    override val parent: RuleContainer? = null,
+    override var parent: RuleContainer? = null,
+    override val isHolder: Boolean = false,
+    override val isStyledComponent: Boolean = false,
 ) : CssBuilder {
     override val classes = mutableListOf<String>()
     override fun RuleSet.unaryPlus() = this()
@@ -195,11 +324,19 @@ open class CssBuilderImpl(
     override val styleName = mutableListOf<String>()
 
     override fun toString() = buildString {
-        declarations.forEach {
-            append("${it.key.hyphenize()}: ${it.value};\n")
-        }
-
+        append(declarations)
         buildRules(indent)
+    }
+
+    private var memoizedHashCode: Int? = null
+    override fun hashCode(): Int {
+        return memoizedHashCode
+            ?: (rules.sumOf { it.hashCode() } + multiRules.sumOf { it.hashCode() } + declarations.hashCode())
+                .also { hashCode -> memoizedHashCode = hashCode }
+    }
+
+    override fun equals(other: Any?) = this.calculateEquals(other) { otherCss ->
+        rules == otherCss.rules && multiRules == otherCss.multiRules && declarations == otherCss.declarations
     }
 
     override val rules = mutableListOf<Rule>()

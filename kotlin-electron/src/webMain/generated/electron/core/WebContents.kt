@@ -1,0 +1,1368 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("INTERNAL_ENTITY")
+
+package electron.core
+
+import node.buffer.Buffer
+import node.events.EventEmitter as NodeEventEmitter
+
+external class WebContents : NodeEventEmitter {
+    /**
+     * Adds the specified path to DevTools workspace. Must be used after DevTools
+     * creation:
+     */
+    fun addWorkSpace(path: String)
+
+    /**
+     * Adjusts the current text selection starting and ending points in the focused
+     * frame by the given amounts. A negative amount moves the selection towards the
+     * beginning of the document, and a positive amount moves the selection towards the
+     * end of the document.
+     *
+     * Example:
+     *
+     * For a call of `win.webContents.adjustSelection({ start: 1, end: 5 })`
+     *
+     * Before:
+     *
+     * [Image: Image Before Text Selection Adjustment]
+     *
+     * After:
+     *
+     * [Image: Image After Text Selection Adjustment]
+     */
+    fun adjustSelection(options: AdjustSelectionOptions)
+
+    /**
+     * Begin subscribing for presentation events and captured frames, the `callback`
+     * will be called with `callback(image, dirtyRect)` when there is a presentation
+     * event.
+     *
+     * The `image` is an instance of NativeImage that stores the captured frame.
+     *
+     * The `dirtyRect` is an object with `x, y, width, height` properties that
+     * describes which part of the page was repainted. If `onlyDirty` is set to `true`,
+     * `image` will only contain the repainted area. `onlyDirty` defaults to `false`.
+     */
+    fun beginFrameSubscription(
+        onlyDirty: Boolean,
+        callback: (image: NativeImage, dirtyRect: Rectangle) -> Unit,
+    )
+
+    /**
+     * Begin subscribing for presentation events and captured frames, the `callback`
+     * will be called with `callback(image, dirtyRect)` when there is a presentation
+     * event.
+     *
+     * The `image` is an instance of NativeImage that stores the captured frame.
+     *
+     * The `dirtyRect` is an object with `x, y, width, height` properties that
+     * describes which part of the page was repainted. If `onlyDirty` is set to `true`,
+     * `image` will only contain the repainted area. `onlyDirty` defaults to `false`.
+     */
+    fun beginFrameSubscription(callback: (image: NativeImage, dirtyRect: Rectangle) -> Unit)
+
+    /**
+     * Resolves with a NativeImage
+     *
+     * Captures a snapshot of the page within `rect`. Omitting `rect` will capture the
+     * whole visible page. The page is considered visible when its browser window is
+     * hidden and the capturer count is non-zero. If you would like the page to stay
+     * hidden, you should ensure that `stayHidden` is set to true.
+     */
+    fun capturePage(
+        rect: Rectangle = definedExternally,
+        opts: Opts = definedExternally,
+    ): js.promise.Promise<NativeImage>
+
+    /**
+     * Centers the current text selection in web page.
+     */
+    fun centerSelection()
+
+    /**
+     * A cloned WebContents instance. This method creates a copy of the WebContents
+     * with the following attributes:
+     *
+     * * **WebPreferences** - All preferences from the original WebContents are copied
+     * * **SiteInstance** - Uses the same SiteInstance as the original. This means the
+     * cloned WebContents will reuse the same render process as the original when
+     * loading same-origin pages, and only spawn a new render process for cross-origin
+     * navigations. This process allocation behavior is consistent with window.open and
+     * tab duplication in Chromium. For more details, see Chromium's Site Isolation
+     * design document.
+     * * **Opener relationship** - Inherits the opener (window.opener) relationship
+     * * **Navigation state** - Copies the navigation history and controller state
+     *
+     * The cloned WebContents is an independent instance with its own lifecycle that
+     * can be destroyed separately and will not contain any open web pages.
+     *
+     * This API is useful for use cases where you want to create a new WebContents that
+     * shares the same render process with the original for same-origin content, while
+     * maintaining full lifecycle independence. Additionally, reusing the existing
+     * render process can help optimize memory usage and page load speed to a certain
+     * extent, as it eliminates the overhead of spawning and initializing a new render
+     * process from scratch.
+     */
+    fun clone(): WebContents
+
+    /**
+     * Closes the page, as if the web content had called `window.close()`.
+     *
+     * If the page is successfully closed (i.e. the unload is not prevented by the
+     * page, or `waitForBeforeUnload` is false or unspecified), the WebContents will be
+     * destroyed and no longer usable. The `destroyed` event will be emitted.
+     */
+    fun close(opts: CloseOpts = definedExternally)
+
+    /**
+     * Closes the DevTools view.
+     */
+    fun closeDevTools()
+
+    /**
+     * Executes the editing command `copy` in web page.
+     */
+    fun copy()
+
+    /**
+     * Copy the image at the given position to the clipboard.
+     */
+    fun copyImageAt(
+        x: Double,
+        y: Double,
+    )
+
+    /**
+     * When executed on a video media element, copies the frame at (x, y) to the
+     * clipboard.
+     */
+    fun copyVideoFrameAt(
+        x: Double,
+        y: Double,
+    )
+
+    /**
+     * Executes the editing command `cut` in web page.
+     */
+    fun cut()
+
+    /**
+     * Executes the editing command `delete` in web page.
+     */
+    fun delete()
+
+    /**
+     * Disable device emulation enabled by `webContents.enableDeviceEmulation`.
+     */
+    fun disableDeviceEmulation()
+
+    /**
+     * Initiates a download of the resource at `url` without navigating. The
+     * `will-download` event of `session` will be triggered.
+     */
+    fun downloadURL(
+        url: String,
+        options: DownloadURLOptions = definedExternally,
+    )
+
+    /**
+     * Enable device emulation with the given parameters.
+     */
+    fun enableDeviceEmulation(parameters: Parameters)
+
+    /**
+     * End subscribing for frame presentation events.
+     */
+    fun endFrameSubscription()
+
+    /**
+     * A promise that resolves with the result of the executed code or is rejected if
+     * the result of the code is a rejected promise.
+     *
+     * Evaluates `code` in page.
+     *
+     * In the browser window some HTML APIs like `requestFullScreen` can only be
+     * invoked by a gesture from the user. Setting `userGesture` to `true` will remove
+     * this limitation.
+     *
+     * Code execution will be suspended until web page stop loading.
+     */
+    fun executeJavaScript(
+        code: String,
+        userGesture: Boolean = definedExternally,
+    ): js.promise.Promise<Any?>
+
+    /**
+     * A promise that resolves with the result of the executed code or is rejected if
+     * the result of the code is a rejected promise.
+     *
+     * Works like `executeJavaScript` but evaluates `scripts` in an isolated context.
+     */
+    fun executeJavaScriptInIsolatedWorld(
+        worldId: Double,
+        scripts: js.array.ReadonlyArray<WebSource>,
+        userGesture: Boolean = definedExternally,
+    ): js.promise.Promise<Any?>
+
+    /**
+     * The request id used for the request.
+     *
+     * Starts a request to find all matches for the `text` in the web page. The result
+     * of the request can be obtained by subscribing to `found-in-page` event.
+     */
+    fun findInPage(
+        text: String,
+        options: FindInPageOptions = definedExternally,
+    ): Double
+
+    /**
+     * Focuses the web page.
+     */
+    fun focus()
+
+    /**
+     * Forcefully terminates the renderer process that is currently hosting this
+     * `webContents`. This will cause the `render-process-gone` event to be emitted
+     * with the `reason=killed || reason=crashed`. Please note that some webContents
+     * share renderer processes and therefore calling this method may also crash the
+     * host process for other webContents as well.
+     *
+     * Calling `reload()` immediately after calling this method will force the reload
+     * to occur in a new process. This should be used when this process is unstable or
+     * unusable, for instance in order to recover from the `unresponsive` event.
+     */
+    fun forcefullyCrashRenderer()
+
+    /**
+     * Information about all Shared Workers.
+     */
+    fun getAllSharedWorkers(): js.array.ReadonlyArray<SharedWorkerInfo>
+
+    /**
+     * whether or not this WebContents will throttle animations and timers when the
+     * page becomes backgrounded. This also affects the Page Visibility API.
+     */
+    fun getBackgroundThrottling(): Boolean
+
+    /**
+     * the current title of the DevTools window. This will only be visible if DevTools
+     * is opened in `undocked` or `detach` mode.
+     */
+    fun getDevToolsTitle(): String
+
+    /**
+     * If _offscreen rendering_ is enabled returns the current frame rate.
+     */
+    fun getFrameRate(): Double
+
+    /**
+     * The identifier of a WebContents stream. This identifier can be used with
+     * `navigator.mediaDevices.getUserMedia` using a `chromeMediaSource` of `tab`. The
+     * identifier is restricted to the web contents that it is registered to and is
+     * only valid for 10 seconds. The `desktop` source only accepts screen and window
+     * identifiers from `desktopCapturer.getSources`; to capture a WebContents use this
+     * identifier with the `tab` source, or `ses.setDisplayMediaRequestHandler`.
+     */
+    fun getMediaSourceId(requestWebContents: WebContents): String
+
+    /**
+     * The Chrome DevTools Protocol TargetID associated with this WebContents. This is
+     * the reverse of `webContents.fromDevToolsTargetId()`.
+     *
+     * > [!NOTE] This method creates a new DevTools agent for this WebContents if one
+     * does not already exist.
+     */
+    fun getOrCreateDevToolsTargetId(): String
+
+    /**
+     * The operating system `pid` of the associated renderer process.
+     */
+    fun getOSProcessId(): Double
+
+    /**
+     * Get the system printer list.
+     *
+     * Resolves with a `PrinterInfo[]`
+     */
+    fun getPrintersAsync(): js.promise.Promise<js.array.ReadonlyArray<PrinterInfo>>
+
+    /**
+     * The Chromium internal `pid` of the associated renderer. Can be compared to the
+     * `frameProcessId` passed by frame specific navigation events (e.g.
+     * `did-frame-navigate`)
+     */
+    fun getProcessId(): Double
+
+    /**
+     * The title of the current web page.
+     */
+    fun getTitle(): String
+
+    /**
+     * the type of the webContent. Can be `backgroundPage`, `window`, `browserView`,
+     * `remote`, `webview` or `offscreen`.
+     */
+    fun getType(): (WebContentsGetTypeResult)
+
+    /**
+     * The URL of the current web page.
+     */
+    fun getURL(): String
+
+    /**
+     * The user agent for this web page.
+     */
+    fun getUserAgent(): String
+
+    /**
+     * Returns the WebRTC IP Handling Policy.
+     */
+    fun getWebRTCIPHandlingPolicy(): String
+
+    /**
+     * * `min` Integer - The minimum UDP port number that WebRTC should use.
+     * * `max` Integer - The maximum UDP port number that WebRTC should use.
+     *
+     * By default this value is `{ min: 0, max: 0 }` , which would apply no restriction
+     * on the udp port range.
+     */
+    fun getWebRTCUDPPortRange(): WebRTCUDPPortRange
+
+    /**
+     * the current zoom factor.
+     */
+    fun getZoomFactor(): Double
+
+    /**
+     * the current zoom level.
+     */
+    fun getZoomLevel(): Double
+
+    /**
+     * The current zoom mode. Can be `default`, `isolated`, `manual`, or `disabled`.
+     */
+    fun getZoomMode(): (WebContentsGetZoomModeResult)
+
+    /**
+     * A promise that resolves with a key for the inserted CSS that can later be used
+     * to remove the CSS via `contents.removeInsertedCSS(key)`.
+     *
+     * Injects CSS into the current web page and returns a unique key for the inserted
+     * stylesheet.
+     */
+    fun insertCSS(
+        css: String,
+        options: InsertCSSOptions = definedExternally,
+    ): js.promise.Promise<String>
+
+    /**
+     * Inserts `text` to the focused element.
+     */
+    fun insertText(text: String): js.promise.Promise<js.void.Void>
+
+    /**
+     * Starts inspecting element at position (`x`, `y`).
+     */
+    fun inspectElement(
+        x: Double,
+        y: Double,
+    )
+
+    /**
+     * Opens the developer tools for the service worker context.
+     */
+    fun inspectServiceWorker()
+
+    /**
+     * Opens the developer tools for the shared worker context.
+     */
+    fun inspectSharedWorker()
+
+    /**
+     * Inspects the shared worker based on its ID.
+     */
+    fun inspectSharedWorkerById(workerId: String)
+
+    /**
+     * Schedules a full repaint of the window this web contents is in.
+     *
+     * If _offscreen rendering_ is enabled invalidates the frame and generates a new
+     * one through the `'paint'` event.
+     */
+    fun invalidate()
+
+    /**
+     * Whether this page has been muted.
+     */
+    fun isAudioMuted(): Boolean
+
+    /**
+     * Whether this page is being captured. It returns true when the capturer count is
+     * greater than 0.
+     */
+    fun isBeingCaptured(): Boolean
+
+    /**
+     * Whether caret browsing is enabled for this page.
+     */
+    fun isCaretBrowsingEnabled(): Boolean
+
+    /**
+     * Whether the renderer process has crashed.
+     */
+    fun isCrashed(): Boolean
+
+    /**
+     * Whether audio is currently playing.
+     */
+    fun isCurrentlyAudible(): Boolean
+
+    /**
+     * Whether the web page is destroyed.
+     */
+    fun isDestroyed(): Boolean
+
+    /**
+     * Whether the DevTools view is focused .
+     */
+    fun isDevToolsFocused(): Boolean
+
+    /**
+     * Whether the DevTools view is opened.
+     */
+    fun isDevToolsOpened(): Boolean
+
+    /**
+     * Whether the web page is focused.
+     */
+    fun isFocused(): Boolean
+
+    /**
+     * Whether web page is still loading resources.
+     */
+    fun isLoading(): Boolean
+
+    /**
+     * Whether the main frame (and not just iframes or frames within it) is still
+     * loading.
+     */
+    fun isLoadingMainFrame(): Boolean
+
+    /**
+     * Indicates whether _offscreen rendering_ is enabled.
+     */
+    fun isOffscreen(): Boolean
+
+    /**
+     * If _offscreen rendering_ is enabled returns whether it is currently painting.
+     */
+    fun isPainting(): Boolean
+
+    /**
+     * Whether the web page is waiting for a first-response from the main resource of
+     * the page.
+     */
+    fun isWaitingForResponse(): Boolean
+
+    /**
+     * the promise will resolve when the page has finished loading (see
+     * `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
+     *
+     * Loads the given file in the window, `filePath` should be a path to an HTML file
+     * relative to the root of your application.  For instance an app structure like
+     * this:
+     *
+     * Would require code like this
+     */
+    fun loadFile(
+        filePath: String,
+        options: LoadFileOptions = definedExternally,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * the promise will resolve when the page has finished loading (see
+     * `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
+     * A noop rejection handler is already attached, which avoids unhandled rejection
+     * errors. If the existing page has a beforeUnload handler, `did-fail-load` will be
+     * called unless `will-prevent-unload` is handled.
+     *
+     * Loads the `url` in the window. The `url` must contain the protocol prefix, e.g.
+     * the `http://` or `file://`. If the load should bypass http cache then use the
+     * `pragma` header to achieve it.
+     */
+    fun loadURL(
+        url: String,
+        options: LoadURLOptions = definedExternally,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * Opens the DevTools.
+     *
+     * When `contents` is a `<webview>` tag, the `mode` would be `detach` by default,
+     * explicitly passing an empty `mode` can force using last used dock state.
+     *
+     * On Windows, if Window Control Overlay is enabled, DevTools will be opened with
+     * `mode: 'detach'`.
+     */
+    fun openDevTools(options: OpenDevToolsOptions = definedExternally)
+
+    /**
+     * Executes the editing command `paste` in web page.
+     */
+    fun paste()
+
+    /**
+     * Executes the editing command `pasteAndMatchStyle` in web page.
+     */
+    fun pasteAndMatchStyle()
+
+    /**
+     * Send a message to the renderer process, optionally transferring ownership of
+     * zero or more `MessagePortMain` objects.
+     *
+     * The transferred `MessagePortMain` objects will be available in the renderer
+     * process by accessing the `ports` property of the emitted event. When they arrive
+     * in the renderer, they will be native DOM `MessagePort` objects.
+     *
+     * For example:
+     */
+    fun postMessage(
+        channel: String,
+        message: Any?,
+        transfer: js.array.ReadonlyArray<MessagePortMain> = definedExternally,
+    )
+
+    /**
+     * When a custom `pageSize` is passed, Chromium attempts to validate platform
+     * specific minimum values for `width_microns` and `height_microns`. Width and
+     * height must both be minimum 353 microns but may be higher on some operating
+     * systems. If a valid `pageSize` is not passed and `usePrinterDefaultPageSize` is
+     * `false`, an error will be thrown.
+     *
+     * Prints window's web page. When `silent` is set to `true`, Electron will pick the
+     * system's default printer if `deviceName` is empty and the default settings for
+     * printing.
+     *
+     * Some possible `failureReason`s for print failure include:
+     *
+     * * "Invalid printer settings"
+     * * "Print job canceled"
+     * * "Print job failed"
+     *
+     * Use `page-break-before: always;` CSS style to force to print to a new page.
+     *
+     * Example usage:
+     */
+    fun print(
+        options: WebContentsPrintOptions = definedExternally,
+        callback: (success: Boolean, failureReason: String) -> Unit = definedExternally,
+    )
+
+    /**
+     * Resolves with the generated PDF data.
+     *
+     * Prints the window's web page as PDF.
+     *
+     * The `landscape` will be ignored if `@page` CSS at-rule is used in the web page.
+     *
+     * An example of `webContents.printToPDF`:
+     *
+     * See Page.printToPdf for more information.
+     */
+    fun printToPDF(options: PrintToPDFOptions): js.promise.Promise<Buffer<*>>
+
+    /**
+     * Executes the editing command `redo` in web page.
+     */
+    fun redo()
+
+    /**
+     * Reloads the current web page.
+     */
+    fun reload()
+
+    /**
+     * Reloads current page and ignores cache.
+     */
+    fun reloadIgnoringCache()
+
+    /**
+     * Resolves if the removal was successful.
+     *
+     * Removes the inserted CSS from the current web page. The stylesheet is identified
+     * by its key, which is returned from `contents.insertCSS(css)`.
+     */
+    fun removeInsertedCSS(key: String): js.promise.Promise<js.void.Void>
+
+    /**
+     * Removes the specified path from DevTools workspace.
+     */
+    fun removeWorkSpace(path: String)
+
+    /**
+     * Executes the editing command `replace` in web page.
+     */
+    fun replace(text: String)
+
+    /**
+     * Executes the editing command `replaceMisspelling` in web page.
+     */
+    fun replaceMisspelling(text: String)
+
+    /**
+     * resolves if the page is saved.
+     */
+    fun savePage(
+        fullPath: String,
+        saveType: WebContentsSavePageSaveType,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * When executed on a video media element, shows a save dialog and saves the frame
+     * at (x, y) to disk.
+     */
+    fun saveVideoFrameAs(
+        x: Double,
+        y: Double,
+    )
+
+    /**
+     * Scrolls to the bottom of the current `webContents`.
+     */
+    fun scrollToBottom()
+
+    /**
+     * Scrolls to the top of the current `webContents`.
+     */
+    fun scrollToTop()
+
+    /**
+     * Executes the editing command `selectAll` in web page.
+     */
+    fun selectAll()
+
+    /**
+     * Send an asynchronous message to the renderer process via `channel`, along with
+     * arguments. Arguments will be serialized with the Structured Clone Algorithm,
+     * just like `postMessage`, so prototype chains will not be included. Sending
+     * Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
+     *
+     * :::warning
+     *
+     * Sending non-standard JavaScript types such as DOM objects or special Electron
+     * objects will throw an exception.
+     *
+     * :::
+     *
+     * For additional reading, refer to Electron's IPC guide.
+     */
+    fun send(
+        channel: String,
+        vararg args: Any?,
+    )
+
+    /**
+     * Sends an input `event` to the page.
+     *
+     * > [!NOTE] The `BrowserWindow` containing the contents needs to be focused for
+     * `sendInputEvent()` to work.
+     */
+    fun sendInputEvent(inputEvent: MouseInputEvent)
+
+    /**
+     * Sends an input `event` to the page.
+     *
+     * > [!NOTE] The `BrowserWindow` containing the contents needs to be focused for
+     * `sendInputEvent()` to work.
+     */
+    fun sendInputEvent(inputEvent: MouseWheelInputEvent)
+
+    /**
+     * Sends an input `event` to the page.
+     *
+     * > [!NOTE] The `BrowserWindow` containing the contents needs to be focused for
+     * `sendInputEvent()` to work.
+     */
+    fun sendInputEvent(inputEvent: KeyboardInputEvent)
+
+    /**
+     * Send an asynchronous message to a specific frame in a renderer process via
+     * `channel`, along with arguments. Arguments will be serialized with the
+     * Structured Clone Algorithm, just like `postMessage`, so prototype chains will
+     * not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets
+     * will throw an exception.
+     *
+     * > **NOTE:** Sending non-standard JavaScript types such as DOM objects or special
+     * Electron objects will throw an exception.
+     *
+     * The renderer process can handle the message by listening to `channel` with the
+     * `ipcRenderer` module.
+     *
+     * If you want to get the `frameId` of a given renderer context you should use the
+     * `webFrame.routingId` value.  E.g.
+     *
+     * You can also read `frameId` from all incoming IPC messages in the main process.
+     */
+    fun sendToFrame(
+        frameId: Double,
+        channel: String,
+        vararg args: Any?,
+    )
+
+    /**
+     * Send an asynchronous message to a specific frame in a renderer process via
+     * `channel`, along with arguments. Arguments will be serialized with the
+     * Structured Clone Algorithm, just like `postMessage`, so prototype chains will
+     * not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets
+     * will throw an exception.
+     *
+     * > **NOTE:** Sending non-standard JavaScript types such as DOM objects or special
+     * Electron objects will throw an exception.
+     *
+     * The renderer process can handle the message by listening to `channel` with the
+     * `ipcRenderer` module.
+     *
+     * If you want to get the `frameId` of a given renderer context you should use the
+     * `webFrame.routingId` value.  E.g.
+     *
+     * You can also read `frameId` from all incoming IPC messages in the main process.
+     */
+    fun sendToFrame(
+        frameId: js.array.Tuple2<Double, Double>,
+        channel: String,
+        vararg args: Any?,
+    )
+
+    /**
+     * Mute the audio on the current web page.
+     */
+    fun setAudioMuted(muted: Boolean)
+
+    /**
+     * Controls whether or not this WebContents will throttle animations and timers
+     * when the page becomes backgrounded. This also affects the Page Visibility API.
+     */
+    fun setBackgroundThrottling(allowed: Boolean)
+
+    /**
+     * Sets whether caret browsing is enabled on the current web page.
+     */
+    fun setCaretBrowsingEnabled(enabled: Boolean)
+
+    /**
+     * Changes the title of the DevTools window to `title`. This will only be visible
+     * if DevTools is opened in `undocked` or `detach` mode.
+     */
+    fun setDevToolsTitle(title: String)
+
+    /**
+     * Uses the `devToolsWebContents` as the target `WebContents` to show DevTools.
+     *
+     * The `devToolsWebContents` must not have done any navigation, and it should not
+     * be used for other purposes after the call.
+     *
+     * By default, Electron manages the DevTools by creating an internal `WebContents`
+     * with native view, which developers have very limited control of. With the
+     * `setDevToolsWebContents` method, developers can use any `WebContents` to show
+     * the DevTools in it, such as `BrowserWindow` or `WebContentsView`.
+     *
+     * Note that closing the DevTools does not destroy the `devToolsWebContents`, it is
+     * the caller's responsibility to destroy `devToolsWebContents` manually.
+     *
+     * An example of showing DevTools in a `BrowserWindow`:
+     */
+    fun setDevToolsWebContents(devToolsWebContents: WebContents)
+
+    /**
+     * If _offscreen rendering_ is enabled sets the frame rate to the specified number.
+     * When `webPreferences.offscreen.useSharedTexture` is `false` only values between
+     * 1 and 240 are accepted.
+     */
+    fun setFrameRate(fps: Double)
+
+    /**
+     * Ignore application menu shortcuts while this web contents is focused.
+     */
+    fun setIgnoreMenuShortcuts(ignore: Boolean)
+
+    /**
+     * Sets the image animation policy for this webContents.  The policy only affects
+     * _new_ images, existing images that are currently being animated are unaffected.
+     * This is a known limitation in Chromium, you can force image animation to be
+     * recalculated with `img.src = img.src` which will result in no network traffic
+     * but will update the animation policy.
+     *
+     * This corresponds to the animationPolicy accessibility feature in Chromium.
+     */
+    fun setImageAnimationPolicy(policy: WebContentsSetImageAnimationPolicyPolicy)
+
+    /**
+     * Overrides the user agent for this web page.
+     */
+    fun setUserAgent(userAgent: String)
+
+    /**
+     * Sets the maximum and minimum pinch-to-zoom level. The page keeps its normal
+     * scale until the user pinches; a `minimumLevel` below 1 only allows zooming out.
+     *
+     * > [!NOTE] Visual zoom is disabled by default in Electron. To re-enable it, call:
+     */
+    fun setVisualZoomLevelLimits(
+        minimumLevel: Double,
+        maximumLevel: Double,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * Setting the WebRTC IP handling policy allows you to control which IPs are
+     * exposed via WebRTC. See BrowserLeaks for more details.
+     */
+    fun setWebRTCIPHandlingPolicy(policy: WebContentsSetWebRTCIPHandlingPolicyPolicy)
+
+    /**
+     * Setting the WebRTC UDP Port Range allows you to restrict the udp port range used
+     * by WebRTC. By default the port range is unrestricted.
+     *
+     * > [!NOTE] To reset to an unrestricted port range this value should be set to `{
+     * min: 0, max: 0 }`.
+     */
+    fun setWebRTCUDPPortRange(udpPortRange: UdpPortRange)
+
+    /**
+     * Called before creating a window when a new window is requested by the renderer,
+     * e.g. by `window.open()`, a link with `target="_blank"`, shift+clicking on a
+     * link, or submitting a form with `<form target="_blank">`. See `window.open()`
+     * for more details and how to use this in conjunction with `did-create-window`.
+     *
+     * An example showing how to customize the process of new `BrowserWindow` creation
+     * to be `BrowserView` attached to main window instead:
+     */
+    fun setWindowOpenHandler(handler: (details: HandlerDetails) -> WindowOpenHandlerResponse)
+
+    /**
+     * Changes the zoom factor to the specified factor. Zoom factor is zoom percent
+     * divided by 100, so 300% = 3.0.
+     *
+     * The factor must be greater than 0.0. Values outside the range Chromium can
+     * display (0.25 to 5.0) are clamped to it.
+     */
+    fun setZoomFactor(factor: Double)
+
+    /**
+     * Changes the zoom level to the specified level. The original size is 0 and each
+     * increment above or below represents zooming 20% larger or smaller. The formula
+     * for this is `scale := 1.2 ^ level`, and the level is clamped to the range
+     * Chromium can display (25% to 500%, about -7.6 to 8.8).
+     *
+     * > [!NOTE] The zoom policy at the Chromium level is same-origin by default,
+     * meaning that the zoom level for a specific domain propagates across all
+     * instances of windows with the same domain. To use per-webContents zoom instead,
+     * set the zoom mode to `'isolated'` via `contents.setZoomMode('isolated')`.
+     */
+    fun setZoomLevel(level: Double)
+
+    /**
+     * Sets the zoom mode for this web contents.
+     *
+     * * `default` - Zoom changes are handled automatically on a per-origin basis.
+     * Other webContents navigated to the same origin will share the same zoom level.
+     * * `isolated` - Zoom changes are handled automatically but on a per-webContents
+     * basis. This webContents will not be affected by zoom changes in other
+     * webContents, and vice versa.
+     * * `manual` - Automatic zoom handling is disabled. The `zoom-changed` event will
+     * still be dispatched, but the page will not actually be zoomed. The zoom level
+     * can be managed manually by the application.
+     * * `disabled` - All zooming in this webContents is disabled. The webContents will
+     * revert to the default zoom level and all zoom changes will be ignored.
+     *
+     * The `isolated` and `manual` zoom modes persist across navigations.
+     */
+    fun setZoomMode(mode: WebContentsSetZoomModeMode)
+
+    /**
+     * Shows pop-up dictionary that searches the selected word on the page.
+     *
+     * @platform darwin
+     */
+    fun showDefinitionForSelection()
+
+    /**
+     * Sets the `item` as dragging item for current drag-drop operation, `file` is the
+     * absolute path of the file to be dragged, and `icon` is the image showing under
+     * the cursor when dragging.
+     */
+    fun startDrag(item: Item)
+
+    /**
+     * If _offscreen rendering_ is enabled and not painting, start painting.
+     */
+    fun startPainting()
+
+    /**
+     * Stops any pending navigation.
+     */
+    fun stop()
+
+    /**
+     * Stops any `findInPage` request for the `webContents` with the provided `action`.
+     */
+    fun stopFindInPage(action: WebContentsStopFindInPageAction)
+
+    /**
+     * If _offscreen rendering_ is enabled and painting, stop painting.
+     */
+    fun stopPainting()
+
+    /**
+     * Indicates whether the snapshot has been created successfully.
+     *
+     * Takes a V8 heap snapshot and saves it to `filePath`.
+     */
+    fun takeHeapSnapshot(filePath: String): js.promise.Promise<js.void.Void>
+
+    /**
+     * Toggles the developer tools.
+     */
+    fun toggleDevTools()
+
+    /**
+     * Executes the editing command `undo` in web page.
+     */
+    fun undo()
+
+    /**
+     * Executes the editing command `unselect` in web page.
+     */
+    fun unselect()
+
+    /**
+     * A `boolean` property that determines whether this page is muted.
+     */
+    var audioMuted: Boolean
+
+    /**
+     * A `boolean` property that determines whether or not this WebContents will
+     * throttle animations and timers when the page becomes backgrounded. This also
+     * affects the Page Visibility API.
+     */
+    var backgroundThrottling: Boolean
+
+    /**
+     * A `boolean` property that determines whether caret browsing is enabled for this
+     * page.
+     *
+     * When enabled, a movable cursor is placed in the page's text, allowing the user
+     * to navigate and select content with the keyboard. Changes apply to the live page
+     * without reloading it.
+     *
+     * A `<webview>` guest inherits this value from its embedder when it is created and
+     * then tracks it independently, so disabling caret browsing on the embedder leaves
+     * an existing guest enabled.
+     *
+     * While any `WebContents` in the process has caret browsing enabled, assistive
+     * technology is notified process-wide that caret browsing is active, so that
+     * screen readers report the caret's position as it moves. That notification is
+     * only withdrawn once every `WebContents` that enabled caret browsing has either
+     * disabled it or been destroyed.
+     */
+    var caretBrowsingEnabled: Boolean
+
+    /**
+     * A `Debugger` instance for this webContents.
+     *
+     */
+    val debugger: Debugger
+
+    /**
+     * A `WebContents | null` property that represents the DevTools `WebContents`
+     * associated with a given `WebContents`.
+     *
+     * > [!NOTE] Users should never store this object because it may become `null` when
+     * the DevTools has been closed.
+     *
+     */
+    val devToolsWebContents: WebContents?
+
+    /**
+     * A `WebFrameMain | null` property that represents the currently focused frame in
+     * this WebContents. Can be the top frame, an inner `<iframe>`, or `null` if
+     * nothing is focused.
+     *
+     */
+    val focusedFrame: WebFrameMain?
+
+    /**
+     * An `Integer` property that sets the frame rate of the web contents to the
+     * specified number. Only values between 1 and 240 are accepted.
+     *
+     * Only applicable if _offscreen rendering_ is enabled.
+     */
+    var frameRate: Double
+
+    /**
+     * A `WebContents | null` property that represents a `WebContents` instance that
+     * might own this `WebContents`.
+     *
+     */
+    val hostWebContents: WebContents?
+
+    /**
+     * A `Integer` representing the unique ID of this WebContents. Each ID is unique
+     * among all `WebContents` instances of the entire Electron application.
+     *
+     */
+    val id: Double
+
+    /**
+     * An `IpcMain` scoped to just IPC messages sent from this WebContents.
+     *
+     * IPC messages sent with `ipcRenderer.send`, `ipcRenderer.sendSync` or
+     * `ipcRenderer.postMessage` will be delivered in the following order:
+     *
+     * * `contents.on('ipc-message')`
+     * * `contents.mainFrame.on(channel)`
+     * * `contents.ipc.on(channel)`
+     * * `ipcMain.on(channel)`
+     *
+     * Handlers registered with `invoke` will be checked in the following order. The
+     * first one that is defined will be called, the rest will be ignored.
+     *
+     * * `contents.mainFrame.handle(channel)`
+     * * `contents.handle(channel)`
+     * * `ipcMain.handle(channel)`
+     *
+     * A handler or event listener registered on the WebContents will receive IPC
+     * messages sent from any frame, including child frames. In most cases, only the
+     * main frame can send IPC messages. However, if the `nodeIntegrationInSubFrames`
+     * option is enabled, it is possible for child frames to send IPC messages also. In
+     * that case, handlers should check the `senderFrame` property of the IPC event to
+     * ensure that the message is coming from the expected frame. Alternatively,
+     * register handlers on the appropriate frame directly using the `WebFrameMain.ipc`
+     * interface.
+     *
+     */
+    val ipc: IpcMain
+
+    /**
+     * A `WebFrameMain` property that represents the top frame of the page's frame
+     * hierarchy.
+     *
+     */
+    val mainFrame: WebFrameMain
+
+    /**
+     * A `NavigationHistory` used by this webContents.
+     *
+     */
+    val navigationHistory: NavigationHistory
+
+    /**
+     * A `WebFrameMain | null` property that represents the frame that opened this
+     * WebContents, either with open(), or by navigating a link with a target
+     * attribute.
+     *
+     */
+    val opener: WebFrameMain?
+
+    /**
+     * A `Session` used by this webContents.
+     *
+     */
+    val session: Session
+
+    /**
+     * A `string` property that determines the user agent for this web page.
+     */
+    var userAgent: String
+
+    /**
+     * A `number` property that determines the zoom factor for this web contents.
+     *
+     * The zoom factor is the zoom percent divided by 100, so 300% = 3.0.
+     */
+    var zoomFactor: Double
+
+    /**
+     * A `number` property that determines the zoom level for this web contents.
+     *
+     * The original size is 0 and each increment above or below represents zooming 20%
+     * larger or smaller to default limits of 300% and 50% of original size,
+     * respectively. The formula for this is `scale := 1.2 ^ level`.
+     */
+    var zoomLevel: Double
+
+    /**
+     * A `string` property that determines the zoom mode for this web contents.
+     *
+     * See `contents.setZoomMode` for a description of the available modes.
+     */
+    var zoomMode: String
+
+    @web.events.JsEvent("audio-state-changed")
+    val audioStateChangedEvent:
+            node.events.EventInstance<js.array.Tuple1<Event<WebContentsAudioStateChangedEventParams>>>
+
+    @web.events.JsEvent("before-input-event")
+    val beforeInputEventEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Input>>
+
+    @web.events.JsEvent("before-mouse-event")
+    val beforeMouseEventEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, MouseInputEvent>>
+
+    @web.events.JsEvent("blur")
+    val blurEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("certificate-error")
+    val certificateErrorEvent: node.events.EventInstance<
+            js.array.Tuple6<
+                    Event<*>,
+                    String,
+                    String,
+                    Certificate,
+                        (
+                isTrusted: Boolean,
+            ) -> Unit,
+                    Boolean,
+                    >,
+            >
+
+    @web.events.JsEvent("console-message")
+    val consoleMessageEvent:
+            node.events.EventInstance<js.array.Tuple5<Event<WebContentsConsoleMessageEventParams>, Double, String, Double, String>>
+
+    @web.events.JsEvent("content-bounds-updated")
+    val contentBoundsUpdatedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Rectangle>>
+
+    @web.events.JsEvent("context-menu")
+    val contextMenuEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, ContextMenuParams>>
+
+    @web.events.JsEvent("cursor-changed")
+    val cursorChangedEvent:
+            node.events.EventInstance<js.array.Tuple6<Event<*>, String, NativeImage, Double, Size, Point>>
+
+    @web.events.JsEvent("destroyed")
+    val destroyedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("devtools-closed")
+    val devtoolsClosedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("devtools-focused")
+    val devtoolsFocusedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("devtools-open-url")
+    val devtoolsOpenUrlEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("devtools-opened")
+    val devtoolsOpenedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("devtools-reload-page")
+    val devtoolsReloadPageEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("devtools-search-query")
+    val devtoolsSearchQueryEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("did-attach-webview")
+    val didAttachWebviewEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, WebContents>>
+
+    @web.events.JsEvent("did-change-theme-color")
+    val didChangeThemeColorEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String?>>
+
+    @web.events.JsEvent("did-create-window")
+    val didCreateWindowEvent: node.events.EventInstance<js.array.Tuple2<BrowserWindow, DidCreateWindowDetails>>
+
+    @web.events.JsEvent("did-fail-load")
+    val didFailLoadEvent:
+            node.events.EventInstance<js.array.Tuple7<Event<*>, Double, String, String, Boolean, Double, Double>>
+
+    @web.events.JsEvent("did-fail-provisional-load")
+    val didFailProvisionalLoadEvent:
+            node.events.EventInstance<js.array.Tuple7<Event<*>, Double, String, String, Boolean, Double, Double>>
+
+    @web.events.JsEvent("did-finish-load")
+    val didFinishLoadEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("did-frame-finish-load")
+    val didFrameFinishLoadEvent: node.events.EventInstance<js.array.Tuple4<Event<*>, Boolean, Double, Double>>
+
+    @web.events.JsEvent("did-frame-navigate")
+    val didFrameNavigateEvent:
+            node.events.EventInstance<js.array.Tuple7<Event<*>, String, Double, String, Boolean, Double, Double>>
+
+    @web.events.JsEvent("did-navigate")
+    val didNavigateEvent: node.events.EventInstance<js.array.Tuple4<Event<*>, String, Double, String>>
+
+    @web.events.JsEvent("did-navigate-in-page")
+    val didNavigateInPageEvent: node.events.EventInstance<js.array.Tuple5<Event<*>, String, Boolean, Double, Double>>
+
+    @web.events.JsEvent("did-redirect-navigation")
+    val didRedirectNavigationEvent:
+            node.events.EventInstance<js.array.Tuple6<Event<WebContentsDidRedirectNavigationEventParams>, String, Boolean, Boolean, Double, Double>>
+
+    @web.events.JsEvent("did-start-loading")
+    val didStartLoadingEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("did-start-navigation")
+    val didStartNavigationEvent:
+            node.events.EventInstance<js.array.Tuple6<Event<WebContentsDidStartNavigationEventParams>, String, Boolean, Boolean, Double, Double>>
+
+    @web.events.JsEvent("did-stop-loading")
+    val didStopLoadingEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("dom-ready")
+    val domReadyEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("enter-html-full-screen")
+    val enterHtmlFullScreenEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("focus")
+    val focusEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("found-in-page")
+    val foundInPageEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Result>>
+
+    @web.events.JsEvent("frame-created")
+    val frameCreatedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, FrameCreatedDetails>>
+
+    @web.events.JsEvent("input-event")
+    val inputEventEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, InputEvent>>
+
+    @web.events.JsEvent("ipc-message")
+    val ipcMessageEvent: node.events.EventInstance<js.array.Tuple3<IpcMainEvent, String, js.array.ReadonlyArray<Any?>>>
+
+    @web.events.JsEvent("ipc-message-sync")
+    val ipcMessageSyncEvent:
+            node.events.EventInstance<js.array.Tuple3<IpcMainEvent, String, js.array.ReadonlyArray<Any?>>>
+
+    @web.events.JsEvent("leave-html-full-screen")
+    val leaveHtmlFullScreenEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("login")
+    val loginEvent: node.events.EventInstance<
+            js.array.Tuple4<
+                    Event<*>,
+                    AuthenticationResponseDetails,
+                    AuthInfo,
+                        (
+                username: String?, /* use undefined for default */
+                password: String?, /* use undefined for default */
+            ) -> Unit,
+                    >,
+            >
+
+    @web.events.JsEvent("media-paused")
+    val mediaPausedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("media-started-playing")
+    val mediaStartedPlayingEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("page-favicon-updated")
+    val pageFaviconUpdatedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, js.array.ReadonlyArray<String>>>
+
+    @web.events.JsEvent("page-title-updated")
+    val pageTitleUpdatedEvent: node.events.EventInstance<js.array.Tuple3<Event<*>, String, Boolean>>
+
+    @web.events.JsEvent("paint")
+    val paintEvent:
+            node.events.EventInstance<js.array.Tuple3<Event<WebContentsPaintEventParams>, Rectangle, NativeImage>>
+
+    @web.events.JsEvent("preferred-size-changed")
+    val preferredSizeChangedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Size>>
+
+    @web.events.JsEvent("preload-error")
+    val preloadErrorEvent: node.events.EventInstance<js.array.Tuple3<Event<*>, String, js.errors.JsError>>
+
+    @web.events.JsEvent("render-process-gone")
+    val renderProcessGoneEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, RenderProcessGoneDetails>>
+
+    @web.events.JsEvent("responsive")
+    val responsiveEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("select-bluetooth-device")
+    val selectBluetoothDeviceEvent:
+            node.events.EventInstance<
+                    js.array.Tuple3<
+                            Event<*>,
+                            js.array.ReadonlyArray<BluetoothDevice>,
+                                (
+                        deviceId: String,
+                    ) -> Unit,
+                            >,
+                    >
+
+    @web.events.JsEvent("select-client-certificate")
+    val selectClientCertificateEvent:
+            node.events.EventInstance<
+                    js.array.Tuple4<
+                            Event<*>,
+                            String,
+                            js.array.ReadonlyArray<Certificate>,
+                                (
+                        certificate: Certificate,
+                    ) -> Unit,
+                            >,
+                    >
+
+    @web.events.JsEvent("unresponsive")
+    val unresponsiveEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("update-target-url")
+    val updateTargetUrlEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, String>>
+
+    @web.events.JsEvent("will-attach-webview")
+    val willAttachWebviewEvent:
+            node.events.EventInstance<js.array.Tuple3<Event<*>, WebPreferences, js.objects.ReadonlyRecord<String, String>>>
+
+    @web.events.JsEvent("will-frame-navigate")
+    val willFrameNavigateEvent:
+            node.events.EventInstance<js.array.Tuple1<Event<WebContentsWillFrameNavigateEventParams>>>
+
+    @web.events.JsEvent("will-navigate")
+    val willNavigateEvent:
+            node.events.EventInstance<js.array.Tuple6<Event<WebContentsWillNavigateEventParams>, String, Boolean, Boolean, Double, Double>>
+
+    @web.events.JsEvent("will-prevent-unload")
+    val willPreventUnloadEvent: node.events.EventInstance<js.array.Tuple1<Event<*>>>
+
+    @web.events.JsEvent("will-redirect")
+    val willRedirectEvent:
+            node.events.EventInstance<js.array.Tuple6<Event<WebContentsWillRedirectEventParams>, String, Boolean, Boolean, Double, Double>>
+
+    @web.events.JsEvent("zoom-changed")
+    val zoomChangedEvent:
+            node.events.EventInstance<js.array.Tuple2<Event<*>, (WebContentsAddListenerListenerZoomDirection)>>
+
+    companion object {
+// Docs: https://electronjs.org/docs/api/web-contents
+        /**
+         * A WebContents instance with the given TargetID, or `undefined` if there is no
+         * WebContents associated with the given TargetID.
+         *
+         * When communicating with the Chrome DevTools Protocol, it can be useful to lookup
+         * a WebContents instance based on its assigned TargetID.
+         */
+        fun fromDevToolsTargetId(targetId: String): WebContents?
+
+        /**
+         * A WebContents instance with the given WebFrameMain, or `undefined` if there is
+         * no WebContents associated with the given WebFrameMain.
+         */
+        fun fromFrame(frame: WebFrameMain): WebContents?
+
+        /**
+         * A WebContents instance with the given ID, or `undefined` if there is no
+         * WebContents associated with the given ID.
+         */
+        fun fromId(id: Double): WebContents?
+
+        /**
+         * An array of all `WebContents` instances. This will contain web contents for all
+         * windows, webviews, opened DevTools, and DevTools extension background pages.
+         */
+        fun getAllWebContents(): js.array.ReadonlyArray<WebContents>
+
+        /**
+         * The web contents that is focused in this application, otherwise returns `null`.
+         */
+        fun getFocusedWebContents(): WebContents?
+    }
+}

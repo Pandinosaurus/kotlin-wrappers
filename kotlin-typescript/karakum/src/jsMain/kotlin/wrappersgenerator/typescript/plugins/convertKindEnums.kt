@@ -1,0 +1,76 @@
+package wrappersgenerator.typescript.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.HERITAGE_CLAUSE
+import io.github.sgrishchenko.karakum.extension.InjectionType
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import io.github.sgrishchenko.karakum.extension.ifPresent
+import io.github.sgrishchenko.karakum.extension.plugins.injectionServiceKey
+import js.reflect.invoke
+import typescript.isEnumDeclaration
+import typescript.isIdentifier
+
+val convertKindEnums = createPlugin { node, context, render ->
+    nullable {
+        ensure(isEnumDeclaration(node))
+        ensure(
+            node.name.text == "SyntaxKind"
+                    || node.name.text == "TypePredicateKind"
+                    || node.name.text == "InvalidatedProjectKind",
+        )
+
+        val name = render(node.name)
+
+        val injectionService = ensureNotNull(context.lookupService(injectionServiceKey))
+
+        val heritageInjections =
+            injectionService.resolveInjections(node, InjectionType.HERITAGE_CLAUSE, context, render)
+
+        val injectedHeritageClauses = heritageInjections
+            .filter { it.isNotEmpty() }
+            .joinToString(", ")
+
+        val members = node.members
+            .mapNotNull { member ->
+                val memberName = member.name
+                val declaration = render(member)
+                    .ifEmpty { return@mapNotNull null }
+
+                val type = if (isIdentifier(memberName)) memberName.text else name
+
+                "$declaration: $type"
+            }
+            .joinToString("\n")
+
+        val body = node.members
+            .mapNotNull { member ->
+                val declaration = render(member.name)
+                    .ifEmpty { return@mapNotNull null }
+
+                val memberHeritageInjections =
+                    injectionService.resolveInjections(member, InjectionType.HERITAGE_CLAUSE, context, render)
+
+                val memberInjectedHeritageClauses = memberHeritageInjections
+                    .filter { it.isNotEmpty() }
+                    .joinToString(", ")
+
+                val heritageClauses = arrayOf(name, memberInjectedHeritageClauses)
+                    .filter { it.isNotEmpty() }
+                    .joinToString(", ")
+
+                "sealed interface $declaration${ifPresent(heritageClauses) { " : $it" }}"
+            }
+            .joinToString("\n")
+
+        """
+        sealed /* enum */
+        external interface ${name}${ifPresent(injectedHeritageClauses) { " : $it" }} {
+        $body
+
+        companion object {
+        $members
+        }
+        }
+        """.trimIndent()
+    }
+}

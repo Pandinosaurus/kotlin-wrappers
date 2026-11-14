@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package node.inspector.heapProfiler
+
+@kotlinx.js.JsPlainObject
+external interface HeapStatsUpdateEventDataType {
+    /**
+     * An array of triplets. Each triplet describes a fragment. The first integer is the fragment index, the second integer is a total count of objects for the fragment, the third integer is a total size of the objects for the fragment.
+     */
+    var statsUpdate: js.array.ReadonlyArray<Double>
+}

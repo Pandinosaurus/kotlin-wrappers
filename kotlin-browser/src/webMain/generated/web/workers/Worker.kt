@@ -1,0 +1,86 @@
+// Automatically generated - do not modify!
+
+package web.workers
+
+import js.array.ReadonlyArray
+import js.serialization.Transferable
+import web.events.Event
+import web.events.EventInstance
+import web.events.EventTarget
+import web.messaging.MessageEvent
+import web.messaging.MessageEventTarget
+import web.serialization.StructuredSerializeOptions
+import web.trustedtypes.TrustedScriptURL
+import web.url.URL
+
+/**
+ * The **`Worker`** interface of the Web Workers API represents a background task that can be created via script, which can send messages back to its creator.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Worker)
+ */
+open external class Worker(
+    scriptURL: TrustedScriptURL,
+    options: WorkerOptions = definedExternally,
+) : EventTarget,
+    AbstractWorker,
+    MessageEventTarget {
+    constructor(
+        scriptURL: String,
+        options: WorkerOptions = definedExternally,
+    )
+
+    constructor(
+        scriptURL: URL,
+        options: WorkerOptions = definedExternally,
+    )
+
+    /**
+     * The **`postMessage()`** method of the Worker interface sends a message to the worker. The first parameter is the data to send to the worker. The data may be any JavaScript object that can be handled by the structured clone algorithm.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Worker/postMessage)
+     */
+    open fun postMessage(
+        message: JsAny?,
+        transfer: ReadonlyArray<Transferable>,
+    )
+
+    open fun postMessage(
+        message: String,
+        transfer: ReadonlyArray<Transferable>,
+    )
+
+    open fun postMessage(
+        message: JsAny?,
+        options: StructuredSerializeOptions = definedExternally,
+    )
+
+    open fun postMessage(
+        message: String,
+        options: StructuredSerializeOptions = definedExternally,
+    )
+
+    /**
+     * The **`terminate()`** method of the Worker interface immediately terminates the Worker. This does not offer the worker an opportunity to finish its operations; it is stopped at once.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Worker/terminate)
+     */
+    open fun terminate()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Worker/error_event)
+ */
+inline val <C : Worker> C.errorEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "error")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Worker/message_event)
+ */
+inline val <C : Worker> C.messageEvent: EventInstance<MessageEvent<JsAny?>, C, C>
+    get() = EventInstance(this, "message")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Worker/messageerror_event)
+ */
+inline val <C : Worker> C.messageErrorEvent: EventInstance<MessageEvent<JsAny?>, C, C>
+    get() = EventInstance(this, "messageerror")

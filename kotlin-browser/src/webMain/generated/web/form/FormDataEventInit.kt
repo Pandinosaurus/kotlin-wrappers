@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+package web.form
+
+import kotlinx.js.JsPlainObject
+import web.events.EventInit
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormDataEvent/FormDataEvent#options)
+ */
+@JsPlainObject
+external interface FormDataEventInit :
+    EventInit {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormDataEvent/FormDataEvent#formData)
+     */
+    var formData: FormData
+}

@@ -1,0 +1,64 @@
+// Automatically generated - do not modify!
+
+package web.locks
+
+import js.promise.Promise
+import js.promise.await
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+
+/**
+ * The **`LockManager`** interface of the Web Locks API provides methods for requesting a new Lock object and querying for an existing Lock object. To get an instance of LockManager, call navigator.locks.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/LockManager)
+ */
+open external class LockManager
+private constructor() {
+    /**
+     * The **`query()`** method of the LockManager interface returns a Promise that resolves with an object containing information about held and pending locks.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/LockManager/query)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("query")
+    open fun queryAsync(): Promise<LockManagerSnapshot>
+
+    /**
+     * The **`request()`** method of the LockManager interface requests a Lock object with parameters specifying its name and characteristics. The requested Lock is passed to a callback, while the function itself returns a Promise that resolves (or rejects) with the result of the callback after the lock is released, or rejects if the request is aborted.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/LockManager/request)
+     */
+    @JsThrows(AbortError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotSupportedError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("request")
+    open fun <T : JsAny?> requestAsync(
+        name: String,
+        callback: LockGrantedCallback<T>,
+    ): Promise<T>
+
+    @JsThrows(AbortError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotSupportedError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("request")
+    open fun <T : JsAny?> requestAsync(
+        name: String,
+        options: LockOptions,
+        callback: LockGrantedCallback<T>,
+    ): Promise<T>
+}
+
+/**
+ * The **`query()`** method of the LockManager interface returns a Promise that resolves with an object containing information about held and pending locks.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/LockManager/query)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun LockManager.query(): LockManagerSnapshot {
+    return queryAsync().await()
+}

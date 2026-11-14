@@ -1,0 +1,38 @@
+[versions]
+coroutines = "1.11.0"
+dokka = "2.3.0"
+karakum = "1.0.0-alpha.132"
+kfc = "19.20.0"
+kotlin = "2.4.21"
+serialization = "1.13.0"
+seskar = "4.66.0"
+download = "5.7.0"
+
+# https://nodejs.org
+node = "26.13.1"
+# https://npmx.dev/package/webpack
+webpack = "5.112.2"
+# https://npmx.dev/package/webpack-cli
+webpack-cli = "7.3.1"
+# https://npmx.dev/package/webpack-dev-server
+webpack-dev-server = "6.1.0"
+# https://npmx.dev/package/mocha
+mocha = "12.0.0-beta-10"
+
+[libraries]
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+# for convention plugins
+gradlePlugins-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+gradlePlugins-jsPlainObjects = { module = "org.jetbrains.kotlin:js-plain-objects", version.ref = "kotlin" }
+gradlePlugins-karakum = { module = "io.github.sgrishchenko.karakum:io.github.sgrishchenko.karakum.gradle.plugin", version.ref = "karakum" }
+gradlePlugins-kfc-library = { module = "io.github.turansky.kfc.library:io.github.turansky.kfc.library.gradle.plugin", version.ref = "kfc" }
+gradlePlugins-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradlePlugins-seskar = { module = "io.github.turansky.seskar:seskar-gradle-plugin", version.ref = "seskar" }
+gradlePlugins-download = { module = "de.undercouch.download:de.undercouch.download.gradle.plugin", version.ref = "download" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+[plugins]
+# for convention plugins
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

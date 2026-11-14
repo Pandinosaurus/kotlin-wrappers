@@ -1,0 +1,23 @@
+// Automatically generated - do not modify!
+
+package web.cssom
+
+import web.events.Event
+import web.events.EventType
+
+/**
+ * The **`ContentVisibilityAutoStateChangeEvent`** interface is the event object for the contentvisibilityautostatechange event, which fires on any element with content-visibility: auto set on it when it starts or stops being relevant to the user and skipping its contents.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ContentVisibilityAutoStateChangeEvent)
+ */
+open external class ContentVisibilityAutoStateChangeEvent(
+    override val type: EventType<ContentVisibilityAutoStateChangeEvent>,
+    init: ContentVisibilityAutoStateChangeEventInit = definedExternally,
+) : Event {
+    /**
+     * The **`skipped`** read-only property of the ContentVisibilityAutoStateChangeEvent interface returns true if the user agent skips the element's contents, or false otherwise.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ContentVisibilityAutoStateChangeEvent/skipped)
+     */
+    open val skipped: Boolean
+}

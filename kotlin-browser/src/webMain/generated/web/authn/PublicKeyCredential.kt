@@ -1,0 +1,199 @@
+// Automatically generated - do not modify!
+
+package web.authn
+
+import js.buffer.ArrayBuffer
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.credentials.Credential
+import web.errors.DOMExceptionType.EncodingError
+import web.errors.DOMExceptionType.SecurityError
+import web.errors.JsThrows
+
+/**
+ * The **`PublicKeyCredential`** interface provides information about a public key / private key pair, which is a credential for logging in to a service using an un-phishable and data-breach resistant asymmetric key pair instead of a password. It inherits from Credential, and is part of the Web Authentication API extension to the Credential Management API.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential)
+ */
+open external class PublicKeyCredential
+private constructor() :
+    Credential {
+    /**
+     * The **`authenticatorAttachment`** read-only property of the PublicKeyCredential interface is a string that indicates the general category of authenticator used during the associated navigator.credentials.create() or navigator.credentials.get() call.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/authenticatorAttachment)
+     */
+    open val authenticatorAttachment: String?
+
+    /**
+     * The **`rawId`** read-only property of the PublicKeyCredential interface is an ArrayBuffer object containing the identifier of the credentials.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/rawId)
+     */
+    open val rawId: ArrayBuffer
+
+    /**
+     * The **`response`** read-only property of the PublicKeyCredential interface is an AuthenticatorResponse object which is sent from the authenticator to the user agent for the creation/fetching of credentials. The information contained in this response will be used by the relying party's server to verify the demand is legitimate.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/response)
+     */
+    open val response: AuthenticatorResponse
+
+    /**
+     * The **`getClientExtensionResults()`** method of the PublicKeyCredential interface returns an object mapping the identifiers of extensions requested during credential creation or authentication, and their results after processing by the user agent.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/getClientExtensionResults)
+     */
+    @JsThrows(SecurityError::class)
+    open fun getClientExtensionResults(): AuthenticationExtensionsClientOutputs
+
+    /**
+     * The **`toJSON()`** method of the PublicKeyCredential interface returns a JSON-serializable plain object representing the PublicKeyCredential object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/toJSON)
+     */
+    @JsThrows(SecurityError::class)
+    open fun toJSON(): JsAny /* RegistrationResponseJSON | AuthenticationResponseJSON */
+
+    companion object {
+        /**
+         * The **`getClientCapabilities()`** static method of the PublicKeyCredential interface returns a Promise that resolves with an object that can be used to check whether or not particular WebAuthn client capabilities and extensions are supported.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/getClientCapabilities_static)
+         */
+        @JsThrows(SecurityError::class)
+        @JsName("getClientCapabilities")
+        fun getClientCapabilitiesAsync(): Promise<PublicKeyCredentialClientCapabilities>
+
+        /**
+         * The **`isConditionalMediationAvailable()`** static method of the PublicKeyCredential interface returns a Promise which resolves to true if the device supports conditional get.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/isConditionalMediationAvailable_static)
+         */
+        @JsThrows(SecurityError::class)
+        @JsName("isConditionalMediationAvailable")
+        fun isConditionalMediationAvailableAsync(): Promise<JsBoolean>
+
+        /**
+         * The **`isUserVerifyingPlatformAuthenticatorAvailable()`** static method of the PublicKeyCredential interface returns a Promise which resolves to true if a user-verifying platform authenticator is present.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/isUserVerifyingPlatformAuthenticatorAvailable_static)
+         */
+        @JsThrows(SecurityError::class)
+        @JsName("isUserVerifyingPlatformAuthenticatorAvailable")
+        fun isUserVerifyingPlatformAuthenticatorAvailableAsync(): Promise<JsBoolean>
+
+        /**
+         * The **`parseCreationOptionsFromJSON()`** static method of the PublicKeyCredential interface creates a PublicKeyCredentialCreationOptions object from a JSON representation of its properties.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/parseCreationOptionsFromJSON_static)
+         */
+        @JsThrows(EncodingError::class)
+        @JsThrows(SecurityError::class)
+        fun parseCreationOptionsFromJSON(options: PublicKeyCredentialCreationOptionsJSON): PublicKeyCredentialCreationOptions
+
+        /**
+         * The **`parseRequestOptionsFromJSON()`** static method of the PublicKeyCredential interface converts a JSON type representation into a PublicKeyCredentialRequestOptions instance.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/parseRequestOptionsFromJSON_static)
+         */
+        @JsThrows(EncodingError::class)
+        @JsThrows(SecurityError::class)
+        fun parseRequestOptionsFromJSON(options: PublicKeyCredentialRequestOptionsJSON): PublicKeyCredentialRequestOptions
+
+        /**
+         * The **`signalAllAcceptedCredentials()`** static method of the PublicKeyCredential interface signals to the authenticator all of the valid credential IDs that the relying party (RP) server still holds for a particular user.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/signalAllAcceptedCredentials_static)
+         */
+        @JsThrows(SecurityError::class)
+        @JsName("signalAllAcceptedCredentials")
+        fun signalAllAcceptedCredentialsAsync(options: AllAcceptedCredentialsOptions): Promise<Void>
+
+        /**
+         * The **`signalCurrentUserDetails()`** static method of the PublicKeyCredential interface signals to the authenticator that a particular user has updated their user name and/or display name on the relying party (RP) server.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/signalCurrentUserDetails_static)
+         */
+        @JsThrows(SecurityError::class)
+        @JsName("signalCurrentUserDetails")
+        fun signalCurrentUserDetailsAsync(options: CurrentUserDetailsOptions): Promise<Void>
+
+        /**
+         * The **`signalUnknownCredential()`** static method of the PublicKeyCredential interface signals to the authenticator that a credential ID was not recognized by the relying party (RP) server.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/signalUnknownCredential_static)
+         */
+        @JsThrows(SecurityError::class)
+        @JsName("signalUnknownCredential")
+        fun signalUnknownCredentialAsync(options: UnknownCredentialOptions): Promise<Void>
+    }
+}
+
+/**
+ * The **`getClientCapabilities()`** static method of the PublicKeyCredential interface returns a Promise that resolves with an object that can be used to check whether or not particular WebAuthn client capabilities and extensions are supported.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/getClientCapabilities_static)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun PublicKeyCredential.Companion.getClientCapabilities(): PublicKeyCredentialClientCapabilities {
+    return getClientCapabilitiesAsync().await()
+}
+
+/**
+ * The **`isConditionalMediationAvailable()`** static method of the PublicKeyCredential interface returns a Promise which resolves to true if the device supports conditional get.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/isConditionalMediationAvailable_static)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun PublicKeyCredential.Companion.isConditionalMediationAvailable(): Boolean {
+    return isConditionalMediationAvailableAsync().await().toBoolean()
+}
+
+/**
+ * The **`isUserVerifyingPlatformAuthenticatorAvailable()`** static method of the PublicKeyCredential interface returns a Promise which resolves to true if a user-verifying platform authenticator is present.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/isUserVerifyingPlatformAuthenticatorAvailable_static)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun PublicKeyCredential.Companion.isUserVerifyingPlatformAuthenticatorAvailable(): Boolean {
+    return isUserVerifyingPlatformAuthenticatorAvailableAsync().await().toBoolean()
+}
+
+/**
+ * The **`signalAllAcceptedCredentials()`** static method of the PublicKeyCredential interface signals to the authenticator all of the valid credential IDs that the relying party (RP) server still holds for a particular user.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/signalAllAcceptedCredentials_static)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun PublicKeyCredential.Companion.signalAllAcceptedCredentials(options: AllAcceptedCredentialsOptions) {
+    signalAllAcceptedCredentialsAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`signalCurrentUserDetails()`** static method of the PublicKeyCredential interface signals to the authenticator that a particular user has updated their user name and/or display name on the relying party (RP) server.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/signalCurrentUserDetails_static)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun PublicKeyCredential.Companion.signalCurrentUserDetails(options: CurrentUserDetailsOptions) {
+    signalCurrentUserDetailsAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`signalUnknownCredential()`** static method of the PublicKeyCredential interface signals to the authenticator that a credential ID was not recognized by the relying party (RP) server.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/signalUnknownCredential_static)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun PublicKeyCredential.Companion.signalUnknownCredential(options: UnknownCredentialOptions) {
+    signalUnknownCredentialAsync(
+        options = options,
+    ).await()
+}

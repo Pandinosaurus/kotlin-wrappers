@@ -1,0 +1,32 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@tauri-apps/api/menu/predefinedMenuItem")
+
+package tauri.apps.api.menu
+
+import tauri.apps.api.menu.base.MenuItemBase
+
+/** A predefined (native) menu item which has a predefined behavior by the OS or by tauri.  */
+external class PredefinedMenuItem : MenuItemBase {
+    /** @ignore */
+    constructor (rid: Double, id: String)
+
+    /** Returns the text of this predefined menu item. */
+    fun text(): js.promise.Promise<String>
+
+    /** Sets the text for this predefined menu item. */
+    fun setText(text: String): js.promise.Promise<js.void.Void>
+
+    companion object {
+        /**
+         * Create a new predefined menu item.
+         *
+         * @example
+         * ```typescript
+         * import { PredefinedMenuItem } from '@tauri-apps/api/menu';
+         * const separator = await PredefinedMenuItem.new({ item: 'Separator' });
+         * ```
+         */
+        fun new(opts: PredefinedMenuItemOptions = definedExternally): js.promise.Promise<PredefinedMenuItem>
+    }
+}

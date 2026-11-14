@@ -1,0 +1,17 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a `BigUint64Array` instance.
+ *
+ * ```js
+ * util.types.isBigUint64Array(new BigInt64Array());   // Returns false
+ * util.types.isBigUint64Array(new BigUint64Array());  // Returns true
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isBigUint64Array")
+external fun isBigUint64ArrayRaw(value: Any?): Boolean /* value is BigUint64Array */

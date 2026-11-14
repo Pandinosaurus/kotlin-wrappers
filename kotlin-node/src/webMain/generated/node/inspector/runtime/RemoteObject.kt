@@ -1,0 +1,55 @@
+// Automatically generated - do not modify!
+
+package node.inspector.runtime
+
+/**
+ * Mirror object referencing original JavaScript object.
+ */
+@kotlinx.js.JsPlainObject
+external interface RemoteObject {
+    /**
+     * Object type.
+     */
+    var type: String
+
+    /**
+     * Object subtype hint. Specified for <code>object</code> type values only.
+     */
+    var subtype: String?
+
+    /**
+     * Object class (constructor) name. Specified for <code>object</code> type values only.
+     */
+    var className: String?
+
+    /**
+     * Remote object value in case of primitive values or JSON values (if it was requested).
+     */
+    var value: Any?
+
+    /**
+     * Primitive value which can not be JSON-stringified does not have <code>value</code>, but gets this property.
+     */
+    var unserializableValue: UnserializableValue?
+
+    /**
+     * String representation of the object.
+     */
+    var description: String?
+
+    /**
+     * Unique object identifier (for non-primitive values).
+     */
+    var objectId: RemoteObjectId?
+
+    /**
+     * Preview containing abbreviated property values. Specified for <code>object</code> type values only.
+     * @experimental
+     */
+    var preview: ObjectPreview?
+
+    /**
+     * @experimental
+     */
+    var customPreview: CustomPreview?
+}

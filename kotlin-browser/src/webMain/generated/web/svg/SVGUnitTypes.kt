@@ -1,0 +1,31 @@
+// Automatically generated - do not modify!
+
+package web.svg
+
+/**
+ * The **`SVGUnitTypes`** interface defines a commonly used set of constants used for reflecting gradientUnits, patternContentUnits and other similar attributes.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGUnitTypes)
+ */
+open external class SVGUnitTypes
+private constructor() {
+    companion object {
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGUnitTypes#svg_unit_type_unknown)
+         */
+        val SVG_UNIT_TYPE_UNKNOWN: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGUnitTypes#svg_unit_type_userspaceonuse)
+         */
+        val SVG_UNIT_TYPE_USERSPACEONUSE: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGUnitTypes#svg_unit_type_objectboundingbox)
+         */
+        val SVG_UNIT_TYPE_OBJECTBOUNDINGBOX: Type
+    }
+
+    sealed /* enum */
+    interface Type
+}

@@ -1,0 +1,185 @@
+// Automatically generated - do not modify!
+
+package web.url
+
+/**
+ * The **`URLPattern`** interface of the URL Pattern API matches URLs or parts of URLs against a pattern. The pattern can contain capturing groups that extract parts of the matched URL.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern)
+ */
+open external class URLPattern(
+    input: String,
+    baseURL: String,
+    options: URLPatternOptions = definedExternally,
+) {
+    constructor(
+        input: URLPatternInit,
+        baseURL: String,
+        options: URLPatternOptions = definedExternally,
+    )
+
+    constructor(
+        input: String,
+        baseURL: URL,
+        options: URLPatternOptions = definedExternally,
+    )
+
+    constructor(
+        input: URLPatternInit,
+        baseURL: URL,
+        options: URLPatternOptions = definedExternally,
+    )
+
+    constructor(
+        input: String = definedExternally,
+        options: URLPatternOptions = definedExternally,
+    )
+
+    constructor(
+        input: URLPatternInit,
+        options: URLPatternOptions = definedExternally,
+    )
+
+    /**
+     * The **`hasRegExpGroups`** read-only property of the URLPattern interface is a boolean indicating whether or not any of the URLPattern components contain regular expression capturing groups.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/hasRegExpGroups)
+     */
+    open val hasRegExpGroups: Boolean
+
+    /**
+     * The **`hash`** read-only property of the URLPattern interface is a string containing the pattern used to match the fragment part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/hash)
+     */
+    open val hash: String
+
+    /**
+     * The **`hostname`** read-only property of the URLPattern interface is a string containing the pattern used to match the hostname part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/hostname)
+     */
+    open val hostname: String
+
+    /**
+     * The **`password`** read-only property of the URLPattern interface is a string containing the pattern used to match the password part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/password)
+     */
+    open val password: String
+
+    /**
+     * The **`pathname`** read-only property of the URLPattern interface is a string containing the pattern used to match the pathname part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/pathname)
+     */
+    open val pathname: String
+
+    /**
+     * The **`port`** read-only property of the URLPattern interface is a string containing the pattern used to match the port part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/port)
+     */
+    open val port: String
+
+    /**
+     * The **`protocol`** read-only property of the URLPattern interface is a string containing the pattern used to match the protocol part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/protocol)
+     */
+    open val protocol: String
+
+    /**
+     * The **`search`** read-only property of the URLPattern interface is a string containing the pattern used to match the search part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/search)
+     */
+    open val search: String
+
+    /**
+     * The **`username`** read-only property of the URLPattern interface is a string containing the pattern used to match the username part of a URL.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/username)
+     */
+    open val username: String
+
+    /**
+     * The **`exec()`** method of the URLPattern interface takes a URL or object of URL parts, and returns either an object containing the results of matching the URL to the pattern, or null if the URL does not match the pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/exec)
+     */
+    open fun exec(
+        input: String = definedExternally,
+        baseURL: String = definedExternally,
+    ): URLPatternResult?
+
+    /**
+     * The **`exec()`** method of the URLPattern interface takes a URL or object of URL parts, and returns either an object containing the results of matching the URL to the pattern, or null if the URL does not match the pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/exec)
+     */
+    open fun exec(
+        input: URLPatternInit,
+        baseURL: String = definedExternally,
+    ): URLPatternResult?
+
+    /**
+     * The **`exec()`** method of the URLPattern interface takes a URL or object of URL parts, and returns either an object containing the results of matching the URL to the pattern, or null if the URL does not match the pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/exec)
+     */
+    open fun exec(
+        input: String = definedExternally,
+        baseURL: URL,
+    ): URLPatternResult?
+
+    /**
+     * The **`exec()`** method of the URLPattern interface takes a URL or object of URL parts, and returns either an object containing the results of matching the URL to the pattern, or null if the URL does not match the pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/exec)
+     */
+    open fun exec(
+        input: URLPatternInit,
+        baseURL: URL,
+    ): URLPatternResult?
+
+    /**
+     * The **`test()`** method of the URLPattern interface takes a URL string or object of URL parts, and returns a boolean indicating if the given input matches the current pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/test)
+     */
+    open fun test(
+        input: String = definedExternally,
+        baseURL: String = definedExternally,
+    ): Boolean
+
+    /**
+     * The **`test()`** method of the URLPattern interface takes a URL string or object of URL parts, and returns a boolean indicating if the given input matches the current pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/test)
+     */
+    open fun test(
+        input: URLPatternInit,
+        baseURL: String = definedExternally,
+    ): Boolean
+
+    /**
+     * The **`test()`** method of the URLPattern interface takes a URL string or object of URL parts, and returns a boolean indicating if the given input matches the current pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/test)
+     */
+    open fun test(
+        input: String = definedExternally,
+        baseURL: URL,
+    ): Boolean
+
+    /**
+     * The **`test()`** method of the URLPattern interface takes a URL string or object of URL parts, and returns a boolean indicating if the given input matches the current pattern.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLPattern/test)
+     */
+    open fun test(
+        input: URLPatternInit,
+        baseURL: URL,
+    ): Boolean
+}

@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+package web.midi
+
+import kotlinx.js.JsPlainObject
+import web.events.EventInit
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MIDIConnectionEvent/MIDIConnectionEvent#options)
+ */
+@JsPlainObject
+external interface MIDIConnectionEventInit :
+    EventInit {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MIDIConnectionEvent/MIDIConnectionEvent#port)
+     */
+    var port: MIDIPort?
+}

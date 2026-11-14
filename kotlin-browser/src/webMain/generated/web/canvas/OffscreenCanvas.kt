@@ -1,0 +1,143 @@
+// Automatically generated - do not modify!
+
+package web.canvas
+
+import js.numbers.UInt53
+import js.promise.Promise
+import js.promise.await
+import js.serialization.Transferable
+import web.blob.Blob
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+import web.gl.TexImageSource
+import web.gl.WebGLContextEvent
+import web.gpu.GPUCopyExternalImageSource
+import web.images.ImageBitmap
+import web.rendering.OffscreenRenderingContext
+import web.rendering.RenderingContextId
+
+/**
+ * When using the <canvas> element or the Canvas API, rendering, animation, and user interaction usually happen on the main execution thread of a web application. The computation relating to canvas animations and rendering can have a significant impact on application performance.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas)
+ */
+open external class OffscreenCanvas(
+    /**
+     * The **`width`** property returns and sets the width of an OffscreenCanvas object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/width)
+     */
+    open var width: UInt53,
+    /**
+     * The **`height`** property returns and sets the height of an OffscreenCanvas object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/height)
+     */
+    open var height: UInt53,
+) : EventTarget,
+    CanvasImageSource,
+    TexImageSource,
+    GPUCopyExternalImageSource,
+    Transferable {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/contextlost_event)
+     */
+    open var oncontextlost: EventHandler<Event, OffscreenCanvas, OffscreenCanvas>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/contextrestored_event)
+     */
+    open var oncontextrestored: EventHandler<Event, OffscreenCanvas, OffscreenCanvas>?
+
+    /**
+     * The **`OffscreenCanvas.convertToBlob()`** method creates a Blob object representing the image contained in the canvas.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/convertToBlob)
+     */
+    @JsThrows(EncodingError::class)
+    @JsThrows(IndexSizeError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("convertToBlob")
+    open fun convertToBlobAsync(options: ImageEncodeOptions = definedExternally): Promise<Blob>
+
+    /**
+     * The **`OffscreenCanvas.getContext()`** method returns a drawing context for an offscreen canvas, or null if the context identifier is not supported, or the offscreen canvas has already been set to a different context mode.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/getContext)
+     */
+    open fun <T : OffscreenRenderingContext, O : JsAny?> getContext(
+        contextId: RenderingContextId<T, O>,
+        options: O? = definedExternally,
+    ): T?
+
+    /**
+     * The **`transferToImageBitmap()`** method of the OffscreenCanvas interface creates an ImageBitmap object from the most recently rendered image of the OffscreenCanvas. The image in the OffscreenCanvas is replaced with a new blank image for subsequent rendering.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/transferToImageBitmap)
+     */
+    @JsThrows(InvalidStateError::class)
+    open fun transferToImageBitmap(): ImageBitmap
+}
+
+/**
+ * The **`OffscreenCanvas.convertToBlob()`** method creates a Blob object representing the image contained in the canvas.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/convertToBlob)
+ */
+@JsThrows(EncodingError::class)
+@JsThrows(IndexSizeError::class)
+@JsThrows(InvalidStateError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun OffscreenCanvas.convertToBlob(): Blob {
+    return convertToBlobAsync().await()
+}
+
+/**
+ * The **`OffscreenCanvas.convertToBlob()`** method creates a Blob object representing the image contained in the canvas.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/convertToBlob)
+ */
+@JsThrows(EncodingError::class)
+@JsThrows(IndexSizeError::class)
+@JsThrows(InvalidStateError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun OffscreenCanvas.convertToBlob(options: ImageEncodeOptions): Blob {
+    return convertToBlobAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/contextlost_event)
+ */
+inline val <C : OffscreenCanvas> C.contextLostEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "contextlost")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/contextrestored_event)
+ */
+inline val <C : OffscreenCanvas> C.contextRestoredEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "contextrestored")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/webglcontextcreationerror_event)
+ */
+inline val <C : OffscreenCanvas> C.webglContextCreationErrorEvent: EventInstance<WebGLContextEvent, C, C>
+    get() = EventInstance(this, "webglcontextcreationerror")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/webglcontextlost_event)
+ */
+inline val <C : OffscreenCanvas> C.webglContextLostEvent: EventInstance<WebGLContextEvent, C, C>
+    get() = EventInstance(this, "webglcontextlost")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/OffscreenCanvas/webglcontextrestored_event)
+ */
+inline val <C : OffscreenCanvas> C.webglContextRestoredEvent: EventInstance<WebGLContextEvent, C, C>
+    get() = EventInstance(this, "webglcontextrestored")

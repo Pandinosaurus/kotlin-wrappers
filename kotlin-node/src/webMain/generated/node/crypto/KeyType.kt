@@ -1,0 +1,184 @@
+// Automatically generated - do not modify!
+
+package node.crypto
+
+sealed external interface KeyType {
+    sealed interface mlDsa : KeyType
+
+    sealed interface mlKem : KeyType
+
+    sealed interface slhDsa : KeyType
+
+    sealed interface dh : KeyType
+
+    sealed interface dsa : KeyType
+
+    sealed interface ec : KeyType
+
+    sealed interface ed25519 : KeyType
+
+    sealed interface ed448 : KeyType
+
+    sealed interface mlDsa44 :
+        KeyType,
+        mlDsa
+
+    sealed interface mlDsa65 :
+        KeyType,
+        mlDsa
+
+    sealed interface mlDsa87 :
+        KeyType,
+        mlDsa
+
+    sealed interface mlKem1024 :
+        KeyType,
+        mlKem
+
+    sealed interface mlKem512 :
+        KeyType,
+        mlKem
+
+    sealed interface mlKem768 :
+        KeyType,
+        mlKem
+
+    sealed interface rsaPss : KeyType
+
+    sealed interface rsa : KeyType
+
+    sealed interface slhDsaSha2128f :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaSha2128s :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaSha2192f :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaSha2192s :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaSha2256f :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaSha2256s :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaShake128f :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaShake128s :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaShake192f :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaShake192s :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaShake256f :
+        KeyType,
+        slhDsa
+
+    sealed interface slhDsaShake256s :
+        KeyType,
+        slhDsa
+
+    sealed interface x25519 : KeyType
+
+    sealed interface x448 : KeyType
+
+    companion object {
+        @seskar.js.JsValue("dh")
+        val dh: dh
+
+        @seskar.js.JsValue("dsa")
+        val dsa: dsa
+
+        @seskar.js.JsValue("ec")
+        val ec: ec
+
+        @seskar.js.JsValue("ed25519")
+        val ed25519: ed25519
+
+        @seskar.js.JsValue("ed448")
+        val ed448: ed448
+
+        @seskar.js.JsValue("ml-dsa-44")
+        val mlDsa44: mlDsa44
+
+        @seskar.js.JsValue("ml-dsa-65")
+        val mlDsa65: mlDsa65
+
+        @seskar.js.JsValue("ml-dsa-87")
+        val mlDsa87: mlDsa87
+
+        @seskar.js.JsValue("ml-kem-1024")
+        val mlKem1024: mlKem1024
+
+        @seskar.js.JsValue("ml-kem-512")
+        val mlKem512: mlKem512
+
+        @seskar.js.JsValue("ml-kem-768")
+        val mlKem768: mlKem768
+
+        @seskar.js.JsValue("rsa-pss")
+        val rsaPss: rsaPss
+
+        @seskar.js.JsValue("rsa")
+        val rsa: rsa
+
+        @seskar.js.JsValue("slh-dsa-sha2-128f")
+        val slhDsaSha2128f: slhDsaSha2128f
+
+        @seskar.js.JsValue("slh-dsa-sha2-128s")
+        val slhDsaSha2128s: slhDsaSha2128s
+
+        @seskar.js.JsValue("slh-dsa-sha2-192f")
+        val slhDsaSha2192f: slhDsaSha2192f
+
+        @seskar.js.JsValue("slh-dsa-sha2-192s")
+        val slhDsaSha2192s: slhDsaSha2192s
+
+        @seskar.js.JsValue("slh-dsa-sha2-256f")
+        val slhDsaSha2256f: slhDsaSha2256f
+
+        @seskar.js.JsValue("slh-dsa-sha2-256s")
+        val slhDsaSha2256s: slhDsaSha2256s
+
+        @seskar.js.JsValue("slh-dsa-shake-128f")
+        val slhDsaShake128f: slhDsaShake128f
+
+        @seskar.js.JsValue("slh-dsa-shake-128s")
+        val slhDsaShake128s: slhDsaShake128s
+
+        @seskar.js.JsValue("slh-dsa-shake-192f")
+        val slhDsaShake192f: slhDsaShake192f
+
+        @seskar.js.JsValue("slh-dsa-shake-192s")
+        val slhDsaShake192s: slhDsaShake192s
+
+        @seskar.js.JsValue("slh-dsa-shake-256f")
+        val slhDsaShake256f: slhDsaShake256f
+
+        @seskar.js.JsValue("slh-dsa-shake-256s")
+        val slhDsaShake256s: slhDsaShake256s
+
+        @seskar.js.JsValue("x25519")
+        val x25519: x25519
+
+        @seskar.js.JsValue("x448")
+        val x448: x448
+    }
+}

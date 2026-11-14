@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@cesium/engine")
+
+package cesium.engine
+
+/**
+ * The lighting model to use for lighting a [Model].
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/global.html#LightingModel">Online Documentation</a>
+ */
+/* enum */
+external class LightingModel
+private constructor() {
+    companion object {
+
+        /**
+         * Use unlit shading, i.e. skip lighting calculations. The model's
+         * diffuse color (assumed to be linear RGB, not sRGB) is used directly
+         * when computing `out_FragColor`. The alpha mode is still
+         * applied.
+         *
+         * Value - `0`
+         */
+        val UNLIT: LightingModel
+
+        /**
+         * Use physically-based rendering lighting calculations. This includes
+         * both PBR metallic roughness and PBR specular glossiness. Image-based
+         * lighting is also applied when possible.
+         *
+         * Value - `1`
+         */
+        val PBR: LightingModel
+    }
+}

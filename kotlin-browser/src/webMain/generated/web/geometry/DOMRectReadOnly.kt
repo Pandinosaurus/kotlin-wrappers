@@ -1,0 +1,81 @@
+// Automatically generated - do not modify!
+
+package web.geometry
+
+import js.serialization.Serializable
+
+/**
+ * The **`DOMRectReadOnly`** interface specifies the standard properties (also used by DOMRect) to define a rectangle whose properties are immutable.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly)
+ */
+open external class DOMRectReadOnly(
+    /**
+     * The **`x`** read-only property of the DOMRectReadOnly interface represents the x coordinate of the DOMRect's origin.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/x)
+     */
+    open val x: Double = definedExternally,
+    /**
+     * The **`y`** read-only property of the DOMRectReadOnly interface represents the y coordinate of the DOMRect's origin.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/y)
+     */
+    open val y: Double = definedExternally,
+    /**
+     * The **`width`** read-only property of the DOMRectReadOnly interface represents the width of the DOMRect.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/width)
+     */
+    open val width: Double = definedExternally,
+    /**
+     * The **`height`** read-only property of the DOMRectReadOnly interface represents the height of the DOMRect.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/height)
+     */
+    open val height: Double = definedExternally,
+) : Serializable {
+    /**
+     * The **`bottom`** read-only property of the DOMRectReadOnly interface returns the bottom coordinate value of the DOMRect. (Has the same value as y + height, or y if height is negative.)
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/bottom)
+     */
+    open val bottom: Double
+
+    /**
+     * The **`left`** read-only property of the DOMRectReadOnly interface returns the left coordinate value of the DOMRect. (Has the same value as x, or x + width if width is negative.)
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/left)
+     */
+    open val left: Double
+
+    /**
+     * The **`right`** read-only property of the DOMRectReadOnly interface returns the right coordinate value of the DOMRect. (Has the same value as x + width, or x if width is negative.)
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/right)
+     */
+    open val right: Double
+
+    /**
+     * The **`top`** read-only property of the DOMRectReadOnly interface returns the top coordinate value of the DOMRect. (Has the same value as y, or y + height if height is negative.)
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/top)
+     */
+    open val top: Double
+
+    /**
+     * The **`toJSON()`** method of the DOMRectReadOnly interface returns a JSON-serializable plain object representing the DOMRectReadOnly object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/toJSON)
+     */
+    open fun toJSON(): JsAny
+
+    companion object {
+        /**
+         * The **`fromRect()`** static method of the DOMRectReadOnly object creates a new DOMRectReadOnly object with a given location and dimensions.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMRectReadOnly/fromRect_static)
+         */
+        fun fromRect(other: DOMRectReadOnly = definedExternally): DOMRectReadOnly
+    }
+}

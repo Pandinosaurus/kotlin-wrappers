@@ -1,0 +1,14 @@
+// Automatically generated - do not modify!
+
+package web.rtc
+
+import js.collections.ReadonlyMap
+
+/**
+ * The **`RTCStatsReport`** interface of the WebRTC API provides a statistics report for a RTCPeerConnection, RTCRtpSender, or RTCRtpReceiver.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCStatsReport)
+ */
+open external class RTCStatsReport
+private constructor() :
+    ReadonlyMap.Mixin<JsString, JsAny?>

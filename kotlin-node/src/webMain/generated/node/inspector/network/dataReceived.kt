@@ -1,0 +1,17 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:inspector")
+@file:JsQualifier("Network")
+
+package node.inspector.network
+
+/**
+ * This feature is only available with the `--experimental-network-inspection` flag enabled.
+ *
+ * Broadcasts the `Network.dataReceived` event to connected frontends, or buffers the data if
+ * `Network.streamResourceContent` command was not invoked for the given request yet.
+ *
+ * Also enables `Network.getResponseBody` command to retrieve the response data.
+ * @since v24.2.0
+ */
+external fun dataReceived(params: DataReceivedEventDataType)

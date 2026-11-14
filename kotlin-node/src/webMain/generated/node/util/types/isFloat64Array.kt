@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`Float64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array) instance.
+ *
+ * ```js
+ * util.types.isFloat64Array(new ArrayBuffer());  // Returns false
+ * util.types.isFloat64Array(new Uint8Array());  // Returns false
+ * util.types.isFloat64Array(new Float64Array());  // Returns true
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isFloat64Array")
+external fun isFloat64ArrayRaw(value: Any?): Boolean /* object is Float64Array */

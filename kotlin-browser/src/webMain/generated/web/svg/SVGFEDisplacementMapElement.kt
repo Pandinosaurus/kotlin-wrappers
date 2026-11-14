@@ -1,0 +1,78 @@
+// Automatically generated - do not modify!
+
+package web.svg
+
+/**
+ * The **`SVGFEDisplacementMapElement`** interface corresponds to the <feDisplacementMap> element.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement)
+ */
+open external class SVGFEDisplacementMapElement
+private constructor() :
+    SVGElement,
+    SVGFilterPrimitiveStandardAttributes {
+    /**
+     * The **`in1`** read-only property of the SVGFEDisplacementMapElement interface reflects the in attribute of the given <feDisplacementMap> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement/in1)
+     */
+    open val in1: SVGAnimatedString
+
+    /**
+     * The **`in2`** read-only property of the SVGFEDisplacementMapElement interface reflects the in2 attribute of the given <feDisplacementMap> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement/in2)
+     */
+    open val in2: SVGAnimatedString
+
+    /**
+     * The **`scale`** read-only property of the SVGFEDisplacementMapElement interface reflects the scale attribute of the given <feDisplacementMap> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement/scale)
+     */
+    open val scale: SVGAnimatedNumber
+
+    /**
+     * The **`xChannelSelector`** read-only property of the SVGFEDisplacementMapElement interface reflects the xChannelSelector attribute of the given <feDisplacementMap> element. It takes one of the SVG_CHANNEL_* constants defined on this interface.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement/xChannelSelector)
+     */
+    open val xChannelSelector: SVGAnimatedEnumeration<ChannelSelector>
+
+    /**
+     * The **`yChannelSelector`** read-only property of the SVGFEDisplacementMapElement interface reflects the yChannelSelector attribute of the given <feDisplacementMap> element. It takes one of the SVG_CHANNEL_* constants defined on this interface.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement/yChannelSelector)
+     */
+    open val yChannelSelector: SVGAnimatedEnumeration<ChannelSelector>
+
+    companion object {
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement#svg_channel_unknown)
+         */
+        val SVG_CHANNEL_UNKNOWN: ChannelSelector
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement#svg_channel_r)
+         */
+        val SVG_CHANNEL_R: ChannelSelector
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement#svg_channel_g)
+         */
+        val SVG_CHANNEL_G: ChannelSelector
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement#svg_channel_b)
+         */
+        val SVG_CHANNEL_B: ChannelSelector
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEDisplacementMapElement#svg_channel_a)
+         */
+        val SVG_CHANNEL_A: ChannelSelector
+    }
+
+    sealed /* enum */
+    interface ChannelSelector
+}

@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package node.crypto
+
+@js.union.JsUnion
+sealed /* union */
+external interface CipherCCMTypes
+
+inline val CipherCCMTypes.Companion.aes128Ccm: CipherCCMTypes
+    get() = js.reflect.unsafeCast("aes-128-ccm")
+
+inline val CipherCCMTypes.Companion.aes192Ccm: CipherCCMTypes
+    get() = js.reflect.unsafeCast("aes-192-ccm")
+
+inline val CipherCCMTypes.Companion.aes256Ccm: CipherCCMTypes
+    get() = js.reflect.unsafeCast("aes-256-ccm")

@@ -1,0 +1,125 @@
+// Automatically generated - do not modify!
+
+package web.imagecapture
+
+import js.promise.Promise
+import js.promise.await
+import web.blob.Blob
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.images.ImageBitmap
+import web.mediastreams.MediaStreamTrack
+
+/**
+ * The **`ImageCapture`** interface of the MediaStream Image Capture API provides methods to enable the capture of images or photos from a camera or other photographic device. It provides an interface for capturing images from a photographic device referenced through a valid MediaStreamTrack.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture)
+ */
+open external class ImageCapture(
+    videoTrack: MediaStreamTrack,
+) {
+    /**
+     * The **`track`** read-only property of the ImageCapture interface returns a reference to the MediaStreamTrack passed to the ImageCapture() constructor.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/track)
+     */
+    open val track: MediaStreamTrack
+
+    /**
+     * The **`getPhotoCapabilities()`** method of the ImageCapture interface returns a Promise that resolves with an object containing the ranges of available configuration options.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/getPhotoCapabilities)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(OperationError::class)
+    @JsName("getPhotoCapabilities")
+    open fun getPhotoCapabilitiesAsync(): Promise<PhotoCapabilities>
+
+    /**
+     * The **`getPhotoSettings()`** method of the ImageCapture interface returns a Promise that resolves with an object containing the current photo configuration settings.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/getPhotoSettings)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(OperationError::class)
+    @JsName("getPhotoSettings")
+    open fun getPhotoSettingsAsync(): Promise<PhotoSettings>
+
+    /**
+     * The **`grabFrame()`** method of the ImageCapture interface takes a snapshot of the live video in a MediaStreamTrack and returns a Promise that resolves with an ImageBitmap containing the snapshot.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/grabFrame)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(UnknownError::class)
+    @JsName("grabFrame")
+    open fun grabFrameAsync(): Promise<ImageBitmap>
+
+    /**
+     * The **`takePhoto()`** method of the ImageCapture interface takes a single exposure using the video capture device sourcing a MediaStreamTrack and returns a Promise that resolves with a Blob containing the data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/takePhoto)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(UnknownError::class)
+    @JsName("takePhoto")
+    open fun takePhotoAsync(photoSettings: PhotoSettings = definedExternally): Promise<Blob>
+}
+
+/**
+ * The **`getPhotoCapabilities()`** method of the ImageCapture interface returns a Promise that resolves with an object containing the ranges of available configuration options.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/getPhotoCapabilities)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(OperationError::class)
+suspend inline fun ImageCapture.getPhotoCapabilities(): PhotoCapabilities {
+    return getPhotoCapabilitiesAsync().await()
+}
+
+/**
+ * The **`getPhotoSettings()`** method of the ImageCapture interface returns a Promise that resolves with an object containing the current photo configuration settings.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/getPhotoSettings)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(OperationError::class)
+suspend inline fun ImageCapture.getPhotoSettings(): PhotoSettings {
+    return getPhotoSettingsAsync().await()
+}
+
+/**
+ * The **`grabFrame()`** method of the ImageCapture interface takes a snapshot of the live video in a MediaStreamTrack and returns a Promise that resolves with an ImageBitmap containing the snapshot.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/grabFrame)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(UnknownError::class)
+suspend inline fun ImageCapture.grabFrame(): ImageBitmap {
+    return grabFrameAsync().await()
+}
+
+/**
+ * The **`takePhoto()`** method of the ImageCapture interface takes a single exposure using the video capture device sourcing a MediaStreamTrack and returns a Promise that resolves with a Blob containing the data.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/takePhoto)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(UnknownError::class)
+suspend inline fun ImageCapture.takePhoto(): Blob {
+    return takePhotoAsync().await()
+}
+
+/**
+ * The **`takePhoto()`** method of the ImageCapture interface takes a single exposure using the video capture device sourcing a MediaStreamTrack and returns a Promise that resolves with a Blob containing the data.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageCapture/takePhoto)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(UnknownError::class)
+suspend inline fun ImageCapture.takePhoto(photoSettings: PhotoSettings): Blob {
+    return takePhotoAsync(
+        photoSettings = photoSettings,
+    ).await()
+}

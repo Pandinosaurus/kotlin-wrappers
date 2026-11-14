@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package node.crypto
+
+@kotlinx.js.JsPlainObject
+external interface RsaPrivateKey {
+    var key: KeyLike
+    var passphrase: String?
+
+    /**
+     * @default 'sha1'
+     */
+    var oaepHash: String?
+    var oaepLabel: js.typedarrays.TypedArray<*, *, *, *>?
+    var padding: Double?
+}

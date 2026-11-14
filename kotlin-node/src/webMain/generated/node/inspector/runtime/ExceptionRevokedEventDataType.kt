@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package node.inspector.runtime
+
+@kotlinx.js.JsPlainObject
+external interface ExceptionRevokedEventDataType {
+    /**
+     * Reason describing why exception was revoked.
+     */
+    var reason: String
+
+    /**
+     * The id of revoked exception, as reported in <code>exceptionThrown</code>.
+     */
+    var exceptionId: Double
+}

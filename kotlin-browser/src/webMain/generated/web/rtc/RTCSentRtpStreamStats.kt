@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+package web.rtc
+
+import js.numbers.UInt53
+import kotlinx.js.JsPlainObject
+
+@JsPlainObject
+external interface RTCSentRtpStreamStats :
+    RTCRtpStreamStats {
+    var bytesSent: UInt53?
+    var packetsSent: UInt53?
+}

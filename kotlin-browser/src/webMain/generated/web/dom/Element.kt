@@ -1,0 +1,1151 @@
+// Automatically generated - do not modify!
+
+package web.dom
+
+import js.array.ReadonlyArray
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.animations.*
+import web.aria.ARIAMixin
+import web.aria.ARIANotifyMixin
+import web.aria.AriaNotificationOptions
+import web.clipboard.ClipboardEvent
+import web.components.CustomElementRegistry
+import web.components.ShadowRoot
+import web.components.ShadowRootInit
+import web.components.Slottable
+import web.csp.SecurityPolicyViolationEvent
+import web.cssom.ClassName
+import web.cssom.StylePropertyMapReadOnly
+import web.cssom.TransitionEvent
+import web.dnd.DragEvent
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.focus.FocusEvent
+import web.fullscreen.FullscreenOptions
+import web.geometry.DOMRect
+import web.geometry.DOMRectList
+import web.html.HTMLCollection
+import web.html.HtmlSource
+import web.html.SetHTMLUnsafeOptions
+import web.input.CompositionEvent
+import web.input.InputEvent
+import web.keyboard.KeyboardEvent
+import web.mouse.MouseEvent
+import web.mouse.WheelEvent
+import web.pointer.PointerEvent
+import web.scroll.ScrollIntoViewOptions
+import web.scroll.ScrollToOptions
+import web.touch.TouchEvent
+import web.trustedtypes.TrustedHTML
+import web.xr.XRSessionEvent
+
+/**
+ * **`Element`** is the most general base class from which all element objects (i.e., objects that represent elements) in a Document inherit. It only has methods and properties common to all kinds of elements. More specific classes inherit from Element.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element)
+ */
+open external class Element
+private constructor() :
+    Node,
+    ARIAMixin,
+    ARIANotifyMixin,
+    Animatable,
+    ChildNode,
+    NonDocumentTypeChildNode,
+    ParentNode,
+    Slottable {
+    /**
+     * The **`Element.attributes`** property returns a live collection of all attribute nodes registered to the specified node. It is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers. To be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/attributes)
+     */
+    open val attributes: NamedNodeMap
+
+    /**
+     * The read-only **`classList`** property of the Element interface contains a live DOMTokenList collection representing the class attribute of the element. This can then be used to manipulate the class list.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/classList)
+     */
+    open val classList: DOMTokenList<ClassName>
+
+    /**
+     * The **`className`** property of the Element interface reflects the element's class content attribute.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/className)
+     */
+    open var className: ClassName
+
+    /**
+     * The **`clientHeight`** read-only property of the Element interface is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels. It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientHeight)
+     */
+    open val clientHeight: Int
+
+    /**
+     * The **`clientLeft`** read-only property of the Element interface returns the width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right-to-left and if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientLeft)
+     */
+    open val clientLeft: Int
+
+    /**
+     * The **`clientTop`** read-only property of the Element interface returns the width of the top border of an element in pixels.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientTop)
+     */
+    open val clientTop: Int
+
+    /**
+     * The **`clientWidth`** read-only property of the Element interface is zero for inline elements and elements with no CSS; otherwise, it's the inner width of an element in pixels. It includes padding but excludes borders, margins, and vertical scrollbars (if present).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientWidth)
+     */
+    open val clientWidth: Int
+
+    /**
+     * The **`currentCSSZoom`** read-only property of the Element interface provides the "effective" CSS zoom of an element, taking into account the zoom applied to the element and all its parent elements.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/currentCSSZoom)
+     */
+    open val currentCSSZoom: Double
+
+    /**
+     * The **`customElementRegistry`** read-only property of the Element interface returns the CustomElementRegistry object associated with this element, or null if one has not been set.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/customElementRegistry)
+     */
+    open val customElementRegistry: CustomElementRegistry?
+
+    /**
+     * The **`id`** property of the Element interface reflects the element's id content attribute.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/id)
+     */
+    open var id: ElementId
+
+    /**
+     * The **`innerHTML`** property of the Element interface gets or sets the HTML or XML markup contained within the element, omitting any shadow roots in both cases.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/innerHTML)
+     */
+    open var innerHTML: HtmlSource
+
+    /**
+     * The **`Element.localName`** read-only property returns the local part of the qualified name of an element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/localName)
+     */
+    open val localName: String
+
+    /**
+     * The **`Element.namespaceURI`** read-only property returns the namespace URI of the element, or null if the element is not in a namespace.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/namespaceURI)
+     */
+    open val namespaceURI: String?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/fullscreenchange_event)
+     */
+    open var onfullscreenchange: EventHandler<Event, Element, Node>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/fullscreenerror_event)
+     */
+    open var onfullscreenerror: EventHandler<Event, Element, Node>?
+
+    /**
+     * The **`outerHTML`** attribute of the Element interface gets or sets the HTML or XML markup of the element and its descendants, omitting any shadow roots in both cases.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/outerHTML)
+     */
+    open var outerHTML: HtmlSource
+    override val ownerDocument: Document
+
+    /**
+     * The read-only **`part`** property of the Element interface contains a DOMTokenList object representing the part identifier(s) of the element. It reflects the element's part content attribute. These can be used to style parts of a shadow DOM, via the ::part pseudo-element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/part)
+     */
+    open val part: DOMTokenList<JsString>
+
+    /**
+     * The **`Element.prefix`** read-only property returns the namespace prefix of the specified element, or null if no prefix is specified.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/prefix)
+     */
+    open val prefix: String?
+
+    /**
+     * The **`scrollHeight`** read-only property of the Element interface is a measurement of the height of an element's content, including content not visible on the screen due to overflow.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollHeight)
+     */
+    open val scrollHeight: Int
+
+    /**
+     * The **`scrollLeft`** property of the Element interface gets or sets the number of pixels by which an element's content is scrolled from its left edge. This value is subpixel precise in modern browsers, meaning that it isn't necessarily a whole number.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollLeft)
+     */
+    open var scrollLeft: Double
+
+    /**
+     * The **`scrollTop`** property of the Element interface gets or sets the number of pixels by which an element's content is scrolled from its top edge. This value is subpixel precise in modern browsers, meaning that it isn't necessarily a whole number.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollTop)
+     */
+    open var scrollTop: Double
+
+    /**
+     * The **`scrollWidth`** read-only property of the Element interface is a measurement of the width of an element's content, including content not visible on the screen due to overflow.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollWidth)
+     */
+    open val scrollWidth: Int
+
+    /**
+     * The **`Element.shadowRoot`** read-only property represents the shadow root hosted by the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/shadowRoot)
+     */
+    open val shadowRoot: ShadowRoot?
+
+    /**
+     * The **`slot`** property of the Element interface returns the name of the shadow DOM slot the element is inserted in. It reflects the element's slot content attribute.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/slot)
+     */
+    open var slot: String
+
+    /**
+     * The **`tagName`** read-only property of the Element interface returns the tag name of the element on which it's called.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/tagName)
+     */
+    open val tagName: String
+
+    /**
+     * The **`attachShadow()`** method of the Element interface attaches a shadow DOM tree to the specified element and returns a reference to its ShadowRoot.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/attachShadow)
+     */
+    @JsThrows(NotSupportedError::class)
+    open fun attachShadow(init: ShadowRootInit): ShadowRoot
+
+    /**
+     * The **`checkVisibility()`** method of the Element interface checks whether the element is potentially visible.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/checkVisibility)
+     */
+    open fun checkVisibility(options: CheckVisibilityOptions = definedExternally): Boolean
+
+    /**
+     * The **`closest()`** method of the Element interface traverses the element and its parents (heading toward the document root) until it finds a node that matches the specified CSS selector.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/closest)
+     */
+    open fun <T : Element> closest(selector: TagName<T>): T?
+    open fun closest(selector: String): Element?
+
+    /**
+     * The **`computedStyleMap()`** method of the Element interface returns a StylePropertyMapReadOnly interface which provides a read-only representation of a CSS declaration block that is an alternative to CSSStyleDeclaration.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/computedStyleMap)
+     */
+    open fun computedStyleMap(): StylePropertyMapReadOnly
+
+    /**
+     * The **`getAttribute()`** method of the Element interface returns the string value of the specified attribute of the specified element. It returns null if the element doesn't have an attribute with the given name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttribute)
+     */
+    open fun getAttribute(qualifiedName: String): String?
+
+    /**
+     * The **`getAttributeNS()`** method of the Element interface returns the string value of the specified namespaced attribute of the specified element. It returns null if the element doesn't have an attribute with the given name in the namespace.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNS)
+     */
+    open fun getAttributeNS(
+        namespace: String?,
+        localName: String,
+    ): String?
+
+    /**
+     * The **`getAttributeNames()`** method of the Element interface returns the attribute names of the element as an Array of strings. If the element has no attributes it returns an empty array.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNames)
+     */
+    open fun getAttributeNames(): ReadonlyArray<JsString>
+
+    /**
+     * The **`getAttributeNode()`** method of the Element interface returns the specified attribute of the specified element, as an Attr node. It returns null if the element doesn't have an attribute with the given name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNode)
+     */
+    open fun getAttributeNode(qualifiedName: String): Attr?
+
+    /**
+     * The **`getAttributeNodeNS()`** method of the Element interface returns the specified namespaced attribute of the specified element, as an Attr node. It returns null if the element doesn't have an attribute with the given name in the namespace.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNodeNS)
+     */
+    open fun getAttributeNodeNS(
+        namespace: String?,
+        localName: String,
+    ): Attr?
+
+    /**
+     * The **`Element.getBoundingClientRect()`** method returns a DOMRect object providing information about the size of an element and its position relative to the viewport.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getBoundingClientRect)
+     */
+    open fun getBoundingClientRect(): DOMRect
+
+    /**
+     * The **`getClientRects()`** method of the Element interface returns a collection of DOMRect objects that indicate the bounding rectangles for each CSS border box in a client.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getClientRects)
+     */
+    open fun getClientRects(): DOMRectList
+
+    /**
+     * The Element method **`getElementsByClassName()`** returns a live HTMLCollection which contains every descendant element which has the specified class name or names.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByClassName)
+     */
+    open fun getElementsByClassName(classNames: ClassName): HTMLCollection<Element>
+
+    /**
+     * The **`Element.getElementsByTagName()`** method returns a live HTMLCollection of elements with the given tag name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByTagName)
+     */
+    open fun <T : Element> getElementsByTagName(qualifiedName: TagName<T>): HTMLCollection<T>
+    open fun getElementsByTagName(qualifiedName: String): HTMLCollection<Element>
+
+    /**
+     * The **`Element.getElementsByTagNameNS()`** method returns a live HTMLCollection of elements with the given tag name belonging to the given namespace. It is similar to Document.getElementsByTagNameNS, except that its search is restricted to descendants of the specified element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByTagNameNS)
+     */
+    open fun <T : Element> getElementsByTagNameNS(
+        namespaceURI: TagNamespace<T>,
+        localName: TagName<T>,
+    ): HTMLCollection<T>
+
+    open fun getElementsByTagNameNS(
+        namespace: String?,
+        localName: String,
+    ): HTMLCollection<Element>
+
+    /**
+     * The **`getHTML()`** method of the Element interface is used to serialize an element's DOM to an HTML string.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getHTML)
+     */
+    open fun getHTML(options: GetHTMLOptions = definedExternally): String
+
+    /**
+     * The **`Element.hasAttribute()`** method returns a Boolean value indicating whether the specified element has the specified attribute or not.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasAttribute)
+     */
+    open fun hasAttribute(qualifiedName: String): Boolean
+
+    /**
+     * The **`hasAttributeNS()`** method of the Element interface returns a boolean value indicating whether the current element has the specified attribute with the specified namespace.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasAttributeNS)
+     */
+    open fun hasAttributeNS(
+        namespace: String?,
+        localName: String,
+    ): Boolean
+
+    /**
+     * The **`hasAttributes()`** method of the Element interface returns a boolean value indicating whether the current element has any attributes or not.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasAttributes)
+     */
+    open fun hasAttributes(): Boolean
+
+    /**
+     * The **`hasPointerCapture()`** method of the Element interface checks whether the element on which it is invoked has pointer capture for the pointer identified by the given pointer ID.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasPointerCapture)
+     */
+    open fun hasPointerCapture(pointerId: Int): Boolean
+
+    /**
+     * The **`insertAdjacentElement()`** method of the Element interface inserts a given element node at a given position relative to the element it is invoked upon.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentElement)
+     */
+    @JsThrows(SyntaxError::class)
+    open fun insertAdjacentElement(
+        where: InsertPosition,
+        element: Element,
+    ): Element?
+
+    /**
+     * The **`insertAdjacentHTML()`** method of the Element interface parses the specified input as HTML or XML and inserts the resulting nodes into the DOM tree at a specified position.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentHTML)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    @JsThrows(SyntaxError::class)
+    open fun insertAdjacentHTML(
+        position: InsertPosition,
+        string: TrustedHTML,
+    )
+
+    /**
+     * The **`insertAdjacentHTML()`** method of the Element interface parses the specified input as HTML or XML and inserts the resulting nodes into the DOM tree at a specified position.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentHTML)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    @JsThrows(SyntaxError::class)
+    open fun insertAdjacentHTML(
+        position: InsertPosition,
+        string: String,
+    )
+
+    /**
+     * The **`insertAdjacentText()`** method of the Element interface, given a relative position and a string, inserts a new text node at the given position relative to the element it is called from.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentText)
+     */
+    @JsThrows(SyntaxError::class)
+    open fun insertAdjacentText(
+        where: InsertPosition,
+        data: String,
+    )
+
+    /**
+     * The **`matches()`** method of the Element interface tests whether the element would be selected by the specified CSS selector.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/matches)
+     */
+    @JsThrows(SyntaxError::class)
+    open fun matches(selectors: String): Boolean
+
+    /**
+     * The **`releasePointerCapture()`** method of the Element interface releases (stops) pointer capture that was previously set for a specific (PointerEvent) pointer.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/releasePointerCapture)
+     */
+    @JsThrows(NotFoundError::class)
+    open fun releasePointerCapture(pointerId: Int)
+
+    /**
+     * The Element method **`removeAttribute()`** removes the attribute with the specified name from the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/removeAttribute)
+     */
+    open fun removeAttribute(qualifiedName: String)
+
+    /**
+     * The **`removeAttributeNS()`** method of the Element interface removes the specified attribute with the specified namespace from an element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/removeAttributeNS)
+     */
+    open fun removeAttributeNS(
+        namespace: String?,
+        localName: String,
+    )
+
+    /**
+     * The **`removeAttributeNode()`** method of the Element interface removes the specified Attr node from the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/removeAttributeNode)
+     */
+    @JsThrows(NotFoundError::class)
+    open fun removeAttributeNode(attr: Attr): Attr
+
+    /**
+     * The **`requestFullscreen()`** method of the Element interface issues an asynchronous request to display the element in fullscreen mode.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/requestFullscreen)
+     */
+    @JsThrows(NotSupportedError::class)
+    @JsName("requestFullscreen")
+    open fun requestFullscreenAsync(options: FullscreenOptions = definedExternally): Promise<Void>
+
+    /**
+     * The **`requestPointerLock()`** method of the Element interface lets you asynchronously ask for the pointer to be locked on the given element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/requestPointerLock)
+     */
+    @JsName("requestPointerLock")
+    open fun requestPointerLockAsync(options: PointerLockOptions = definedExternally): Promise<Void>
+
+    /**
+     * The **`scroll()`** method of the Element interface scrolls to a particular set of coordinates inside a given element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scroll)
+     */
+    open fun scroll(options: ScrollToOptions = definedExternally): Promise<Void>?
+    open fun scroll(
+        x: Double,
+        y: Double,
+    ): Promise<Void>?
+
+    /**
+     * The **`scrollBy()`** method of the Element interface scrolls an element by the given amount.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollBy)
+     */
+    open fun scrollBy(options: ScrollToOptions = definedExternally): Promise<Void>?
+    open fun scrollBy(
+        x: Double,
+        y: Double,
+    ): Promise<Void>?
+
+    /**
+     * The **`scrollIntoView()`** method of the Element interface scrolls the element's ancestor containers such that the element on which scrollIntoView() is called is visible to the user.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollIntoView)
+     */
+    open fun scrollIntoView(options: ScrollIntoViewOptions = definedExternally): Promise<Void>?
+
+    /**
+     * The **`scrollTo()`** method of the Element interface scrolls to a particular set of coordinates inside a given element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollTo)
+     */
+    open fun scrollTo(options: ScrollToOptions = definedExternally): Promise<Void>?
+    open fun scrollTo(
+        x: Double,
+        y: Double,
+    ): Promise<Void>?
+
+    /**
+     * The **`setAttribute()`** method of the Element interface sets the value of an attribute on the specified element. If the attribute already exists, the value is updated; otherwise a new attribute is added with the specified name and value.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttribute)
+     */
+    @JsThrows(InvalidCharacterError::class)
+    open fun setAttribute(
+        qualifiedName: String,
+        value: String,
+    )
+
+    /**
+     * The **`setAttributeNS()`** method of the Element interface adds a new attribute or changes the value of an attribute with the given namespace and name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttributeNS)
+     */
+    @JsThrows(InvalidCharacterError::class)
+    @JsThrows(NamespaceError::class)
+    open fun setAttributeNS(
+        namespace: String?,
+        qualifiedName: String,
+        value: String,
+    )
+
+    /**
+     * The **`setAttributeNode()`** method of the Element interface adds a new Attr node to the specified element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttributeNode)
+     */
+    open fun setAttributeNode(attr: Attr): Attr?
+
+    /**
+     * The **`setAttributeNodeNS()`** method of the Element interface adds a new namespaced Attr node to an element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttributeNodeNS)
+     */
+    open fun setAttributeNodeNS(attr: Attr): Attr?
+
+    /**
+     * The **`setHTML()`** method of the Element interface provides an XSS-safe method to parse and sanitize a string of HTML and insert it into the DOM as a subtree of the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setHTML)
+     */
+    open fun setHTML(
+        html: String,
+        options: SetHTMLOptions = definedExternally,
+    )
+
+    /**
+     * The **`setHTMLUnsafe()`** method of the Element interface is used to parse HTML input into a DocumentFragment, optionally filtering out unwanted elements and attributes, and those that don't belong in the context, and then using it to replace the element's subtree in the DOM.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setHTMLUnsafe)
+     */
+    open fun setHTMLUnsafe(
+        html: TrustedHTML,
+        options: SetHTMLUnsafeOptions = definedExternally,
+    )
+
+    /**
+     * The **`setHTMLUnsafe()`** method of the Element interface is used to parse HTML input into a DocumentFragment, optionally filtering out unwanted elements and attributes, and those that don't belong in the context, and then using it to replace the element's subtree in the DOM.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setHTMLUnsafe)
+     */
+    open fun setHTMLUnsafe(
+        html: String,
+        options: SetHTMLUnsafeOptions = definedExternally,
+    )
+
+    /**
+     * The **`setPointerCapture()`** method of the Element interface is used to designate a specific element as the capture target of future pointer events. Subsequent events for the pointer will be targeted at the capture element until capture is released (via Element.releasePointerCapture() or the pointerup event is fired).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setPointerCapture)
+     */
+    @JsThrows(NotFoundError::class)
+    open fun setPointerCapture(pointerId: Int)
+
+    /**
+     * The **`toggleAttribute()`** method of the Element interface toggles a Boolean attribute on the given element, removing it if present and adding it if not present.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/toggleAttribute)
+     */
+    @JsThrows(InvalidCharacterError::class)
+    open fun toggleAttribute(
+        qualifiedName: String,
+        force: Boolean = definedExternally,
+    ): Boolean
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/textContent)
+     */
+    override var textContent: String
+
+    @JsName("data-testid")
+    open var dataTestId: DataTestId?
+
+    /* `ARIANotifyMixin` overrides */
+
+    override fun ariaNotify(
+        announcement: String,
+        options: AriaNotificationOptions,
+    )
+
+    /* `Animatable` overrides */
+
+    override fun animate(
+        keyframes: ReadonlyArray<Keyframe>?,
+        options: Double,
+    ): Animation
+
+    override fun animate(
+        keyframes: ReadonlyArray<Keyframe>?,
+        options: KeyframeAnimationOptions,
+    ): Animation
+
+    override fun animate(
+        keyframes: PropertyIndexedKeyframes?,
+        options: Double,
+    ): Animation
+
+    override fun animate(
+        keyframes: PropertyIndexedKeyframes?,
+        options: KeyframeAnimationOptions,
+    ): Animation
+
+    override fun getAnimations(options: GetAnimationsOptions): ReadonlyArray<Animation>
+
+    /* `ChildNode` overrides */
+
+    override fun after(vararg nodes: Node)
+    override fun after(vararg nodes: String)
+    override fun before(vararg nodes: Node)
+    override fun before(vararg nodes: String)
+    override fun remove()
+    override fun replaceWith(vararg nodes: Node)
+    override fun replaceWith(vararg nodes: String)
+
+    /* `ParentNode` overrides */
+
+    override val childElementCount: Int
+    override val children: HTMLCollection<*>
+    override val firstElementChild: Element?
+    override val lastElementChild: Element?
+    override fun append(vararg nodes: Node)
+    override fun append(vararg nodes: String)
+    override fun moveBefore(
+        node: Node,
+        child: Node?,
+    )
+
+    override fun prepend(vararg nodes: Node)
+    override fun prepend(vararg nodes: String)
+    override fun <T : Element> querySelector(selectors: TagName<T>): T?
+    override fun querySelector(selectors: String): Element?
+    override fun <T : Element> querySelectorAll(selectors: TagName<T>): NodeList<T>
+    override fun querySelectorAll(selectors: String): NodeList<Element>
+    override fun replaceChildren(vararg nodes: Node)
+    override fun replaceChildren(vararg nodes: String)
+    override fun replaceChildren()
+}
+
+/**
+ * The **`requestFullscreen()`** method of the Element interface issues an asynchronous request to display the element in fullscreen mode.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/requestFullscreen)
+ */
+@JsThrows(NotSupportedError::class)
+suspend inline fun Element.requestFullscreen() {
+    requestFullscreenAsync().await()
+}
+
+/**
+ * The **`requestFullscreen()`** method of the Element interface issues an asynchronous request to display the element in fullscreen mode.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/requestFullscreen)
+ */
+@JsThrows(NotSupportedError::class)
+suspend inline fun Element.requestFullscreen(options: FullscreenOptions) {
+    requestFullscreenAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`requestPointerLock()`** method of the Element interface lets you asynchronously ask for the pointer to be locked on the given element.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/requestPointerLock)
+ */
+suspend inline fun Element.requestPointerLock() {
+    requestPointerLockAsync().await()
+}
+
+/**
+ * The **`requestPointerLock()`** method of the Element interface lets you asynchronously ask for the pointer to be locked on the given element.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/requestPointerLock)
+ */
+suspend inline fun Element.requestPointerLock(options: PointerLockOptions) {
+    requestPointerLockAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/abort_event)
+ */
+inline val <C : Element> C.abortEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "abort")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationcancel_event)
+ */
+inline val <C : Element> C.animationCancelEvent: EventInstance<AnimationEvent, C, Node>
+    get() = EventInstance(this, "animationcancel")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationend_event)
+ */
+inline val <C : Element> C.animationEndEvent: EventInstance<AnimationEvent, C, Node>
+    get() = EventInstance(this, "animationend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationiteration_event)
+ */
+inline val <C : Element> C.animationIterationEvent: EventInstance<AnimationEvent, C, Node>
+    get() = EventInstance(this, "animationiteration")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationstart_event)
+ */
+inline val <C : Element> C.animationStartEvent: EventInstance<AnimationEvent, C, Node>
+    get() = EventInstance(this, "animationstart")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/auxclick_event)
+ */
+inline val <C : Element> C.auxClickEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "auxclick")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/beforeinput_event)
+ */
+inline val <C : Element> C.beforeInputEvent: EventInstance<InputEvent, C, Node>
+    get() = EventInstance(this, "beforeinput")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/beforexrselect_event)
+ */
+inline val <C : Element> C.beforeXrSelectEvent: EventInstance<XRSessionEvent, C, Node>
+    get() = EventInstance(this, "beforexrselect")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/blur_event)
+ */
+inline val <C : Element> C.blurEvent: EventInstance<FocusEvent, C, C>
+    get() = EventInstance(this, "blur")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/click_event)
+ */
+inline val <C : Element> C.clickEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "click")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/compositionend_event)
+ */
+inline val <C : Element> C.compositionEndEvent: EventInstance<CompositionEvent, C, Node>
+    get() = EventInstance(this, "compositionend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/compositionstart_event)
+ */
+inline val <C : Element> C.compositionStartEvent: EventInstance<CompositionEvent, C, Node>
+    get() = EventInstance(this, "compositionstart")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/compositionupdate_event)
+ */
+inline val <C : Element> C.compositionUpdateEvent: EventInstance<CompositionEvent, C, Node>
+    get() = EventInstance(this, "compositionupdate")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/contextmenu_event)
+ */
+inline val <C : Element> C.contextMenuEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "contextmenu")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/copy_event)
+ */
+inline val <C : Element> C.copyEvent: EventInstance<ClipboardEvent, C, Node>
+    get() = EventInstance(this, "copy")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/cut_event)
+ */
+inline val <C : Element> C.cutEvent: EventInstance<ClipboardEvent, C, Node>
+    get() = EventInstance(this, "cut")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/dblclick_event)
+ */
+inline val <C : Element> C.dblClickEvent: EventInstance<MouseEvent, C, Node>
+    get() = EventInstance(this, "dblclick")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/drag_event)
+ */
+inline val <C : Element> C.dragEvent: EventInstance<DragEvent, C, Node>
+    get() = EventInstance(this, "drag")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/dragend_event)
+ */
+inline val <C : Element> C.dragEndEvent: EventInstance<DragEvent, C, Node>
+    get() = EventInstance(this, "dragend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/dragenter_event)
+ */
+inline val <C : Element> C.dragEnterEvent: EventInstance<DragEvent, C, Node>
+    get() = EventInstance(this, "dragenter")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/dragleave_event)
+ */
+inline val <C : Element> C.dragLeaveEvent: EventInstance<DragEvent, C, Node>
+    get() = EventInstance(this, "dragleave")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/dragover_event)
+ */
+inline val <C : Element> C.dragOverEvent: EventInstance<DragEvent, C, Node>
+    get() = EventInstance(this, "dragover")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/dragstart_event)
+ */
+inline val <C : Element> C.dragStartEvent: EventInstance<DragEvent, C, Node>
+    get() = EventInstance(this, "dragstart")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/drop_event)
+ */
+inline val <C : Element> C.dropEvent: EventInstance<DragEvent, C, Node>
+    get() = EventInstance(this, "drop")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/error_event)
+ */
+inline val <C : Element> C.errorEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "error")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/focus_event)
+ */
+inline val <C : Element> C.focusEvent: EventInstance<FocusEvent, C, C>
+    get() = EventInstance(this, "focus")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/focusin_event)
+ */
+inline val <C : Element> C.focusInEvent: EventInstance<FocusEvent, C, Node>
+    get() = EventInstance(this, "focusin")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/focusout_event)
+ */
+inline val <C : Element> C.focusOutEvent: EventInstance<FocusEvent, C, Node>
+    get() = EventInstance(this, "focusout")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/fullscreenchange_event)
+ */
+inline val <C : Element> C.fullscreenChangeEvent: EventInstance<Event, C, Node>
+    get() = EventInstance(this, "fullscreenchange")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/fullscreenerror_event)
+ */
+inline val <C : Element> C.fullscreenErrorEvent: EventInstance<Event, C, Node>
+    get() = EventInstance(this, "fullscreenerror")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/gotpointercapture_event)
+ */
+inline val <C : Element> C.gotPointerCaptureEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "gotpointercapture")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/input_event)
+ */
+inline val <C : Element> C.inputEvent: EventInstance<InputEvent, C, Node>
+    get() = EventInstance(this, "input")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/keydown_event)
+ */
+inline val <C : Element> C.keyDownEvent: EventInstance<KeyboardEvent, C, Node>
+    get() = EventInstance(this, "keydown")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/keypress_event)
+ */
+inline val <C : Element> C.keyPressEvent: EventInstance<KeyboardEvent, C, Node>
+    get() = EventInstance(this, "keypress")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/keyup_event)
+ */
+inline val <C : Element> C.keyUpEvent: EventInstance<KeyboardEvent, C, Node>
+    get() = EventInstance(this, "keyup")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/load_event)
+ */
+inline val <C : Element> C.loadEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "load")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/lostpointercapture_event)
+ */
+inline val <C : Element> C.lostPointerCaptureEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "lostpointercapture")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mousedown_event)
+ */
+inline val <C : Element> C.mouseDownEvent: EventInstance<MouseEvent, C, Node>
+    get() = EventInstance(this, "mousedown")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseenter_event)
+ */
+inline val <C : Element> C.mouseEnterEvent: EventInstance<MouseEvent, C, C>
+    get() = EventInstance(this, "mouseenter")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseleave_event)
+ */
+inline val <C : Element> C.mouseLeaveEvent: EventInstance<MouseEvent, C, C>
+    get() = EventInstance(this, "mouseleave")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mousemove_event)
+ */
+inline val <C : Element> C.mouseMoveEvent: EventInstance<MouseEvent, C, Node>
+    get() = EventInstance(this, "mousemove")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseout_event)
+ */
+inline val <C : Element> C.mouseOutEvent: EventInstance<MouseEvent, C, Node>
+    get() = EventInstance(this, "mouseout")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseover_event)
+ */
+inline val <C : Element> C.mouseOverEvent: EventInstance<MouseEvent, C, Node>
+    get() = EventInstance(this, "mouseover")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseup_event)
+ */
+inline val <C : Element> C.mouseUpEvent: EventInstance<MouseEvent, C, Node>
+    get() = EventInstance(this, "mouseup")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/paste_event)
+ */
+inline val <C : Element> C.pasteEvent: EventInstance<ClipboardEvent, C, Node>
+    get() = EventInstance(this, "paste")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointercancel_event)
+ */
+inline val <C : Element> C.pointerCancelEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "pointercancel")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerdown_event)
+ */
+inline val <C : Element> C.pointerDownEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "pointerdown")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerenter_event)
+ */
+inline val <C : Element> C.pointerEnterEvent: EventInstance<PointerEvent, C, C>
+    get() = EventInstance(this, "pointerenter")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerleave_event)
+ */
+inline val <C : Element> C.pointerLeaveEvent: EventInstance<PointerEvent, C, C>
+    get() = EventInstance(this, "pointerleave")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointermove_event)
+ */
+inline val <C : Element> C.pointerMoveEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "pointermove")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerout_event)
+ */
+inline val <C : Element> C.pointerOutEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "pointerout")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerover_event)
+ */
+inline val <C : Element> C.pointerOverEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "pointerover")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerrawupdate_event)
+ */
+inline val <C : Element> C.pointerRawUpdateEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "pointerrawupdate")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerup_event)
+ */
+inline val <C : Element> C.pointerUpEvent: EventInstance<PointerEvent, C, Node>
+    get() = EventInstance(this, "pointerup")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scroll_event)
+ */
+inline val <C : Element> C.scrollEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "scroll")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollend_event)
+ */
+inline val <C : Element> C.scrollEndEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "scrollend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/securitypolicyviolation_event)
+ */
+inline val <C : Element> C.securityPolicyViolationEvent: EventInstance<SecurityPolicyViolationEvent, C, Node>
+    get() = EventInstance(this, "securitypolicyviolation")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/select_event)
+ */
+inline val <C : Element> C.selectEvent: EventInstance<Event, C, Node>
+    get() = EventInstance(this, "select")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/selectionchange_event)
+ */
+inline val <C : Element> C.selectionChangeEvent: EventInstance<Event, C, Node>
+    get() = EventInstance(this, "selectionchange")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/selectstart_event)
+ */
+inline val <C : Element> C.selectStartEvent: EventInstance<Event, C, Node>
+    get() = EventInstance(this, "selectstart")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchcancel_event)
+ */
+inline val <C : Element> C.touchCancelEvent: EventInstance<TouchEvent, C, Node>
+    get() = EventInstance(this, "touchcancel")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchend_event)
+ */
+inline val <C : Element> C.touchEndEvent: EventInstance<TouchEvent, C, Node>
+    get() = EventInstance(this, "touchend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchmove_event)
+ */
+inline val <C : Element> C.touchMoveEvent: EventInstance<TouchEvent, C, Node>
+    get() = EventInstance(this, "touchmove")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchstart_event)
+ */
+inline val <C : Element> C.touchStartEvent: EventInstance<TouchEvent, C, Node>
+    get() = EventInstance(this, "touchstart")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitioncancel_event)
+ */
+inline val <C : Element> C.transitionCancelEvent: EventInstance<TransitionEvent, C, Node>
+    get() = EventInstance(this, "transitioncancel")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitionend_event)
+ */
+inline val <C : Element> C.transitionEndEvent: EventInstance<TransitionEvent, C, Node>
+    get() = EventInstance(this, "transitionend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitionrun_event)
+ */
+inline val <C : Element> C.transitionRunEvent: EventInstance<TransitionEvent, C, Node>
+    get() = EventInstance(this, "transitionrun")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitionstart_event)
+ */
+inline val <C : Element> C.transitionStartEvent: EventInstance<TransitionEvent, C, Node>
+    get() = EventInstance(this, "transitionstart")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/unload_event)
+ */
+inline val <C : Element> C.unloadEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "unload")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/wheel_event)
+ */
+inline val <C : Element> C.wheelEvent: EventInstance<WheelEvent, C, Node>
+    get() = EventInstance(this, "wheel")

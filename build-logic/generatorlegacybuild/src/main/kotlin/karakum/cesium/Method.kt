@@ -1,0 +1,143 @@
+package karakum.cesium
+
+import karakum.common.replaceSuffix
+import karakum.common.withSuspendAdapter
+
+internal class Method(
+    override val source: Definition,
+) : Member() {
+    override val name = source.parseFunctionName()
+
+    private val optional = source.isOptionalFunction()
+
+    private val typeParameters = source.parseFunctionTypeParameters()
+        .replace(" extends ", " : ")
+        .replace("<T>", "<T : JsAny>")
+
+    override val docName: String
+        get() = if (static) ".$name" else name
+
+    private val modifiers = source.body
+        .substringBefore("(")
+        .split(" ")
+        .dropLast(1)
+
+    val protected: Boolean =
+        "protected" in modifiers
+
+    override val static: Boolean by lazy {
+        "static" in modifiers || (hasParent && parent is Namespace)
+    }
+
+    private val parameters = source.parseFunctionParameters()
+    private val returnType = source.parseFunctionReturnType(name, optional)
+
+    override fun toCode(): String {
+        if (name == "toString" && parameters.isEmpty())
+            return ""
+
+        if (name == "equals" && parameters.size == 1)
+            return ""
+
+        if (name == "equalsArray" && parameters.size == 3)
+            return ""
+
+        if (name == "throwInstantiationError")
+            return ""
+
+        val returnExpression = when {
+            optional -> "-> ${returnType!!}"
+            returnType == null -> ""
+            else -> ": $returnType"
+        }
+
+        val modifierList = listOfNotNull(
+            "external".takeIf { !hasParent },
+            "abstract".takeIf { abstract },
+            "override".takeIf { overridden },
+            "open".takeIf { open },
+        )
+
+        val link = if (hasParent) {
+            DocLink(parent, this)
+        } else {
+            DocLink(this)
+        }
+
+        val doc = source.doc(link)
+            .let { if (it.isNotEmpty()) "$it\n" else "" }
+
+        var params = parameters.toCode(multilinePreferred = false)
+        when {
+            optional -> params = params.replace(" = definedExternally", "/* = definedExternally */")
+            overridden -> params = params.replace(" = definedExternally", "")
+        }
+
+        val sourceDeclaration = if (!optional) {
+            "fun $typeParameters$name$params$returnExpression"
+        } else {
+            "val $typeParameters$name: ($params$returnExpression)?"
+        }
+
+        val replacedSyncDeclarations by lazy {
+            listOf(
+                sourceDeclaration.replace(
+                    "fun ${name}(",
+                    "@JsName(\"${name}\")\n fun ${name}Sync(",
+                ),
+            )
+        }
+
+        val declarations = when {
+            (name == "loadTileDataAvailability" || name == "pickFeatures")
+                    && sourceDeclaration.endsWith("): Void") -> {
+                withSuspendAdapter(sourceDeclaration.replaceSuffix("): Void", "): Promise<Void>"))
+                    .map { if ("Async" in it) it.replace("): Promise<Void>", "): Void") else it }
+                    .toList()
+            }
+
+            name == "fromType"
+                    && (sourceDeclaration == "fun fromType(\n type: String,\n uniforms: JsAny? = definedExternally\n): Material")
+                -> replacedSyncDeclarations
+
+            name == "pick"
+                    && (sourceDeclaration == "fun pick(\n windowPosition: Cartesian2,\n width: Double? = definedExternally,\n height: Double? = definedExternally\n): JsAny?")
+                -> replacedSyncDeclarations
+
+            name == "raiseEvent"
+                    && (source.body == "raiseEvent(...arguments: Parameters<Listener>): void")
+                -> listOf("val raiseEvent: JsFunction<T, Void>")
+
+            else -> withSuspendAdapter(sourceDeclaration)
+                .flatMap(::withResultAdapter)
+                .toList()
+        }
+
+        if (declarations.size == 1) {
+            val modifiers = modifierList.joinToString(" ", "", " ")
+            return doc + modifiers + declarations.single()
+        }
+
+        val declaration = declarations
+            .asSequence()
+            .drop(if ("override" in modifierList) 1 else 0)
+            .map {
+                val suspend = "suspend " in it
+                val anchor = if (suspend) "suspend " else "fun "
+                val modifiers = (modifierList - (if (suspend) "abstract" else ""))
+                    .joinToString(" ", "", " ")
+
+                val result = it.replaceFirst(anchor, "$modifiers $anchor")
+                if (!suspend && "override" in modifierList && result.startsWith("@JsName(")) {
+                    result.substringAfter("\n")
+                        .replace(
+                            "): Void",
+                            """): @Suppress("WRONG_JS_INTEROP_TYPE" /* KT-90758 */) Void""",
+                        )
+                } else result
+            }
+            .joinToString("\n\n")
+
+        return doc + declaration
+    }
+}

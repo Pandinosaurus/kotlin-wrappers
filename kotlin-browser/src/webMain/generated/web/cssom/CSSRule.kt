@@ -1,0 +1,32 @@
+// Automatically generated - do not modify!
+
+package web.cssom
+
+/**
+ * The **`CSSRule`** interface represents a single CSS rule. There are several types of rules which inherit properties from CSSRule.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSRule)
+ */
+open external class CSSRule
+private constructor() {
+    /**
+     * The **`cssText`** property of the CSSRule interface returns the actual text of a CSSStyleSheet style-rule.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSRule/cssText)
+     */
+    open var cssText: String
+
+    /**
+     * The **`parentRule`** read-only property of the CSSRule interface returns the containing rule of the current rule if this exists, or otherwise returns null.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSRule/parentRule)
+     */
+    open val parentRule: CSSRule?
+
+    /**
+     * The **`parentStyleSheet`** read-only property of the CSSRule interface returns the StyleSheet object in which the current rule is defined.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSRule/parentStyleSheet)
+     */
+    open val parentStyleSheet: CSSStyleSheet?
+}

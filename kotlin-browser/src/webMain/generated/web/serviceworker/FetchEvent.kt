@@ -1,0 +1,81 @@
+// Automatically generated - do not modify!
+
+package web.serviceworker
+
+import js.promise.Promise
+import js.promise.PromiseLike
+import js.void.Void
+import web.errors.DOMExceptionType.InvalidStateError
+import web.errors.DOMExceptionType.NetworkError
+import web.errors.JsThrows
+import web.events.EventType
+import web.http.Request
+import web.http.Response
+
+/**
+ * This is the event type for fetch events dispatched on the service worker global scope. It contains information about the fetch, including the request and how the receiver will treat the response. It provides the event.respondWith() method, which allows us to provide a response to this fetch.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent)
+ */
+open external class FetchEvent(
+    override val type: EventType<FetchEvent>,
+    init: FetchEventInit,
+) : ExtendableEvent {
+    /**
+     * The **`clientId`** read-only property of the FetchEvent interface returns the id of the Client that the current service worker is controlling.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent/clientId)
+     */
+    open val clientId: String
+
+    /**
+     * The **`handled`** read-only property of the FetchEvent interface returns a promise indicating if the event has been handled by the fetch algorithm or not. This property allows executing code after the browser has consumed a response, and is usually used together with the waitUntil() method.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent/handled)
+     */
+    open val handled: Promise<Void>
+
+    /**
+     * The **`preloadResponse`** read-only property of the FetchEvent interface returns a Promise that resolves to the navigation preload Response if navigation preload was triggered, or undefined otherwise.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent/preloadResponse)
+     */
+    open val preloadResponse: Promise<*>
+
+    /**
+     * The **`request`** read-only property of the FetchEvent interface returns the Request that triggered the event handler.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent/request)
+     */
+    open val request: Request
+
+    /**
+     * The **`resultingClientId`** read-only property of the FetchEvent interface is the id of the client that replaces the previous client during a page navigation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent/resultingClientId)
+     */
+    open val resultingClientId: String
+
+    /**
+     * The **`respondWith()`** method of FetchEvent prevents the browser's default fetch handling, and allows you to provide a promise for a Response yourself.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent/respondWith)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NetworkError::class)
+    open fun respondWith(r: Response)
+
+    /**
+     * The **`respondWith()`** method of FetchEvent prevents the browser's default fetch handling, and allows you to provide a promise for a Response yourself.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FetchEvent/respondWith)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NetworkError::class)
+    open fun respondWith(r: PromiseLike<Response>)
+
+    companion object
+}
+
+inline val FetchEvent.Companion.FETCH: EventType<FetchEvent>
+    get() = EventType("fetch")

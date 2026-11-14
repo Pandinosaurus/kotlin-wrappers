@@ -1,0 +1,38 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface WebContentsDidStartNavigationEventParams {
+    /**
+     * The URL the frame is navigating to.
+     */
+    var url: String
+
+    /**
+     * Whether the navigation happened without changing document. Examples of same
+     * document navigations are reference fragment navigations, pushState/replaceState,
+     * and same page history navigation.
+     */
+    var isSameDocument: Boolean
+
+    /**
+     * True if the navigation is taking place in a main frame.
+     */
+    var isMainFrame: Boolean
+
+    /**
+     * The frame to be navigated. May be `null` if accessed after the frame has either
+     * navigated or been destroyed.
+     */
+    var frame: WebFrameMain?
+
+    /**
+     * The frame which initiated the navigation. This can be a parent frame (e.g. via
+     * `window.open` with a frame's name), a child frame (e.g. an unsandboxed iframe
+     * navigating its parent via `<a target="_top">`), or null if the navigation was
+     * not initiated by a frame. This can also be null if the initiating frame was
+     * deleted before the event was emitted.
+     */
+    var initiator: WebFrameMain?
+}

@@ -1,0 +1,153 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/PaginationItem")
+
+package mui.material
+
+import mui.material.styles.Theme
+import mui.system.PropsWithSx
+import mui.system.SxProps
+import mui.types.PropsWithComponent
+import react.ElementType
+import react.FC
+import react.Props
+import react.ReactNode
+import react.dom.html.HTMLAttributes
+import web.html.HTMLDivElement
+import web.html.HTMLElement
+
+external interface PaginationItemProps :
+    PaginationItemOwnProps,
+    HTMLAttributes<HTMLDivElement>,
+    PropsWithComponent
+
+external interface PaginationItemSlots {
+    /**
+     * The component that renders the first page slot.
+     * @default FirstPageIcon
+     */
+    var first: ElementType<*>
+
+    /**
+     * The component that renders the last page slot.
+     * @default LastPageIcon
+     */
+    var last: ElementType<*>
+
+    /**
+     * The component that renders the next page slot.
+     * @default NavigateNextIcon
+     */
+    var next: ElementType<*>
+
+    /**
+     * The component that renders the previous page slot.
+     * @default NavigateBeforeIcon
+     */
+    var previous: ElementType<*>
+}
+
+external interface PaginationItemSlotProps : Props {
+    /** TS: SlotProps<React.ElementType<React.HTMLProps<HTMLElement>>, PaginationItemFirstSlotPropsOverrides, PaginationItemOwnerState> */
+    var first: HTMLAttributes<HTMLElement>?
+
+    /** TS: SlotProps<React.ElementType<React.HTMLProps<HTMLElement>>, PaginationItemLastSlotPropsOverrides, PaginationItemOwnerState> */
+    var last: HTMLAttributes<HTMLElement>?
+
+    /** TS: SlotProps<React.ElementType<React.HTMLProps<HTMLElement>>, PaginationItemNextSlotPropsOverrides, PaginationItemOwnerState> */
+    var next: HTMLAttributes<HTMLElement>?
+
+    /** TS: SlotProps<React.ElementType<React.HTMLProps<HTMLElement>>, PaginationItemPreviousSlotPropsOverrides, PaginationItemOwnerState> */
+    var previous: HTMLAttributes<HTMLElement>?
+}
+
+external interface PaginationItemSlotsAndSlotProps : Props {
+    var slots: PaginationItemSlots?
+
+    var slotProps: PaginationItemSlotProps?
+}
+
+external interface PaginationItemOwnerState
+
+external interface PaginationItemOwnProps :
+    PaginationItemSlotsAndSlotProps,
+    PropsWithSx {
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    var classes: PaginationItemClasses?
+
+    /**
+     * The active color.
+     * It supports both default and custom theme colors, which can be added as shown in the
+     * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+     * @default 'standard'
+     */
+    var color: PaginationItemColor?
+
+    /**
+     * If `true`, the component is disabled.
+     * @default false
+     */
+    var disabled: Boolean?
+
+    /**
+     * Whether the custom component should render a native `<button>` element when
+     * rendering a React component with the `component` or `slots` prop.
+     */
+    var nativeButton: Boolean?
+
+    /**
+     * The current page number.
+     */
+    var page: ReactNode?
+
+    /**
+     * If `true` the pagination item is selected.
+     * @default false
+     */
+    var selected: Boolean?
+
+    /**
+     * The shape of the pagination item.
+     * @default 'circular'
+     */
+    var shape: PaginationItemShape?
+
+    /**
+     * The size of the component.
+     * @default 'medium'
+     */
+    var size: Size?
+
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    override var sx: SxProps<Theme>?
+
+    /**
+     * The type of pagination item.
+     * @default 'page'
+     */
+    var type: UsePaginationItemType?
+
+    /**
+     * The variant to use.
+     * @default 'text'
+     */
+    var variant: PaginationItemVariant?
+}
+
+/**
+ *
+ * Demos:
+ *
+ * - [Pagination](https://mui.com/material-ui/react-pagination/)
+ *
+ * API:
+ *
+ * - [PaginationItem API](https://mui.com/material-ui/api/pagination-item/)
+ * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ */
+@JsName("default")
+external val PaginationItem: FC<PaginationItemProps>

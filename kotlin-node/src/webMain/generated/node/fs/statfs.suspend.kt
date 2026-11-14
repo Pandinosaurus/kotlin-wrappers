@@ -1,0 +1,21 @@
+// Automatically generated - do not modify!
+
+package node.fs
+
+@seskar.js.JsAsync
+external suspend fun statfs(
+    path: PathLike,
+    opts: StatfsOpts = definedExternally,
+): StatsFs
+
+@seskar.js.JsAsync
+external suspend fun statfs(
+    path: PathLike,
+    opts: StatfsBigIntOpts,
+): BigIntStatsFs
+
+@seskar.js.JsAsync
+external suspend fun statfs(path: PathLike, opts: StatFsOptions = definedExternally): Any /* StatsFs | BigIntStatsFs */
+
+@seskar.js.JsAsync
+external suspend fun statfs(path: PathLike): StatsFs

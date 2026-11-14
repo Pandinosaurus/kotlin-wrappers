@@ -1,0 +1,22 @@
+// Automatically generated - do not modify!
+
+package node.inspector.debugger
+
+@kotlinx.js.JsPlainObject
+external interface BreakLocation {
+    /**
+     * Script identifier as reported in the <code>Debugger.scriptParsed</code>.
+     */
+    var scriptId: node.inspector.runtime.ScriptId
+
+    /**
+     * Line number in the script (0-based).
+     */
+    var lineNumber: Double
+
+    /**
+     * Column number in the script (0-based).
+     */
+    var columnNumber: Double?
+    var type: String?
+}

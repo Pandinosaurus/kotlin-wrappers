@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package node.v8
+
+/**
+ * @since v24.8.0
+ */
+external interface CPUProfileHandle {
+    /**
+     * Stopping collecting the profile, then return a Promise that fulfills with an error or the
+     * profile data.
+     * @since v24.8.0
+     */
+    @JsName("stop")
+    fun stopAsync(): js.promise.Promise<String>
+
+    @seskar.js.JsAsync
+    suspend fun stop(): String
+}

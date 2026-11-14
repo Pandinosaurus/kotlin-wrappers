@@ -1,0 +1,47 @@
+// Automatically generated - do not modify!
+
+package web.codecs
+
+import js.array.ArrayLike
+import js.iterable.JsIterable
+import js.promise.Promise
+import js.void.Void
+
+/**
+ * The **`ImageTrackList`** interface of the WebCodecs API represents a list of image tracks.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageTrackList)
+ */
+open external class ImageTrackList
+private constructor() :
+    ArrayLike<ImageTrack>,
+    JsIterable.Mixin<ImageTrack> {
+    /**
+     * The **`length`** property of the ImageTrackList interface returns the length of the ImageTrackList.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageTrackList/length)
+     */
+    override val length: Int
+
+    /**
+     * The **`ready`** property of the ImageTrackList interface returns a Promise that resolves when the ImageTrackList is populated with tracks.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageTrackList/ready)
+     */
+    open val ready: Promise<Void>
+
+    /**
+     * The **`selectedIndex`** property of the ImageTrackList interface returns the index of the selected track.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageTrackList/selectedIndex)
+     */
+    open val selectedIndex: Int
+
+    /**
+     * The **`selectedTrack`** property of the ImageTrackList interface returns an ImageTrack object representing the currently selected track.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ImageTrackList/selectedTrack)
+     */
+    open val selectedTrack: ImageTrack?
+}

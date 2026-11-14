@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface CertificateTrustDialogOptions {
+    /**
+     * The certificate to trust/import.
+     */
+    var certificate: Certificate
+
+    /**
+     * The message to display to the user.
+     */
+    var message: String
+}

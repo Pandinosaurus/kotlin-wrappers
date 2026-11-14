@@ -1,0 +1,27 @@
+// Automatically generated - do not modify!
+
+package mui.material
+
+import seskar.js.JsValue
+
+sealed /* union */
+external interface FormHelperTextVariant {
+    companion object {
+        @JsValue("standard")
+        val standard: FormHelperTextVariant
+
+        @JsValue("outlined")
+        val outlined: FormHelperTextVariant
+
+        @JsValue("filled")
+        val filled: FormHelperTextVariant
+    }
+}
+
+sealed /* union */
+external interface FormHelperTextMargin {
+    companion object {
+        @JsValue("dense")
+        val dense: FormHelperTextMargin
+    }
+}

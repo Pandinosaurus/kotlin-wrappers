@@ -1,0 +1,27 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("vscode")
+
+package vscode
+
+/**
+ * The reason why code actions were requested.
+ *
+ * [Online Documentation](https://code.visualstudio.com/api/references/vscode-api#CodeActionTriggerKind)
+ */
+/* enum */
+external class CodeActionTriggerKind
+private constructor() {
+    /**
+     * Code actions were explicitly requested by the user or by an extension.
+     */
+    val Invoke: CodeActionTriggerKind // 1
+
+    /**
+     * Code actions were requested automatically.
+     *
+     * This typically happens when current selection in a file changes, but can
+     * also be triggered when file content changes.
+     */
+    val Automatic: CodeActionTriggerKind // 2
+}

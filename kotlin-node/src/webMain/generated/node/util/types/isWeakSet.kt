@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) instance.
+ *
+ * ```js
+ * util.types.isWeakSet(new WeakSet());  // Returns true
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isWeakSet")
+external fun isWeakSetRaw(value: Any?): Boolean /* object is WeakSet<object> */

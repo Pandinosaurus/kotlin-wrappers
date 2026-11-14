@@ -1,0 +1,70 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util")
+
+package node.util
+
+/**
+ * The `util.debuglog()` method is used to create a function that conditionally
+ * writes debug messages to `stderr` based on the existence of the `NODE_DEBUG`
+ * environment variable. If the `section` name appears within the value of that
+ * environment variable, then the returned function operates similar to
+ * `console.error()`. If not, then the returned function is a no-op.
+ *
+ * ```js
+ * import { debuglog } from 'node:util';
+ * const log = debuglog('foo');
+ *
+ * log('hello from foo [%d]', 123);
+ * ```
+ *
+ * If this program is run with `NODE_DEBUG=foo` in the environment, then
+ * it will output something like:
+ *
+ * ```console
+ * FOO 3245: hello from foo [123]
+ * ```
+ *
+ * where `3245` is the process id. If it is not run with that
+ * environment variable set, then it will not print anything.
+ *
+ * The `section` supports wildcard also:
+ *
+ * ```js
+ * import { debuglog } from 'node:util';
+ * const log = debuglog('foo-bar');
+ *
+ * log('hi there, it\'s foo-bar [%d]', 2333);
+ * ```
+ *
+ * if it is run with `NODE_DEBUG=foo*` in the environment, then it will output
+ * something like:
+ *
+ * ```console
+ * FOO-BAR 3257: hi there, it's foo-bar [2333]
+ * ```
+ *
+ * Multiple comma-separated `section` names may be specified in the `NODE_DEBUG`
+ * environment variable: `NODE_DEBUG=fs,net,tls`.
+ *
+ * The optional `callback` argument can be used to replace the logging function
+ * with a different function that doesn't have any initialization or
+ * unnecessary wrapping.
+ *
+ * ```js
+ * import { debuglog } from 'node:util';
+ * let log = debuglog('internals', (debug) => {
+ *   // Replace with a logging function that optimizes out
+ *   // testing if the section is enabled
+ *   log = debug;
+ * });
+ * ```
+ * @since v0.11.3
+ * @param section A string identifying the portion of the application for which the `debuglog` function is being created.
+ * @param callback A callback invoked the first time the logging function is called with a function argument that is a more optimized logging function.
+ * @return The logging function
+ */
+external fun debuglog(
+    section: String,
+    callback: (fn: DebugLoggerFunction) -> Unit = definedExternally,
+): DebugLogger

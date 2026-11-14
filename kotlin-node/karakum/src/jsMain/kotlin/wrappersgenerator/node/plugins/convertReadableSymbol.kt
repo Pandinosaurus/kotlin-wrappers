@@ -1,0 +1,26 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import js.reflect.invoke
+import typescript.isClassDeclaration
+import typescript.isComputedPropertyName
+import typescript.isMethodDeclaration
+
+val convertReadableSymbol = createPlugin { node, context, _ ->
+    nullable {
+        ensure(isMethodDeclaration(node))
+
+        val name = node.name
+        ensure(isComputedPropertyName(name))
+
+        val classNode = ensureNotNull(node.parent)
+        ensure(isClassDeclaration(classNode))
+        ensure(classNode.name?.text == "Readable")
+
+        val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+
+        "/* ${typeScriptService.printNode(node)} */"
+    }
+}

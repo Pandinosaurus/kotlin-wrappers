@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package node.inspector.runtime
+
+/**
+ * Represents function call argument. Either remote object id <code>objectId</code>, primitive <code>value</code>, unserializable primitive value or neither of (for undefined) them should be specified.
+ */
+@kotlinx.js.JsPlainObject
+external interface CallArgument {
+    /**
+     * Primitive value or serializable javascript object.
+     */
+    var value: Any?
+
+    /**
+     * Primitive value which can not be JSON-stringified.
+     */
+    var unserializableValue: UnserializableValue?
+
+    /**
+     * Remote object handle.
+     */
+    var objectId: RemoteObjectId?
+}

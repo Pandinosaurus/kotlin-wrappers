@@ -1,0 +1,297 @@
+// Automatically generated - do not modify!
+
+package web.serviceworker
+
+import js.array.ReadonlyArray
+import js.promise.Promise
+import js.promise.await
+import web.errors.DOMExceptionType.SecurityError
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+import web.messaging.MessageEvent
+import web.trustedtypes.TrustedScriptURL
+import web.url.URL
+
+/**
+ * The **`ServiceWorkerContainer`** interface of the Service Worker API provides an object representing the service worker as an overall unit in the network ecosystem, including facilities to register, unregister and update service workers, and access the state of service workers and their registrations.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer)
+ */
+open external class ServiceWorkerContainer
+private constructor() :
+    EventTarget {
+    /**
+     * The **`controller`** read-only property of the ServiceWorkerContainer interface represents the active service worker controlling the current page (associated with this ServiceWorkerContainer), or null if the page has no active or activating service worker.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/controller)
+     */
+    open val controller: ServiceWorker?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/controllerchange_event)
+     */
+    open var oncontrollerchange: EventHandler<Event, ServiceWorkerContainer, ServiceWorkerContainer>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/message_event)
+     */
+    open var onmessage: EventHandler<MessageEvent<*>, ServiceWorkerContainer, ServiceWorkerContainer>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/messageerror_event)
+     */
+    open var onmessageerror: EventHandler<MessageEvent<*>, ServiceWorkerContainer, ServiceWorkerContainer>?
+
+    /**
+     * The **`ready`** read-only property of the ServiceWorkerContainer interface provides a way of delaying code execution until a service worker is active.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/ready)
+     */
+    open val ready: Promise<ServiceWorkerRegistration>
+
+    /**
+     * The **`getRegistration()`** method of the ServiceWorkerContainer interface gets a ServiceWorkerRegistration object whose scope URL matches the provided client URL. The method returns a Promise that resolves to a ServiceWorkerRegistration or undefined.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/getRegistration)
+     */
+    @JsName("getRegistration")
+    open fun getRegistrationAsync(clientURL: String = definedExternally): Promise<ServiceWorkerRegistration?>
+
+    /**
+     * The **`getRegistration()`** method of the ServiceWorkerContainer interface gets a ServiceWorkerRegistration object whose scope URL matches the provided client URL. The method returns a Promise that resolves to a ServiceWorkerRegistration or undefined.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/getRegistration)
+     */
+    @JsName("getRegistration")
+    open fun getRegistrationAsync(clientURL: URL): Promise<ServiceWorkerRegistration?>
+
+    /**
+     * The **`getRegistrations()`** method of the ServiceWorkerContainer interface gets all ServiceWorkerRegistrations associated with a ServiceWorkerContainer, in an array. The method returns a Promise that resolves to an array of ServiceWorkerRegistration.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/getRegistrations)
+     */
+    @JsName("getRegistrations")
+    open fun getRegistrationsAsync(): Promise<ReadonlyArray<ServiceWorkerRegistration>>
+
+    /**
+     * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("register")
+    open fun registerAsync(
+        scriptURL: TrustedScriptURL,
+        options: RegistrationOptions = definedExternally,
+    ): Promise<ServiceWorkerRegistration>
+
+    /**
+     * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("register")
+    open fun registerAsync(
+        scriptURL: String,
+        options: RegistrationOptions = definedExternally,
+    ): Promise<ServiceWorkerRegistration>
+
+    /**
+     * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("register")
+    open fun registerAsync(
+        scriptURL: URL,
+        options: RegistrationOptions = definedExternally,
+    ): Promise<ServiceWorkerRegistration>
+
+    /**
+     * The **`startMessages()`** method of the ServiceWorkerContainer interface explicitly starts the flow of messages being dispatched from a service worker to pages under its control (e.g., sent via Client.postMessage()). This can be used to react to sent messages earlier, even before that page's content has finished loading.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/startMessages)
+     */
+    open fun startMessages()
+
+    @JsThrows(SecurityError::class)
+    @JsName("register")
+    open fun registerAsync(
+        module: ServiceWorkerModule,
+        options: RegistrationOptions = definedExternally,
+    ): Promise<ServiceWorkerRegistration>
+}
+
+/**
+ * The **`getRegistration()`** method of the ServiceWorkerContainer interface gets a ServiceWorkerRegistration object whose scope URL matches the provided client URL. The method returns a Promise that resolves to a ServiceWorkerRegistration or undefined.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/getRegistration)
+ */
+suspend inline fun ServiceWorkerContainer.getRegistration(): ServiceWorkerRegistration? {
+    return getRegistrationAsync().await()
+}
+
+/**
+ * The **`getRegistration()`** method of the ServiceWorkerContainer interface gets a ServiceWorkerRegistration object whose scope URL matches the provided client URL. The method returns a Promise that resolves to a ServiceWorkerRegistration or undefined.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/getRegistration)
+ */
+suspend inline fun ServiceWorkerContainer.getRegistration(clientURL: String): ServiceWorkerRegistration? {
+    return getRegistrationAsync(
+        clientURL = clientURL,
+    ).await()
+}
+
+/**
+ * The **`getRegistration()`** method of the ServiceWorkerContainer interface gets a ServiceWorkerRegistration object whose scope URL matches the provided client URL. The method returns a Promise that resolves to a ServiceWorkerRegistration or undefined.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/getRegistration)
+ */
+suspend inline fun ServiceWorkerContainer.getRegistration(clientURL: URL): ServiceWorkerRegistration? {
+    return getRegistrationAsync(
+        clientURL = clientURL,
+    ).await()
+}
+
+/**
+ * The **`getRegistrations()`** method of the ServiceWorkerContainer interface gets all ServiceWorkerRegistrations associated with a ServiceWorkerContainer, in an array. The method returns a Promise that resolves to an array of ServiceWorkerRegistration.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/getRegistrations)
+ */
+suspend inline fun ServiceWorkerContainer.getRegistrations(): ReadonlyArray<ServiceWorkerRegistration> {
+    return getRegistrationsAsync().await()
+}
+
+/**
+ * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    scriptURL: TrustedScriptURL,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        scriptURL = scriptURL,
+    ).await()
+}
+
+/**
+ * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    scriptURL: TrustedScriptURL,
+    options: RegistrationOptions,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        scriptURL = scriptURL,
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    scriptURL: String,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        scriptURL = scriptURL,
+    ).await()
+}
+
+/**
+ * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    scriptURL: String,
+    options: RegistrationOptions,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        scriptURL = scriptURL,
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    scriptURL: URL,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        scriptURL = scriptURL,
+    ).await()
+}
+
+/**
+ * The **`register()`** method of the ServiceWorkerContainer interface creates or updates a ServiceWorkerRegistration for the given scope.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/register)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    scriptURL: URL,
+    options: RegistrationOptions,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        scriptURL = scriptURL,
+        options = options,
+    ).await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    module: ServiceWorkerModule,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        module = module,
+    ).await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun ServiceWorkerContainer.register(
+    module: ServiceWorkerModule,
+    options: RegistrationOptions,
+): ServiceWorkerRegistration {
+    return registerAsync(
+        module = module,
+        options = options,
+    ).await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/controllerchange_event)
+ */
+inline val <C : ServiceWorkerContainer> C.controllerChangeEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "controllerchange")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/message_event)
+ */
+inline val <C : ServiceWorkerContainer> C.messageEvent: EventInstance<MessageEvent<JsAny?>, C, C>
+    get() = EventInstance(this, "message")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ServiceWorkerContainer/messageerror_event)
+ */
+inline val <C : ServiceWorkerContainer> C.messageErrorEvent: EventInstance<MessageEvent<JsAny?>, C, C>
+    get() = EventInstance(this, "messageerror")

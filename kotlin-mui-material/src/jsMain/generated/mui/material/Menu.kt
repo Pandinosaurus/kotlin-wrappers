@@ -1,0 +1,168 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/Menu")
+
+package mui.material
+
+import mui.material.styles.Theme
+import mui.system.PropsWithSx
+import mui.system.StandardProps
+import mui.system.SxProps
+import react.*
+import web.dom.Element
+
+external interface MenuProps :
+    StandardProps,
+    PopoverProps,
+    MenuSlotsAndSlotProps,
+    PropsWithChildren,
+    PropsWithSx {
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var slots: MenuSlots?
+
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var slotProps: MenuSlotProps?
+
+    /**
+     * An HTML element, or a function that returns one.
+     * It's used to set the position of the menu.
+     */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var anchorEl: ((element: Element) -> Element)?
+
+    /**
+     * If `true` (Default) will focus the `[role="menu"]` if no focusable child is found. Disabled
+     * children are not focusable. If you set this prop to `false` focus will be placed
+     * on the parent modal container. This has severe accessibility implications
+     * and should only be considered if you manage focus otherwise.
+     * @default true
+     */
+    override var autoFocus: Boolean?
+
+    /**
+     * Menu contents, normally `MenuItem`s.
+     */
+    override var children: ReactNode?
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var classes: MenuClasses?
+
+    /**
+     * When opening the menu will not focus the active item but the `[role="menu"]`
+     * unless `autoFocus` is also set to `false`. Not using the default means not
+     * following WAI-ARIA authoring practices. Please be considerate about possible
+     * accessibility implications.
+     * @default false
+     */
+    var disableAutoFocusItem: Boolean?
+
+    /**
+     * Callback fired when the component requests to be closed.
+     *
+     * @param {object} event The event source of the callback.
+     * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`, `"tabKeyDown"`.
+     */
+    override var onClose: ((event: Any, reason: String) -> Unit)?
+
+    /**
+     * If `true`, the component is shown.
+     */
+    override var open: Boolean
+
+    /**
+     * `classes` prop applied to the [`Popover`](https://mui.com/material-ui/api/popover/) element.
+     */
+    var PopoverClasses: PopoverClasses?
+
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    override var sx: SxProps<Theme>?
+
+    /**
+     * The length of the transition in `ms`, or 'auto'
+     * @default 'auto'
+     */
+    override var transitionDuration: Any? /* TransitionProps['timeout'] | 'auto' */
+
+    /**
+     * The variant to use. Use `menu` to prevent selected items from impacting the initial focus.
+     * @default 'selectedMenu'
+     */
+    var variant: MenuVariant?
+}
+
+external interface MenuSlots {
+    /**
+     * The component used for the popper.
+     * @default Modal
+     */
+    var root: ElementType<*>
+
+    /**
+     * The component used for the paper.
+     * @default PopoverPaper
+     */
+    var paper: ElementType<*>
+
+    /**
+     * The component used for the list.
+     * @default MenuList
+     */
+    var list: ElementType<*>
+
+    /**
+     * The component used for the transition slot.
+     * @default Grow
+     */
+    var transition: ElementType<*>
+
+    /**
+     * The component used for the backdrop slot.
+     * @default Backdrop
+     */
+    var backdrop: ElementType<*>
+}
+
+external interface MenuSlotProps : Props {
+    /** TS: SlotProps<React.ElementType<ModalProps>, MenuRootSlotPropsOverrides, MenuOwnerState> */
+    var root: ModalProps?
+
+    /** TS: SlotProps<React.ElementType<PaperProps>, MenuPaperSlotPropsOverrides, MenuOwnerState> */
+    var paper: PaperProps?
+
+    /** TS: SlotProps<React.ElementType<MenuListProps>, MenuListSlotPropsOverrides, MenuOwnerState> */
+    var list: MenuListProps?
+
+    /** TS: SlotComponentProps< // use SlotComponentProps because transition slot does not support `component` and `sx` prop React.ElementType<TransitionProps>, TransitionProps & MenuTransitionSlotPropsOverrides, MenuOwnerState> */
+    var transition: Any?
+
+    /** TS: SlotProps<React.ElementType<BackdropProps>, MenuBackdropSlotPropsOverrides, MenuOwnerState> */
+    var backdrop: BackdropProps?
+}
+
+external interface MenuSlotsAndSlotProps : Props {
+    var slots: MenuSlots?
+
+    var slotProps: MenuSlotProps?
+}
+
+external interface MenuOwnerState
+
+/**
+ *
+ * Demos:
+ *
+ * - [App Bar](https://mui.com/material-ui/react-app-bar/)
+ * - [Menu](https://mui.com/material-ui/react-menu/)
+ *
+ * API:
+ *
+ * - [Menu API](https://mui.com/material-ui/api/menu/)
+ * - inherits [Popover API](https://mui.com/material-ui/api/popover/)
+ */
+@JsName("default")
+external val Menu: FC<MenuProps>

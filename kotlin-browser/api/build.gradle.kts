@@ -1,0 +1,131 @@
+tasks.register("generate") {
+    doLast {
+        generateApiReport()
+    }
+}
+
+fun generateApiReport() {
+    val files = fileTree("../..") {
+        include("kotlin-js-core/src/webMain/**/*.kt")
+        include("kotlin-js/src/webMain/**/*.kt")
+        include("kotlin-web/src/webMain/**/*.kt")
+        include("kotlin-browser/src/webMain/**/*.kt")
+    }
+
+    // language=kotlin
+    val browserType = """
+        data class BrowserType(
+            val jsName: String,
+            val kotlinFqn: String,
+            val kotlinMixinFqn: String? = null,
+        )
+    """.trimIndent()
+
+    val typeList = files.files.asSequence()
+        .onEach { println("Processing ${it.name}") }
+        .flatMap { getApiItems(it) }
+        .sortedBy { it.jsName }
+        .joinToString(
+            separator = ",\n",
+            prefix = "val BROWSER_TYPES: List<BrowserType> = listOf(\n",
+            postfix = "\n)",
+        ) { item ->
+            listOfNotNull(
+                "BrowserType(",
+                """jsName = "${item.jsName}",""",
+                """kotlinFqn = "${item.kotlinFqn}",""",
+                if (item.hasMixin) """kotlinMixinFqn = "${item.kotlinFqn}.Mixin",""" else null,
+                ")",
+            ).joinToString(separator = "\n")
+        }
+
+    val content = browserType + "\n\n" + typeList
+
+    file("generated/browser-api.main.kts")
+        .also { it.parentFile.mkdirs() }
+        .writeText(content)
+}
+
+data class ApiItem(
+    val jsName: String,
+    val kotlinFqn: String,
+    val hasMixin: Boolean,
+)
+
+val EXCLUDED_NAMES = setOf(
+    "JsClass",
+    "JsErrorLike",
+    "JsErrorName",
+    "JsCloseable",
+    "Object",
+    "ObjectLike",
+    "Serializable",
+
+    "AsyncMapLike",
+
+    "VariadicTuple",
+
+    "Ed25519Algorithm",
+    "X25519Algorithm",
+)
+
+fun getApiItems(
+    source: File,
+): Sequence<ApiItem> {
+    val content = source.readText()
+    val pkg = content
+        .substringAfter("package ", "")
+        .substringBefore("\n")
+        .trim()
+
+    if (pkg == "js.atomic"
+        || pkg == "js.core"
+        || pkg == "js.function"
+        || pkg.endsWith(".internal")
+        || pkg.startsWith("kotlin.")
+    ) {
+        return emptySequence()
+    }
+
+    val hasMixin = " interface Mixin :" in content
+            || " interface Mixin<" in content
+
+    return content
+        .replace("private external ", "")
+        .replace("internal external ", "")
+        .splitToSequence(
+            "external interface ",
+            "external class ",
+            "\ntypealias ",
+        )
+        .drop(1)
+        .map { it.substringBefore("\n") }
+        .map { it.replace("/* class */ ", "") }
+        .map { it.substringBefore(" ") }
+        .map { it.substringBefore("<") }
+        .map { it.substringBefore("(") }
+        .filter { !it.startsWith("Tuple") }
+        .filter { it !in EXCLUDED_NAMES }
+        .map { name ->
+            val jsName = when {
+                pkg == "js.intl" -> "Intl.$name"
+                pkg == "js.temporal" -> "Temporal.$name"
+                pkg == "web.assembly" -> "WebAssembly.$name"
+
+                name == "JsError" -> "Error"
+                name == "JsIterator" -> "Iterator"
+                name == "JsIterable" -> "Iterable"
+                name == "JsIteratorLike" -> "IteratorLike"
+                name == "JsMap" -> "Map"
+                name == "JsSet" -> "Set"
+
+                else -> name
+            }
+
+            ApiItem(
+                jsName = jsName,
+                kotlinFqn = "$pkg.$name",
+                hasMixin = hasMixin,
+            )
+        }
+}

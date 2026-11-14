@@ -1,0 +1,156 @@
+// Automatically generated - do not modify!
+
+package web.mediasource
+
+import js.buffer.BufferSource
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.errors.QuotaExceededError
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+
+/**
+ * The **`SourceBuffer`** interface represents a chunk of media to be passed into an HTMLMediaElement and played, via a MediaSource object. This can be made up of one or several media segments.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer)
+ */
+open external class SourceBuffer
+private constructor() :
+    EventTarget {
+    /**
+     * The **`appendWindowEnd`** property of the SourceBuffer interface controls the timestamp for the end of the append window, a timestamp range that can be used to filter what media data is appended to the SourceBuffer. Coded media frames with timestamps within this range will be appended, whereas those outside the range will be filtered out.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/appendWindowEnd)
+     */
+    open var appendWindowEnd: Double
+
+    /**
+     * The **`appendWindowStart`** property of the SourceBuffer interface controls the timestamp for the start of the append window, a timestamp range that can be used to filter what media data is appended to the SourceBuffer. Coded media frames with timestamps within this range will be appended, whereas those outside the range will be filtered out.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/appendWindowStart)
+     */
+    open var appendWindowStart: Double
+
+    /**
+     * The **`buffered`** read-only property of the SourceBuffer interface returns the time ranges that are currently buffered in the SourceBuffer as a normalized TimeRanges object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/buffered)
+     */
+    open val buffered: TimeRanges
+
+    /**
+     * The **`mode`** property of the SourceBuffer interface controls whether media segments can be appended to the SourceBuffer in any order, or in a strict sequence.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/mode)
+     */
+    open var mode: AppendMode
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/abort_event)
+     */
+    open var onabort: EventHandler<Event, SourceBuffer, SourceBuffer>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/error_event)
+     */
+    open var onerror: EventHandler<Event, SourceBuffer, SourceBuffer>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/update_event)
+     */
+    open var onupdate: EventHandler<Event, SourceBuffer, SourceBuffer>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/updateend_event)
+     */
+    open var onupdateend: EventHandler<Event, SourceBuffer, SourceBuffer>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/updatestart_event)
+     */
+    open var onupdatestart: EventHandler<Event, SourceBuffer, SourceBuffer>?
+
+    /**
+     * The **`timestampOffset`** property of the SourceBuffer interface controls the offset applied to timestamps inside media segments that are appended to the SourceBuffer.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/timestampOffset)
+     */
+    open var timestampOffset: Double
+
+    /**
+     * The **`updating`** read-only property of the SourceBuffer interface indicates whether the SourceBuffer is currently being updated — i.e., whether an appendBuffer() or remove() operation is currently in progress.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/updating)
+     */
+    open val updating: Boolean
+
+    /**
+     * The **`abort()`** method of the SourceBuffer interface aborts the current segment and resets the segment parser.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/abort)
+     */
+    @JsThrows(InvalidStateError::class)
+    open fun abort()
+
+    /**
+     * The **`appendBuffer()`** method of the SourceBuffer interface appends media segment data from an ArrayBuffer, a TypedArray or a DataView object to the SourceBuffer.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/appendBuffer)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows.Typed(QuotaExceededError::class)
+    open fun appendBuffer(data: BufferSource)
+
+    /**
+     * The **`changeType()`** method of the SourceBuffer interface sets the MIME type that future calls to appendBuffer() should expect the new media data to conform to. This makes it possible to change codecs or container type mid-stream.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/changeType)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotSupportedError::class)
+    open fun changeType(type: String)
+
+    /**
+     * The **`remove()`** method of the SourceBuffer interface removes media segments within a specific time range from the SourceBuffer. This method can only be called when SourceBuffer.updating equals false. If SourceBuffer.updating is not equal to false, call SourceBuffer.abort().
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/remove)
+     */
+    @JsThrows(InvalidAccessError::class)
+    @JsThrows(InvalidStateError::class)
+    open fun remove(
+        start: Double,
+        end: Double,
+    )
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/abort_event)
+ */
+inline val <C : SourceBuffer> C.abortEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "abort")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/error_event)
+ */
+inline val <C : SourceBuffer> C.errorEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "error")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/update_event)
+ */
+inline val <C : SourceBuffer> C.updateEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "update")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/updateend_event)
+ */
+inline val <C : SourceBuffer> C.updateEndEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "updateend")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SourceBuffer/updatestart_event)
+ */
+inline val <C : SourceBuffer> C.updateStartEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "updatestart")

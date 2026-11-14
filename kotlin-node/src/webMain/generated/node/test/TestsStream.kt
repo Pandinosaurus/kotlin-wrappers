@@ -1,0 +1,82 @@
+// Automatically generated - do not modify!
+
+package node.test
+
+import node.stream.Readable
+
+/**
+ * A successful call to `run()` will return a new `TestsStream` object, streaming a series of events representing the execution of the tests.
+ *
+ * Some of the events are guaranteed to be emitted in the same order as the tests are defined, while others are emitted in the order that the tests execute.
+ * @since v18.9.0, v16.19.0
+ */
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface TestsStream : Readable {
+    override fun addListener(event: String, listener: Function<Unit> /* (...args: any[]) => void */) /* this */
+
+    override fun emit(
+        event: String,
+        vararg args: Any?,
+    ): Boolean
+
+    override fun emit(
+        event: js.symbol.Symbol,
+        vararg args: Any?,
+    ): Boolean
+
+    override fun on(event: String, listener: Function<Unit> /* (...args: any[]) => void */) /* this */
+
+    override fun once(event: String, listener: Function<Unit> /* (...args: any[]) => void */) /* this */
+
+    override fun prependListener(
+        event: String,
+        listener: Function<Unit>, /* (...args: any[]) => void */
+    ) /* this */
+
+    override fun prependOnceListener(
+        event: String,
+        listener: Function<Unit>, /* (...args: any[]) => void */
+    ) /* this */
+
+    @web.events.JsEvent("test:coverage")
+    val testCoverageEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestCoverage>>
+
+    @web.events.JsEvent("test:complete")
+    val testCompleteEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestComplete>>
+
+    @web.events.JsEvent("test:dequeue")
+    val testDequeueEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestDequeue>>
+
+    @web.events.JsEvent("test:diagnostic")
+    val testDiagnosticEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestDiagnostic>>
+
+    @web.events.JsEvent("test:enqueue")
+    val testEnqueueEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestEnqueue>>
+
+    @web.events.JsEvent("test:fail")
+    val testFailEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestFail>>
+
+    @web.events.JsEvent("test:pass")
+    val testPassEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestPass>>
+
+    @web.events.JsEvent("test:plan")
+    val testPlanEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestPlan>>
+
+    @web.events.JsEvent("test:start")
+    val testStartEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestStart>>
+
+    @web.events.JsEvent("test:stderr")
+    val testStderrEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestStderr>>
+
+    @web.events.JsEvent("test:stdout")
+    val testStdoutEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestStdout>>
+
+    @web.events.JsEvent("test:summary")
+    val testSummaryEvent: node.events.EventInstance<js.array.Tuple1<node.test.eventData.TestSummary>>
+
+    @web.events.JsEvent("test:watch:drained")
+    val testWatchDrainedEvent: node.events.EventInstance<js.array.Tuple>
+
+    @web.events.JsEvent("test:watch:restarted")
+    val testWatchRestartedEvent: node.events.EventInstance<js.array.Tuple>
+}

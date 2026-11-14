@@ -1,0 +1,23 @@
+// Automatically generated - do not modify!
+
+package node.stream
+
+import web.abort.Abortable
+
+@kotlinx.js.JsPlainObject
+external interface StreamOptions<T : Stream> : Abortable {
+    var emitClose: Boolean?
+    var highWaterMark: Double?
+    var objectMode: Boolean?
+    var construct: (
+        (/* this: T, */ callback: (error: js.errors.JsError? /* use undefined for default */) -> Unit) -> Unit
+    )?
+    var destroy: (
+        (
+        /* this: T, */
+        error: js.errors.JsError?,
+        callback: (error: js.errors.JsError? /* use undefined for default */) -> Unit,
+    ) -> Unit
+    )?
+    var autoDestroy: Boolean?
+}

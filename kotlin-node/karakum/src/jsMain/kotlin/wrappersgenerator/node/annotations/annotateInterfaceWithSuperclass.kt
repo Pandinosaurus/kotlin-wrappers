@@ -1,0 +1,94 @@
+package wrappersgenerator.node.annotations
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.AnnotationContext
+import js.reflect.invoke
+import typescript.*
+
+private val interfacesWithSuperclass = setOf(
+    // globals
+    "ErrnoException",
+    "ReadableStream",
+    "WritableStream",
+
+    // child_process
+    "Control",
+    "ChildProcessByStdio",
+    "ChildProcessWithoutNullStreams",
+    "ExecException",
+    "PromiseWithChild",
+
+    // cluster
+    "Cluster",
+
+    // crypto
+    "CipherCCM",
+    "CipherGCM",
+    "CipherOCB",
+    "CipherChaCha20Poly1305",
+    "DecipherCCM",
+    "DecipherGCM",
+    "DecipherOCB",
+    "DecipherChaCha20Poly1305",
+
+    // events
+    "EventEmitterReferencingAsyncResource",
+    "NodeEventTarget",
+
+    // fs
+    "FSWatcher",
+    "StatWatcher",
+
+    // http2
+    "Http2SecureServer",
+    "Http2Server",
+    "Http2Session",
+    "Http2Stream",
+
+    // perf_hooks
+    "WorkerPerformance",
+
+    // process
+    "Process",
+    "ReadStream",
+    "WriteStream",
+
+    // stream
+    "Stream",
+
+    // test
+    "Error",
+    "TestError",
+    "TestsStream",
+
+    // util
+    "CustomPromisifySymbol",
+    "DebugLogger",
+)
+
+suspend fun annotateInterfaceWithSuperclass(node: Node, context: AnnotationContext) = nullable {
+    nullable {
+        ensure(isInterfaceDeclaration(node))
+        ensure(node.name.text in interfacesWithSuperclass)
+
+        "@Suppress(\"INTERFACE_WITH_SUPERCLASS\")"
+    } ?: nullable {
+        ensure(isTypeAliasDeclaration(node))
+        ensure(node.name.text == "ExecFileException")
+
+        "@Suppress(\"INTERFACE_WITH_SUPERCLASS\")"
+    } ?: nullable {
+        ensure(context.isAnonymousDeclaration)
+
+        ensure(isIntersectionTypeNode(node))
+
+        val variable = ensureNotNull(node.parent)
+        ensure(isVariableDeclaration(variable))
+
+        val variableName = ensureNotNull(variable.name)
+        ensure(isIdentifier(variableName))
+        ensure(variableName.text == "writer")
+
+        "@Suppress(\"INTERFACE_WITH_SUPERCLASS\")"
+    }
+}

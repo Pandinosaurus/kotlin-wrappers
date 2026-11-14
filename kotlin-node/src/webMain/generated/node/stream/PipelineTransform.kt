@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package node.stream
+
+typealias PipelineTransform<
+        @Suppress("UNUSED_TYPEALIAS_PARAMETER")
+        S,
+        /*  : PipelineTransformSource<Any?> */
+        @Suppress("UNUSED_TYPEALIAS_PARAMETER")
+        U,
+        > = Any /* NodeJS.ReadWriteStream | ((source: S extends (...args: any[]) => Iterable<infer ST> | AsyncIterable<infer ST> ? AsyncIterable<ST> : S) => AsyncIterable<U>) */

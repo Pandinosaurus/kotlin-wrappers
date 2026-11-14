@@ -1,0 +1,84 @@
+// Automatically generated - do not modify!
+
+package node.process
+
+external interface ProcessReport {
+    /**
+     * Write reports in a compact format, single-line JSON, more easily consumable by log processing systems
+     * than the default multi-line format designed for human consumption.
+     * @since v13.12.0, v12.17.0
+     */
+    var compact: Boolean
+
+    /**
+     * Directory where the report is written.
+     * The default value is the empty string, indicating that reports are written to the current
+     * working directory of the Node.js process.
+     */
+    var directory: String
+
+    /**
+     * Filename where the report is written. If set to the empty string, the output filename will be comprised
+     * of a timestamp, PID, and sequence number. The default value is the empty string.
+     */
+    var filename: String
+
+    /**
+     * Returns a JavaScript Object representation of a diagnostic report for the running process.
+     * The report's JavaScript stack trace is taken from `err`, if present.
+     */
+    fun getReport(err: js.errors.JsError = definedExternally): Any
+
+    /**
+     * If true, a diagnostic report is generated on fatal errors,
+     * such as out of memory errors or failed C++ assertions.
+     * @default false
+     */
+    var reportOnFatalError: Boolean
+
+    /**
+     * If true, a diagnostic report is generated when the process
+     * receives the signal specified by process.report.signal.
+     * @default false
+     */
+    var reportOnSignal: Boolean
+
+    /**
+     * If true, a diagnostic report is generated on uncaught exception.
+     * @default false
+     */
+    var reportOnUncaughtException: Boolean
+
+    /**
+     * If true, a diagnostic report is generated without the environment variables.
+     * @default false
+     */
+    var excludeEnv: Boolean
+
+    /**
+     * The signal used to trigger the creation of a diagnostic report.
+     * @default 'SIGUSR2'
+     */
+    var signal: Signals
+
+    /**
+     * Writes a diagnostic report to a file. If filename is not provided, the default filename
+     * includes the date, time, PID, and a sequence number.
+     * The report's JavaScript stack trace is taken from `err`, if present.
+     *
+     * If the value of filename is set to `'stdout'` or `'stderr'`, the report is written
+     * to the stdout or stderr of the process respectively.
+     * @param fileName Name of the file where the report is written.
+     * This should be a relative path, that will be appended to the directory specified in
+     * `process.report.directory`, or the current working directory of the Node.js process,
+     * if unspecified.
+     * @param err A custom error used for reporting the JavaScript stack.
+     * @return Filename of the generated report.
+     */
+    fun writeReport(
+        fileName: String = definedExternally,
+        err: js.errors.JsError = definedExternally,
+    ): String
+
+    fun writeReport(err: js.errors.JsError = definedExternally): String
+}

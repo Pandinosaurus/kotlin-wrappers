@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView) instance.
+ *
+ * ```js
+ * const ab = new ArrayBuffer(20);
+ * util.types.isDataView(new DataView(ab));  // Returns true
+ * util.types.isDataView(new Float64Array());  // Returns false
+ * ```
+ *
+ * See also [`ArrayBuffer.isView()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer/isView).
+ * @since v10.0.0
+ */
+@JsName("isDataView")
+external fun isDataViewRaw(value: Any?): Boolean /* object is DataView */

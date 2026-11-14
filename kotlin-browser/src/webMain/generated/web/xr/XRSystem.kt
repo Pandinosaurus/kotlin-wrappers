@@ -1,0 +1,94 @@
+// Automatically generated - do not modify!
+
+package web.xr
+
+import js.promise.Promise
+import js.promise.await
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+
+open external class XRSystem
+private constructor() :
+    EventTarget {
+    /**
+     * Attempts to initialize an XRSession for the given mode if possible, entering immersive
+     * mode if necessary.
+     * @param mode
+     * @param options
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotSupportedError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("requestSession")
+    open fun requestSessionAsync(
+        mode: XRSessionMode,
+        options: XRSessionInit = definedExternally,
+    ): Promise<XRSession>
+
+    /**
+     * Queries if a given mode may be supported by the user agent and device capabilities.
+     * @param mode
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("isSessionSupported")
+    open fun isSessionSupportedAsync(mode: XRSessionMode): Promise<JsBoolean>
+    open var ondevicechange: EventHandler<XRSystemDeviceChangeEvent, *, *>?
+    open var onsessiongranted: EventHandler<XRSystemSessionGrantedEvent, *, *>?
+}
+
+/**
+ * Attempts to initialize an XRSession for the given mode if possible, entering immersive
+ * mode if necessary.
+ * @param mode
+ * @param options
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotSupportedError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun XRSystem.requestSession(
+    mode: XRSessionMode,
+): XRSession {
+    return requestSessionAsync(
+        mode = mode,
+    ).await()
+}
+
+/**
+ * Attempts to initialize an XRSession for the given mode if possible, entering immersive
+ * mode if necessary.
+ * @param mode
+ * @param options
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotSupportedError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun XRSystem.requestSession(
+    mode: XRSessionMode,
+    options: XRSessionInit,
+): XRSession {
+    return requestSessionAsync(
+        mode = mode,
+        options = options,
+    ).await()
+}
+
+/**
+ * Queries if a given mode may be supported by the user agent and device capabilities.
+ * @param mode
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun XRSystem.isSessionSupported(mode: XRSessionMode): Boolean {
+    return isSessionSupportedAsync(
+        mode = mode,
+    ).await().toBoolean()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/XRSystem/devicechange_event)
+ */
+inline val <C : XRSystem> C.deviceChangeEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "devicechange")

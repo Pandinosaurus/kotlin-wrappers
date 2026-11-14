@@ -1,0 +1,192 @@
+package karakum.browser
+
+import karakum.browser.LinkData.Mode
+
+internal fun formatComment(
+    comment: String,
+): String {
+    val formatted = if ("\n" !in comment) {
+        comment
+            .replaceFirst("/** ", "/**\n * ")
+            .removeSuffix(" */") + "\n */"
+    } else comment
+
+    return formatted.replace(Typography.nbsp.toString(), " ")
+}
+
+internal fun String.withComment(
+    fullSource: String,
+    source: String,
+): String {
+    val commentSource = fullSource.substringBefore("\n$source", "")
+        .takeIf { it.endsWith(" */") }
+        ?: return this
+
+    val comment = formatComment("/**" + commentSource.substringAfterLast("\n/**"))
+    return "$comment\n${this}"
+}
+
+internal fun ConversionResult.withComment(
+    fullSource: String,
+    source: String,
+): ConversionResult? {
+    val newBody = body.withComment(
+        fullSource = fullSource,
+        source = source,
+    )
+
+    if ("@deprecated" in newBody)
+        return null
+
+    if (body != newBody)
+        return copy(body = newBody)
+
+    if ("[MDN Reference]" in body)
+        return this
+
+    val linkData = getLinkData(fullSource = fullSource, typeName = name)
+        ?: return this
+
+    val bodyWithComments = linkData.toComment()
+        .plus("\n")
+        .plus(
+            body
+                .splitToSequence("\n")
+                .reduce { acc, line ->
+                    val memberName = line.trim()
+                        .removePrefix("override ")
+                        .trim()
+                        .takeIf { it.startsWith("val ") || it.startsWith("var ") }
+                        ?.substringAfter(" ", "")
+                        ?.substringBefore(":")
+                        ?: return@reduce acc + "\n" + line
+
+                    val comment = linkData.copy(sectionName = memberName).toComment()
+                    if (!acc.endsWith("\n */")) {
+                        "$acc\n$comment\n$line"
+                    } else {
+                        acc.removeSuffix("\n */") + "\n *\n" + comment.substringAfter("\n") + "\n" + line
+                    }
+                },
+        )
+
+    return copy(
+        body = bodyWithComments,
+    )
+}
+
+private fun getReferenceLink(
+    source: String,
+): String? {
+    val commentSource = source
+        .substringBeforeLast("\n", "")
+        .takeIf { it.endsWith(" */") }
+        ?.substringAfterLast("/**", "")
+        ?: return null
+
+    return commentSource
+        .substringAfter(" * [MDN Reference]", "")
+        .substringBefore("\n", "")
+        .removeSurrounding("(", ")")
+        .ifEmpty { null }
+}
+
+private fun getLinkData(
+    fullSource: String,
+    typeName: String,
+): LinkData? {
+    if (!IDLRegistry.isPlainObjectInterface(typeName))
+        return null
+
+    if (hasMdnPage(typeName))
+        return LinkData(
+            baseUrl = "https://developer.mozilla.org/docs/Web/API/$typeName",
+            mode = if (hasMdnSubpages(typeName)) Mode.SUB_PAGE else Mode.HASH,
+        )
+
+    if (!typeName.endsWith("Init")) {
+        fullSource
+            .split(
+                "): $typeName;",
+                "): Promise<$typeName>;",
+            )
+            .dropLast(1)
+            .firstNotNullOfOrNull {
+                val baseUrl = getReferenceLink(it)
+                    ?: return@firstNotNullOfOrNull null
+
+                LinkData(
+                    baseUrl = baseUrl,
+                    mode = Mode.HASH,
+                    sectionName = "return_value",
+                )
+            }
+            ?.also { return it }
+    }
+
+    return fullSource
+        .split(
+            ": $typeName)",
+            ": $typeName | null)",
+            ": $typeName | undefined)",
+            ": $typeName, ",
+            ": $typeName | null, ",
+            ": $typeName | undefined, ",
+        )
+        .dropLast(1)
+        .firstNotNullOfOrNull {
+            val baseUrl = if (it.substringAfterLast("\n").trim().startsWith("new(")) {
+                val typeName = it.substringAfterLast("\ndeclare var ", "")
+                    .takeIf { "\ninterface " !in it }
+                    ?.substringBefore(": {", "")
+                    ?.takeIf { it.isNotEmpty() }
+                    ?: return@firstNotNullOfOrNull null
+
+                "https://developer.mozilla.org/docs/Web/API/$typeName/$typeName"
+            } else {
+                getReferenceLink(it)
+                    ?: return@firstNotNullOfOrNull null
+            }
+
+            val parameterName = it
+                .substringAfterLast("\n", "")
+                .ifEmpty { return@firstNotNullOfOrNull null }
+                .substringAfterLast(", ")
+                .substringAfterLast("(")
+                .removeSuffix("?")
+
+            LinkData(
+                baseUrl = baseUrl,
+                mode = Mode.HASH,
+                sectionName = parameterName,
+            )
+        }
+}
+
+private data class LinkData(
+    private val baseUrl: String,
+    private val mode: Mode,
+    private val sectionName: String? = null,
+) {
+    enum class Mode {
+        SUB_PAGE,
+        HASH,
+
+        ;
+    }
+
+    fun toComment(): String {
+        val url = when {
+            sectionName == null -> baseUrl
+            mode == Mode.SUB_PAGE -> "$baseUrl/$sectionName"
+            mode == Mode.HASH -> "$baseUrl#${sectionName.lowercase()}"
+            else -> error("")
+        }
+
+        return """
+        /**
+         * [MDN Reference]($url)
+         */
+        """.trimIndent()
+    }
+}

@@ -1,0 +1,53 @@
+// Automatically generated - do not modify!
+
+package web.fs
+
+import web.errors.DOMExceptionType.NotFoundError
+import web.errors.DOMExceptionType.SecurityError
+import web.errors.JsThrows
+
+/**
+ * The **`FileSystemDirectoryEntry`** interface of the File and Directory Entries API represents a directory in a file system. It provides methods which make it possible to access and manipulate the files in a directory, as well as to access the entries within the directory.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemDirectoryEntry)
+ */
+open external class FileSystemDirectoryEntry
+private constructor() :
+    FileSystemEntry {
+    /**
+     * The FileSystemDirectoryEntry interface's method **`createReader()`** returns a FileSystemDirectoryReader object which can be used to read the entries in the directory.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemDirectoryEntry/createReader)
+     */
+    open fun createReader(): FileSystemDirectoryReader
+
+    /**
+     * The FileSystemDirectoryEntry interface's method **`getDirectory()`** returns a FileSystemDirectoryEntry object corresponding to a directory contained somewhere within the directory subtree rooted at the directory on which it's called.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemDirectoryEntry/getDirectory)
+     */
+    @JsThrows(NotFoundError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("getDirectory")
+    open fun getDirectoryWithCallbacks(
+        path: String? = definedExternally,
+        options: FileSystemFlags = definedExternally,
+        successCallback: FileSystemEntryCallback = definedExternally,
+        errorCallback: ErrorCallback = definedExternally,
+    )
+
+    /**
+     * The FileSystemDirectoryEntry interface's method **`getFile()`** returns a FileSystemFileEntry object corresponding to a file contained somewhere within the directory subtree rooted at the directory on which it's called.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemDirectoryEntry/getFile)
+     */
+    @JsThrows(NotFoundError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("getFile")
+    open fun getFileWithCallbacks(
+        path: String? = definedExternally,
+        options: FileSystemFlags = definedExternally,
+        successCallback: FileSystemEntryCallback = definedExternally,
+        errorCallback: ErrorCallback = definedExternally,
+    )
+}

@@ -1,0 +1,21 @@
+// Automatically generated - do not modify!
+
+package node.vm
+
+@kotlinx.js.JsPlainObject
+external interface RunningScriptInNewContextOptions :
+    RunningScriptOptions,
+    CreateContextOptions {
+    /**
+     * Human-readable name of the newly created context.
+     */
+    var contextName: String?
+
+    /**
+     * Origin corresponding to the newly created context for display purposes. The origin should be formatted like a URL,
+     * but with only the scheme, host, and port (if necessary), like the value of the `url.origin` property of a `URL` object.
+     * Most notably, this string should omit the trailing slash, as that denotes a path.
+     */
+    var contextOrigin: String?
+    var contextCodeGeneration: (RunningScriptInNewContextOptionsContextCodeGeneration)?
+}

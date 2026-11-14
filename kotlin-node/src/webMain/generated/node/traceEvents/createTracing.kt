@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:trace_events")
+
+package node.traceEvents
+
+/**
+ * Creates and returns a `Tracing` object for the given set of `categories`.
+ *
+ * ```js
+ * import trace_events from 'node:trace_events';
+ * const categories = ['node.perf', 'node.async_hooks'];
+ * const tracing = trace_events.createTracing({ categories });
+ * tracing.enable();
+ * // do stuff
+ * tracing.disable();
+ * ```
+ * @since v10.0.0
+ */
+external fun createTracing(options: CreateTracingOptions): Tracing

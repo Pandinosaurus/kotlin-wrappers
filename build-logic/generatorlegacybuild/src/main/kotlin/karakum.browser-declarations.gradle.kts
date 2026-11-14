@@ -1,0 +1,106 @@
+import de.undercouch.gradle.tasks.download.Download
+
+plugins {
+    id("declarations")
+    id("de.undercouch.download")
+}
+
+val mdnContentDir = layout.buildDirectory.dir("mdn-content")
+
+val downloadMdnContentRepo = tasks.register<Download>("downloadMdnContentRepo") {
+    src("https://github.com/mdn/content/archive/refs/heads/main.zip")
+    dest(temporaryDir.resolve("mdn-content-repo.zip"))
+    onlyIfModified(true)
+    useETag(true)
+}
+
+val downloadMdnContent = tasks.register<Sync>("downloadMdnContent") {
+    val apiPath = "content-main/files/en-us/web/"
+
+    from(zipTree(downloadMdnContentRepo.map { it.dest })) {
+        include("${apiPath}**/*.*")
+    }
+    into(mdnContentDir)
+
+    eachFile {
+        path = path.removePrefix(apiPath)
+    }
+
+    includeEmptyDirs = false
+}
+
+tasks.named("generateDeclarations") {
+    dependsOn(downloadMdnContent)
+
+    doLast {
+        val sourceDir = webGeneratedDir
+
+        delete(sourceDir)
+
+        val idlDir = nodeModules.resolve("@webref/idl")
+        val eventsSourceFile = nodeModules.resolve("@webref/events/events.json")
+        val definitionsDir = nodeModules.resolve("@typescript")
+            .listFiles { file -> file.isDirectory && file.name.startsWith("typescript-") }
+            .single()
+            .resolve("lib")
+        val webDefinitionsDir = nodeModules.resolve("@types/web")
+        val webworkerDefinitionsDir = nodeModules.resolve("@types/webworker")
+        val serviceworkerDefinitionsDir = nodeModules.resolve("@types/serviceworker")
+        val audioWorkletDefinitionsDir = nodeModules.resolve("@types/audioworklet")
+        val webXrDefinitionsDir = nodeModules.resolve("@types/webxr")
+
+        karakum.browser.generateKotlinDeclarations(
+            idlDir = idlDir,
+            eventsSourceFile = eventsSourceFile,
+            definitionsDir = definitionsDir,
+            webDefinitionsFile = webDefinitionsDir.resolve("index.d.ts"),
+            webworkerDefinitionsFile = webworkerDefinitionsDir.resolve("index.d.ts"),
+            serviceworkerDefinitionsFile = serviceworkerDefinitionsDir.resolve("index.d.ts"),
+            audioWorkletDefinitionsFile = audioWorkletDefinitionsDir.resolve("index.d.ts"),
+            webXrDefinitionsFile = webXrDefinitionsDir.resolve("index.d.ts"),
+            mdnContentDir = mdnContentDir.get().asFile,
+            sourceDir = sourceDir.asFile,
+        )
+    }
+}
+
+tasks.register("findMissedTypes") {
+    doLast {
+        val generatedInterfaces = fileTree(file("../../kotlin-browser/src/webMain/generated"))
+            .plus(fileTree(file("../../kotlin-web/src/webMain/generated")))
+            .mapNotNull { it.name.removeSuffix(".kt") }
+            .flatMap { if (it.endsWith("Event")) sequenceOf(it, "${it}Init") else sequenceOf(it) }
+            .toSet()
+
+        val declaredInterfaces = sequenceOf(
+            "@types/web",
+            "@types/webworker",
+            "@types/serviceworker",
+            "@types/audioworklet",
+        ).map { nodeModules.resolve("$it/index.d.ts") }
+            .map { it.readText() }
+            .flatMap { content ->
+                content.splitToSequence("\ninterface ")
+                    .flatMap { line ->
+                        if (line.endsWith(" */") && "@deprecated" in line.substringAfterLast("/**")) {
+                            sequenceOf(line, "--deprecated--")
+                        } else {
+                            sequenceOf(line)
+                        }
+                    }
+                    .zipWithNext { note, line ->
+                        if (note != "--deprecated--" && line != "--deprecated--") line else null
+                    }
+                    .filterNotNull()
+            }
+            .map { it.substringBefore(" ").substringBefore("<") }
+            .filter { !it.endsWith("EventMap") }
+            .filter { !it.endsWith("NameMap") }
+            .filter { !it.endsWith("Iterator") }
+            .toSet()
+
+        val missedTypes = (declaredInterfaces - generatedInterfaces).sorted() - karakum.browser.KNOWN_MISSED_TYPES
+        println("MISSED TYPES: ${missedTypes.size}")
+        println(missedTypes.joinToString("\n"))
+    }
+}

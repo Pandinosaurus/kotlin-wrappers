@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+package node.net
+
+typealias LookupFunction = (
+    hostname: String,
+    options: node.dns.LookupOptions,
+    callback: (
+        err: node.ErrnoException?,
+        address: Any, /* string | dns.LookupAddress[] */
+        family: Double?, /* use undefined for default */
+    ) -> Unit,
+) -> Unit

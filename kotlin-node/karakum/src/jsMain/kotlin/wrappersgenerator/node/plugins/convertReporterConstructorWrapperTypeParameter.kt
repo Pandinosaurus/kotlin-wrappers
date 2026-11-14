@@ -1,0 +1,81 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import js.reflect.invoke
+import typescript.*
+
+private fun isInstanceType(node: Node) = nullable {
+    ensure(isTypeReferenceNode(node))
+
+    val typeName = node.typeName
+    ensure(isIdentifier(typeName))
+    ensure(typeName.text == "InstanceType")
+} != null
+
+val convertReporterConstructorWrapperTypeParameter = createPlugin { node, context, render ->
+    nullable {
+        val sourceFileName = ensureNotNull(node.getSourceFile()).fileName
+        ensure(sourceFileName.endsWith("test.d.ts"))
+
+        nullable {
+            ensure(isTypeParameterDeclaration(node))
+
+            val interfaceNode = ensureNotNull(node.parent)
+            ensure(isInterfaceDeclaration(interfaceNode))
+            ensure(interfaceNode.name.text == "ReporterConstructorWrapper")
+            ensure(node.name.text == "T")
+
+            "T : Transform"
+        } ?: nullable {
+            ensure(isTypeReferenceNode(node))
+            ensure(isInstanceType(node))
+
+            val interfaceNode = node
+                .parent // MethodSignature
+                ?.parent // InterfaceDeclaration
+            ensure(isInterfaceDeclaration(interfaceNode))
+            ensure(interfaceNode.name.text == "ReporterConstructorWrapper")
+
+            val firstTypeArgument = ensureNotNull(node.typeArguments?.getOrNull(0))
+
+            render(firstTypeArgument)
+        } ?: nullable {
+            ensure(isTypeReferenceNode(node))
+
+            val typeName = node.typeName
+            ensure(isIdentifier(typeName))
+            ensure(typeName.text == "T")
+
+            val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+            val typeChecker = typeScriptService.program.getTypeChecker()
+
+            val symbol = ensureNotNull(typeChecker.getSymbolAtLocation(node.typeName))
+
+            val typeParameterDeclarations = ensureNotNull(symbol.declarations)
+            val typeParameterDeclaration =
+                ensureNotNull(typeParameterDeclarations.find { isTypeParameterDeclaration(it) })
+
+            val interfaceNode = ensureNotNull(typeParameterDeclaration.parent)
+            ensure(isInterfaceDeclaration(interfaceNode))
+            ensure(interfaceNode.name.text == "ReporterConstructorWrapper")
+
+            val parent = ensureNotNull(node.parent)
+            ensure(!isInstanceType(parent))
+
+            "JsClass<${render(node)}>"
+        } ?: nullable {
+            ensure(isTypeReferenceNode(node))
+
+            val typeName = node.typeName
+            ensure(isIdentifier(typeName))
+            ensure(typeName.text == "ReporterConstructorWrapper")
+
+            val firstTypeArgument = ensureNotNull(node.typeArguments?.getOrNull(0))
+            ensure(isTypeQueryNode(firstTypeArgument))
+
+            "ReporterConstructorWrapper<${render(firstTypeArgument.exprName)}>"
+        }
+    }
+}

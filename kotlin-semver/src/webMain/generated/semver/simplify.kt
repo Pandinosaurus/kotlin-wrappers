@@ -1,0 +1,33 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * Return a "simplified" range that matches the same items in `versions` list as the range specified.
+ * Note that it does *not* guarantee that it would match the same versions in all cases,
+ * only for the set of versions provided.
+ * This is useful when generating ranges by joining together multiple versions with `||` programmatically,
+ * to provide the user with something a bit more ergonomic.
+ * If the provided range is shorter in string-length than the generated range, then that is returned.
+ */
+external fun simplify(
+    ranges: js.array.ReadonlyArray<String>,
+    range: String,
+    options: Options = definedExternally,
+): Any /* string | Range */
+
+/**
+ * Return a "simplified" range that matches the same items in `versions` list as the range specified.
+ * Note that it does *not* guarantee that it would match the same versions in all cases,
+ * only for the set of versions provided.
+ * This is useful when generating ranges by joining together multiple versions with `||` programmatically,
+ * to provide the user with something a bit more ergonomic.
+ * If the provided range is shorter in string-length than the generated range, then that is returned.
+ */
+external fun simplify(
+    ranges: js.array.ReadonlyArray<String>,
+    range: Range,
+    options: Options = definedExternally,
+): Any /* string | Range */

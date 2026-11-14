@@ -1,0 +1,25 @@
+// Automatically generated - do not modify!
+
+package web.useractivation
+
+/**
+ * The **`UserActivation`** interface provides information about whether a user is currently interacting with the page, or has completed an interaction since page load.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/UserActivation)
+ */
+open external class UserActivation
+private constructor() {
+    /**
+     * The read-only **`hasBeenActive`** property of the UserActivation interface indicates whether the current window has sticky user activation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/UserActivation/hasBeenActive)
+     */
+    open val hasBeenActive: Boolean
+
+    /**
+     * The read-only **`isActive`** property of the UserActivation interface indicates whether the current window has transient user activation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/UserActivation/isActive)
+     */
+    open val isActive: Boolean
+}

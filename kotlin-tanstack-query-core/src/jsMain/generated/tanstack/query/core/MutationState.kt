@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package tanstack.query.core
+
+import kotlinx.js.JsPlainObject
+import web.time.EpochTimeStamp
+
+@JsPlainObject
+external interface MutationState<TData, TError, TVariables, TOnMutateResult> {
+    val context: TOnMutateResult?
+    val data: TData?
+    val error: TError?
+    val failureCount: Int
+    val failureReason: TError?
+    val isPaused: Boolean
+    val status: MutationStatus
+    val variables: TVariables?
+    val submittedAt: EpochTimeStamp
+}

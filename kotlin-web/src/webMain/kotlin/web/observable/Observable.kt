@@ -1,0 +1,266 @@
+package web.observable
+
+import js.array.ReadonlyArray
+import js.errors.JsErrorLike
+import js.iterable.AsyncIterable
+import js.iterable.JsIterable
+import js.promise.Promise
+import js.void.Void
+import web.abort.unsafeAbortable
+import web.coroutines.await
+import web.experimental.ExperimentalWebApi
+import web.function.VoidFunction
+
+@ExperimentalWebApi
+open external class Observable<out T : JsAny?>(
+    callback: SubscribeCallback<T>,
+) {
+    @PublishedApi
+    @JsName("catch")
+    internal fun catchInternal(transform: (JsErrorLike?) -> Promise<@UnsafeVariance T>): Observable<T>
+
+    @PublishedApi
+    @JsName("catch")
+    internal fun catchInternal(transform: (JsErrorLike?) -> JsIterable<@UnsafeVariance T>): Observable<T>
+
+    @PublishedApi
+    @JsName("catch")
+    internal fun catchInternal(transform: (JsErrorLike?) -> ReadonlyArray<@UnsafeVariance T>): Observable<T>
+
+    @PublishedApi
+    @JsName("catch")
+    internal fun catchInternal(transform: (JsErrorLike?) -> AsyncIterable<@UnsafeVariance T>): Observable<T>
+
+    @PublishedApi
+    @JsName("catch")
+    internal fun catchInternal(transform: (JsErrorLike?) -> Observable<@UnsafeVariance T>): Observable<T>
+
+    open fun drop(n: Int): Observable<T>
+
+    @JsName("every")
+    open fun everyAsync(
+        predicate: (T) -> Boolean,
+        options: SubscribeOptions? = definedExternally,
+    ): Promise<JsBoolean>
+
+    open fun filter(predicate: (T) -> Boolean): Observable<T>
+
+    open fun finally(callback: VoidFunction): Observable<T>
+
+    @JsName("find")
+    open fun findAsync(
+        predicate: (T) -> Boolean,
+        options: SubscribeOptions? = definedExternally,
+    ): Promise<T>
+
+    @JsName("first")
+    open fun firstAsync(options: SubscribeOptions? = definedExternally): Promise<T>
+
+    open fun <R : JsAny?> flatMap(transform: (T) -> Promise<R>): Observable<R>
+    open fun <R : JsAny?> flatMap(transform: (T) -> JsIterable<R>): Observable<R>
+    open fun <R : JsAny?> flatMap(transform: (T) -> ReadonlyArray<R>): Observable<R>
+    open fun <R : JsAny?> flatMap(transform: (T) -> AsyncIterable<R>): Observable<R>
+    open fun <R : JsAny?> flatMap(transform: (T) -> Observable<R>): Observable<R>
+
+    @JsName("forEach")
+    open fun forEachAsync(
+        action: (item: T) -> Unit,
+        options: SubscribeOptions? = definedExternally,
+    ): Promise<Void>
+
+    open fun inspect(inspector: ObservableInspector<T>): Observable<T>
+    open fun inspect(callback: (value: T) -> Unit): Observable<T>
+    open fun inspect(): Observable<T>
+
+    @JsName("last")
+    open fun lastAsync(options: SubscribeOptions? = definedExternally): Promise<T>
+
+    open fun <R : JsAny?> map(transform: (T) -> R): Observable<R>
+
+    @JsName("reduce")
+    open fun <U : JsAny?> reduceAsync(
+        operation: (previousValue: U, currentValue: T, currentIndex: Int) -> U,
+        initialValue: U,
+        options: SubscribeOptions? = definedExternally,
+    ): Promise<U>
+
+    @JsName("some")
+    open fun someAsync(
+        predicate: (T) -> Boolean,
+        options: SubscribeOptions? = definedExternally,
+    ): Promise<JsBoolean>
+
+    /**
+     * Subscribes to the sequence with an observer
+     */
+    open fun subscribe(
+        observer: SubscriptionObserver<T>,
+        options: SubscribeOptions? = definedExternally,
+    )
+
+    /**
+     * Subscribes to the sequence with callbacks
+     */
+    open fun subscribe(
+        callback: (value: T) -> Unit,
+        options: SubscribeOptions? = definedExternally,
+    )
+
+    open fun <R : JsAny?> switchMap(transform: (T) -> Promise<R>): Observable<R>
+    open fun <R : JsAny?> switchMap(transform: (T) -> JsIterable<R>): Observable<R>
+    open fun <R : JsAny?> switchMap(transform: (T) -> ReadonlyArray<R>): Observable<R>
+    open fun <R : JsAny?> switchMap(transform: (T) -> AsyncIterable<R>): Observable<R>
+    open fun <R : JsAny?> switchMap(transform: (T) -> Observable<R>): Observable<R>
+
+    open fun take(n: Int): Observable<T>
+
+    open fun takeUntil(notifier: Promise<*>): Observable<T>
+    open fun takeUntil(notifier: JsIterable<*>): Observable<T>
+    open fun takeUntil(notifier: ReadonlyArray<*>): Observable<T>
+    open fun takeUntil(notifier: AsyncIterable<*>): Observable<T>
+    open fun takeUntil(notifier: Observable<*>): Observable<T>
+
+    @JsName("toArray")
+    open fun toArrayAsync(options: SubscribeOptions? = definedExternally): Promise<ReadonlyArray<T>>
+
+    companion object {
+        fun <T : JsAny?> from(
+            source: Promise<T>,
+        ): Observable<T>
+
+        fun <T : JsAny?> from(
+            source: JsIterable<T>,
+        ): Observable<T>
+
+        fun <T : JsAny?> from(
+            source: ReadonlyArray<T>,
+        ): Observable<T>
+
+        fun <T : JsAny?> from(
+            source: AsyncIterable<T>,
+        ): Observable<T>
+
+        fun <T : JsAny?> from(
+            source: Observable<T>,
+        ): Observable<T>
+    }
+}
+
+@ExperimentalWebApi
+inline fun <T : JsAny?> Observable<T>.catch(
+    noinline transform: (JsErrorLike?) -> Promise<T>,
+): Observable<T> =
+    catchInternal(transform)
+
+@ExperimentalWebApi
+inline fun <T : JsAny?> Observable<T>.catch(
+    noinline transform: (JsErrorLike?) -> JsIterable<T>,
+): Observable<T> =
+    catchInternal(transform)
+
+@ExperimentalWebApi
+inline fun <T : JsAny?> Observable<T>.catch(
+    noinline transform: (JsErrorLike?) -> ReadonlyArray<T>,
+): Observable<T> =
+    catchInternal(transform)
+
+@ExperimentalWebApi
+inline fun <T : JsAny?> Observable<T>.catch(
+    noinline transform: (JsErrorLike?) -> AsyncIterable<T>,
+): Observable<T> =
+    catchInternal(transform)
+
+@ExperimentalWebApi
+inline fun <T : JsAny?> Observable<T>.catch(
+    noinline transform: (JsErrorLike?) -> Observable<T>,
+): Observable<T> =
+    catchInternal(transform)
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?> Observable<T>.every(
+    predicate: (T) -> Boolean,
+): Boolean {
+    return await { signal ->
+        everyAsync(
+            predicate = predicate,
+            options = unsafeAbortable(signal),
+        )
+    }.toBoolean()
+}
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?> Observable<T>.find(
+    predicate: (T) -> Boolean,
+): T {
+    return await { signal ->
+        findAsync(
+            predicate = predicate,
+            options = unsafeAbortable(signal),
+        )
+    }
+}
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?> Observable<T>.first(): T {
+    return await { signal ->
+        firstAsync(
+            options = unsafeAbortable(signal),
+        )
+    }
+}
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?> Observable<T>.forEach(
+    action: (item: T) -> Unit,
+) {
+    await { signal ->
+        forEachAsync(
+            action = action,
+            options = unsafeAbortable(signal),
+        )
+    }
+}
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?> Observable<T>.last(): T {
+    return await { signal ->
+        lastAsync(
+            options = unsafeAbortable(signal),
+        )
+    }
+}
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?, U : JsAny?> Observable<T>.reduce(
+    operation: (previousValue: U, currentValue: T, currentIndex: Int) -> U,
+    initialValue: U,
+): U {
+    return await { signal ->
+        reduceAsync(
+            operation = operation,
+            initialValue = initialValue,
+            options = unsafeAbortable(signal),
+        )
+    }
+}
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?> Observable<T>.some(
+    predicate: (T) -> Boolean,
+): Boolean {
+    return await { signal ->
+        someAsync(
+            predicate = predicate,
+            options = unsafeAbortable(signal),
+        )
+    }.toBoolean()
+}
+
+@ExperimentalWebApi
+suspend fun <T : JsAny?> Observable<T>.toArray(): ReadonlyArray<T> {
+    return await { signal ->
+        toArrayAsync(
+            options = unsafeAbortable(signal),
+        )
+    }
+}

@@ -1,0 +1,25 @@
+package js.string
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace)
+ */
+external interface StringReplacer {
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace)
+     */
+    @JsSymbol("replace")
+    fun `[@@replace]`(
+        string: String,
+        replaceValue: String,
+    ): String
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace)
+     */
+    @JsSymbol("replace")
+    fun `[@@replace]`(
+        string: String,
+        replacer: (substring: String) -> String,
+    ): String
+}

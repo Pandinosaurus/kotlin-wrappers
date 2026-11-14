@@ -1,0 +1,103 @@
+// Automatically generated - do not modify!
+
+package web.svg
+
+import web.errors.DOMExceptionType.IndexSizeError
+import web.errors.JsThrows
+import web.geometry.DOMPointReadOnly
+
+/**
+ * The **`SVGTextContentElement`** interface is implemented by elements that support rendering child text content. It is inherited by various text-related interfaces, such as SVGTextElement, SVGTSpanElement, and SVGTextPathElement.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement)
+ */
+open external class SVGTextContentElement
+private constructor() :
+    SVGGraphicsElement {
+    /**
+     * The **`lengthAdjust`** read-only property of the SVGTextContentElement interface reflects the lengthAdjust attribute of the given element. It takes one of the LENGTHADJUST_* constants defined on this interface.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/lengthAdjust)
+     */
+    open val lengthAdjust: SVGAnimatedEnumeration<LengthAdjust>
+
+    /**
+     * The **`textLength`** read-only property of the SVGTextContentElement interface reflects the textLength attribute of the given element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/textLength)
+     */
+    open val textLength: SVGAnimatedLength
+
+    /**
+     * The **`getCharNumAtPosition()`** method of the SVGTextContentElement interface represents the character which caused a text glyph to be rendered at a given position in the coordinate system. Because the relationship between characters and glyphs is not one-to-one, only the first character of the relevant typographic character is returned.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getCharNumAtPosition)
+     */
+    open fun getCharNumAtPosition(point: DOMPointReadOnly = definedExternally): Int
+
+    /**
+     * The **`getComputedTextLength()`** method of the SVGTextContentElement interface represents the computed length for the text within the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getComputedTextLength)
+     */
+    open fun getComputedTextLength(): Float
+
+    /**
+     * The **`getEndPositionOfChar()`** method of the SVGTextContentElement interface returns the trailing position of a typographic character after text layout has been performed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getEndPositionOfChar)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun getEndPositionOfChar(charnum: Int): SVGPoint
+
+    /**
+     * The **`getExtentOfChar()`** method of the SVGTextContentElement interface the represents computed tight bounding box of the glyph cell that corresponds to a given typographic character.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getExtentOfChar)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun getExtentOfChar(charnum: Int): SVGRect
+
+    /**
+     * The **`getNumberOfChars()`** method of the SVGTextContentElement interface represents the total number of addressable characters available for rendering within the current element, regardless of whether they will be rendered.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getNumberOfChars)
+     */
+    open fun getNumberOfChars(): Int
+
+    /**
+     * The **`getRotationOfChar()`** method of the SVGTextContentElement interface the represents the rotation of a typographic character.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getRotationOfChar)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun getRotationOfChar(charnum: Int): Float
+
+    /**
+     * The **`getStartPositionOfChar()`** method of the SVGTextContentElement interface returns the position of a typographic character after text layout has been performed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getStartPositionOfChar)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun getStartPositionOfChar(charnum: Int): SVGPoint
+
+    /**
+     * The **`getSubStringLength()`** method of the SVGTextContentElement interface represents the computed length of the formatted text advance distance for a substring of text within the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTextContentElement/getSubStringLength)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun getSubStringLength(
+        charnum: Int,
+        nchars: Int,
+    ): Float
+
+    companion object {
+        val LENGTHADJUST_UNKNOWN: LengthAdjust
+        val LENGTHADJUST_SPACING: LengthAdjust
+        val LENGTHADJUST_SPACINGANDGLYPHS: LengthAdjust
+    }
+
+    sealed /* enum */
+    interface LengthAdjust
+}

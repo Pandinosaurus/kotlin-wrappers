@@ -1,0 +1,29 @@
+// Automatically generated - do not modify!
+
+package node.test.eventData
+
+@kotlinx.js.JsPlainObject
+external interface TestFailDetails {
+    /**
+     * The duration of the test in milliseconds.
+     */
+    var duration_ms: Double
+
+    /**
+     * An error wrapping the error thrown by the test.
+     */
+    var error: Error
+
+    /**
+     * The type of the test, used to denote whether this is a suite.
+     * @since v20.0.0, v19.9.0, v18.17.0
+     */
+    var type: (TestFailDetailsType)?
+
+    /**
+     * The attempt number of the test run,
+     * present only when using the `--test-rerun-failures` flag.
+     * @since v24.7.0
+     */
+    var attempt: Double?
+}

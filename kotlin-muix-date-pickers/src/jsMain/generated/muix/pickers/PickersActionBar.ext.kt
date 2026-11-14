@@ -1,0 +1,28 @@
+// Automatically generated - do not modify!
+
+package muix.pickers
+
+import seskar.js.JsValue
+
+sealed /* union */
+external interface PickersActionBarAction {
+    companion object {
+        @JsValue("clear")
+        val clear: PickersActionBarAction
+
+        @JsValue("cancel")
+        val cancel: PickersActionBarAction
+
+        @JsValue("accept")
+        val accept: PickersActionBarAction
+
+        @JsValue("today")
+        val today: PickersActionBarAction
+
+        @JsValue("next")
+        val next: PickersActionBarAction
+
+        @JsValue("nextOrAccept")
+        val nextOrAccept: PickersActionBarAction
+    }
+}

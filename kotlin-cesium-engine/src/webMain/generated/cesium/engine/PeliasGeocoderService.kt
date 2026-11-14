@@ -1,0 +1,62 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@cesium/engine")
+
+package cesium.engine
+
+import js.array.ReadonlyArray
+import js.promise.Promise
+import seskar.js.JsAsync
+
+/**
+ * Provides geocoding via a [Pelias](https://pelias.io/) server.
+ * ```
+ * // Configure a Viewer to use the Pelias server hosted by https://geocode.earth/
+ * const viewer = new Viewer('cesiumContainer', {
+ *   geocoder: new PeliasGeocoderService(new Resource({
+ *     url: 'https://api.geocode.earth/v1/',
+ *       queryParameters: {
+ *         api_key: '<Your geocode.earth API key>'
+ *     }
+ *   }))
+ * });
+ * ```
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/PeliasGeocoderService.html">Online Documentation</a>
+ *
+ * @constructor
+ * @property [url] The endpoint to the Pelias server.
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/PeliasGeocoderService.html">Online Documentation</a>
+ */
+open external class PeliasGeocoderService(
+    val url: Resource,
+) {
+    constructor(
+        url: String,
+    )
+
+    /**
+     * Gets the credit to display after a geocode is performed. Typically this is used to credit
+     * the geocoder service.
+     * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/PeliasGeocoderService.html#credit">Online Documentation</a>
+     */
+    val credit: Credit?
+
+    /**
+     * @param [query] The query to be sent to the geocoder service
+     * @param [type] The type of geocode to perform.
+     *   Default value - [GeocodeType.SEARCH]
+     * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/PeliasGeocoderService.html#geocode">Online Documentation</a>
+     */
+    @JsAsync
+    @Suppress("WRONG_EXTERNAL_DECLARATION")
+    suspend fun geocode(
+        query: String,
+        type: GeocodeType? = definedExternally,
+    ): ReadonlyArray<GeocoderService.Result>
+
+    @JsName("geocode")
+    fun geocodeAsync(
+        query: String,
+        type: GeocodeType? = definedExternally,
+    ): Promise<ReadonlyArray<GeocoderService.Result>>
+}

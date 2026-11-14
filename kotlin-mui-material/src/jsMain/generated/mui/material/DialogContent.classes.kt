@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/DialogContent")
+
+package mui.material
+
+import kotlinx.js.JsPlainObject
+import web.cssom.ClassName
+
+@JsPlainObject
+external interface DialogContentClasses {
+    /** Styles applied to the root element. */
+    val root: ClassName
+
+    /** Styles applied to the root element if `dividers={true}`. */
+    val dividers: ClassName
+}
+
+external val dialogContentClasses: DialogContentClasses

@@ -1,0 +1,133 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: String,
+    range: String,
+    hilo: OutsideHilo,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: String,
+    range: String,
+    hilo: OutsideHilo,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: String,
+    range: String,
+    hilo: OutsideHilo,
+    optionsOrLoose: RangeOptions = definedExternally,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: String,
+    range: Range,
+    hilo: OutsideHilo,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: String,
+    range: Range,
+    hilo: OutsideHilo,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: String,
+    range: Range,
+    hilo: OutsideHilo,
+    optionsOrLoose: RangeOptions = definedExternally,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: SemVer,
+    range: String,
+    hilo: OutsideHilo,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: SemVer,
+    range: String,
+    hilo: OutsideHilo,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: SemVer,
+    range: String,
+    hilo: OutsideHilo,
+    optionsOrLoose: RangeOptions = definedExternally,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: SemVer,
+    range: Range,
+    hilo: OutsideHilo,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: SemVer,
+    range: Range,
+    hilo: OutsideHilo,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Return true if the version is outside the bounds of the range in either the high or low direction.
+ * The hilo argument must be either the string '>' or '<'. (This is the function called by gtr and ltr.)
+ */
+external fun outside(
+    version: SemVer,
+    range: Range,
+    hilo: OutsideHilo,
+    optionsOrLoose: RangeOptions = definedExternally,
+): Boolean

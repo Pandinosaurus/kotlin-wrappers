@@ -1,0 +1,136 @@
+// Automatically generated - do not modify!
+
+package web.gpu
+
+import js.reflect.unsafeCast
+import js.union.JsUnion
+
+@JsUnion
+sealed /* union */
+external interface GPUVertexFormat
+
+inline val GPUVertexFormat.Companion.float16: GPUVertexFormat
+    get() = unsafeCast("float16")
+
+inline val GPUVertexFormat.Companion.float16x2: GPUVertexFormat
+    get() = unsafeCast("float16x2")
+
+inline val GPUVertexFormat.Companion.float16x4: GPUVertexFormat
+    get() = unsafeCast("float16x4")
+
+inline val GPUVertexFormat.Companion.float32: GPUVertexFormat
+    get() = unsafeCast("float32")
+
+inline val GPUVertexFormat.Companion.float32x2: GPUVertexFormat
+    get() = unsafeCast("float32x2")
+
+inline val GPUVertexFormat.Companion.float32x3: GPUVertexFormat
+    get() = unsafeCast("float32x3")
+
+inline val GPUVertexFormat.Companion.float32x4: GPUVertexFormat
+    get() = unsafeCast("float32x4")
+
+inline val GPUVertexFormat.Companion.sint16: GPUVertexFormat
+    get() = unsafeCast("sint16")
+
+inline val GPUVertexFormat.Companion.sint16x2: GPUVertexFormat
+    get() = unsafeCast("sint16x2")
+
+inline val GPUVertexFormat.Companion.sint16x4: GPUVertexFormat
+    get() = unsafeCast("sint16x4")
+
+inline val GPUVertexFormat.Companion.sint32: GPUVertexFormat
+    get() = unsafeCast("sint32")
+
+inline val GPUVertexFormat.Companion.sint32x2: GPUVertexFormat
+    get() = unsafeCast("sint32x2")
+
+inline val GPUVertexFormat.Companion.sint32x3: GPUVertexFormat
+    get() = unsafeCast("sint32x3")
+
+inline val GPUVertexFormat.Companion.sint32x4: GPUVertexFormat
+    get() = unsafeCast("sint32x4")
+
+inline val GPUVertexFormat.Companion.sint8: GPUVertexFormat
+    get() = unsafeCast("sint8")
+
+inline val GPUVertexFormat.Companion.sint8x2: GPUVertexFormat
+    get() = unsafeCast("sint8x2")
+
+inline val GPUVertexFormat.Companion.sint8x4: GPUVertexFormat
+    get() = unsafeCast("sint8x4")
+
+inline val GPUVertexFormat.Companion.snorm1010102: GPUVertexFormat
+    get() = unsafeCast("snorm10-10-10-2")
+
+inline val GPUVertexFormat.Companion.snorm16: GPUVertexFormat
+    get() = unsafeCast("snorm16")
+
+inline val GPUVertexFormat.Companion.snorm16x2: GPUVertexFormat
+    get() = unsafeCast("snorm16x2")
+
+inline val GPUVertexFormat.Companion.snorm16x4: GPUVertexFormat
+    get() = unsafeCast("snorm16x4")
+
+inline val GPUVertexFormat.Companion.snorm8: GPUVertexFormat
+    get() = unsafeCast("snorm8")
+
+inline val GPUVertexFormat.Companion.snorm8x2: GPUVertexFormat
+    get() = unsafeCast("snorm8x2")
+
+inline val GPUVertexFormat.Companion.snorm8x4: GPUVertexFormat
+    get() = unsafeCast("snorm8x4")
+
+inline val GPUVertexFormat.Companion.uint16: GPUVertexFormat
+    get() = unsafeCast("uint16")
+
+inline val GPUVertexFormat.Companion.uint16x2: GPUVertexFormat
+    get() = unsafeCast("uint16x2")
+
+inline val GPUVertexFormat.Companion.uint16x4: GPUVertexFormat
+    get() = unsafeCast("uint16x4")
+
+inline val GPUVertexFormat.Companion.uint32: GPUVertexFormat
+    get() = unsafeCast("uint32")
+
+inline val GPUVertexFormat.Companion.uint32x2: GPUVertexFormat
+    get() = unsafeCast("uint32x2")
+
+inline val GPUVertexFormat.Companion.uint32x3: GPUVertexFormat
+    get() = unsafeCast("uint32x3")
+
+inline val GPUVertexFormat.Companion.uint32x4: GPUVertexFormat
+    get() = unsafeCast("uint32x4")
+
+inline val GPUVertexFormat.Companion.uint8: GPUVertexFormat
+    get() = unsafeCast("uint8")
+
+inline val GPUVertexFormat.Companion.uint8x2: GPUVertexFormat
+    get() = unsafeCast("uint8x2")
+
+inline val GPUVertexFormat.Companion.uint8x4: GPUVertexFormat
+    get() = unsafeCast("uint8x4")
+
+inline val GPUVertexFormat.Companion.unorm1010102: GPUVertexFormat
+    get() = unsafeCast("unorm10-10-10-2")
+
+inline val GPUVertexFormat.Companion.unorm16: GPUVertexFormat
+    get() = unsafeCast("unorm16")
+
+inline val GPUVertexFormat.Companion.unorm16x2: GPUVertexFormat
+    get() = unsafeCast("unorm16x2")
+
+inline val GPUVertexFormat.Companion.unorm16x4: GPUVertexFormat
+    get() = unsafeCast("unorm16x4")
+
+inline val GPUVertexFormat.Companion.unorm8: GPUVertexFormat
+    get() = unsafeCast("unorm8")
+
+inline val GPUVertexFormat.Companion.unorm8x2: GPUVertexFormat
+    get() = unsafeCast("unorm8x2")
+
+inline val GPUVertexFormat.Companion.unorm8x4: GPUVertexFormat
+    get() = unsafeCast("unorm8x4")
+
+inline val GPUVertexFormat.Companion.unorm8x4Bgra: GPUVertexFormat
+    get() = unsafeCast("unorm8x4-bgra")

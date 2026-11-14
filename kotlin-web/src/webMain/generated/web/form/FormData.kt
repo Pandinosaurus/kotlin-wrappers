@@ -1,0 +1,100 @@
+// Automatically generated - do not modify!
+
+package web.form
+
+import js.array.ReadonlyArray
+import js.collections.MapLike
+import web.blob.Blob
+import web.events.EventTarget
+import web.http.BodyInit
+
+/**
+ * The **`FormData`** interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the fetch(), XMLHttpRequest.send() or navigator.sendBeacon() methods. It uses the same format a form would use if the encoding type were set to "multipart/form-data".
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData)
+ */
+open external class FormData(
+    form: EventTarget /* HTMLFormElement */ = definedExternally,
+    submitter: EventTarget /* HTMLElement */? = definedExternally,
+) : MapLike.Mixin<JsString, FormDataEntryValue>,
+    BodyInit {
+    /**
+     * The **`append()`** method of the FormData interface appends a new value onto an existing key inside a FormData object, or adds the key if it does not already exist.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/append)
+     */
+    open fun append(
+        name: String,
+        value: String,
+    )
+
+    /**
+     * The **`append()`** method of the FormData interface appends a new value onto an existing key inside a FormData object, or adds the key if it does not already exist.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/append)
+     */
+    open fun append(
+        name: String,
+        value: Blob,
+    )
+
+    open fun append(
+        name: String,
+        blobValue: Blob,
+        filename: String = definedExternally,
+    )
+
+    /**
+     * The **`delete()`** method of the FormData interface deletes a key and its value(s) from a FormData object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/delete)
+     */
+    open fun delete(name: String)
+
+    /**
+     * The **`get()`** method of the FormData interface returns the first value associated with a given key from within a FormData object. If you expect multiple values and want all of them, use the getAll() method instead.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/get)
+     */
+    open fun get(name: String): FormDataEntryValue?
+
+    /**
+     * The **`getAll()`** method of the FormData interface returns all the values associated with a given key from within a FormData object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/getAll)
+     */
+    open fun getAll(name: String): ReadonlyArray<FormDataEntryValue>
+
+    /**
+     * The **`has()`** method of the FormData interface returns whether a FormData object contains a certain key.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/has)
+     */
+    open fun has(name: String): Boolean
+
+    /**
+     * The **`set()`** method of the FormData interface sets a new value for an existing key inside a FormData object, or adds the key/value if it does not already exist.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/set)
+     */
+    open fun set(
+        name: String,
+        value: String,
+    )
+
+    /**
+     * The **`set()`** method of the FormData interface sets a new value for an existing key inside a FormData object, or adds the key/value if it does not already exist.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/set)
+     */
+    open fun set(
+        name: String,
+        value: Blob,
+    )
+
+    open fun set(
+        name: String,
+        blobValue: Blob,
+        filename: String = definedExternally,
+    )
+}

@@ -1,0 +1,117 @@
+// Automatically generated - do not modify!
+
+package web.rtc
+
+/**
+ * The **`RTCIceCandidate`** interface—part of the WebRTC API—represents a candidate Interactive Connectivity Establishment (ICE) configuration which may be used to establish an RTCPeerConnection.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate)
+ */
+open external class RTCIceCandidate(
+    init: RTCLocalIceCandidateInit = definedExternally,
+) {
+    /**
+     * The RTCIceCandidate interface's read-only **`address`** property is a string providing the IP address of the device which is the source of the candidate. The address is null by default if not otherwise specified.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/address)
+     */
+    open val address: String?
+
+    /**
+     * The read-only property **`candidate`** on the RTCIceCandidate interface returns a string describing the candidate in detail. Most of the other properties of RTCIceCandidate are actually extracted from this string.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/candidate)
+     */
+    open val candidate: String
+
+    /**
+     * The read-only **`component`** property on the RTCIceCandidate interface is a string which indicates whether the candidate is an RTP or an RTCP candidate.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/component)
+     */
+    open val component: RTCIceComponent?
+
+    /**
+     * The **`foundation`** read-only property of the RTCIceCandidate interface is a string that allows correlation of candidates from a common network path on multiple RTCIceTransport objects.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/foundation)
+     */
+    open val foundation: String?
+
+    /**
+     * The RTCIceCandidate interface's read-only **`port`** property contains the port number on the device at the address given by RTCIceCandidate.address at which the candidate's peer can be reached.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/port)
+     */
+    open val port: Short?
+
+    /**
+     * The RTCIceCandidate interface's read-only **`priority`** property specifies the candidate's priority according to the remote peer; the higher this value is, the better the remote peer considers the candidate to be.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/priority)
+     */
+    open val priority: Int?
+
+    /**
+     * The RTCIceCandidate interface's read-only **`protocol`** property is a string which indicates whether the candidate uses UDP or TCP as its transport protocol.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/protocol)
+     */
+    open val protocol: RTCIceProtocol?
+
+    /**
+     * The RTCIceCandidate interface's read-only **`relatedAddress`** property is a string indicating the related address of a relay or reflexive candidate.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/relatedAddress)
+     */
+    open val relatedAddress: String?
+
+    /**
+     * The RTCIceCandidate interface's read-only **`relatedPort`** property indicates the port number of reflexive or relay candidates.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/relatedPort)
+     */
+    open val relatedPort: Short?
+
+    /**
+     * The read-only **`sdpMLineIndex`** property on the RTCIceCandidate interface is a zero-based index of the m-line describing the media associated with the candidate.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/sdpMLineIndex)
+     */
+    open val sdpMLineIndex: Short?
+
+    /**
+     * The read-only property **`sdpMid`** on the RTCIceCandidate interface returns a string specifying the media stream identification tag of the media component with which the candidate is associated. This ID uniquely identifies a given stream for the component with which the candidate is associated.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/sdpMid)
+     */
+    open val sdpMid: String?
+
+    /**
+     * The RTCIceCandidate interface's read-only **`tcpType`** property is included on TCP candidates to provide additional details about the candidate type.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/tcpType)
+     */
+    open val tcpType: RTCIceTcpCandidateType?
+
+    /**
+     * The RTCIceCandidate interface's read-only **`type`** specifies the type of candidate the object represents.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/type)
+     */
+    open val type: RTCIceCandidateType?
+
+    /**
+     * The read-only **`usernameFragment`** property on the RTCIceCandidate interface is a string indicating the username fragment ("ufrag") that uniquely identifies a single ICE interaction session.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/usernameFragment)
+     */
+    open val usernameFragment: String?
+
+    /**
+     * The **`toJSON()`** method of the RTCIceCandidate interface returns a JSON-serializable plain object representing the RTCIceCandidate object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCIceCandidate/toJSON)
+     */
+    open fun toJSON(): RTCIceCandidateInit
+}

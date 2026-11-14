@@ -1,0 +1,45 @@
+// Automatically generated - do not modify!
+
+package web.audio
+
+import web.errors.DOMExceptionType.InvalidStateError
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+
+/**
+ * The **`AudioScheduledSourceNode`** interface—part of the Web Audio API—is a parent interface for several types of audio source node interfaces which share the ability to be started and stopped, optionally at specified times. Specifically, this interface defines the start() and stop() methods, as well as the ended event.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioScheduledSourceNode)
+ */
+open external class AudioScheduledSourceNode
+private constructor() :
+    AudioNode {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioScheduledSourceNode/ended_event)
+     */
+    open var onended: EventHandler<Event, AudioScheduledSourceNode, AudioScheduledSourceNode>?
+
+    /**
+     * The **`start()`** method on AudioScheduledSourceNode schedules a sound to begin playback at the specified time. If no time is specified, then the sound begins playing immediately.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioScheduledSourceNode/start)
+     */
+    @JsThrows(InvalidStateError::class)
+    open fun start(`when`: Double = definedExternally)
+
+    /**
+     * The **`stop()`** method on AudioScheduledSourceNode schedules a sound to cease playback at the specified time. If no time is specified, then the sound stops playing immediately.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioScheduledSourceNode/stop)
+     */
+    @JsThrows(InvalidStateError::class)
+    open fun stop(`when`: Double = definedExternally)
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AudioScheduledSourceNode/ended_event)
+ */
+inline val <C : AudioScheduledSourceNode> C.endedEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "ended")

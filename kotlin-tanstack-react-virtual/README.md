@@ -1,0 +1,11 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.jetbrains.kotlin-wrappers/kotlin-tanstack-react-virtual)](https://central.sonatype.com/artifact/org.jetbrains.kotlin-wrappers/kotlin-tanstack-react-virtual)
+
+# Module kotlin-tanstack-react-virtual
+
+Kotlin wrapper for the [TanStack React Virtual](https://github.com/TanStack/virtual) library.
+
+### Internals
+
+Declarations in [src/webMain/generated](./src/webMain/generated) are generated.
+
+Manual changes are prohibited.

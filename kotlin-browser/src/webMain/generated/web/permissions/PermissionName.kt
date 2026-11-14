@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+package web.permissions
+
+import js.reflect.unsafeCast
+import js.union.JsUnion
+
+@JsUnion
+sealed /* union */
+external interface PermissionName
+
+inline val PermissionName.Companion.camera: PermissionName
+    get() = unsafeCast("camera")
+
+inline val PermissionName.Companion.geolocation: PermissionName
+    get() = unsafeCast("geolocation")
+
+inline val PermissionName.Companion.microphone: PermissionName
+    get() = unsafeCast("microphone")
+
+inline val PermissionName.Companion.midi: PermissionName
+    get() = unsafeCast("midi")
+
+inline val PermissionName.Companion.notifications: PermissionName
+    get() = unsafeCast("notifications")
+
+inline val PermissionName.Companion.persistentStorage: PermissionName
+    get() = unsafeCast("persistent-storage")
+
+inline val PermissionName.Companion.push: PermissionName
+    get() = unsafeCast("push")
+
+inline val PermissionName.Companion.screenWakeLock: PermissionName
+    get() = unsafeCast("screen-wake-lock")
+
+inline val PermissionName.Companion.storageAccess: PermissionName
+    get() = unsafeCast("storage-access")

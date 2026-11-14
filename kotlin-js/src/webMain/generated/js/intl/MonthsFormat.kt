@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package js.intl
+
+import js.reflect.unsafeCast
+import js.union.JsUnion
+
+@JsUnion
+sealed /* union */
+external interface MonthsFormat
+
+inline val MonthsFormat.Companion.long: MonthsFormat
+    get() = unsafeCast("long")
+
+inline val MonthsFormat.Companion.short: MonthsFormat
+    get() = unsafeCast("short")
+
+inline val MonthsFormat.Companion.narrow: MonthsFormat
+    get() = unsafeCast("narrow")

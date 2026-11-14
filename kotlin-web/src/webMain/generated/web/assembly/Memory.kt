@@ -1,0 +1,31 @@
+// Automatically generated - do not modify!
+
+package web.assembly
+
+import js.buffer.ArrayBufferLike
+
+/**
+ * The **`WebAssembly.Memory`** object is a resizable ArrayBuffer or SharedArrayBuffer that holds raw bytes of memory accessed by a WebAssembly.Instance.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/WebAssembly/Reference/JavaScript_interface/Memory)
+ */
+@JsQualifier("WebAssembly")
+open external class Memory<out B : ArrayBufferLike>(
+    descriptor: MemoryDescriptor,
+) {
+    /**
+     * The read-only **`buffer`** prototype property of the WebAssembly.Memory object returns the buffer contained in the memory. Depending on whether or not the memory was constructed with shared: true, the buffer is either an ArrayBuffer or a SharedArrayBuffer.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/WebAssembly/Reference/JavaScript_interface/Memory/buffer)
+     */
+    open val buffer: B
+
+    /**
+     * The **`grow()`** prototype method of the WebAssembly.Memory object increases the size of the memory instance by a specified number of WebAssembly pages.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/WebAssembly/Reference/JavaScript_interface/Memory/grow)
+     */
+    open fun grow(delta: AddressValue): AddressValue
+    open fun toFixedLengthBuffer(): B
+    open fun toResizableBuffer(): B
+}

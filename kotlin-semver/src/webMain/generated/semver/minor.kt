@@ -1,0 +1,47 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * Return the minor version number.
+ */
+external fun minor(version: String): Int
+
+/**
+ * Return the minor version number.
+ */
+external fun minor(
+    version: String,
+    optionsOrLoose: Boolean = definedExternally,
+): Int
+
+/**
+ * Return the minor version number.
+ */
+external fun minor(
+    version: String,
+    optionsOrLoose: Options = definedExternally,
+): Int
+
+/**
+ * Return the minor version number.
+ */
+external fun minor(version: SemVer): Int
+
+/**
+ * Return the minor version number.
+ */
+external fun minor(
+    version: SemVer,
+    optionsOrLoose: Boolean = definedExternally,
+): Int
+
+/**
+ * Return the minor version number.
+ */
+external fun minor(
+    version: SemVer,
+    optionsOrLoose: Options = definedExternally,
+): Int

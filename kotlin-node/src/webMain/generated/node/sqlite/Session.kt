@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+package node.sqlite
+
+/**
+ * @since v22.12.0
+ */
+external interface Session {
+    /**
+     * Retrieves a changeset containing all changes since the changeset was created. Can be called multiple times.
+     * An exception is thrown if the database or the session is not open. This method is a wrapper around
+     * [`sqlite3session_changeset()`](https://www.sqlite.org/session/sqlite3session_changeset.html).
+     * @returns Binary changeset that can be applied to other databases.
+     * @since v22.12.0
+     */
+    fun changeset(): node.NonSharedUint8Array
+
+    /**
+     * Similar to the method above, but generates a more compact patchset. See
+     * [Changesets and Patchsets](https://www.sqlite.org/sessionintro.html#changesets_and_patchsets)
+     * in the documentation of SQLite. An exception is thrown if the database or the session is not open. This method is a
+     * wrapper around
+     * [`sqlite3session_patchset()`](https://www.sqlite.org/session/sqlite3session_patchset.html).
+     * @returns Binary patchset that can be applied to other databases.
+     * @since v22.12.0
+     */
+    fun patchset(): node.NonSharedUint8Array
+
+    /**
+     * Closes the session. An exception is thrown if the database or the session is not open. This method is a
+     * wrapper around
+     * [`sqlite3session_delete()`](https://www.sqlite.org/session/sqlite3session_delete.html).
+     */
+    fun close()
+}

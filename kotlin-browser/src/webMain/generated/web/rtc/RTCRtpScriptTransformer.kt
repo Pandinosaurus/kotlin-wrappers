@@ -1,0 +1,96 @@
+// Automatically generated - do not modify!
+
+package web.rtc
+
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.errors.DOMExceptionType.InvalidStateError
+import web.errors.DOMExceptionType.NotFoundError
+import web.errors.JsThrows
+import web.events.EventTarget
+import web.streams.ReadableStream
+import web.streams.WritableStream
+
+/**
+ * The **`RTCRtpScriptTransformer`** interface of the WebRTC API provides a worker-side Stream API interface that a WebRTC Encoded Transform can use to modify encoded media frames in the incoming and outgoing WebRTC pipelines.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer)
+ */
+open external class RTCRtpScriptTransformer
+private constructor() :
+    EventTarget {
+    /**
+     * The **`options`** read-only property of the RTCRtpScriptTransformer interface returns the object that was (optionally) passed as the second argument during construction of the corresponding RTCRtpScriptTransform.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/options)
+     */
+    open val options: JsAny?
+
+    /**
+     * The **`readable`** read-only property of the RTCRtpScriptTransformer interface returns a ReadableStream instance is a source for encoded media frames.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/readable)
+     */
+    open val readable: ReadableStream<*>
+
+    /**
+     * The **`writable`** read-only property of the RTCRtpScriptTransformer interface returns a WritableStream instance that can be used as a sink for encoded media frames enqueued on the corresponding RTCRtpScriptTransformer.readable.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/writable)
+     */
+    open val writable: WritableStream<*>
+
+    /**
+     * The **`generateKeyFrame()`** method of the RTCRtpScriptTransformer interface causes a video encoder to generate a key frame.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/generateKeyFrame)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotFoundError::class)
+    @JsName("generateKeyFrame")
+    open fun generateKeyFrameAsync(rid: String = definedExternally): Promise<Void>
+
+    /**
+     * The **`sendKeyFrameRequest()`** method of the RTCRtpScriptTransformer interface may be called by a WebRTC Encoded Transform that is processing incoming encoded video frames, in order to request a key frame from the sender.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/sendKeyFrameRequest)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsName("sendKeyFrameRequest")
+    open fun sendKeyFrameRequestAsync(): Promise<Void>
+}
+
+/**
+ * The **`generateKeyFrame()`** method of the RTCRtpScriptTransformer interface causes a video encoder to generate a key frame.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/generateKeyFrame)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun RTCRtpScriptTransformer.generateKeyFrame() {
+    generateKeyFrameAsync().await()
+}
+
+/**
+ * The **`generateKeyFrame()`** method of the RTCRtpScriptTransformer interface causes a video encoder to generate a key frame.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/generateKeyFrame)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun RTCRtpScriptTransformer.generateKeyFrame(rid: String) {
+    generateKeyFrameAsync(
+        rid = rid,
+    ).await()
+}
+
+/**
+ * The **`sendKeyFrameRequest()`** method of the RTCRtpScriptTransformer interface may be called by a WebRTC Encoded Transform that is processing incoming encoded video frames, in order to request a key frame from the sender.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCRtpScriptTransformer/sendKeyFrameRequest)
+ */
+@JsThrows(InvalidStateError::class)
+suspend inline fun RTCRtpScriptTransformer.sendKeyFrameRequest() {
+    sendKeyFrameRequestAsync().await()
+}

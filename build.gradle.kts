@@ -1,7 +1,7 @@
 plugins {
-    kotlin("js") apply false
+    id("wrappersbuild.security-npm-overrides")
 }
 
 tasks.wrapper {
-    gradleVersion = "7.2"
+    gradleVersion = "9.9.1"
 }

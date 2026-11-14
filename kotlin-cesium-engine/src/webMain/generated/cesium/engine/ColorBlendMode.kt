@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@cesium/engine")
+
+package cesium.engine
+
+/**
+ * Defines different modes for blending between a target color and a primitive's source color.
+ *
+ * HIGHLIGHT multiplies the source color by the target color
+ * REPLACE replaces the source color with the target color
+ * MIX blends the source color and target color together
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/global.html#ColorBlendMode">Online Documentation</a>
+ */
+/* enum */
+external class ColorBlendMode
+private constructor() {
+    companion object {
+
+        /**
+         * Value - `0`
+         */
+        val HIGHLIGHT: ColorBlendMode
+
+        /**
+         * Value - `1`
+         */
+        val REPLACE: ColorBlendMode
+
+        /**
+         * Value - `2`
+         */
+        val MIX: ColorBlendMode
+    }
+}

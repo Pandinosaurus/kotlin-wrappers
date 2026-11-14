@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * Returns difference between two versions by the release type (major, premajor, minor, preminor, patch, prepatch, or prerelease), or null if the versions are the same.
+ */
+external fun diff(
+    v1: String,
+    v2: String,
+): ReleaseType?
+
+/**
+ * Returns difference between two versions by the release type (major, premajor, minor, preminor, patch, prepatch, or prerelease), or null if the versions are the same.
+ */
+external fun diff(
+    v1: String,
+    v2: SemVer,
+): ReleaseType?
+
+/**
+ * Returns difference between two versions by the release type (major, premajor, minor, preminor, patch, prepatch, or prerelease), or null if the versions are the same.
+ */
+external fun diff(
+    v1: SemVer,
+    v2: String,
+): ReleaseType?
+
+/**
+ * Returns difference between two versions by the release type (major, premajor, minor, preminor, patch, prepatch, or prerelease), or null if the versions are the same.
+ */
+external fun diff(
+    v1: SemVer,
+    v2: SemVer,
+): ReleaseType?

@@ -1,0 +1,23 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("INTERNAL_ENTITY")
+
+package electron.core
+
+open external class ShareMenu {
+// Docs: https://electronjs.org/docs/api/share-menu
+    /**
+     * ShareMenu
+     */
+    constructor (sharingItem: SharingItem)
+
+    /**
+     * Closes the context menu in the `browserWindow`.
+     */
+    fun closePopup(browserWindow: BrowserWindow = definedExternally)
+
+    /**
+     * Pops up this menu as a context menu in the `BrowserWindow`.
+     */
+    fun popup(options: PopupOptions = definedExternally)
+}

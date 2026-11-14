@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+package web.rtc
+
+import js.buffer.ArrayBuffer
+import js.numbers.Int53
+import js.serialization.Serializable
+
+/**
+ * The **`RTCEncodedAudioFrame`** of the WebRTC API represents an encoded audio frame in the WebRTC receiver or sender pipeline, which may be modified using a WebRTC Encoded Transform.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCEncodedAudioFrame)
+ */
+open external class RTCEncodedAudioFrame
+private constructor() :
+    Serializable {
+    /**
+     * The **`data`** property of the RTCEncodedAudioFrame interface returns a buffer containing the data for an encoded frame.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCEncodedAudioFrame/data)
+     */
+    open var data: ArrayBuffer
+
+    /**
+     * The **`timestamp`** read-only property of the RTCEncodedAudioFrame interface indicates the time at which frame sampling started.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCEncodedAudioFrame/timestamp)
+     */
+    open val timestamp: Int53
+
+    /**
+     * The **`getMetadata()`** method of the RTCEncodedAudioFrame interface returns an object containing the metadata associated with the frame.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/RTCEncodedAudioFrame/getMetadata)
+     */
+    open fun getMetadata(): RTCEncodedAudioFrameMetadata
+}

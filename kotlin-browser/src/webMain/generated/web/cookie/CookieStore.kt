@@ -1,0 +1,178 @@
+// Automatically generated - do not modify!
+
+package web.cookie
+
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.errors.DOMExceptionType.SecurityError
+import web.errors.JsThrows
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+
+/**
+ * The **`CookieStore`** interface of the Cookie Store API provides methods for getting and setting cookies asynchronously from either a page or a service worker.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore)
+ */
+open external class CookieStore
+private constructor() :
+    EventTarget {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/change_event)
+     */
+    open var onchange: EventHandler<CookieChangeEvent, CookieStore, CookieStore>?
+
+    /**
+     * The **`delete()`** method of the CookieStore interface deletes a cookie that matches the given name or options object. The method expires the cookie by changing its date to one in the past.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/delete)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("delete")
+    open fun deleteAsync(name: String): Promise<Void>
+
+    @JsThrows(SecurityError::class)
+    @JsName("delete")
+    open fun deleteAsync(options: CookieStoreDeleteOptions): Promise<Void>
+
+    /**
+     * The **`get()`** method of the CookieStore interface returns a Promise that resolves to a single cookie matching the given name or options object. The method will return the first cookie that matches.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/get)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("get")
+    open fun getAsync(name: String): Promise<CookieListItem?>
+
+    @JsThrows(SecurityError::class)
+    @JsName("get")
+    open fun getAsync(options: CookieStoreGetOptions = definedExternally): Promise<CookieListItem?>
+
+    /**
+     * The **`getAll()`** method of the CookieStore interface returns a Promise that resolves as an array of cookies that match the name or options passed to it. Passing no parameters will return all cookies for the current context.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/getAll)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("getAll")
+    open fun getAllAsync(name: String): Promise<CookieList>
+
+    @JsThrows(SecurityError::class)
+    @JsName("getAll")
+    open fun getAllAsync(options: CookieStoreGetOptions = definedExternally): Promise<CookieList>
+
+    /**
+     * The **`set()`** method of the CookieStore interface sets a cookie with the given name and value or options object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/set)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("set")
+    open fun setAsync(
+        name: String,
+        value: String,
+    ): Promise<Void>
+
+    @JsThrows(SecurityError::class)
+    @JsName("set")
+    open fun setAsync(options: CookieInit): Promise<Void>
+}
+
+/**
+ * The **`delete()`** method of the CookieStore interface deletes a cookie that matches the given name or options object. The method expires the cookie by changing its date to one in the past.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/delete)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.delete(name: String) {
+    deleteAsync(
+        name = name,
+    ).await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.delete(options: CookieStoreDeleteOptions) {
+    deleteAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`get()`** method of the CookieStore interface returns a Promise that resolves to a single cookie matching the given name or options object. The method will return the first cookie that matches.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/get)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.get(name: String): CookieListItem? {
+    return getAsync(
+        name = name,
+    ).await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.get(): CookieListItem? {
+    return getAsync().await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.get(options: CookieStoreGetOptions): CookieListItem? {
+    return getAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`getAll()`** method of the CookieStore interface returns a Promise that resolves as an array of cookies that match the name or options passed to it. Passing no parameters will return all cookies for the current context.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/getAll)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.getAll(name: String): CookieList {
+    return getAllAsync(
+        name = name,
+    ).await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.getAll(): CookieList {
+    return getAllAsync().await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.getAll(options: CookieStoreGetOptions): CookieList {
+    return getAllAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`set()`** method of the CookieStore interface sets a cookie with the given name and value or options object.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/set)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.set(
+    name: String,
+    value: String,
+) {
+    setAsync(
+        name = name,
+        value = value,
+    ).await()
+}
+
+@JsThrows(SecurityError::class)
+suspend inline fun CookieStore.set(options: CookieInit) {
+    setAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CookieStore/change_event)
+ */
+inline val <C : CookieStore> C.changeEvent: EventInstance<CookieChangeEvent, C, C>
+    get() = EventInstance(this, "change")

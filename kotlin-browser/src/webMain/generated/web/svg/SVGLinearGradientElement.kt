@@ -1,0 +1,40 @@
+// Automatically generated - do not modify!
+
+package web.svg
+
+/**
+ * The **`SVGLinearGradientElement`** interface corresponds to the <linearGradient> element.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGLinearGradientElement)
+ */
+open external class SVGLinearGradientElement
+private constructor() :
+    SVGGradientElement {
+    /**
+     * The **`x1`** read-only property of the SVGLinearGradientElement interface describes the x-axis coordinate of the start point of the gradient as an SVGAnimatedLength. It reflects the computed value of the x1 attribute on the <linearGradient> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGLinearGradientElement/x1)
+     */
+    open val x1: SVGAnimatedLength
+
+    /**
+     * The **`x2`** read-only property of the SVGLinearGradientElement interface describes the x-axis coordinate of the start point of the gradient as an SVGAnimatedLength. It reflects the computed value of the x2 attribute on the <linearGradient> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGLinearGradientElement/x2)
+     */
+    open val x2: SVGAnimatedLength
+
+    /**
+     * The **`y1`** read-only property of the SVGLinearGradientElement interface describes the y-axis coordinate of the start point of the gradient as an SVGAnimatedLength. It reflects the computed value of the y1 attribute on the <linearGradient> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGLinearGradientElement/y1)
+     */
+    open val y1: SVGAnimatedLength
+
+    /**
+     * The **`y2`** read-only property of the SVGLinearGradientElement interface describes the y-axis coordinate of the start point of the gradient as an SVGAnimatedLength. It reflects the computed value of the y2 attribute on the <linearGradient> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGLinearGradientElement/y2)
+     */
+    open val y2: SVGAnimatedLength
+}

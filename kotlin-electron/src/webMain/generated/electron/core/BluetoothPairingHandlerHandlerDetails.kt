@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface BluetoothPairingHandlerHandlerDetails {
+    var deviceId: String
+
+    /**
+     * The type of pairing prompt being requested. One of the following values:
+     */
+    var pairingKind: (BluetoothPairingHandlerHandlerDetailsPairingKind)
+
+    /**
+     * The frame initiating this handler. May be `null` if accessed after the frame has
+     * either navigated or been destroyed.
+     */
+    var frame: WebFrameMain?
+
+    /**
+     * The pin value to verify if `pairingKind` is `confirmPin`.
+     */
+    var pin: String?
+}

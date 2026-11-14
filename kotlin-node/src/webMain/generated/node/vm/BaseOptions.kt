@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package node.vm
+
+@kotlinx.js.JsPlainObject
+external interface BaseOptions {
+    /**
+     * Specifies the filename used in stack traces produced by this script.
+     * @default ''
+     */
+    var filename: String?
+
+    /**
+     * Specifies the line number offset that is displayed in stack traces produced by this script.
+     * @default 0
+     */
+    var lineOffset: Double?
+
+    /**
+     * Specifies the column number offset that is displayed in stack traces produced by this script.
+     * @default 0
+     */
+    var columnOffset: Double?
+}

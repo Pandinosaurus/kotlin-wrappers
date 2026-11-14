@@ -1,0 +1,85 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/LinearProgress")
+
+package mui.material
+
+import mui.material.styles.Theme
+import mui.system.PropsWithSx
+import mui.system.StandardProps
+import mui.system.SxProps
+import react.FC
+import react.dom.html.HTMLAttributes
+import web.html.HTMLSpanElement
+
+external interface LinearProgressProps :
+    StandardProps,
+    HTMLAttributes<HTMLSpanElement>,
+    PropsWithSx {
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    var classes: LinearProgressClasses?
+
+    /**
+     * The color of the component.
+     * It supports both default and custom theme colors, which can be added as shown in the
+     * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+     * @default 'primary'
+     */
+    var color: LinearProgressColor?
+
+    /**
+     * The maximum value for the progress indicator for the determinate and buffer variants.
+     * @default 100
+     */
+    var max: Double?
+
+    /**
+     * The minimum value for the progress indicator for the determinate and buffer variants.
+     * @default 0
+     */
+    var min: Double?
+
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    override var sx: SxProps<Theme>?
+
+    /**
+     * The value of the progress indicator for the determinate and buffer variants.
+     * Value between `min` and `max`.
+     */
+    var value: Number?
+
+    /**
+     * The value for the buffer variant.
+     * Value between `min` and `max`.
+     */
+    var valueBuffer: Number?
+
+    /**
+     * The variant to use.
+     * Use indeterminate or query when there is no progress value.
+     * @default 'indeterminate'
+     */
+    var variant: LinearProgressVariant?
+}
+
+/**
+ * ## ARIA
+ *
+ * If the progress bar is describing the loading progress of a particular region of a page,
+ * you should use `aria-describedby` to point to the progress bar, and set the `aria-busy`
+ * attribute to `true` on that region until it has finished loading.
+ *
+ * Demos:
+ *
+ * - [Progress](https://mui.com/material-ui/react-progress/)
+ *
+ * API:
+ *
+ * - [LinearProgress API](https://mui.com/material-ui/api/linear-progress/)
+ */
+@JsName("default")
+external val LinearProgress: FC<LinearProgressProps>

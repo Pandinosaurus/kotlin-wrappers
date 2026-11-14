@@ -1,0 +1,97 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@cesium/engine")
+
+package cesium.engine
+
+import cesium.core.Clock
+import cesium.core.TimeInterval
+import cesium.core.TimeIntervalCollection
+import js.function.JsFunction
+import js.promise.Promise
+import kotlinx.js.JsPlainObject
+import seskar.js.JsAsync
+import web.html.HTMLImageElement
+
+/**
+ * Provides functionality for ImageryProviders that have time dynamic imagery
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/TimeDynamicImagery.html">Online Documentation</a>
+ */
+open external class TimeDynamicImagery(
+    options: ConstructorOptions,
+) {
+    /**
+     * @property [clock] A Clock instance that is used when determining the value for the time dimension. Required when `options.times` is specified.
+     * @property [times] TimeIntervalCollection with its `data` property being an object containing time dynamic dimension and their values.
+     * @property [requestImageFunction] A function that will request imagery tiles.
+     * @property [reloadFunction] A function that will be called when all imagery tiles need to be reloaded.
+     */
+    @JsPlainObject
+    interface ConstructorOptions {
+        val clock: Clock
+        val times: TimeIntervalCollection
+        val requestImageFunction: JsFunction<*, *>
+        val reloadFunction: JsFunction<*, *>
+    }
+
+    /**
+     * Gets or sets a clock that is used to get keep the time used for time dynamic parameters.
+     * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/TimeDynamicImagery.html#clock">Online Documentation</a>
+     */
+    var clock: Clock
+
+    /**
+     * Gets or sets a time interval collection.
+     * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/TimeDynamicImagery.html#times">Online Documentation</a>
+     */
+    var times: TimeIntervalCollection
+
+    /**
+     * Gets the current interval.
+     * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/TimeDynamicImagery.html#currentInterval">Online Documentation</a>
+     */
+    var currentInterval: TimeInterval
+
+    /**
+     * Gets the tile from the cache if its available.
+     * @param [x] The tile X coordinate.
+     * @param [y] The tile Y coordinate.
+     * @param [level] The tile level.
+     * @param [request] The request object. Intended for internal use only.
+     * @return A promise for the image that will resolve when the image is available, or
+     *   undefined if the tile is not in the cache.
+     * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/TimeDynamicImagery.html#getFromCache">Online Documentation</a>
+     */
+    @JsAsync(optional = true)
+    @Suppress("WRONG_EXTERNAL_DECLARATION")
+    suspend fun getFromCache(
+        x: Double,
+        y: Double,
+        level: Int,
+        request: Request? = definedExternally,
+    ): HTMLImageElement?
+
+    @JsName("getFromCache")
+    fun getFromCacheAsync(
+        x: Double,
+        y: Double,
+        level: Int,
+        request: Request? = definedExternally,
+    ): Promise<HTMLImageElement>?
+
+    /**
+     * Checks if the next interval is approaching and will start preload the tile if necessary. Otherwise it will
+     * just add the tile to a list to preload when we approach the next interval.
+     * @param [x] The tile X coordinate.
+     * @param [y] The tile Y coordinate.
+     * @param [level] The tile level.
+     * @param [request] The request object. Intended for internal use only.
+     * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/TimeDynamicImagery.html#checkApproachingInterval">Online Documentation</a>
+     */
+    fun checkApproachingInterval(
+        x: Double,
+        y: Double,
+        level: Int,
+        request: Request? = definedExternally,
+    )
+}

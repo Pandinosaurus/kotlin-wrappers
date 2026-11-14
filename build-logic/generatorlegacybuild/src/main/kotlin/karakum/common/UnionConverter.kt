@@ -1,0 +1,342 @@
+package karakum.common
+
+import karakum.common.UnionConverter.CommentProvider
+
+// Interface for TS unions conversion helpers
+internal interface UnionConverter {
+    fun unionBody(
+        name: String,
+        values: List<String>,
+    ): String {
+        val constants = values.map(::unionConstant)
+
+        return unionBodyByConstants(name, constants)
+    }
+
+    fun unionBodyByConstants(name: String, constants: List<UnionConstant>): String
+
+    fun sealedUnionBody(name: String, values: List<String>, commentProvider: CommentProvider? = null): String
+
+    fun sealedUnionBody(name: String, parentType: String, values: List<String>): String
+
+    fun objectUnionBody(name: String, constants: List<UnionConstant>): String
+
+    interface CommentProvider {
+        fun getComment(name: String): String?
+        fun getComment(name: String, unionValue: String): String?
+    }
+}
+
+// Helpers converting TS unions to sealed external interfaces, which include fields annotated with @JsValue.
+// Generated interfaces are not supported in the WASM target.
+internal object JsUnionConverter : UnionConverter {
+
+    override fun unionBodyByConstants(
+        name: String,
+        constants: List<UnionConstant>,
+    ): String {
+        val constantNames = constants
+            .joinToString("\n") {
+                sequenceOf(
+                    it.jsValueAnnotation,
+                    "val ${it.name}: ${it.type ?: name}",
+                ).joinToString("\n")
+            }
+
+        return """
+        sealed external interface $name {
+            companion object {
+            $constantNames
+            }
+        }
+        """.trimIndent()
+    }
+
+    override fun sealedUnionBody(
+        name: String,
+        values: List<String>,
+        commentProvider: CommentProvider?,
+    ): String {
+        val constants = values.map(::unionConstant)
+
+        val bodyMembers = constants.joinToString("\n") {
+            """
+        ${it.jsValueAnnotation}
+        val ${it.name}: $name
+        """.trimIndent()
+        }
+
+        return """
+        sealed external interface $name {
+            companion object {
+                $bodyMembers
+            }
+        }
+        """.trimIndent()
+    }
+
+    override fun sealedUnionBody(
+        name: String,
+        parentType: String,
+        values: List<String>,
+    ): String {
+        val constants = values.map(::unionConstant)
+
+        val bodyMembers = constants.joinToString("\n") {
+            """
+        ${it.jsValueAnnotation}
+        val ${it.name}: $parentType.${it.name.replaceFirstChar(Char::uppercase)}
+        """.trimIndent()
+        }
+
+        return """
+        sealed external interface $name: $parentType {
+            companion object {
+                $bodyMembers
+            }
+        }
+        """.trimIndent()
+    }
+
+    override fun objectUnionBody(
+        name: String,
+        constants: List<UnionConstant>,
+    ): String {
+        val constantNames = constants.joinToString("\n") {
+            sequenceOf(
+                it.jsValueAnnotation,
+                "val ${it.name} : ${name}.${it.name}",
+            ).joinToString("\n")
+        }
+
+        val constantTypes = constants.joinToString("\n") {
+            "sealed interface ${it.name} : $name"
+        }
+
+        return """
+        sealed external interface $name {
+            companion object {
+                $constantNames
+            }
+
+            $constantTypes
+        }
+        """.trimIndent()
+    }
+}
+
+// Helpers converting TS unions to sealed external interfaces with companion extensions
+// Generated interfaces support in the WASM target.
+internal object CommonUnionConverter : UnionConverter {
+
+    // K/Wasm requires `@JsName("Object")` on an external interface to access its companion object.
+    // Accessing the companion (which happens via any of its extension properties/methods, including inline)
+    // will fail at runtime in the future if the JS declaration doesn't exist.
+    private const val JS_UNION = """@JsUnion"""
+
+    override fun unionBodyByConstants(
+        name: String,
+        constants: List<UnionConstant>,
+    ): String {
+        val interfaceName = name.substringBefore('<')
+        val hasGenerics = interfaceName != name
+
+        val extensions = constants.joinToString("\n\n") {
+            require(!hasGenerics || it.type != null) {
+                "You should specify types for all generic unions. Wrong constant: $it."
+            }
+
+            it.withComment(
+                """
+            inline val $interfaceName.Companion.${it.name}: ${it.type ?: name}
+                get() = unsafeCast(${it.jsValue})
+            """,
+            )
+        }
+
+        return """
+        $JS_UNION
+        sealed /* union */
+        external interface $name
+
+        $extensions
+        """.trimIndent()
+    }
+
+    override fun sealedUnionBody(
+        name: String,
+        values: List<String>,
+        commentProvider: CommentProvider?,
+    ): String {
+        val constants = values.map(::unionConstant)
+
+        val extensions = constants.joinToString("\n\n") {
+            sequenceOf(
+                commentProvider?.getComment(name, it.value),
+                """
+                inline val $name.Companion.${it.name}: $name
+                    get() = unsafeCast(${it.jsValue})
+                """.trimIndent(),
+            ).filterNotNull()
+                .joinToString("\n")
+        }
+
+        return sequenceOf(
+            commentProvider?.getComment(name),
+            """
+            $JS_UNION
+            sealed /* union */
+            external interface $name
+
+            $extensions
+            """.trimIndent(),
+        ).filterNotNull()
+            .joinToString("\n")
+    }
+
+    override fun sealedUnionBody(
+        name: String,
+        parentType: String,
+        values: List<String>,
+    ): String {
+        val constants = values.map(::unionConstant)
+
+        val extensions = constants.joinToString("\n") {
+            """
+            inline val $name.Companion.${it.name}: $parentType.${it.name.replaceFirstChar(Char::uppercase)}
+                get() = unsafeCast(${it.jsValue})
+            """.trimIndent()
+        }
+
+        return """
+        $JS_UNION
+        sealed /* union */
+        external interface $name :
+            $parentType
+
+        $extensions
+        """.trimIndent()
+    }
+
+    override fun objectUnionBody(
+        name: String,
+        constants: List<UnionConstant>,
+    ): String {
+        val extensions = constants.joinToString("\n\n") {
+            """
+            inline val $name.Companion.${it.name}: $name.${it.name}
+                get() = unsafeCast(${it.jsValue})
+            """.trimIndent()
+        }
+
+        val constantTypes = constants.joinToString("\n") {
+            "sealed interface ${it.name} : $name"
+        }
+
+        return """
+        $JS_UNION
+        sealed /* union */
+        external interface $name {
+            $constantTypes
+        }
+
+        $extensions
+        """.trimIndent()
+    }
+}
+
+internal data class UnionConstant(
+    val name: String,
+    val value: String,
+    val type: String? = null,
+    private val originalValue: Boolean = false,
+    val comment: String? = null,
+) {
+    val jsValue: String
+        get() = if (originalValue) value else """"$value""""
+
+    val jsValueAnnotation: String
+        get() {
+            val annotation = if (originalValue) {
+                if (value.startsWith("\"")) {
+                    "@JsValue(\"${value.removeSurrounding("\"")}\")"
+                } else "@JsRawValue(\"$value\")"
+            } else {
+                val escapedValue = when (value) {
+                    "\"" -> """\""""
+                    else -> value
+                }
+
+                """@JsValue("$escapedValue")"""
+            }
+
+            return withComment(annotation)
+        }
+
+    fun withComment(valueExpression: String): String =
+        listOfNotNull(comment, valueExpression.trimIndent())
+            .joinToString("\n")
+}
+
+internal fun unionConstant(
+    value: String,
+): UnionConstant =
+    UnionConstant(
+        name = unionName(value),
+        value = value,
+    )
+
+internal fun unionConstant(
+    value: Boolean,
+): UnionConstant =
+    UnionConstant(
+        name = unionName(value.toString()),
+        value = value.toString(),
+        originalValue = true,
+    )
+
+internal fun unionName(
+    value: String,
+): String {
+    var name = value
+        .removePrefix("@")
+        .removeSurrounding("[", "]")
+        .removePrefix("::")
+        .removePrefix(":")
+        .removeSuffix("()")
+        .replace(":", "-")
+
+    if (name != "-" && name.startsWith("-")) {
+        name = name.removePrefix("-")
+    }
+
+    name = when (name) {
+        "" -> "none"
+        "1" -> "D"
+
+        "2x" -> "x2"
+        "4x" -> "x4"
+
+        "2-digit" -> "twoDigit"
+
+        else -> {
+            (if (name.substring(0, 1) in "0123456789") "_" else "") +
+                    name.kebabToCamel()
+        }
+    }
+
+    return when (name) {
+        "false",
+        "true",
+
+        "class",
+        "for",
+        "is",
+        "as",
+        "object",
+        "super",
+            -> "`${name}`"
+
+        else -> name
+    }
+}

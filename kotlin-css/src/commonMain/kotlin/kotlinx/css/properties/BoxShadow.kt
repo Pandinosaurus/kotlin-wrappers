@@ -2,42 +2,28 @@ package kotlinx.css.properties
 
 import kotlinx.css.*
 
-class BoxShadow(
-    private var inset: Boolean,
-    private var offsetX: LinearDimension,
-    private var offsetY: LinearDimension,
-    private var blurRadius: LinearDimension,
-    private var spreadRadius: LinearDimension,
-    var color: Color,
-) {
-    override fun toString() = buildString {
-        if (inset) append("inset ")
-        append("$offsetX $offsetY $blurRadius $spreadRadius $color")
-    }
+open class BoxShadow(
+    color: Color = Color.currentColor,
+    offsetX: LinearDimension = 0.px,
+    offsetY: LinearDimension = 0.px,
+    blurRadius: LinearDimension = 0.px,
+    spreadRadius: LinearDimension = 0.px,
+) : CssValue("$offsetX $offsetY $blurRadius $spreadRadius $color")
+
+data class BoxShadowInset(
+    val color: Color = Color.currentColor,
+    val offsetX: LinearDimension = 0.px,
+    val offsetY: LinearDimension = 0.px,
+    val blurRadius: LinearDimension = 0.px,
+    val spreadRadius: LinearDimension = 0.px,
+) : BoxShadow(color, offsetX, offsetY, blurRadius, spreadRadius) {
+    override fun toString() = value
+
+    override val value = "inset $offsetX $offsetY $blurRadius $spreadRadius $color"
 }
 
 class BoxShadows : StyleList<BoxShadow>(", ") {
     companion object {
         val none = BoxShadows()
     }
-}
-
-fun StyledElement.boxShadow(
-    color: Color,
-    offsetX: LinearDimension = 0.px,
-    offsetY: LinearDimension = 0.px,
-    blurRadius: LinearDimension = 0.px,
-    spreadRadius: LinearDimension = 0.px,
-) {
-    boxShadow += BoxShadow(false, offsetX, offsetY, blurRadius, spreadRadius, color)
-}
-
-fun StyledElement.boxShadowInset(
-    color: Color,
-    offsetX: LinearDimension = 0.px,
-    offsetY: LinearDimension = 0.px,
-    blurRadius: LinearDimension = 0.px,
-    spreadRadius: LinearDimension = 0.px,
-) {
-    boxShadow += BoxShadow(true, offsetX, offsetY, blurRadius, spreadRadius, color)
 }

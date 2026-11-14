@@ -1,0 +1,171 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/Checkbox")
+
+package mui.material
+
+import mui.material.styles.Theme
+import mui.system.PropsWithSx
+import mui.system.StandardProps
+import mui.system.SxProps
+import react.ElementType
+import react.FC
+import react.Props
+import react.ReactNode
+import react.dom.events.ChangeEvent
+import react.dom.html.InputHTMLAttributes
+import web.dom.ElementId
+import web.html.HTMLInputElement
+
+external interface CheckboxProps :
+    StandardProps,
+    SwitchBaseProps,
+    CheckboxSlotsAndSlotProps,
+    PropsWithSx {
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var slots: CheckboxSlots?
+
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var slotProps: CheckboxSlotProps?
+
+    /**
+     * If `true`, the component is checked.
+     */
+    override var checked: Boolean?
+
+    /**
+     * The icon to display when the component is checked.
+     * @default <CheckBoxIcon />
+     */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var checkedIcon: ReactNode?
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var classes: CheckboxClasses?
+
+    /**
+     * The color of the component.
+     * It supports both default and custom theme colors, which can be added as shown in the
+     * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+     * @default 'primary'
+     */
+    var color: CheckboxColor?
+
+    /**
+     * If `true`, the component is disabled.
+     * @default false
+     */
+    override var disabled: Boolean?
+
+    /**
+     * If `true`, the ripple effect is disabled.
+     * @default false
+     */
+    override var disableRipple: Boolean?
+
+    /**
+     * The icon to display when the component is unchecked.
+     * @default <CheckBoxOutlineBlankIcon />
+     */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var icon: ReactNode?
+
+    /**
+     * The id of the `input` element.
+     */
+    override var id: ElementId?
+
+    /**
+     * If `true`, the component appears indeterminate.
+     * This sets the native input element to indeterminate,
+     * and we also set a `data-indeterminate` attribute on the `input`.
+     * @default false
+     */
+    var indeterminate: Boolean?
+
+    /**
+     * The icon to display when the component is indeterminate.
+     * @default <IndeterminateCheckBoxIcon />
+     */
+    var indeterminateIcon: ReactNode?
+
+    /**
+     * Callback fired when the state is changed.
+     *
+     * @param {React.ChangeEvent<HTMLInputElement>} event The event source of the callback.
+     * You can pull out the new checked state by accessing `event.target.checked` (boolean).
+     */
+    override var onChange: ((event: ChangeEvent<HTMLInputElement, *>, checked: Boolean) -> Unit)?
+
+    /**
+     * If `true`, the `input` element is required.
+     * @default false
+     */
+    override var required: Boolean?
+
+    /**
+     * The size of the component.
+     * `small` is equivalent to the dense checkbox styling.
+     * @default 'medium'
+     */
+    var size: Size?
+
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    override var sx: SxProps<Theme>?
+
+    /**
+     * The value of the component. The DOM API casts this to a string.
+     * The browser uses "on" as the default value.
+     */
+    override var value: Any? /* SwitchBaseProps['value'] */
+}
+
+external interface CheckboxSlots {
+    /**
+     * The component that renders the root slot.
+     * @default SwitchBase
+     */
+    var root: ElementType<*>
+
+    /**
+     * The component that renders the input slot.
+     * @default SwitchBase's input
+     */
+    var input: ElementType<*>
+}
+
+external interface CheckboxSlotProps : Props {
+    /** TS: SlotProps<React.ElementType<SwitchBaseProps>, CheckboxRootSlotPropsOverrides, CheckboxOwnerState> */
+    var root: SwitchBaseProps?
+
+    /** TS: SlotProps<'input', CheckboxInputSlotPropsOverrides, CheckboxOwnerState> */
+    var input: InputHTMLAttributes<HTMLInputElement>?
+}
+
+external interface CheckboxSlotsAndSlotProps : Props {
+    var slots: CheckboxSlots?
+
+    var slotProps: CheckboxSlotProps?
+}
+
+external interface CheckboxOwnerState
+
+/**
+ *
+ * Demos:
+ *
+ * - [Checkbox](https://mui.com/material-ui/react-checkbox/)
+ * - [Transfer List](https://mui.com/material-ui/react-transfer-list/)
+ *
+ * API:
+ *
+ * - [Checkbox API](https://mui.com/material-ui/api/checkbox/)
+ * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ */
+@JsName("default")
+external val Checkbox: FC<CheckboxProps>

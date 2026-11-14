@@ -1,0 +1,123 @@
+package karakum.browser
+
+private val JS_MARKER_DECLARATIONS = setOf(
+    "Transferable",
+)
+
+private val WEB_MARKER_DECLARATIONS = setOf(
+    "BodyInit",
+
+    "AlgorithmIdentifier",
+
+    "ReadableStreamController<T>",
+
+    "MessageEventSource",
+
+    "ImageBitmapSource",
+    "CanvasImageSource",
+    "TexImageSource",
+
+    "GPUCopyExternalImageSource",
+    "GPUBindingResource",
+
+    "OriginSource",
+    "URLLike",
+    "URLSource",
+)
+
+private val BROWSER_MARKER_DECLARATIONS = setOf(
+    "HTMLOrSVGImageElement",
+    "HTMLOrSVGScriptElement",
+
+    "OffscreenRenderingContext",
+    "RenderingContext",
+
+    "MediaProvider",
+)
+
+internal val MARKER_DECLARATIONS =
+    BROWSER_MARKER_DECLARATIONS +
+            WEB_MARKER_DECLARATIONS +
+            JS_MARKER_DECLARATIONS
+
+private val WEB_BASE_TYPES = listOf(
+    "String",
+    "BufferSource",
+)
+
+private val BROWSER_BASE_TYPES = listOf(
+    "Blob",
+)
+
+private val ALIASES = mapOf(
+    "string" to "String",
+    "WindowProxy" to "Window",
+)
+
+internal fun getMarkerChildType(
+    type: String,
+): String =
+    ALIASES[type] ?: type
+
+internal object MarkerRegistry {
+    private lateinit var map: Map<String, List<String>>
+
+    fun fill(
+        content: String,
+    ) {
+        map = MARKER_DECLARATIONS.asSequence()
+            .flatMap { name -> findParentTypes(content = content, interfaceDeclaration = name) }
+            .groupBy(keySelector = { it.first }, valueTransform = { it.second })
+    }
+
+    fun additionalParents(
+        type: String,
+    ): List<String>? {
+        val result = map[type]
+
+        if (type == "Headers") {
+            require(result == null)
+            return listOf("HeadersInit")
+        }
+
+        if (result != null && type in BROWSER_BASE_TYPES)
+            return result.filter { it !in BROWSER_MARKER_DECLARATIONS }
+
+        return result
+    }
+
+    fun nonProcessedChildTypes(
+        type: String,
+    ): List<String> {
+        val baseTypes = when (type) {
+            in BROWSER_MARKER_DECLARATIONS,
+                -> BROWSER_BASE_TYPES
+
+            else -> WEB_BASE_TYPES
+        }
+
+        return baseTypes.filter {
+            val parentTypes = map[it]
+            parentTypes != null && type in parentTypes
+        }
+    }
+}
+
+private fun findParentTypes(
+    content: String,
+    interfaceDeclaration: String,
+): Sequence<Pair<String, String>> =
+    content.substringAfter("type $interfaceDeclaration = ", "")
+        .substringBefore(";\n")
+        .splitToSequence(" | ")
+        .map { it.substringBefore("<") }
+        .map { getMarkerChildType(it) }
+        .map { type ->
+            val parentType = when (type) {
+                "ReadableByteStreamController" -> interfaceDeclaration.replace("<T>", "<Void>")
+                "ReadableStreamDefaultController" -> interfaceDeclaration.replace("<T>", "<R>")
+                else -> interfaceDeclaration
+            }
+
+            type to parentType
+        }

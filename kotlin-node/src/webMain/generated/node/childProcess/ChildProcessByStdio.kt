@@ -1,0 +1,28 @@
+// Automatically generated - do not modify!
+
+package node.childProcess
+
+import node.stream.Readable
+import node.stream.Writable
+
+// return this object when stdio option is a tuple of 3
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface ChildProcessByStdio<I : Writable?, O : Readable?, E : Readable?> : ChildProcess {
+    @JsName("stdin")
+    var boundStdin: I
+
+    @JsName("stdout")
+    var boundStdout: O
+
+    @JsName("stderr")
+    var boundStderr: E
+
+    @JsName("stdio")
+    val boundStdio: js.array.Tuple5<
+            I,
+            O,
+            E,
+            Any?, /* Readable | Writable | null | undefined */ // extra, no modification
+            Any?, /* Readable | Writable | null | undefined */
+            >
+}

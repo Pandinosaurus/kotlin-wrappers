@@ -1,0 +1,220 @@
+// Automatically generated - do not modify!
+
+package web.idb
+
+import js.array.ReadonlyArray
+import js.numbers.JsInt
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+
+/**
+ * **`IDBIndex`** interface of the IndexedDB API provides asynchronous access to an index in a database. An index is a kind of object store for looking up records in another object store, called the referenced object store. You use this interface to retrieve data.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex)
+ */
+open external class IDBIndex
+private constructor() {
+    /**
+     * The **`keyPath`** read-only property of the IDBIndex interface returns the key path of the current index. If null, this index is not auto-populated.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/keyPath)
+     */
+    open val keyPath: JsAny /* string | string[] */
+
+    /**
+     * The **`multiEntry`** read-only property of the IDBIndex interface returns a boolean value that affects how the index behaves when the result of evaluating the index's key path yields an array.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/multiEntry)
+     */
+    open val multiEntry: Boolean
+
+    /**
+     * The **`name`** property of the IDBIndex interface contains a string which names the index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/name)
+     */
+    open var name: String
+
+    /**
+     * The **`objectStore`** read-only property of the IDBIndex interface returns the object store referenced by the current index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/objectStore)
+     */
+    open val objectStore: IDBObjectStore
+
+    /**
+     * The **`unique`** read-only property returns a boolean that states whether the index allows duplicate keys.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/unique)
+     */
+    open val unique: Boolean
+
+    /**
+     * The **`count()`** method of the IDBIndex interface returns an IDBRequest object, and in a separate thread, returns the number of records within a key range.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/count)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun count(query: IDBValidKey = definedExternally): IDBRequest<JsInt>
+
+    /**
+     * The **`count()`** method of the IDBIndex interface returns an IDBRequest object, and in a separate thread, returns the number of records within a key range.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/count)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun count(query: IDBKeyRange): IDBRequest<JsInt>
+
+    /**
+     * The **`get()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, finds either the value in the referenced object store that corresponds to the given key or the first corresponding value, if key is set to an IDBKeyRange.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/get)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun get(query: IDBValidKey): IDBRequest<*>
+
+    /**
+     * The **`get()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, finds either the value in the referenced object store that corresponds to the given key or the first corresponding value, if key is set to an IDBKeyRange.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/get)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun get(query: IDBKeyRange): IDBRequest<*>
+
+    /**
+     * The **`getAll()`** method of the IDBIndex interface retrieves all objects that are inside the index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/getAll)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAll(
+        queryOrOptions: IDBValidKey? = definedExternally,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<*>>
+
+    /**
+     * The **`getAll()`** method of the IDBIndex interface retrieves all objects that are inside the index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/getAll)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAll(
+        queryOrOptions: IDBKeyRange?,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<*>>
+
+    /**
+     * The **`getAllKeys()`** method of the IDBIndex interface asynchronously retrieves the primary keys of all objects inside the index, setting them as the result of the request object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/getAllKeys)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAllKeys(
+        queryOrOptions: IDBValidKey? = definedExternally,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<IDBValidKey>>
+
+    /**
+     * The **`getAllKeys()`** method of the IDBIndex interface asynchronously retrieves the primary keys of all objects inside the index, setting them as the result of the request object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/getAllKeys)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAllKeys(
+        queryOrOptions: IDBKeyRange?,
+        count: Int = definedExternally,
+    ): IDBRequest<ReadonlyArray<IDBValidKey>>
+
+    /**
+     * The **`getAllRecords()`** method of the IDBIndex interface retrieves all records (including index keys, primary keys, and values) from the index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/getAllRecords)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getAllRecords(options: IDBGetAllOptions = definedExternally): IDBRequest<*>
+
+    /**
+     * The **`getKey()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, finds either the primary key that corresponds to the given key in this index or the first corresponding primary key, if key is set to an IDBKeyRange.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/getKey)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getKey(query: IDBValidKey): IDBRequest<IDBValidKey?>
+
+    /**
+     * The **`getKey()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, finds either the primary key that corresponds to the given key in this index or the first corresponding primary key, if key is set to an IDBKeyRange.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/getKey)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun getKey(query: IDBKeyRange): IDBRequest<IDBValidKey?>
+
+    /**
+     * The **`openCursor()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, creates a cursor over the specified key range.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/openCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openCursor(
+        query: IDBValidKey? = definedExternally,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursorWithValue?>
+
+    /**
+     * The **`openCursor()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, creates a cursor over the specified key range.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/openCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openCursor(
+        query: IDBKeyRange?,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursorWithValue?>
+
+    /**
+     * The **`openKeyCursor()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, creates a cursor over the specified key range, as arranged by this index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/openKeyCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openKeyCursor(
+        query: IDBValidKey? = definedExternally,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursor?>
+
+    /**
+     * The **`openKeyCursor()`** method of the IDBIndex interface returns an IDBRequest object, and, in a separate thread, creates a cursor over the specified key range, as arranged by this index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBIndex/openKeyCursor)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(TransactionInactiveError::class)
+    open fun openKeyCursor(
+        query: IDBKeyRange?,
+        direction: IDBCursorDirection = definedExternally,
+    ): IDBRequest<IDBCursor?>
+}

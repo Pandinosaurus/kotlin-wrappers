@@ -1,0 +1,84 @@
+// Automatically generated - do not modify!
+
+package node.dns
+
+sealed external interface ResourceRecordType {
+    sealed interface StringRecord : ResourceRecordType
+
+    sealed interface A :
+        ResourceRecordType,
+        StringRecord
+
+    sealed interface AAAA :
+        ResourceRecordType,
+        StringRecord
+
+    sealed interface CNAME :
+        ResourceRecordType,
+        StringRecord
+
+    sealed interface NS :
+        ResourceRecordType,
+        StringRecord
+
+    sealed interface PTR :
+        ResourceRecordType,
+        StringRecord
+
+    sealed interface ANY : ResourceRecordType
+
+    sealed interface CAA : ResourceRecordType
+
+    sealed interface MX : ResourceRecordType
+
+    sealed interface NAPTR : ResourceRecordType
+
+    sealed interface SOA : ResourceRecordType
+
+    sealed interface SRV : ResourceRecordType
+
+    sealed interface TLSA : ResourceRecordType
+
+    sealed interface TXT : ResourceRecordType
+
+    companion object {
+        @seskar.js.JsValue("A")
+        val A: A
+
+        @seskar.js.JsValue("AAAA")
+        val AAAA: AAAA
+
+        @seskar.js.JsValue("CNAME")
+        val CNAME: CNAME
+
+        @seskar.js.JsValue("NS")
+        val NS: NS
+
+        @seskar.js.JsValue("PTR")
+        val PTR: PTR
+
+        @seskar.js.JsValue("ANY")
+        val ANY: ANY
+
+        @seskar.js.JsValue("CAA")
+        val CAA: CAA
+
+        @seskar.js.JsValue("MX")
+        val MX: MX
+
+        @seskar.js.JsValue("NAPTR")
+        val NAPTR: NAPTR
+
+        @seskar.js.JsValue("SOA")
+        val SOA: SOA
+
+        @seskar.js.JsValue("SRV")
+        val SRV: SRV
+
+        @seskar.js.JsValue("TLSA")
+        val TLSA: TLSA
+
+        @seskar.js.JsValue("TXT")
+        val TXT: TXT
+    }
+}

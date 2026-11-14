@@ -1,0 +1,171 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/Chip")
+
+@file:Suppress(
+    "VIRTUAL_MEMBER_HIDDEN",
+)
+
+package mui.material
+
+import mui.material.styles.Theme
+import mui.system.PropsWithSx
+import mui.system.SxProps
+import mui.types.PropsWithComponent
+import react.*
+import react.dom.events.EventHandler
+import react.dom.html.HTMLAttributes
+import web.html.HTMLDivElement
+import web.html.HTMLSpanElement
+
+external interface ChipProps :
+    ChipOwnProps,
+    ChipSlotsAndSlotProps,
+    HTMLAttributes<HTMLDivElement>,
+    PropsWithComponent
+
+external interface ChipSlots {
+    /**
+     * The component that renders the root.
+     * @default div
+     */
+    var root: ElementType<*>
+
+    /**
+     * The component that renders the label.
+     * @default span
+     */
+    var label: ElementType<*>
+}
+
+external interface ChipSlotProps : Props {
+    /** TS: SlotProps<'div', ChipRootSlotPropsOverrides, ChipOwnerState> */
+    var root: HTMLAttributes<HTMLDivElement>?
+
+    /** TS: SlotProps<'span', ChipLabelSlotPropsOverrides, ChipOwnerState> */
+    var label: HTMLAttributes<HTMLSpanElement>?
+}
+
+external interface ChipSlotsAndSlotProps : Props {
+    var slots: ChipSlots?
+
+    var slotProps: ChipSlotProps?
+}
+
+external interface ChipOwnerState
+
+external interface ChipOwnProps :
+    PropsWithSx,
+    HTMLAttributes<HTMLDivElement> {
+    /**
+     * The Avatar element to display.
+     */
+    var avatar: ReactElement<*>?
+
+    /**
+     * This prop isn't supported.
+     * Use the `component` prop if you need to change the children structure.
+     */
+    var children: Nothing?
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    var classes: ChipClasses?
+
+    /**
+     * If `true`, the chip will appear clickable, and will raise when pressed,
+     * even if the onClick prop is not defined.
+     * If `false`, the chip will not appear clickable, even if onClick prop is defined.
+     * This can be used, for example,
+     * along with the component prop to indicate an anchor Chip is clickable.
+     * Note: this controls the UI and does not affect the onClick event.
+     */
+    var clickable: Boolean?
+
+    /**
+     * The color of the component.
+     * It supports both default and custom theme colors, which can be added as shown in the
+     * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+     * @default 'default'
+     */
+    var color: ChipColor?
+
+    /**
+     * Override the default delete icon element. Shown only if `onDelete` is set.
+     */
+    var deleteIcon: ReactElement<*>?
+
+    /**
+     * If `true`, the component is disabled.
+     * @default false
+     */
+    var disabled: Boolean?
+
+    /**
+     * Icon element.
+     */
+    var icon: ReactElement<*>?
+
+    /**
+     * The content of the component.
+     */
+    var label: ReactNode?
+
+    /**
+     * Callback fired when the delete icon is clicked.
+     * If set, the delete icon will be shown.
+     */
+    var onDelete: EventHandler<*>?
+
+    /**
+     * The size of the component.
+     * @default 'medium'
+     */
+    var size: BaseSize?
+
+    /**
+     * If `true`, the component is expected to resolve to a native `<button>` element.
+     * When omitted, custom components inherit the default button semantics of the current wrapper.
+     * Set to `true` when a custom component resolves to a native `<button>`, or `false`
+     * when it resolves to a non-button host.
+     */
+    var nativeButton: Boolean?
+
+    /**
+     * If `true`, allows the disabled chip to escape focus.
+     * If `false`, allows the disabled chip to receive focus.
+     * @default false
+     */
+    var skipFocusWhenDisabled: Boolean?
+
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    override var sx: SxProps<Theme>?
+
+    /**
+     *  @ignore
+     */
+    var tabIndex: Int?
+
+    /**
+     * The variant to use.
+     * @default 'filled'
+     */
+    var variant: ChipVariant?
+}
+
+/**
+ * Chips represent complex entities in small blocks, such as a contact.
+ *
+ * Demos:
+ *
+ * - [Chip](https://mui.com/material-ui/react-chip/)
+ *
+ * API:
+ *
+ * - [Chip API](https://mui.com/material-ui/api/chip/)
+ */
+@JsName("default")
+external val Chip: FC<ChipProps>

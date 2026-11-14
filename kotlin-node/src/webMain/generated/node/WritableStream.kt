@@ -1,0 +1,38 @@
+// Automatically generated - do not modify!
+
+package node
+
+import node.events.EventEmitter
+
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface WritableStream : EventEmitter {
+    var writable: Boolean
+
+    fun write(
+        buffer: js.typedarrays.Uint8Array<*>,
+        cb: (err: js.errors.JsError? /* use undefined for default */) -> Unit = definedExternally,
+    ): Boolean
+
+    fun write(
+        buffer: String,
+        cb: (err: js.errors.JsError? /* use undefined for default */) -> Unit = definedExternally,
+    ): Boolean
+
+    fun write(
+        str: String,
+        encoding: node.buffer.BufferEncoding = definedExternally,
+        cb: (err: js.errors.JsError? /* use undefined for default */) -> Unit = definedExternally,
+    ): Boolean
+
+    fun end(cb: () -> Unit = definedExternally) /* this */
+
+    fun end(data: String, cb: () -> Unit = definedExternally) /* this */
+
+    fun end(data: js.typedarrays.Uint8Array<*>, cb: () -> Unit = definedExternally) /* this */
+
+    fun end(
+        str: String,
+        encoding: node.buffer.BufferEncoding = definedExternally,
+        cb: () -> Unit = definedExternally,
+    ) /* this */
+}

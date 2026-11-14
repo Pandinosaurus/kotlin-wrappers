@@ -1,0 +1,45 @@
+// Automatically generated - do not modify!
+
+package node.zlib
+
+@kotlinx.js.JsPlainObject
+external interface ZlibOptions {
+    /**
+     * @default constants.Z_NO_FLUSH
+     */
+    var flush: Double?
+
+    /**
+     * @default constants.Z_FINISH
+     */
+    var finishFlush: Double?
+
+    /**
+     * @default 16*1024
+     */
+    var chunkSize: Double?
+    var windowBits: Double?
+
+    /** compression only */
+    var level: Double?
+
+    /** compression only */
+    var memLevel: Double?
+
+    /** compression only */
+    var strategy: Double?
+
+    /** deflate/inflate only, empty dictionary by default */
+    var dictionary: Any? /* NodeJS.ArrayBufferView | ArrayBuffer | undefined */
+
+    /**
+     * If `true`, returns an object with `buffer` and `engine`.
+     */
+    var info: Boolean?
+
+    /**
+     * Limits output size when using convenience methods.
+     * @default buffer.kMaxLength
+     */
+    var maxOutputLength: Double?
+}

@@ -1,0 +1,67 @@
+// Automatically generated - do not modify!
+
+package web.idb
+
+import js.array.ReadonlyArray
+import js.numbers.UInt53
+import js.promise.Promise
+import js.promise.await
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+
+/**
+ * The **`IDBFactory`** interface of the IndexedDB API lets applications asynchronously access the indexed databases. The object that implements the interface is window.indexedDB. You open — that is, create and access — and delete a database with this object, and not directly with IDBFactory.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBFactory)
+ */
+open external class IDBFactory
+private constructor() {
+    /**
+     * The **`cmp()`** method of the IDBFactory interface compares two values as keys to determine equality and ordering for IndexedDB operations, such as storing and iterating.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBFactory/cmp)
+     */
+    @JsThrows(DataError::class)
+    open fun cmp(
+        first: JsAny?,
+        second: JsAny?,
+    ): Short
+
+    /**
+     * The **`databases`** method of the IDBFactory interface returns a Promise that fulfills with an array of objects containing the name and version of all the available databases.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBFactory/databases)
+     */
+    @JsThrows(SecurityError::class)
+    @JsThrows(UnknownError::class)
+    @JsName("databases")
+    open fun databasesAsync(): Promise<ReadonlyArray<IDBDatabaseInfo>>
+
+    /**
+     * The **`deleteDatabase()`** method of the IDBFactory interface requests the deletion of a database. The method returns an IDBOpenDBRequest object immediately, and performs the deletion operation asynchronously.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBFactory/deleteDatabase)
+     */
+    open fun deleteDatabase(name: String): IDBOpenDBRequest
+
+    /**
+     * The **`open()`** method of the IDBFactory interface requests opening a connection to a database.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBFactory/open)
+     */
+    open fun open(
+        name: String,
+        version: UInt53 = definedExternally,
+    ): IDBOpenDBRequest
+}
+
+/**
+ * The **`databases`** method of the IDBFactory interface returns a Promise that fulfills with an array of objects containing the name and version of all the available databases.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/IDBFactory/databases)
+ */
+@JsThrows(SecurityError::class)
+@JsThrows(UnknownError::class)
+suspend inline fun IDBFactory.databases(): ReadonlyArray<IDBDatabaseInfo> {
+    return databasesAsync().await()
+}

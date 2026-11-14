@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package tanstack.table.core
+
+import js.array.ReadonlyArray
+import kotlinx.js.JsPlainObject
+
+@JsPlainObject
+external interface VisibilityRow<TData : RowData> {
+    /**
+     * Returns an array of cells that account for column visibility for the row.
+     * [API Docs](https://tanstack.com/table/v8/docs/api/features/column-visibility#getvisiblecells)
+     * [Guide](https://tanstack.com/table/v8/docs/guide/column-visibility)
+     */
+    val getVisibleCells: () -> ReadonlyArray<Cell<TData, *>>
+}

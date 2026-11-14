@@ -1,0 +1,42 @@
+// Automatically generated - do not modify!
+
+package web.streams
+
+import js.errors.JsError
+
+/**
+ * The **`ReadableStreamDefaultController`** interface of the Streams API represents a controller allowing control of a ReadableStream's state and internal queue. Default controllers are for streams that are not byte streams.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamDefaultController)
+ */
+open external class ReadableStreamDefaultController<in R : JsAny?>
+private constructor() :
+    ReadableStreamController<R> {
+    /**
+     * The **`desiredSize`** read-only property of the ReadableStreamDefaultController interface returns the desired size required to fill the stream's internal queue.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamDefaultController/desiredSize)
+     */
+    open val desiredSize: Double?
+
+    /**
+     * The **`close()`** method of the ReadableStreamDefaultController interface closes the associated stream.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamDefaultController/close)
+     */
+    open fun close()
+
+    /**
+     * The **`enqueue()`** method of the ReadableStreamDefaultController interface enqueues a given chunk in the associated stream.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamDefaultController/enqueue)
+     */
+    open fun enqueue(chunk: R)
+
+    /**
+     * The **`error()`** method of the ReadableStreamDefaultController interface causes any future interactions with the associated stream to error.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamDefaultController/error)
+     */
+    open fun error(error: JsError = definedExternally)
+}

@@ -1,0 +1,246 @@
+package karakum.cesium
+
+internal abstract class TypeBase(
+    final override val source: Definition,
+) : Declaration(), IType, HasMembers {
+    final override val name: String =
+        source.defaultName
+
+    private val typeParameters: String = run {
+        val start = source.body.substringAfter(name)
+        if (start.startsWith("<")) {
+            (start.substringBefore(">") + ">")
+                .replace("T = unknown", "T : JsAny?")
+                .replace(" extends ", " : ")
+        } else ""
+    }
+
+    var parents: List<String> = run {
+        val start = source.body
+            .substringAfter(name)
+            .substringBefore(" {\n")
+
+        if (start.startsWith(" extends ")) {
+            listOf(start.removePrefix(" extends "))
+                .map { if (it == "Error") "JsError" else it }
+        } else emptyList()
+    }
+
+    abstract val typeName: String
+    abstract val companion: HasMembers?
+    open val staticBody: Boolean = false
+
+    protected val abstract: Boolean by lazy {
+        source.abstract
+    }
+
+    protected open val open: Boolean = false
+
+    private val hasPrivateConstructor: Boolean by lazy {
+        source.hasPrivateConstructor
+    }
+
+    override val members by lazy {
+        val filter: (Member) -> Boolean = if (hasPrivateConstructor) {
+            { it !is Constructor }
+        } else {
+            { true }
+        }
+
+        members(source.body, source.optionsKdocBody())
+            .filter(filter)
+            .onEach { it.parent = this }
+            .onEach { if (!it.static) it.abstract = abstract }
+            // TODO: all open?
+            .onEach { if (it.parent.name == APPEARANCE) it.open = open }
+    }
+
+    private fun Constructor?.propertyParameters(): List<Property> {
+        this ?: return emptyList()
+
+        if (parameters.isEmpty())
+            return emptyList()
+
+        val parameterMap = parameters
+            .associate { it.name to it.type }
+
+        return members.asSequence()
+            .filterIsInstance<Property>()
+            .filter { parameterMap[it.name] == it.type }
+            .toList()
+    }
+
+    override fun toCode(): String =
+        toCode(true)
+
+    fun toCode(top: Boolean): String {
+        val constructor = members.firstOrNull() as? Constructor
+        var constructorBody = when {
+            hasPrivateConstructor -> "\nprivate constructor()"
+            constructor != null -> constructor.toCode().removePrefix("constructor")
+            else -> ""
+        }
+
+        val propertyParameters = constructor.propertyParameters()
+        for (p in propertyParameters) {
+            val parameter = "${p.name}: ${p.type}"
+            val param = if ("$parameter?" in constructorBody) "$parameter?" else parameter
+            constructorBody = constructorBody.replaceFirst(param, p.declaration)
+        }
+
+        if ("JsError" in parents) {
+            constructorBody = constructorBody.replaceFirst(
+                "val message:",
+                "override val message:",
+            )
+        }
+
+        val (nestedTypes, companionMembers) = run {
+            val source = companion?.members
+                ?: return@run (emptyList<Member>() to emptyList<Member>())
+
+            if (source.all { it is SimpleType } && members.none { it.static })
+                return@run Pair(source, emptyList<Member>())
+
+            Pair(
+                source.filter { it.isNestedType() },
+                source.filterNot { it.isNestedType() },
+            )
+        }
+
+        var body = members
+            .asSequence()
+            .filter { it != constructor }
+            .filter { staticBody || !it.static }
+            .plus(nestedTypes)
+            // WA for duplicated option types
+            .distinct()
+            .filter(constructor.toMemberFilter())
+            .minus(propertyParameters)
+            .map { it.toCode() }
+            .filter { it.isNotEmpty() } // TEMP
+            .joinToString(separator = "\n\n")
+
+        if (!staticBody) {
+            val staticMembers = members.filter { it.static }
+                .plus(companionMembers)
+
+            val packable = name != PACKABLE
+                    && name != "PlaneOutlineGeometry" // WA
+                    && name != "BufferPrimitiveMaterial" // WA
+                    && staticMembers.any { it.name == PACKED_LENGTH }
+
+            if (packable) {
+                staticMembers.asSequence()
+                    .filter { it.name in PACKABLE_MEMBERS }
+                    .forEach { it.overridden = true }
+            }
+
+            val companionBody = staticMembers
+                .map { it.toCode() }
+                .filter { it.isNotEmpty() } // TEMP
+                .joinToString(separator = "\n\n")
+
+            val companionTypes = if (packable) {
+                ": $PACKABLE<$name>"
+            } else ""
+
+            if (companionBody.isNotEmpty()) {
+                body += "\n\ncompanion object $companionTypes {\n$companionBody\n}"
+            }
+        }
+
+        val parentNames = if (parents.isNotEmpty()) {
+            val result = ":" + (if (constructorBody.endsWith("\n)")) " " else "\n") +
+                    parents.joinToString(", ")
+
+            when (name) {
+                "BufferPointMaterial",
+                "BufferPolygonCollection",
+                "BufferPolygonMaterial",
+                "BufferPolylineMaterial",
+                "Cesium3DTilesVoxelProvider",
+                "DefaultProxy",
+                "IonResource",
+                    -> " /* $result */"
+
+                else -> result
+            }
+        } else ""
+
+        when (name) {
+            "BufferPrimitive",
+                -> body = body.replace("fun toJSON(", "open fun toJSON(")
+
+            "BufferPoint",
+            "BufferPolygon",
+            "BufferPolyline",
+                -> body = body.replace("fun toJSON(", "override fun toJSON(")
+
+            "BufferPrimitiveCollection",
+                -> body = body.replace("fun setPositions(", "open fun setPositions(")
+
+            "BufferPointCollection",
+            "BufferPolylineCollection",
+                -> body = body.replace("fun setPositions(", "override fun setPositions(")
+
+            "Camera",
+                -> body = body.replace(Regex("""\n(var (position|direction|up): Cartesian3)"""), "\noverride $1")
+
+            "Event",
+                -> body = body
+                .replace("listener: Listener", "listener: EventListener<T>")
+                .replace("fun addEventListener(", "internal fun addEventListener(")
+                .replace("fun removeEventListener(", "internal fun removeEventListener(")
+        }
+
+        // TODO: move cleanup to separate method
+        body = "$constructorBody $parentNames {\n$body\n}\n"
+            .replace(": $name.", ": ")
+
+        val header = if (top) {
+            DEFAULT_PACKAGE
+        } else ""
+
+        val modifiers = (if (top) "external " else "") +
+                (if (abstract) "abstract " else "") +
+                (if (open) "open " else "")
+
+        val hideParams = constructor != null && !constructor.hasParameters
+
+        val doc = propertyParameters
+            .fold(source.doc(DocLink(this), hideParams)) { acc, p ->
+                acc.replaceFirst("@param [${p.name}]", "@property [${p.name}]")
+            }
+
+        val declaration = when (name) {
+            "Event" -> "$name<T : Tuple>"
+            else -> name + typeParameters
+        }
+
+        return header +
+                doc +
+                "\n" +
+                "$modifiers $typeName $declaration $body"
+    }
+}
+
+private fun Member.isNestedType(): Boolean {
+    if (this is NestedNamespace)
+        return true
+
+    if (this !is SimpleType)
+        return false
+
+    return name.startsWith(CONSTRUCTOR_OPTIONS)
+            || !name.endsWith("Options")
+}
+
+private fun Constructor?.toMemberFilter(): (Member) -> Boolean {
+    if (this == null || !hiddenOptions)
+        return { true }
+
+    return {
+        it !is SimpleType || !it.name.startsWith(CONSTRUCTOR_OPTIONS)
+    }
+}

@@ -1,0 +1,23 @@
+package wrappersgenerator.testing.library.react.injections
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.HERITAGE_CLAUSE
+import io.github.sgrishchenko.karakum.extension.InjectionType
+import io.github.sgrishchenko.karakum.extension.createInjection
+import js.reflect.invoke
+import typescript.isIntersectionTypeNode
+import typescript.isTypeAliasDeclaration
+
+val injectBoundFunction = createInjection { node, context, _ ->
+    nullable {
+        ensure(isIntersectionTypeNode(node))
+
+        val typeAlias = ensureNotNull(node.parent)
+        ensure(isTypeAliasDeclaration(typeAlias))
+        ensure(typeAlias.name.text == "RenderResult")
+
+        ensure(context.type == InjectionType.HERITAGE_CLAUSE)
+
+        arrayOf("testing.library.dom.BoundFunctions")
+    }
+}

@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) instance.
+ *
+ * ```js
+ * const target = {};
+ * const proxy = new Proxy(target, {});
+ * util.types.isProxy(target);  // Returns false
+ * util.types.isProxy(proxy);  // Returns true
+ * ```
+ * @since v10.0.0
+ */
+external fun isProxy(value: Any?): Boolean

@@ -1,0 +1,38 @@
+// Automatically generated - do not modify!
+
+package web.html
+
+import web.errors.DOMExceptionType.IndexSizeError
+import web.errors.JsThrows
+
+/**
+ * The **`HTMLTableSectionElement`** interface provides special properties and methods (beyond the HTMLElement interface it also has available to it by inheritance) for manipulating the layout and presentation of sections, that is headers, footers and bodies (<thead>, <tfoot>, and <tbody>, respectively) in an HTML table.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableSectionElement)
+ */
+open external class HTMLTableSectionElement
+protected constructor() :
+    HTMLElement {
+    /**
+     * The **`rows`** read-only property of the HTMLTableSectionElement interface returns a live HTMLCollection containing the rows in the section. The HTMLCollection is live and is automatically updated when rows are added or removed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableSectionElement/rows)
+     */
+    open val rows: HTMLCollection<HTMLTableRowElement>
+
+    /**
+     * The **`deleteRow()`** method of the HTMLTableSectionElement interface removes a specific row (<tr>) from the given table sectioning element (<thead>, <tfoot>, or <tbody>).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableSectionElement/deleteRow)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun deleteRow(index: Int)
+
+    /**
+     * The **`insertRow()`** method of the HTMLTableSectionElement interface creates a <tr> element, inserts it at the specified position in the given table sectioning element (<thead>, <tfoot>, or <tbody>), and returns it.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTableSectionElement/insertRow)
+     */
+    @JsThrows(IndexSizeError::class)
+    open fun insertRow(index: Int = definedExternally): HTMLTableRowElement
+}

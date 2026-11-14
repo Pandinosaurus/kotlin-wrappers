@@ -1,0 +1,21 @@
+// Automatically generated - do not modify!
+
+package node.perfHooks
+
+@kotlinx.js.JsPlainObject
+external interface UVMetrics {
+    /**
+     * Number of event loop iterations.
+     */
+    val loopCount: Double
+
+    /**
+     * Number of events that have been processed by the event handler.
+     */
+    val events: Double
+
+    /**
+     * Number of events that were waiting to be processed when the event provider was called.
+     */
+    val eventsWaiting: Double
+}

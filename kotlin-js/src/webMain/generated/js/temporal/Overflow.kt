@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package js.temporal
+
+import js.reflect.unsafeCast
+import js.union.JsUnion
+
+@JsUnion
+sealed /* union */
+external interface Overflow
+
+inline val Overflow.Companion.constrain: Overflow
+    get() = unsafeCast("constrain")
+
+inline val Overflow.Companion.reject: Overflow
+    get() = unsafeCast("reject")

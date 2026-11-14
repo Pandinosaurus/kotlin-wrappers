@@ -1,0 +1,64 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import io.github.sgrishchenko.karakum.extension.ifPresent
+import io.github.sgrishchenko.karakum.extension.plugins.*
+import io.github.sgrishchenko.karakum.util.escapeIdentifier
+import js.reflect.invoke
+import typescript.isClassDeclaration
+import typescript.isIdentifier
+import typescript.isMethodDeclaration
+
+private val overriddenMethods = mapOf(
+    // stream
+    "Readable" to mapOf(
+        "read" to "readOrNull"
+    ),
+
+    // http2
+    "Http2ServerRequest" to mapOf(
+        "read" to "readOrNull"
+    ),
+)
+
+val convertOverriddenMethodDeclaration = createPlugin { node, context, render ->
+    nullable {
+        ensure(isMethodDeclaration(node))
+
+        val classNode = ensureNotNull(node.parent)
+        ensure(isClassDeclaration(classNode))
+
+        val className = ensureNotNull(classNode.name)
+        val classOverrides = ensureNotNull(overriddenMethods[className.text])
+
+        val methodName = node.name
+        ensure(isIdentifier(methodName))
+        val methodOverride = ensureNotNull(classOverrides[methodName.text])
+
+        val name = escapeIdentifier(render(node.name))
+
+        val typeParameters = node.typeParameters
+            ?.map { render(it) }
+            ?.joinToString(", ")
+
+        val returnType = node.type?.let {render(it) }
+
+        val inheritanceModifierService =
+            context.lookupService(inheritanceModifierServiceKey)
+
+        convertParameterDeclarations(
+            node, context, render,
+            ParameterDeclarationStrategy.function,
+        ) { parameters, signature ->
+            val inheritanceModifier = inheritanceModifierService?.resolveSignatureInheritanceModifier(node, signature, context)
+
+            val jsName = if (inheritanceModifier != "override") "@JsName(\"$name\")" else ""
+
+            """
+                $jsName
+                ${ifPresent(inheritanceModifier) { "$it " }}fun ${ifPresent(typeParameters) { "<$it> " }}${methodOverride}(${parameters})${ifPresent(returnType) { ": $it" }}
+            """.trimIndent()
+        }
+    }
+}

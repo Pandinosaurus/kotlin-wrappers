@@ -1,0 +1,219 @@
+package js.regexp
+
+import js.array.ReadonlyArray
+import js.iterable.JsIterable
+import js.serialization.Serializable
+import js.string.*
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
+ */
+open external class RegExp(
+    pattern: String,
+    /**
+     * Returns a string indicating the flags of the regular expression in question. This field is read-only.
+     * The characters in this string are sequenced and concatenated in the following order:
+     *
+     *  - "d" for [hasIndices]
+     *  - "g" for [global]
+     *  - "i" for [ignoreCase]
+     *  - "m" for [multiline]
+     *  - "s" for [dotAll]
+     *  - "u" for [unicode]
+     *  - "v" for [unicodeSets]
+     *  - "y" for [sticky]
+     *
+     * If no flags are set, the value is the empty string.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/flags)
+     */
+    open val flags: String = definedExternally,
+) : StringMatcher,
+    StringMatcherAll,
+    StringReplacer,
+    StringSearcher,
+    StringSplitter,
+    Serializable {
+
+    constructor(pattern: RegExp)
+
+    /**
+     * Returns a Boolean value indicating the state of the dotAll flag (s) used with a regular expression.
+     * Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/dotAll)
+     */
+    open val dotAll: Boolean
+
+    /**
+     * Returns a Boolean value indicating the state of the global flag (g) used with a regular expression. Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+     */
+    open val global: Boolean
+
+    /**
+     * Returns a Boolean value indicating the state of the ignoreCase flag (i) used with a regular expression. Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/ignoreCase)
+     */
+    open val ignoreCase: Boolean
+
+    /**
+     * Returns a Boolean value indicating the state of the hasIndices flag (d) used with a regular expression.
+     * Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/hasIndices)
+     */
+    open val hasIndices: Boolean
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastIndex)
+     */
+    open var lastIndex: Int
+
+    /**
+     * Returns a Boolean value indicating the state of the multiline flag (m) used with a regular expression. Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/multiline)
+     */
+    open val multiline: Boolean
+
+    /**
+     * Returns a copy of the text of the regular expression pattern. Read-only. The regExp argument is a Regular expression object. It can be a variable name or a literal.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/source)
+     */
+    open val source: String
+
+    /**
+     * Returns a Boolean value indicating the state of the sticky flag (y) used with a regular
+     * expression. Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky)
+     */
+    open val sticky: Boolean
+
+    /**
+     * Returns a Boolean value indicating the state of the Unicode flag (u) used with a regular
+     * expression. Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicode)
+     */
+    open val unicode: Boolean
+
+    /**
+     * Returns a Boolean value indicating the state of the unicodeSets flag (v) used with a regular expression.
+     * Default is false. Read-only.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)
+     */
+    open val unicodeSets: Boolean
+
+    /**
+     * Executes a search on a string using a regular expression pattern, and returns an array containing the results of that search.
+     * @param string The String object or string literal on which to perform the search.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec)
+     */
+    open fun exec(string: String): RegExpExecArray?
+
+    /**
+     * Returns a Boolean value that indicates whether or not a pattern exists in a searched string.
+     * @param string String on which to perform the search.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test)
+     */
+    open fun test(string: String): Boolean
+
+    /**
+     * Matches a string with this regular expression, and returns an array containing the results of
+     * that search.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/Symbol.match)
+     *
+     * @param string A string to search within.
+     */
+    override fun `[@@match]`(
+        string: String,
+    ): RegExpMatchArray?
+
+    /**
+     * Matches a string with this regular expression, and returns an iterable of matches
+     * containing the results of that search.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/Symbol.matchAll)
+     *
+     * @param string A string to search within.
+     */
+    override fun `[@@matchAll]`(
+        string: String,
+    ): JsIterable<RegExpExecArray>
+
+    /**
+     * Replaces text in a string, using this regular expression.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/Symbol.replace)
+     *
+     * @param string A String object or string literal whose contents matching against
+     *               this regular expression will be replaced
+     * @param replaceValue A String object or string literal containing the text to replace for every
+     *                     successful match of this regular expression.
+     */
+    override fun `[@@replace]`(
+        string: String,
+        replaceValue: String,
+    ): String
+
+    /**
+     * Replaces text in a string, using this regular expression.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/Symbol.replace)
+     *
+     * @param string A String object or string literal whose contents matching against
+     *               this regular expression will be replaced
+     * @param replacer A function that returns the replacement text.
+     */
+    override fun `[@@replace]`(
+        string: String,
+        replacer: (substring: String) -> String,
+    ): String
+
+    /**
+     * Finds the position beginning first substring match in a regular expression search
+     * using this regular expression.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/Symbol.search)
+     *
+     * @param string The string to search within.
+     */
+    override fun `[@@search]`(
+        string: String,
+    ): Int
+
+    /**
+     * Returns an array of substrings that were delimited by strings in the original input that
+     * match against this regular expression.
+     *
+     * If the regular expression contains capturing parentheses, then each time this
+     * regular expression matches, the results (including any undefined results) of the
+     * capturing parentheses are spliced.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/Symbol.split)
+     *
+     * @param string string value to split
+     * @param limit if not undefined, the output array is truncated so that it contains no more
+     * than 'limit' elements.
+     */
+    override fun `[@@split]`(
+        string: String,
+        limit: Int,
+    ): ReadonlyArray<JsString>
+
+    companion object {
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp/escape)
+         */
+        fun escape(string: String): String
+    }
+}

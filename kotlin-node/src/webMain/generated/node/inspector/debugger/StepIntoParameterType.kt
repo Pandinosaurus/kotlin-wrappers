@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.inspector.debugger
+
+@kotlinx.js.JsPlainObject
+external interface StepIntoParameterType {
+    /**
+     * Debugger will issue additional Debugger.paused notification if any async task is scheduled before next pause.
+     * @experimental
+     */
+    var breakOnAsyncCall: Boolean?
+}

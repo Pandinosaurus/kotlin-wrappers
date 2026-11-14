@@ -1,0 +1,22 @@
+// Automatically generated - do not modify!
+
+package node.inspector.io
+
+@kotlinx.js.JsPlainObject
+external interface ReadParameterType {
+    /**
+     * Handle of the stream to read.
+     */
+    var handle: StreamHandle
+
+    /**
+     * Seek to the specified offset before reading (if not specified, proceed with offset
+     * following the last read). Some types of streams may only support sequential reads.
+     */
+    var offset: Double?
+
+    /**
+     * Maximum number of bytes to read (left upon the agent discretion if not specified).
+     */
+    var size: Double?
+}

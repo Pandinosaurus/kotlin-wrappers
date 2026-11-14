@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+package node.http2
+
+external interface HTTP2ServerCommon {
+    fun setTimeout(msec: Number = definedExternally, callback: () -> Unit = definedExternally) /* this */
+
+    /**
+     * Throws ERR_HTTP2_INVALID_SETTING_VALUE for invalid settings values.
+     * Throws ERR_INVALID_ARG_TYPE for invalid settings argument.
+     */
+    fun updateSettings(settings: Settings)
+}

@@ -1,0 +1,17 @@
+package web.html
+
+import js.reflect.JsExternalInheritorsOnly
+import js.reflect.unsafeCast
+import js.reflect.upcast
+import js.string.JsStrings.toKotlinString
+
+@JsExternalInheritorsOnly
+external interface HtmlSource
+
+inline fun HtmlSource(
+    value: String,
+): HtmlSource =
+    unsafeCast(value)
+
+fun HtmlSource.asStringOrNull(): String? =
+    (upcast<JsAny>() as? JsString)?.toKotlinString()

@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.http2
+
+// Http2Stream
+@kotlinx.js.JsPlainObject
+external interface StreamState {
+    var localWindowSize: Double?
+    var state: Double?
+    var localClose: Double?
+    var remoteClose: Double?
+}

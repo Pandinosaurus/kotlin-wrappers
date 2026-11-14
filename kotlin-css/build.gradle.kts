@@ -1,38 +1,40 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithSimulatorTests
+
 plugins {
-    kotlin("multiplatform")
-    `kotlin-conventions`
-    `publish-conventions`
+    id("wrappersbuild.kotlin-legacy-library-conventions")
 }
 
 kotlin {
     jvm()
     js {
-        moduleName = project.name
-        browser()
-    }
-
-    iosArm32("iosArm32")
-    iosArm64("iosArm64")
-    iosX64("iosX64")
-
-    sourceSets {
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
-
-        val jvmTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-            }
-        }
-
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
+        browser {
+            testTask {
+                testLogging.showStandardStreams = true
+                useKarma {
+                    useChromeHeadlessNoSandbox()
+                }
             }
         }
     }
+    wasmJs()
+
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
+
+    // Sets the device ID for iosSimulatorArm64Test
+    targets.withType<KotlinNativeTargetWithSimulatorTests> {
+        testRuns["test"].deviceId = "iPhone 16"
+    }
+}
+
+dependencies {
+    commonTestImplementation(libs.kotlin.test)
+}
+
+tasks.named("iosSimulatorArm64Test") {
+    enabled = false
 }

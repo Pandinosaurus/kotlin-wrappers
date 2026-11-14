@@ -1,0 +1,10 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface Point {
+    // Docs: https://electronjs.org/docs/api/structures/point
+    var x: Double
+    var y: Double
+}

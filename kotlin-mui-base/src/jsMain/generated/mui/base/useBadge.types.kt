@@ -1,0 +1,52 @@
+// Automatically generated - do not modify!
+
+package mui.base
+
+import react.ReactNode
+
+external interface UseBadgeParameters {
+    /**
+     * The content rendered within the badge.
+     */
+    var badgeContent: ReactNode?
+
+    /**
+     * If `true`, the badge is invisible.
+     * @default false
+     */
+    var invisible: Boolean?
+
+    /**
+     * Max count to show.
+     * @default 99
+     */
+    var max: Double?
+
+    /**
+     * Controls whether the badge is hidden when `badgeContent` is zero.
+     * @default false
+     */
+    var showZero: Boolean?
+}
+
+external interface UseBadgeReturnValue {
+    /**
+     * Defines the content that's displayed inside the badge.
+     */
+    var badgeContent: ReactNode
+
+    /**
+     * If `true`, the component will not be visible.
+     */
+    var invisible: Boolean
+
+    /**
+     * Maximum number to be displayed in the badge.
+     */
+    var max: Double
+
+    /**
+     * Value to be displayed in the badge. If `badgeContent` is greater than `max`, it will return `max+`.
+     */
+    var displayValue: ReactNode
+}

@@ -1,0 +1,30 @@
+// Automatically generated - do not modify!
+
+package node.test.eventData
+
+@kotlinx.js.JsPlainObject
+external interface TestCoverageSummary {
+    /**
+     * An array of coverage reports for individual files.
+     */
+    var files: js.array.ReadonlyArray<TestCoverageSummaryFilesItem>
+
+    /**
+     * An object containing whether or not the coverage for
+     * each coverage type.
+     * @since v22.9.0
+     */
+    var thresholds: TestCoverageSummaryThresholds
+
+    /**
+     * An object containing a summary of coverage for all files.
+     */
+    var totals: TestCoverageSummaryTotals
+
+    /**
+     * The working directory when code coverage began. This
+     * is useful for displaying relative path names in case
+     * the tests changed the working directory of the Node.js process.
+     */
+    var workingDirectory: String
+}

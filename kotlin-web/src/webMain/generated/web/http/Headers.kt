@@ -1,0 +1,69 @@
+// Automatically generated - do not modify!
+
+package web.http
+
+import js.array.ReadonlyArray
+import js.array.Tuple2
+import js.collections.MapLike
+import js.objects.ReadonlyRecord
+
+/**
+ * The **`Headers`** interface of the Fetch API allows you to perform various actions on HTTP request and response headers. These actions include retrieving, setting, adding to, and removing headers from the list of the request's headers.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Headers)
+ */
+open external class Headers(
+    init: ReadonlyArray<Tuple2<JsString, JsString>> = definedExternally,
+) : MapLike.Mixin<JsString, JsString>,
+    HeadersInit {
+    constructor(init: ReadonlyRecord<JsString, JsString>)
+    constructor(init: HeadersInit)
+
+    /**
+     * The **`append()`** method of the Headers interface appends a new value onto an existing header inside a Headers object, or adds the header if it does not already exist.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Headers/append)
+     */
+    open fun append(
+        name: String,
+        value: String,
+    )
+
+    /**
+     * The **`delete()`** method of the Headers interface deletes a header from the current Headers object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Headers/delete)
+     */
+    open fun delete(name: String)
+
+    /**
+     * The **`get()`** method of the Headers interface returns a byte string of all the values of a header within a Headers object with a given name. If the requested header doesn't exist in the Headers object, it returns null.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Headers/get)
+     */
+    open fun get(name: String): String?
+
+    /**
+     * The **`getSetCookie()`** method of the Headers interface returns an array containing the values of all Set-Cookie headers associated with a response. This allows Headers objects to handle having multiple Set-Cookie headers, which wasn't possible prior to its implementation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Headers/getSetCookie)
+     */
+    open fun getSetCookie(): ReadonlyArray<JsString>
+
+    /**
+     * The **`has()`** method of the Headers interface returns a boolean stating whether a Headers object contains a certain header.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Headers/has)
+     */
+    open fun has(name: String): Boolean
+
+    /**
+     * The **`set()`** method of the Headers interface sets a new value for an existing header inside a Headers object, or adds the header if it does not already exist.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Headers/set)
+     */
+    open fun set(
+        name: String,
+        value: String,
+    )
+}

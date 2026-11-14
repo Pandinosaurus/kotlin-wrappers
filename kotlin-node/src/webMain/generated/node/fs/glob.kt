@@ -1,0 +1,77 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:fs")
+
+package node.fs
+
+/**
+ * Retrieves the files matching the specified pattern.
+ *
+ * ```js
+ * import { glob } from 'node:fs';
+ *
+ * glob('*.js', (err, matches) => {
+ *   if (err) throw err;
+ *   console.log(matches);
+ * });
+ * ```
+ * @since v22.0.0
+ */
+external fun glob(
+    pattern: String,
+    callback: (err: node.ErrnoException?, matches: js.array.ReadonlyArray<String>) -> Unit,
+)
+
+/**
+ * Retrieves the files matching the specified pattern.
+ *
+ * ```js
+ * import { glob } from 'node:fs';
+ *
+ * glob('*.js', (err, matches) => {
+ *   if (err) throw err;
+ *   console.log(matches);
+ * });
+ * ```
+ * @since v22.0.0
+ */
+external fun glob(
+    pattern: js.array.ReadonlyArray<String>,
+    callback: (err: node.ErrnoException?, matches: js.array.ReadonlyArray<String>) -> Unit,
+)
+
+external fun glob(
+    pattern: String,
+    options: GlobOptionsWithFileTypes,
+    callback: (err: node.ErrnoException?, matches: js.array.ReadonlyArray<Dirent<*>>) -> Unit,
+)
+
+external fun glob(
+    pattern: js.array.ReadonlyArray<String>,
+    options: GlobOptionsWithFileTypes,
+    callback: (err: node.ErrnoException?, matches: js.array.ReadonlyArray<Dirent<*>>) -> Unit,
+)
+
+external fun glob(
+    pattern: String,
+    options: GlobOptionsWithoutFileTypes,
+    callback: (err: node.ErrnoException?, matches: js.array.ReadonlyArray<String>) -> Unit,
+)
+
+external fun glob(
+    pattern: js.array.ReadonlyArray<String>,
+    options: GlobOptionsWithoutFileTypes,
+    callback: (err: node.ErrnoException?, matches: js.array.ReadonlyArray<String>) -> Unit,
+)
+
+external fun glob(
+    pattern: String,
+    options: GlobOptions,
+    callback: (err: node.ErrnoException?, matches: Any /* Dirent[] | string[] */) -> Unit,
+)
+
+external fun glob(
+    pattern: js.array.ReadonlyArray<String>,
+    options: GlobOptions,
+    callback: (err: node.ErrnoException?, matches: Any /* Dirent[] | string[] */) -> Unit,
+)

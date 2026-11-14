@@ -1,0 +1,15 @@
+// Automatically generated - do not modify!
+
+package web.html
+
+import web.window.WindowEventHandlers
+
+/**
+ * The **`HTMLBodyElement`** interface provides special properties (beyond those inherited from the regular HTMLElement interface) for manipulating <body> elements.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLBodyElement)
+ */
+open external class HTMLBodyElement
+protected constructor() :
+    HTMLElement,
+    WindowEventHandlers

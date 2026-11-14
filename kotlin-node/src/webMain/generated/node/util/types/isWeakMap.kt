@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) instance.
+ *
+ * ```js
+ * util.types.isWeakMap(new WeakMap());  // Returns true
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isWeakMap")
+external fun isWeakMapRaw(value: Any?): Boolean /* object is WeakMap<object, unknown> */

@@ -1,0 +1,134 @@
+// Automatically generated - do not modify!
+
+package web.svg
+
+import web.errors.DOMExceptionType.NoModificationAllowedError
+import web.errors.JsThrows
+import web.geometry.DOMMatrixReadOnly
+
+/**
+ * The **`SVGTransform`** interface reflects one of the component transformations within an SVGTransformList; thus, an SVGTransform object corresponds to a single component (e.g., scale(…) or matrix(…)) within a transform attribute.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform)
+ */
+open external class SVGTransform
+private constructor() {
+    /**
+     * The **`angle`** read-only property of the SVGTransform interface represents the angle of the transformation in degrees.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/angle)
+     */
+    open val angle: Float
+
+    /**
+     * The **`matrix`** read-only property of the SVGTransform interface represents the transformation matrix that corresponds to the transformation type.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/matrix)
+     */
+    open val matrix: SVGMatrix
+
+    /**
+     * The **`type`** read-only property of the SVGTransform interface represents the type of transformation applied, specified by one of the SVG_TRANSFORM_* constants defined on this interface.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/type)
+     */
+    open val type: Type
+
+    /**
+     * The **`setMatrix()`** method of the SVGTransform interface sets the transform type to SVG_TRANSFORM_MATRIX, with parameter matrix defining the new transformation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/setMatrix)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    open fun setMatrix(matrix: DOMMatrixReadOnly /* DOMMatrix2DInit */ = definedExternally)
+
+    /**
+     * The **`setRotate()`** method of the SVGTransform interface sets the transform type to SVG_TRANSFORM_ROTATE, with parameter angle defining the rotation angle and parameters cx and cy defining the optional center of rotation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/setRotate)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    open fun setRotate(
+        angle: Float,
+        cx: Float,
+        cy: Float,
+    )
+
+    /**
+     * The **`setScale()`** method of the SVGTransform interface sets the transform type to SVG_TRANSFORM_SCALE, with parameters sx and sy defining the scale amounts.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/setScale)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    open fun setScale(
+        sx: Float,
+        sy: Float,
+    )
+
+    /**
+     * The **`setSkewX()`** method of the SVGTransform interface sets the transform type to SVG_TRANSFORM_SKEWX, with parameter angle defining the amount of skew along the X-axis.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/setSkewX)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    open fun setSkewX(angle: Float)
+
+    /**
+     * The **`setSkewY()`** method of the SVGTransform interface sets the transform type to SVG_TRANSFORM_SKEWY, with parameter angle defining the amount of skew along the Y-axis.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/setSkewY)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    open fun setSkewY(angle: Float)
+
+    /**
+     * The **`setTranslate()`** method of the SVGTransform interface sets the transform type to SVG_TRANSFORM_TRANSLATE, with parameters tx and ty defining the translation amounts.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform/setTranslate)
+     */
+    @JsThrows(NoModificationAllowedError::class)
+    open fun setTranslate(
+        tx: Float,
+        ty: Float,
+    )
+
+    companion object {
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform#svg_transform_unknown)
+         */
+        val SVG_TRANSFORM_UNKNOWN: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform#svg_transform_matrix)
+         */
+        val SVG_TRANSFORM_MATRIX: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform#svg_transform_translate)
+         */
+        val SVG_TRANSFORM_TRANSLATE: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform#svg_transform_scale)
+         */
+        val SVG_TRANSFORM_SCALE: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform#svg_transform_rotate)
+         */
+        val SVG_TRANSFORM_ROTATE: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform#svg_transform_skewx)
+         */
+        val SVG_TRANSFORM_SKEWX: Type
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGTransform#svg_transform_skewy)
+         */
+        val SVG_TRANSFORM_SKEWY: Type
+    }
+
+    sealed /* enum */
+    interface Type
+}

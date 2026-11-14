@@ -1,0 +1,26 @@
+// Automatically generated - do not modify!
+
+package node.test.eventData
+
+@kotlinx.js.JsPlainObject
+external interface TestCompleteDetails {
+    /**
+     * Whether the test passed or not.
+     */
+    var passed: Boolean
+
+    /**
+     * The duration of the test in milliseconds.
+     */
+    var duration_ms: Double
+
+    /**
+     * An error wrapping the error thrown by the test if it did not pass.
+     */
+    var error: Error?
+
+    /**
+     * The type of the test, used to denote whether this is a suite.
+     */
+    var type: (TestCompleteDetailsType)?
+}

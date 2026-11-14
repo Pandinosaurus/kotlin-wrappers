@@ -1,0 +1,43 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+external class Comparator {
+    constructor (comp: String)
+
+    constructor (comp: String, optionsOrLoose: Boolean = definedExternally)
+
+    constructor (comp: String, optionsOrLoose: Options = definedExternally)
+
+    constructor (comp: Comparator)
+
+    constructor (comp: Comparator, optionsOrLoose: Boolean = definedExternally)
+
+    constructor (comp: Comparator, optionsOrLoose: Options = definedExternally)
+
+    var semver: SemVer
+    var operator: ComparatorOperator
+    var value: String
+    var loose: Boolean
+    var options: Options
+
+    fun parse(comp: String)
+
+    fun test(version: String): Boolean
+
+    fun test(version: SemVer): Boolean
+
+    fun intersects(comp: Comparator): Boolean
+
+    fun intersects(
+        comp: Comparator,
+        optionsOrLoose: Boolean = definedExternally,
+    ): Boolean
+
+    fun intersects(
+        comp: Comparator,
+        optionsOrLoose: Options = definedExternally,
+    ): Boolean
+}

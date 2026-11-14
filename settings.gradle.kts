@@ -1,78 +1,301 @@
 rootProject.name = "kotlin-wrappers"
 
 pluginManagement {
-    resolutionStrategy {
-        plugins {
-            val kotlinVersion = extra["kotlin.version"] as String
-            kotlin("multiplatform") version kotlinVersion
-            kotlin("jvm") version kotlinVersion
-            kotlin("js") version kotlinVersion
-            kotlin("plugin.serialization") version kotlinVersion
+    includeBuild("build-logic-settings")
+}
+
+plugins {
+    id("wrappersbuild.settings")
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            val kotlinVersion = extra.properties["kotlin.version"] as String?
+            if (kotlinVersion != null) {
+                version("kotlin", kotlinVersion)
+            }
+        }
+
+        create("jspkg") {
+            from(files("gradle/jspkg.versions.toml"))
         }
     }
 }
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
+fun includeHelper(
+    path: String,
+    helperName: String,
+) {
+    includeBuild("$path/$helperName") {
+        name = "$path-$helperName"
     }
 }
 
-// Examples
-include("examples")
+fun includeApi(path: String) {
+    includeHelper(path, "api")
+}
+
+fun includeKarakum(path: String) {
+    includeHelper(path, "karakum")
+}
+
+includeBuild("build-logic")
+
+include("docs")
+
+includeKarakum("kotlin-actions")
+
+// Kotlin/JS: GitHub Actions Artifact wrappers
+include("kotlin-actions-artifact")
+
+// Kotlin/JS: GitHub Actions Cache wrappers
+include("kotlin-actions-cache")
+
+// Kotlin/JS: GitHub Actions Core wrappers
+include("kotlin-actions-core")
+
+// Kotlin/JS: GitHub Actions Exec wrappers
+include("kotlin-actions-exec")
+
+// Kotlin/JS: GitHub Actions GitHub wrappers
+include("kotlin-actions-github")
+
+// Kotlin/JS: GitHub Actions Glob wrappers
+include("kotlin-actions-glob")
+
+// Kotlin/JS: GitHub Actions HTTP Client wrappers
+include("kotlin-actions-http-client")
+
+// Kotlin/JS: GitHub Actions IO wrappers
+include("kotlin-actions-io")
+
+// Kotlin/JS: GitHub Actions Tool Cache wrappers
+include("kotlin-actions-tool-cache")
+
+// Kotlin/JS: Ajv JSON schema validator wrappers
+include("kotlin-ajv")
+
+// Kotlin/JS: Browser APIs missing from the standard library
+include("kotlin-browser")
+
+includeApi("kotlin-browser")
+
+includeKarakum("kotlin-browser")
+
+includeKarakum("kotlin-cesium")
+
+// Kotlin/JS: CesiumJS wrappers
+include("kotlin-cesium-core")
+
+// Kotlin/JS: CesiumJS wrappers
+include("kotlin-cesium-engine")
+
+// Kotlin/JS: CesiumJS wrappers
+include("kotlin-cesium-widgets")
 
 // Platform-agnostic CSS support
 include("kotlin-css")
 
+// Kotlin/JS: Zero-runtime CSS core typings
+include("kotlin-cssom-core")
+
 // Kotlin/JS: Zero-runtime CSS typings
 include("kotlin-csstype")
 
-// Kotlin/JS: Emotion wrappers
-include("kotlin-emotion")
+includeKarakum("kotlin-csstype")
 
-// Kotlin/JS: various helpers
-include("kotlin-extensions")
+// Kotlin/JS: Electron wrappers
+include("kotlin-electron")
+
+includeKarakum("kotlin-electron")
+
+// Kotlin/JS: Emotion Cache wrappers
+include("kotlin-emotion-cache")
+
+// Kotlin/JS: Emotion CSS wrappers
+include("kotlin-emotion-css")
+
+// Kotlin/JS: Emotion React wrappers
+include("kotlin-emotion-react")
+
+// Kotlin/JS: Emotion Styled wrappers
+include("kotlin-emotion-styled")
+
+// Kotlin/JS: Emotion Utils wrappers
+include("kotlin-emotion-utils")
+
+// Kotlin/JS: Floating UI Core wrappers
+include("kotlin-floating-ui-core")
+
+// Kotlin/JS: Floating UI DOM wrappers
+include("kotlin-floating-ui-dom")
+
+// Kotlin/JS: Floating UI React DOM wrappers
+include("kotlin-floating-ui-react-dom")
+
+// Kotlin/JS: Floating UI Utils wrappers
+include("kotlin-floating-ui-utils")
+
+// Kotlin/JS: APIs missing from the standard library
+include("kotlin-js")
+
+// Kotlin/JS: Helper for `kotlin-js`
+include("kotlin-js-core")
+
+// Kotlin/JS: Helper for `kotlin-js`
+include("kotlin-js-plain-object")
+
+// Kotlin/Web: Test helpers
+include("kotlin-js-test")
+
+// Kotlin/JS: JSZip wrappers
+include("kotlin-jszip")
 
 // Kotlin/JS: Material UI wrappers
-include("kotlin-mui")
+include("kotlin-mui-material")
+
+// Kotlin/JS: MUI Base UI wrappers
+include("kotlin-mui-base")
+
+// Kotlin/JS: Material UI Icons wrappers
+include("kotlin-mui-icons-material")
+
+// Kotlin/JS: MUI Lab wrappers
+include("kotlin-mui-lab")
+
+// Kotlin/JS: MUI System wrappers
+include("kotlin-mui-system")
+
+// Kotlin/JS: MUI X Date Pickers wrappers
+include("kotlin-muix-date-pickers")
+
+// Kotlin/JS: MUI X Tree View wrappers
+include("kotlin-muix-tree-view")
+
+// Kotlin/JS: Node.js wrappers
+include("kotlin-node")
+
+includeKarakum("kotlin-node")
+
+// Kotlin/JS: pako wrappers
+include("kotlin-pako")
+
+// Kotlin/JS: Popper Core wrappers
+include("kotlin-popperjs-core")
+
+includeKarakum("kotlin-popperjs-core")
+
+// Kotlin/JS: JSON Lint wrappers
+include("kotlin-prantlf-jsonlint")
+
+// Kotlin/JS: Preact Signals Core wrappers
+include("kotlin-preact-signals-core")
+
+// Kotlin/JS: Preact Signals React wrappers
+include("kotlin-preact-signals-react")
 
 // Kotlin/JS: React wrappers
 include("kotlin-react")
 
-// Kotlin/JS: React CSS injection
-include("kotlin-react-css")
-
 // Kotlin/JS: React DOM wrappers
 include("kotlin-react-dom")
 
-// Kotlin/JS: React Popper wrappers
-include("kotlin-react-popper")
+includeKarakum("kotlin-react-dom")
 
-// Kotlin/JS: React Query wrappers
-include("kotlin-react-query")
+// Kotlin/JS: React Select wrappers
+include("kotlin-react-select")
 
-// Kotlin/JS: React Redux wrappers
-include("kotlin-react-redux")
+// Kotlin/JS: React Use wrappers
+include("kotlin-react-use")
 
-// Kotlin/JS: React Router wrappers
-include("kotlin-react-router-dom")
+// Kotlin/JS: semver wrappers
+include("kotlin-semver")
 
-// Kotlin/JS: React Table wrappers
-include("kotlin-react-table")
+includeKarakum("kotlin-semver")
 
-// Kotlin/JS: React Virtual wrappers
-include("kotlin-react-virtual")
+// Kotlin/JS: TanStack History wrappers
+include("kotlin-tanstack-history")
 
-// Kotlin/JS: Redux wrappers
-include("kotlin-redux")
+includeKarakum("kotlin-tanstack-history")
 
-// Kotlin/JS: Ring UI wrappers
-include("kotlin-ring-ui")
+includeKarakum("kotlin-tanstack-query")
 
-// Kotlin/JS: styled-components wrappers
-include("kotlin-styled")
+// Kotlin/JS: TanStack Query Core wrappers
+include("kotlin-tanstack-query-core")
 
-// Kotlin/JS: a reimplementation of kotlin-styled in pure Kotlin, without styled-components
-include("kotlin-styled-next")
+// Kotlin/JS: TanStack React Query wrappers
+include("kotlin-tanstack-react-query")
+
+// Kotlin/JS: TanStack React Query Devtools wrappers
+include("kotlin-tanstack-react-query-devtools")
+
+// Kotlin/JS: TanStack React Router wrappers
+include("kotlin-tanstack-react-router")
+
+// Kotlin/JS: TanStack React Router Devtools wrappers
+include("kotlin-tanstack-react-router-devtools")
+
+// Kotlin/JS: TanStack React Table wrappers
+include("kotlin-tanstack-react-table")
+
+// Kotlin/JS: TanStack React Virtual wrappers
+include("kotlin-tanstack-react-virtual")
+
+includeKarakum("kotlin-tanstack-react-virtual")
+
+// Kotlin/JS: TanStack Router Core wrappers
+include("kotlin-tanstack-router-core")
+
+includeKarakum("kotlin-tanstack-table")
+
+// Kotlin/JS: TanStack Table Core wrappers
+include("kotlin-tanstack-table-core")
+
+// Kotlin/JS: TanStack Virtual Core wrappers
+include("kotlin-tanstack-virtual-core")
+
+includeKarakum("kotlin-tanstack-virtual-core")
+
+// Kotlin/JS: Tauri API wrappers
+include("kotlin-tauri-apps-api")
+
+includeKarakum("kotlin-tauri-apps-api")
+
+// Kotlin/JS: DOM Testing Library wrappers
+include("kotlin-testing-library-dom")
+
+includeKarakum("kotlin-testing-library-dom")
+
+// Kotlin/JS: React Testing Library wrappers
+include("kotlin-testing-library-react")
+
+includeKarakum("kotlin-testing-library-react")
+
+// Kotlin/JS: Testing Library User Event wrappers
+include("kotlin-testing-library-user-event")
+
+includeKarakum("kotlin-testing-library-user-event")
+
+// Kotlin/JS: TypeScript wrappers
+include("kotlin-typescript")
+
+includeKarakum("kotlin-typescript")
+
+// Kotlin/JS: @vercel/ncc wrappers
+include("kotlin-vercel-ncc")
+
+// Kotlin/JS: VS Code wrappers
+include("kotlin-vscode")
+
+includeKarakum("kotlin-vscode")
+
+// Kotlin/JS: Common web wrappers
+include("kotlin-web")
+
+// Kotlin/JS: yaml wrappers
+include("kotlin-yaml")
 
 include("kotlin-wrappers-bom")
+
+include("kotlin-wrappers-catalog")

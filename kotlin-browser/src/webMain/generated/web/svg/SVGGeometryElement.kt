@@ -1,0 +1,49 @@
+// Automatically generated - do not modify!
+
+package web.svg
+
+import web.geometry.DOMPointReadOnly
+
+/**
+ * The **`SVGGeometryElement`** interface represents SVG elements whose rendering is defined by geometry with an equivalent path, and which can be filled and stroked. This includes paths and the basic shapes.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGGeometryElement)
+ */
+open external class SVGGeometryElement
+private constructor() :
+    SVGGraphicsElement {
+    /**
+     * The **`SVGGeometryElement.pathLength`** property reflects the pathLength attribute and returns the total length of the path, in user units.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGGeometryElement/pathLength)
+     */
+    open val pathLength: SVGAnimatedNumber
+
+    /**
+     * The **`SVGGeometryElement.getPointAtLength()`** method returns the point at a given distance along the path.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGGeometryElement/getPointAtLength)
+     */
+    open fun getPointAtLength(distance: Float): SVGPoint
+
+    /**
+     * The **`SVGGeometryElement.getTotalLength()`** method returns the user agent's computed value for the total length of the path in user units.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGGeometryElement/getTotalLength)
+     */
+    open fun getTotalLength(): Float
+
+    /**
+     * The **`isPointInFill()`** method of the SVGGeometryElement interface determines whether a given point is within the fill shape of an element. The point argument is interpreted as a point in the local coordinate system of the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGGeometryElement/isPointInFill)
+     */
+    open fun isPointInFill(point: DOMPointReadOnly = definedExternally): Boolean
+
+    /**
+     * The **`isPointInStroke()`** method of the SVGGeometryElement interface determines whether a given point is within the stroke shape of an element. The point argument is interpreted as a point in the local coordinate system of the element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGGeometryElement/isPointInStroke)
+     */
+    open fun isPointInStroke(point: DOMPointReadOnly = definedExternally): Boolean
+}

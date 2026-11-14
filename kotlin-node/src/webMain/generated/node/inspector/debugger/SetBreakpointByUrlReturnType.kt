@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package node.inspector.debugger
+
+@kotlinx.js.JsPlainObject
+external interface SetBreakpointByUrlReturnType {
+    /**
+     * Id of the created breakpoint for further reference.
+     */
+    var breakpointId: BreakpointId
+
+    /**
+     * List of the locations this breakpoint resolved into upon addition.
+     */
+    var locations: js.array.ReadonlyArray<Location>
+}

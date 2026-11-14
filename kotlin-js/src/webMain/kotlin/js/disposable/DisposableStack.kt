@@ -1,0 +1,88 @@
+package js.disposable
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DisposableStack)
+ */
+open external class DisposableStack :
+    Disposable.Mixin {
+    /**
+     * Returns a value indicating whether this stack has been disposed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DisposableStack/disposed)
+     */
+    open val disposed: Boolean
+
+    /**
+     * Disposes each resource in the stack in the reverse order that they were added.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DisposableStack/dispose)
+     */
+    open fun dispose()
+
+    /**
+     * Adds a disposable resource to the stack, returning the resource.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DisposableStack/use)
+     *
+     * @param value The resource to add. `null` and `undefined` will not be added, but will be returned.
+     * @return The provided [value].
+     */
+    open fun <T : Disposable?> use(value: T): T
+
+    /**
+     * Adds a value and associated disposal callback as a resource to the stack.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DisposableStack/adopt)
+     *
+     * @param value The value to add.
+     * @param onDispose The callback to use in place of a `[Symbol.dispose]()` method. Will be invoked with `value`
+     * as the first parameter.
+     * @return The provided [value].
+     */
+    open fun <T : JsAny?> adopt(
+        value: T,
+        onDispose: (value: T) -> Unit,
+    ): T
+
+    /**
+     * Adds a callback to be invoked when the stack is disposed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DisposableStack/defer)
+     */
+    open fun defer(
+        onDispose: () -> Unit,
+    )
+
+    /**
+     * Move all resources out of this stack and into a new `DisposableStack`, and marks this stack as disposed.
+     *
+     * ```ts
+     * class C {
+     *   #res1: Disposable;
+     *   #res2: Disposable;
+     *   #disposables: DisposableStack;
+     *   constructor() {
+     *     // stack will be disposed when exiting constructor for any reason
+     *     using stack = new DisposableStack();
+     *
+     *     // get first resource
+     *     this.#res1 = stack.use(getResource1());
+     *
+     *     // get second resource. If this fails, both `stack` and `#res1` will be disposed.
+     *     this.#res2 = stack.use(getResource2());
+     *
+     *     // all operations succeeded, move resources out of `stack` so that they aren't disposed
+     *     // when constructor exits
+     *     this.#disposables = stack.move();
+     *   }
+     *
+     *   [Symbol.dispose]() {
+     *     this.#disposables.dispose();
+     *   }
+     * }
+     * ```
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DisposableStack/move)
+     */
+    open fun move(): DisposableStack
+}

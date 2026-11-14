@@ -1,0 +1,117 @@
+// Automatically generated - do not modify!
+
+package mui.base
+
+import seskar.js.JsRawValue
+import seskar.js.JsValue
+
+sealed /* union */
+external interface AutocompleteHighlightChangeReason {
+    companion object {
+        @JsValue("keyboard")
+        val keyboard: AutocompleteHighlightChangeReason
+
+        @JsValue("mouse")
+        val mouse: AutocompleteHighlightChangeReason
+
+        @JsValue("auto")
+        val auto: AutocompleteHighlightChangeReason
+
+        @JsValue("touch")
+        val touch: AutocompleteHighlightChangeReason
+    }
+}
+
+sealed /* union */
+external interface AutocompleteChangeReason {
+    companion object {
+        @JsValue("createOption")
+        val createOption: AutocompleteChangeReason
+
+        @JsValue("selectOption")
+        val selectOption: AutocompleteChangeReason
+
+        @JsValue("removeOption")
+        val removeOption: AutocompleteChangeReason
+
+        @JsValue("clear")
+        val clear: AutocompleteChangeReason
+
+        @JsValue("blur")
+        val blur: AutocompleteChangeReason
+    }
+}
+
+sealed /* union */
+external interface AutocompleteCloseReason {
+    companion object {
+        @JsValue("createOption")
+        val createOption: AutocompleteCloseReason
+
+        @JsValue("toggleInput")
+        val toggleInput: AutocompleteCloseReason
+
+        @JsValue("escape")
+        val escape: AutocompleteCloseReason
+
+        @JsValue("selectOption")
+        val selectOption: AutocompleteCloseReason
+
+        @JsValue("removeOption")
+        val removeOption: AutocompleteCloseReason
+
+        @JsValue("blur")
+        val blur: AutocompleteCloseReason
+    }
+}
+
+sealed /* union */
+external interface AutocompleteInputChangeReason {
+    companion object {
+        @JsValue("input")
+        val input: AutocompleteInputChangeReason
+
+        @JsValue("reset")
+        val reset: AutocompleteInputChangeReason
+
+        @JsValue("clear")
+        val clear: AutocompleteInputChangeReason
+
+        @JsValue("blur")
+        val blur: AutocompleteInputChangeReason
+
+        @JsValue("selectOption")
+        val selectOption: AutocompleteInputChangeReason
+
+        @JsValue("removeOption")
+        val removeOption: AutocompleteInputChangeReason
+    }
+}
+
+sealed /* union */
+external interface MatchFrom {
+    companion object {
+        @JsValue("any")
+        val any: MatchFrom
+
+        @JsValue("start")
+        val start: MatchFrom
+    }
+}
+
+sealed /* union */
+external interface BlurOnSelect {
+    companion object {
+        @JsValue("touch")
+        val touch: BlurOnSelect
+
+        @JsValue("mouse")
+        val mouse: BlurOnSelect
+
+        @JsRawValue("true")
+        val `true`: BlurOnSelect
+
+        @JsRawValue("false")
+        val `false`: BlurOnSelect
+    }
+}

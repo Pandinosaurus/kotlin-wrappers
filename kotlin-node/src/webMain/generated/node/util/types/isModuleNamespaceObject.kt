@@ -1,0 +1,17 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is an instance of a [Module Namespace Object](https://tc39.github.io/ecma262/#sec-module-namespace-exotic-objects).
+ *
+ * ```js
+ * import * as ns from './a.js';
+ *
+ * util.types.isModuleNamespaceObject(ns);  // Returns true
+ * ```
+ * @since v10.0.0
+ */
+external fun isModuleNamespaceObject(value: Any?): Boolean

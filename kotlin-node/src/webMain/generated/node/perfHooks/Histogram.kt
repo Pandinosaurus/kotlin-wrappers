@@ -1,0 +1,98 @@
+// Automatically generated - do not modify!
+
+package node.perfHooks
+
+external interface Histogram {
+    /**
+     * The number of samples recorded by the histogram.
+     * @since v17.4.0, v16.14.0
+     */
+    val count: Double
+
+    /**
+     * The number of samples recorded by the histogram.
+     * v17.4.0, v16.14.0
+     */
+    val countBigInt: js.numbers.BigInt
+
+    /**
+     * The number of times the event loop delay exceeded the maximum 1 hour event
+     * loop delay threshold.
+     * @since v11.10.0
+     */
+    val exceeds: Double
+
+    /**
+     * The number of times the event loop delay exceeded the maximum 1 hour event loop delay threshold.
+     * @since v17.4.0, v16.14.0
+     */
+    val exceedsBigInt: js.numbers.BigInt
+
+    /**
+     * The maximum recorded event loop delay.
+     * @since v11.10.0
+     */
+    val max: Double
+
+    /**
+     * The maximum recorded event loop delay.
+     * v17.4.0, v16.14.0
+     */
+    val maxBigInt: Double
+
+    /**
+     * The mean of the recorded event loop delays.
+     * @since v11.10.0
+     */
+    val mean: Double
+
+    /**
+     * The minimum recorded event loop delay.
+     * @since v11.10.0
+     */
+    val min: Double
+
+    /**
+     * The minimum recorded event loop delay.
+     * v17.4.0, v16.14.0
+     */
+    val minBigInt: js.numbers.BigInt
+
+    /**
+     * Returns the value at the given percentile.
+     * @since v11.10.0
+     * @param percentile A percentile value in the range (0, 100].
+     */
+    fun percentile(percentile: Number): Double
+
+    /**
+     * Returns the value at the given percentile.
+     * @since v17.4.0, v16.14.0
+     * @param percentile A percentile value in the range (0, 100].
+     */
+    fun percentileBigInt(percentile: Number): js.numbers.BigInt
+
+    /**
+     * Returns a `Map` object detailing the accumulated percentile distribution.
+     * @since v11.10.0
+     */
+    val percentiles: js.collections.ReadonlyMap<Double, Double>
+
+    /**
+     * Returns a `Map` object detailing the accumulated percentile distribution.
+     * @since v17.4.0, v16.14.0
+     */
+    val percentilesBigInt: js.collections.ReadonlyMap<js.numbers.BigInt, js.numbers.BigInt>
+
+    /**
+     * Resets the collected histogram data.
+     * @since v11.10.0
+     */
+    fun reset()
+
+    /**
+     * The standard deviation of the recorded event loop delays.
+     * @since v11.10.0
+     */
+    val stddev: Double
+}

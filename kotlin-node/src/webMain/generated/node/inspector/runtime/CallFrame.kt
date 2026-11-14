@@ -1,0 +1,34 @@
+// Automatically generated - do not modify!
+
+package node.inspector.runtime
+
+/**
+ * Stack entry for runtime errors and assertions.
+ */
+@kotlinx.js.JsPlainObject
+external interface CallFrame {
+    /**
+     * JavaScript function name.
+     */
+    var functionName: String
+
+    /**
+     * JavaScript script id.
+     */
+    var scriptId: ScriptId
+
+    /**
+     * JavaScript script name or url.
+     */
+    var url: String
+
+    /**
+     * JavaScript script line number (0-based).
+     */
+    var lineNumber: Double
+
+    /**
+     * JavaScript script column number (0-based).
+     */
+    var columnNumber: Double
+}

@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package node.stream
+
+typealias PipelineDestination<
+        @Suppress("UNUSED_TYPEALIAS_PARAMETER")
+        S,
+        /*  : PipelineTransformSource<Any?> */
+        @Suppress("UNUSED_TYPEALIAS_PARAMETER")
+        P,
+        > = Any /* S extends PipelineTransformSource<infer ST> ? NodeJS.WritableStream | PipelineDestinationIterableFunction<ST> | PipelineDestinationPromiseFunction<ST, P> : never */

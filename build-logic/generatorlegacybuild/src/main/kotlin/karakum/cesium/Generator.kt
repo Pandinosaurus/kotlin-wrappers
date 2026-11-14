@@ -1,0 +1,109 @@
+package karakum.cesium
+
+import karakum.common.GENERATOR_COMMENT
+import karakum.common.count
+import karakum.common.writeCode
+import java.io.File
+
+internal fun generateKotlinDeclarations(
+    coreDefinitionsFile: File,
+    engineDefinitionsFile: File,
+    widgetsDefinitionsFile: File,
+    sourceDir: File,
+) {
+    generate(
+        declarations = parseDeclarations(coreDefinitionsFile),
+        pkg = "cesium.core",
+        sourceDir = sourceDir.resolve("cesium/core"),
+    )
+
+    generate(
+        declarations = parseDeclarations(engineDefinitionsFile),
+        pkg = "cesium.engine",
+        defaultImports = "import cesium.core.*",
+        sourceDir = sourceDir.resolve("cesium/engine"),
+    )
+
+    generate(
+        declarations = parseDeclarations(widgetsDefinitionsFile)
+            .filter { it.name != "ContextOptions" }
+            .filter { it.name != "WebGLOptions" },
+        pkg = "cesium.widgets",
+        defaultImports = """
+            import cesium.core.*
+            import cesium.engine.*
+            """.trimIndent(),
+        sourceDir = sourceDir.resolve("cesium/widgets"),
+    )
+}
+
+private fun generate(
+    declarations: List<Declaration>,
+    pkg: String,
+    defaultImports: String = "",
+    sourceDir: File,
+) {
+    sourceDir.mkdirs()
+
+    val moduleDeclaration = """@file:JsModule("@${pkg.replace(".", "/")}")"""
+
+    for (declaration in declarations.sortedBy(Declaration::name)) {
+        for ((name, body) in declaration.toConversionResults()) {
+            val file = sourceDir.resolve("${name}.kt")
+            if (!file.exists()) {
+                val isRuntime = hasRuntimeDeclarations(body)
+
+                val content = sequenceOf(
+                    "// $GENERATOR_COMMENT",
+                    moduleDeclaration.takeIf { isRuntime } ?: "",
+                    "package $pkg",
+                    defaultImports,
+                    toCommonBody(body),
+                ).filter { it.isNotEmpty() }
+                    .joinToString("\n\n")
+
+                file.writeCode(content)
+            } else {
+                // for functions with union type parameters
+                file.appendText("\n\n")
+            }
+        }
+    }
+}
+
+private fun hasRuntimeDeclarations(code: String): Boolean {
+    if (code.startsWith("external fun "))
+        return true
+
+    if ("\nexternal " !in code)
+        return false
+
+    if (code.count("\nexternal ") == code.count("\nexternal interface"))
+        return "companion object" in code
+
+    return true
+}
+
+private fun toCommonBody(
+    body: String,
+): String =
+    body.replace("<String>", "<JsString>")
+        .replace("<String,", "<JsString,")
+        .replace(", String>", ", JsString>")
+        .replace(", String?>", ", JsString?>")
+        .replace("<Double>", "<JsDouble>")
+        .replace("<Double,", "<JsDouble,")
+        .replace(", Double>", ", JsDouble>")
+        .replace("<Double?>", "<JsDouble?>")
+        .replace("<Int>", "<JsInt>")
+        .replace("<Int,", "<JsInt,")
+        .replace(", Int>", ", JsInt>")
+        .replace("<Boolean>", "<JsBoolean>")
+        .replace(
+            "@JsAsync\n",
+            "@JsAsync\n@Suppress(\"WRONG_EXTERNAL_DECLARATION\")\n",
+        )
+        .replace(
+            "@JsAsync(optional = true)\n",
+            "@JsAsync(optional = true)\n@Suppress(\"WRONG_EXTERNAL_DECLARATION\")\n",
+        )

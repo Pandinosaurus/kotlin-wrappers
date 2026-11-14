@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.diagnosticsChannel
+
+@kotlinx.js.JsPlainObject
+external interface TracingChannelSubscribers<ContextType : Any> {
+    var start: (message: ContextType) -> Unit
+    var end: (message: TracingChannelSubscribersEndMessage<ContextType>) -> Unit
+    var asyncStart: (message: TracingChannelSubscribersAsyncStartMessage<ContextType>) -> Unit
+    var asyncEnd: (message: TracingChannelSubscribersAsyncEndMessage<ContextType>) -> Unit
+    var error: (message: TracingChannelSubscribersErrorMessage<ContextType>) -> Unit
+}

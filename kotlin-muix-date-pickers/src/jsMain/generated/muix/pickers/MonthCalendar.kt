@@ -1,0 +1,10 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/x-date-pickers/MonthCalendar")
+
+package muix.pickers
+
+import react.FC
+
+
+external val MonthCalendar: FC<MonthCalendarProps>

@@ -1,0 +1,109 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: String,
+    v2: String,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: String,
+    v2: String,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: String,
+    v2: String,
+    optionsOrLoose: Options = definedExternally,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: String,
+    v2: SemVer,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: String,
+    v2: SemVer,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: String,
+    v2: SemVer,
+    optionsOrLoose: Options = definedExternally,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: SemVer,
+    v2: String,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: SemVer,
+    v2: String,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: SemVer,
+    v2: String,
+    optionsOrLoose: Options = definedExternally,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: SemVer,
+    v2: SemVer,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: SemVer,
+    v2: SemVer,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * v1 == v2 This is true if they're logically equivalent, even if they're not the exact same string. You already know how to compare strings.
+ */
+external fun eq(
+    v1: SemVer,
+    v2: SemVer,
+    optionsOrLoose: Options = definedExternally,
+): Boolean

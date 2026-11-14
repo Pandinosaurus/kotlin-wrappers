@@ -1,0 +1,101 @@
+// Automatically generated - do not modify!
+
+package node.sqlite
+
+@kotlinx.js.JsPlainObject
+external interface DatabaseSyncOptions {
+    /**
+     * If `true`, the database is opened by the constructor. When
+     * this value is `false`, the database must be opened via the `open()` method.
+     * @since v22.5.0
+     * @default true
+     */
+    var open: Boolean?
+
+    /**
+     * If `true`, foreign key constraints
+     * are enabled. This is recommended but can be disabled for compatibility with
+     * legacy database schemas. The enforcement of foreign key constraints can be
+     * enabled and disabled after opening the database using
+     * [`PRAGMA foreign_keys`](https://www.sqlite.org/pragma.html#pragma_foreign_keys).
+     * @since v22.10.0
+     * @default true
+     */
+    var enableForeignKeyConstraints: Boolean?
+
+    /**
+     * If `true`, SQLite will accept
+     * [double-quoted string literals](https://www.sqlite.org/quirks.html#dblquote).
+     * This is not recommended but can be
+     * enabled for compatibility with legacy database schemas.
+     * @since v22.10.0
+     * @default false
+     */
+    var enableDoubleQuotedStringLiterals: Boolean?
+
+    /**
+     * If `true`, the database is opened in read-only mode.
+     * If the database does not exist, opening it will fail.
+     * @since v22.12.0
+     * @default false
+     */
+    var readOnly: Boolean?
+
+    /**
+     * If `true`, the `loadExtension` SQL function
+     * and the `loadExtension()` method are enabled.
+     * You can call `enableLoadExtension(false)` later to disable this feature.
+     * @since v22.13.0
+     * @default false
+     */
+    var allowExtension: Boolean?
+
+    /**
+     * The [busy timeout](https://sqlite.org/c3ref/busy_timeout.html) in milliseconds. This is the maximum amount of
+     * time that SQLite will wait for a database lock to be released before
+     * returning an error.
+     * @since v24.0.0
+     * @default 0
+     */
+    var timeout: Double?
+
+    /**
+     * If `true`, integer fields are read as JavaScript `BigInt` values. If `false`,
+     * integer fields are read as JavaScript numbers.
+     * @since v24.4.0
+     * @default false
+     */
+    var readBigInts: Boolean?
+
+    /**
+     * If `true`, query results are returned as arrays instead of objects.
+     * @since v24.4.0
+     * @default false
+     */
+    var returnArrays: Boolean?
+
+    /**
+     * If `true`, allows binding named parameters without the prefix
+     * character (e.g., `foo` instead of `:foo`).
+     * @since v24.4.40
+     * @default true
+     */
+    var allowBareNamedParameters: Boolean?
+
+    /**
+     * If `true`, unknown named parameters are ignored when binding.
+     * If `false`, an exception is thrown for unknown named parameters.
+     * @since v24.4.40
+     * @default false
+     */
+    var allowUnknownNamedParameters: Boolean?
+
+    /**
+     * If `true`, enables the defensive flag. When the defensive flag is enabled,
+     * language features that allow ordinary SQL to deliberately corrupt the database
+     * file are disabled. The defensive flag can also be set using `enableDefensive()`.
+     * @since v24.12.0
+     * @default true
+     */
+    var defensive: Boolean?
+}

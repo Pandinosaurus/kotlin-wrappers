@@ -1,0 +1,78 @@
+// Automatically generated - do not modify!
+
+package web.scheduling
+
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.abort.unsafeAbortable
+import web.coroutines.await
+
+/**
+ * The **`Scheduler`** interface of the Prioritized Task Scheduling API provides methods for scheduling prioritized tasks.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Scheduler)
+ */
+open external class Scheduler
+private constructor() {
+    /**
+     * The **`postTask()`** method of the Scheduler interface is used for adding tasks to be scheduled according to their priority.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Scheduler/postTask)
+     */
+    @JsName("postTask")
+    open fun <T : JsAny?> postTaskAsync(
+        callback: SchedulerPostTaskCallback<T>,
+        options: SchedulerPostTaskOptions = definedExternally,
+    ): Promise<T>
+
+    /**
+     * The **`yield()`** method of the Scheduler interface is used for yielding to the main thread during a task and continuing execution later, with the continuation scheduled as a prioritized task (see the Prioritized Task Scheduling API for more information). This allows long-running work to be broken up so the browser stays responsive.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Scheduler/yield)
+     */
+    @JsName("yield")
+    open fun yieldAsync(): Promise<Void>
+}
+
+/**
+ * The **`postTask()`** method of the Scheduler interface is used for adding tasks to be scheduled according to their priority.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Scheduler/postTask)
+ */
+suspend fun <T : JsAny?> Scheduler.postTask(
+    callback: SchedulerPostTaskCallback<T>,
+): T {
+    return await { signal ->
+        postTaskAsync(
+            callback = callback,
+            options = unsafeAbortable(signal),
+        )
+    }
+}
+
+/**
+ * The **`postTask()`** method of the Scheduler interface is used for adding tasks to be scheduled according to their priority.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Scheduler/postTask)
+ */
+suspend fun <T : JsAny?> Scheduler.postTask(
+    callback: SchedulerPostTaskCallback<T>,
+    options: SchedulerPostTaskOptions,
+): T {
+    return await { signal ->
+        postTaskAsync(
+            callback = callback,
+            options = unsafeAbortable(options, signal),
+        )
+    }
+}
+
+/**
+ * The **`yield()`** method of the Scheduler interface is used for yielding to the main thread during a task and continuing execution later, with the continuation scheduled as a prioritized task (see the Prioritized Task Scheduling API for more information). This allows long-running work to be broken up so the browser stays responsive.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Scheduler/yield)
+ */
+suspend inline fun Scheduler.yield() {
+    yieldAsync().await()
+}

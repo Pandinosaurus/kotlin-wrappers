@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package node.inspector.profiler
+
+/**
+ * Coverage data for a source range.
+ */
+@kotlinx.js.JsPlainObject
+external interface CoverageRange {
+    /**
+     * JavaScript script source offset for the range start.
+     */
+    var startOffset: Double
+
+    /**
+     * JavaScript script source offset for the range end.
+     */
+    var endOffset: Double
+
+    /**
+     * Collected execution count of the source range.
+     */
+    var count: Double
+}

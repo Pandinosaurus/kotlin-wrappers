@@ -1,0 +1,26 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * Returns cleaned (removed leading/trailing whitespace, remove '=v' prefix) and parsed version, or null if version is invalid.
+ */
+external fun clean(version: String): String?
+
+/**
+ * Returns cleaned (removed leading/trailing whitespace, remove '=v' prefix) and parsed version, or null if version is invalid.
+ */
+external fun clean(
+    version: String,
+    optionsOrLoose: Boolean = definedExternally,
+): String?
+
+/**
+ * Returns cleaned (removed leading/trailing whitespace, remove '=v' prefix) and parsed version, or null if version is invalid.
+ */
+external fun clean(
+    version: String,
+    optionsOrLoose: Options = definedExternally,
+): String?

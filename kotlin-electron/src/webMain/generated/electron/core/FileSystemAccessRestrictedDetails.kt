@@ -1,0 +1,32 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface FileSystemAccessRestrictedDetails {
+    /**
+     * The origin that initiated access to the blocked path.
+     */
+    var origin: String
+
+    /**
+     * Whether or not the path is a directory.
+     */
+    var isDirectory: Boolean
+
+    /**
+     * The blocked path attempting to be accessed.
+     */
+    var path: String
+
+    /**
+     * The frame that initiated access. May be `null` if the frame has since been
+     * destroyed.
+     */
+    var frame: WebFrameMain?
+
+    /**
+     * The WebContents that contains `frame`.
+     */
+    var webContents: WebContents?
+}

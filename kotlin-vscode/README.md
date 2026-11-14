@@ -1,0 +1,11 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.jetbrains.kotlin-wrappers/kotlin-vscode)](https://central.sonatype.com/artifact/org.jetbrains.kotlin-wrappers/kotlin-vscode)
+
+# Module kotlin-vscode
+
+[vscode](https://npmx.dev/package/@types/vscode) declarations
+
+### Internals
+
+Declarations in [src/webMain/generated](./src/webMain/generated) are generated.
+
+Manual changes are prohibited.

@@ -1,0 +1,9 @@
+// Automatically generated - do not modify!
+
+package node.crypto
+
+@kotlinx.js.JsPlainObject
+external interface ED25519KeyPairOptions<PubF : KeyFormat, PrivF : KeyFormat> {
+    var publicKeyEncoding: ED25519KeyPairOptionsPublicKeyEncoding<PubF>
+    var privateKeyEncoding: ED25519KeyPairOptionsPrivateKeyEncoding<PrivF>
+}

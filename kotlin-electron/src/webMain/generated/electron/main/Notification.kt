@@ -1,0 +1,9 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("electron/main")
+
+package electron.main
+
+open external class Notification : electron.core.Notification {
+    constructor (options: NotificationConstructorOptions = definedExternally)
+}

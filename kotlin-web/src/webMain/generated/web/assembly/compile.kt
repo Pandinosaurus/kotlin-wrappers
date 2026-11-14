@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+package web.assembly
+
+import js.buffer.AllowSharedBufferSource
+import js.promise.Promise
+import js.promise.await
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/WebAssembly/Reference/JavaScript_interface/compile_static)
+ */
+@JsQualifier("WebAssembly")
+@JsName("compile")
+external fun compileAsync(
+    bytes: AllowSharedBufferSource,
+    options: WebAssemblyCompileOptions? = definedExternally,
+): Promise<Module>
+
+suspend inline fun compile(
+    bytes: AllowSharedBufferSource,
+): Module {
+    return compileAsync(
+        bytes = bytes,
+    ).await()
+}
+
+suspend inline fun compile(
+    bytes: AllowSharedBufferSource,
+    options: WebAssemblyCompileOptions?,
+): Module {
+    return compileAsync(
+        bytes = bytes,
+        options = options,
+    ).await()
+}

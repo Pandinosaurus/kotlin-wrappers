@@ -1,0 +1,9 @@
+// Automatically generated - do not modify!
+
+package node.stream
+
+typealias PipelineCallback<
+        @Suppress("UNUSED_TYPEALIAS_PARAMETER")
+        S,
+        /*  : PipelineDestination<Any?, Any?> */
+        > = Any /* S extends PipelineDestinationPromiseFunction<any, infer P> ? (err: NodeJS.ErrnoException | null, value: P) => void : (err: NodeJS.ErrnoException | null) => void */

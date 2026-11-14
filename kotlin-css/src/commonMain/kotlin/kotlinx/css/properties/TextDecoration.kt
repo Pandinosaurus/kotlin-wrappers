@@ -3,9 +3,7 @@
 package kotlinx.css.properties
 
 import kotlinx.css.Color
-import kotlinx.css.StyledElement
 import kotlinx.css.hyphenize
-import kotlinx.css.textDecoration
 
 enum class TextDecorationLine {
     initial, inherit, unset,
@@ -13,6 +11,14 @@ enum class TextDecorationLine {
     underline, overline, lineThrough;
 
     override fun toString() = name.hyphenize()
+}
+
+enum class TextDecorationStyle {
+    initial, inherit, unset,
+
+    solid, double, dotted, dashed, wavy;
+
+    override fun toString() = name
 }
 
 
@@ -33,20 +39,4 @@ class TextDecoration(
             color?.let { append(" $it") }
         }
     }
-}
-
-enum class TextDecorationStyle {
-    initial, inherit, unset,
-
-    solid, double, dotted, dashed, wavy;
-
-    override fun toString() = name
-}
-
-fun StyledElement.textDecoration(
-    vararg lines: TextDecorationLine,
-    style: TextDecorationStyle? = null,
-    color: Color? = null,
-) {
-    textDecoration = TextDecoration(lines.toSet(), style, color)
 }

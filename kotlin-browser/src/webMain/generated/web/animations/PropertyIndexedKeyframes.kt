@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+package web.animations
+
+import js.array.ReadonlyArray
+import js.numbers.JsDouble
+
+external interface PropertyIndexedKeyframes {
+    var composite: ReadonlyArray<CompositeOperationOrAuto> /* | CompositeOperationOrAuto */?
+    var easing: JsAny /* string | string[] */?
+    var offset: ReadonlyArray<JsDouble?> /* | Double */?
+    // [property: string]: string | string[] | number | CSSStyleValue | CSSStyleValue[] | null | (number | null)[] | undefined
+}

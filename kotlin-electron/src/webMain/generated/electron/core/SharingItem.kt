@@ -1,0 +1,22 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface SharingItem {
+// Docs: https://electronjs.org/docs/api/structures/sharing-item
+    /**
+     * An array of files to share.
+     */
+    var filePaths: js.array.ReadonlyArray<String>?
+
+    /**
+     * An array of text to share.
+     */
+    var texts: js.array.ReadonlyArray<String>?
+
+    /**
+     * An array of URLs to share.
+     */
+    var urls: js.array.ReadonlyArray<String>?
+}

@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:module")
+
+package node.module
+
+/**
+ * Register [hooks](https://nodejs.org/docs/latest-v24.x/api/module.html#customization-hooks)
+ * that customize Node.js module resolution and loading behavior.
+ * @since v22.15.0
+ * @experimental
+ */
+external fun registerHooks(options: RegisterHooksOptions): ModuleHooks

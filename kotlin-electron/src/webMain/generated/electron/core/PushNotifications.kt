@@ -1,0 +1,33 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface PushNotifications : node.events.EventEmitter {
+    /**
+     * Registers the app with Apple Push Notification service (APNS) to receive Badge,
+     * Sound, and Alert notifications. If registration is successful, the promise will
+     * be resolved with the APNS device token. Otherwise, the promise will be rejected
+     * with an error message. See:
+     * https://developer.apple.com/documentation/appkit/nsapplication/1428476-registerforremotenotificationtyp?language=objc
+     *
+     * @platform darwin
+     */
+    fun registerForAPNSNotifications(): js.promise.Promise<String>
+
+    /**
+     * Unregisters the app from notifications received from APNS.
+     *
+     * Apps unregistered through this method can always reregister.
+     *
+     * See:
+     * https://developer.apple.com/documentation/appkit/nsapplication/1428747-unregisterforremotenotifications?language=objc
+     *
+     * @platform darwin
+     */
+    fun unregisterForAPNSNotifications()
+
+    @web.events.JsEvent("received-apns-notification")
+    val receivedApnsNotificationEvent:
+            node.events.EventInstance<js.array.Tuple2<Event<*>, js.objects.ReadonlyRecord<String, Any?>>>
+}

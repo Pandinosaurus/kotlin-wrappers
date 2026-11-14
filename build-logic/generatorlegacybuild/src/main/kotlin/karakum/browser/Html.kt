@@ -1,0 +1,2826 @@
+package karakum.browser
+
+import karakum.common.EmptyExtensionsCollector
+import karakum.common.ExtensionsCollector
+import karakum.common.TYPED_ARRAYS
+import karakum.common.withSuspendExtensions
+import karakum.events.EventDataRegistry
+
+internal const val VIDEO_FRAME_REQUEST_ID = "VideoFrameRequestId"
+internal const val XR_FRAME_REQUEST_ID = "XRFrameRequestId"
+internal const val RENDERING_CONTEXT_ID = "RenderingContextId"
+internal const val GEOLOCATION_WATCH_ID = "GeolocationWatchId"
+
+private val ANIMATION_TYPES = setOf(
+    "Animation",
+    "AnimationEffect",
+    "AnimationTimeline",
+
+    "Animatable",
+    "GetAnimationsOptions",
+
+    "ComputedEffectTiming",
+    "EffectTiming",
+    "OptionalEffectTiming",
+
+    "ComputedKeyframe",
+    "Keyframe",
+    "KeyframeAnimationOptions",
+    "KeyframeEffect",
+    "KeyframeEffectOptions",
+    "PropertyIndexedKeyframes",
+    "TimelineRangeOffset",
+
+    "DocumentTimeline",
+    "DocumentTimelineOptions",
+
+    "ScrollTimeline",
+    "ScrollTimelineOptions",
+    "ViewTimeline",
+    "ViewTimelineOptions",
+)
+
+private val ARIA_TYPES = setOf(
+    "ARIAMixin",
+    "ARIANotifyMixin",
+    "AriaNotificationOptions",
+)
+
+private val RANGES_TYPES = setOf(
+    "AbstractRange",
+    "Range",
+    "StaticRange",
+    "StaticRangeInit",
+)
+
+private val SELECTION_TYPES = setOf(
+    "Selection",
+    "GetComposedRangesOptions",
+)
+
+private val DOM_TYPES = setOf(
+    // separate package?
+    "CaretPosition",
+    "CaretPositionFromPointOptions",
+
+    "DOMStringList",
+    "DOMStringMap",
+    "DOMTokenList",
+
+    "Attr",
+    "CDATASection",
+    "CharacterData",
+    "Comment",
+    "ElementCreationOptions",
+    "NonDocumentTypeChildNode",
+    "NonElementParentNode",
+    "ProcessingInstruction",
+    "DocumentType",
+    "TreeWalker",
+    "Text",
+    "NodeIterator",
+
+    // special
+    "HTMLOrSVGOrMathMLElement",
+    "FocusOptions",
+
+    "Node",
+    "NodeFilter",
+    "NodeList",
+    "NamedNodeMap",
+    "GetRootNodeOptions",
+    "DOMImplementation",
+
+    "ChildNode",
+    "ParentNode",
+    "Element",
+    "CheckVisibilityOptions",
+    "GetHTMLOptions",
+    "ImportNodeOptions",
+
+    // separate package?
+    "PointerLockOptions",
+    "SetHTMLOptions",
+)
+
+private val GLOBAL_TYPES = setOf(
+    "GlobalEventHandlers",
+)
+
+private val WEB_COMPONENTS_TYPES = setOf(
+    "AssignedNodesOptions",
+
+    "CustomElementRegistry",
+    "CustomElementConstructor",
+    "ElementDefinitionOptions",
+
+    "CustomStateSet",
+    "ElementInternals",
+    "HTMLSlotElement",
+    "HTMLTemplateElement",
+
+    "ShadowRoot",
+    "ShadowRootInit",
+    "Slottable",
+)
+
+private val VALIDATION_TYPES = setOf(
+    "ValidityState",
+    "ValidityStateFlags",
+)
+
+private val EVENTS_TYPES = setOf(
+    "AddEventListenerOptions",
+    "EventListenerOptions",
+)
+
+private val SCROLL_TYPES = setOf(
+    "ScrollOptions",
+    "ScrollToOptions",
+    "ScrollIntoViewOptions",
+)
+
+private val FULLSCREEN_TYPES = setOf(
+    "FullscreenOptions",
+)
+
+private val CSSOM_INTERFACES = listOf(
+    "ElementCSSInlineStyle",
+    "LinkStyle",
+)
+
+private val CSSOM_TYPES = listOf(
+    "StylePropertyMap",
+    "StylePropertyMapReadOnly",
+    "PropertyDefinition",
+) + CSSOM_INTERFACES
+
+private val VIEW_TRANSITION_TYPES = listOf(
+    "ViewTransition",
+    "ViewTransitionTypeSet",
+    "StartViewTransitionOptions",
+)
+
+private val HIGHLIGHT_TYPES = listOf(
+    "Highlight",
+    "HighlightHitResult",
+    "HighlightRegistry",
+    "HighlightsFromPointOptions",
+)
+
+private val DOM_DATA_TYPES = listOf(
+    "DataTransfer",
+    "DataTransferItem",
+    "DataTransferItemList",
+)
+
+internal val DOM_GEOMETRY_TYPES = listOf(
+    "DOMPointReadOnly",
+    "DOMPoint",
+    "DOMPointInit",
+
+    "DOMRectReadOnly",
+    "DOMRect",
+    "DOMRectInit",
+    "DOMRectList",
+
+    "DOMMatrixReadOnly",
+    "DOMMatrix",
+    "DOMMatrixInit",
+    "DOMMatrix2DInit",
+
+    "DOMQuad",
+    "DOMQuadInit",
+)
+
+private val PARSING_TYPES = listOf(
+    "DOMParser",
+    "XMLSerializer",
+)
+
+private val IMAGES_TYPES = listOf(
+    "ImageData",
+    "ImageDataSettings",
+
+    "ImageBitmap",
+    "ImageBitmapOptions",
+    "ImageBitmapRenderingContext",
+    "ImageBitmapRenderingContextSettings",
+)
+
+private val CANVAS_TYPES = listOf(
+    "ImageEncodeOptions",
+
+    "Path2D",
+    "TextMetrics",
+
+    "OffscreenCanvas",
+    "OffscreenCanvasRenderingContext2D",
+)
+
+private val FORM_TYPES = listOf(
+    "FormData",
+)
+
+private val HTTP_TYPES = listOf(
+    "Body",
+    "Request",
+    "RequestInit",
+    "Response",
+    "ResponseInit",
+
+    "Headers",
+    "HeadersInit",
+)
+
+private val MEDIA_STREAM_TYPES = listOf(
+    "CanvasCaptureMediaStreamTrack",
+    "OverconstrainedError",
+
+    "DoubleRange",
+    "ULongRange",
+)
+
+private val IMAGE_CAPTURE_TYPES = listOf(
+    "ImageCapture",
+
+    "MediaSettingsRange",
+    "PhotoCapabilities",
+    "PhotoSettings",
+)
+
+private val MEDIA_SESSION_TYPES = listOf(
+    "MediaSession",
+    "MediaSessionAction",
+    "MediaSessionActionDetails",
+    "MediaMetadata",
+    "MediaMetadataInit",
+    "MediaImage",
+    "MediaPositionState",
+)
+
+private val MEDIA_CAPABILITIES_TYPES = listOf(
+    "AudioConfiguration",
+    "VideoConfiguration",
+
+    "MediaConfiguration",
+    "MediaEncodingConfiguration",
+    "MediaDecodingConfiguration",
+
+    "KeySystemTrackConfiguration",
+)
+
+private val MEDIA_SOURCE_TYPES = listOf(
+    "MediaSource",
+    "MediaSourceHandle",
+    "SourceBuffer",
+    "SourceBufferList",
+    "TimeRanges",
+)
+
+private val WEB_AUDIO_TYPES = listOf(
+    "AudioTimestamp",
+
+    "AudioContext",
+    "AudioContextOptions",
+
+    "AnalyserOptions",
+    "AudioBufferOptions",
+    "AudioBufferSourceOptions",
+    "AudioNodeOptions",
+    "AudioWorkletNodeOptions",
+    "AudioParamMap",
+    "MediaElementAudioSourceOptions",
+    "OfflineAudioContextOptions",
+    "OscillatorOptions",
+    "PannerOptions",
+    "PeriodicWaveOptions",
+    "StereoPannerOptions",
+    "WaveShaperOptions",
+    "PeriodicWaveConstraints",
+    "BiquadFilterOptions",
+    "ChannelMergerOptions",
+    "ChannelSplitterOptions",
+    "ConstantSourceOptions",
+    "ConvolverOptions",
+    "DelayOptions",
+    "DynamicsCompressorOptions",
+    "GainOptions",
+    "IIRFilterOptions",
+
+    "AnalyserNode",
+    "AudioBuffer",
+    "AudioBufferSourceNode",
+    "AudioDestinationNode",
+    "AudioListener",
+    "AudioNode",
+    "AudioParam",
+    "AudioScheduledSourceNode",
+    "AudioWorklet",
+    "AudioWorkletGlobalScope",
+    "AudioWorkletNode",
+    "AudioWorkletProcessor",
+    "BaseAudioContext",
+    "BiquadFilterNode",
+    "ChannelMergerNode",
+    "ChannelSplitterNode",
+    "ConstantSourceNode",
+    "ConvolverNode",
+    "DelayNode",
+    "DynamicsCompressorNode",
+    "GainNode",
+    "IIRFilterNode",
+    "MediaElementAudioSourceNode",
+    "MediaStreamAudioDestinationNode",
+    "MediaStreamAudioSourceNode",
+    "MediaStreamAudioSourceOptions",
+    "OfflineAudioContext",
+    "OscillatorNode",
+    "PannerNode",
+    "PeriodicWave",
+    "StereoPannerNode",
+    "WaveShaperNode",
+)
+
+private val WORKLETS_TYPES = listOf(
+    "Worklet",
+    "WorkletOptions",
+)
+
+private val WORKERS_TYPES = listOf(
+    "AbstractWorker",
+    "SharedWorker",
+    "Worker",
+    "WorkerOptions",
+)
+
+private val WEB_AUTHN_TYPES = listOf(
+    "AllAcceptedCredentialsOptions",
+    "AuthenticationExtensionsClientInputs",
+    "AuthenticationExtensionsClientInputsJSON",
+    "AuthenticationExtensionsClientOutputs",
+    "AuthenticationExtensionsClientOutputsJSON",
+    "AuthenticationExtensionsLargeBlobInputs",
+    "AuthenticationExtensionsLargeBlobInputsJSON",
+    "AuthenticationExtensionsLargeBlobOutputs",
+    "AuthenticationExtensionsLargeBlobOutputsJSON",
+    "AuthenticationExtensionsPRFInputs",
+    "AuthenticationExtensionsPRFInputsJSON",
+    "AuthenticationExtensionsPRFOutputs",
+    "AuthenticationExtensionsPRFOutputsJSON",
+    "AuthenticationExtensionsPRFValues",
+    "AuthenticationExtensionsPRFValuesJSON",
+    "AuthenticationResponseJSON",
+    "AuthenticatorAssertionResponse",
+    "AuthenticatorAssertionResponseJSON",
+    "AuthenticatorAttestationResponse",
+    "AuthenticatorAttestationResponseJSON",
+    "AuthenticatorResponse",
+    "AuthenticatorSelectionCriteria",
+    "CredentialPropertiesOutput",
+    "CurrentUserDetailsOptions",
+    "PublicKeyCredential",
+    "PublicKeyCredentialCreationOptions",
+    "PublicKeyCredentialCreationOptionsJSON",
+    "PublicKeyCredentialDescriptor",
+    "PublicKeyCredentialDescriptorJSON",
+    "PublicKeyCredentialEntity",
+    "PublicKeyCredentialParameters",
+    "PublicKeyCredentialRequestOptions",
+    "PublicKeyCredentialRequestOptionsJSON",
+    "PublicKeyCredentialRpEntity",
+    "PublicKeyCredentialUserEntity",
+    "PublicKeyCredentialUserEntityJSON",
+    "RegistrationResponseJSON",
+    "UnknownCredentialOptions",
+)
+
+private val CREDENTIALS_TYPES = listOf(
+    "Credential",
+    "CredentialCreationOptions",
+    "CredentialRequestOptions",
+    "CredentialsContainer",
+
+    // separate package?
+    "DigitalCredential",
+)
+
+private val FEDCM_TYPES = listOf(
+    "NavigatorLogin",
+)
+
+private val ABORT_TYPES = listOf(
+    "AbortController",
+    "AbortSignal",
+)
+
+private val ERROR_TYPES = listOf(
+    DOM_EXCEPTION,
+)
+
+private val SCHEDULING_TYPES = listOf(
+    "IdleDeadline",
+    "IdleRequestOptions",
+
+    "Scheduler",
+    "SchedulerPostTaskOptions",
+    "TaskController",
+    "TaskControllerInit",
+    "TaskSignal",
+    "TaskSignalAnyInit",
+)
+
+private val WEB_SERIALIZATION = listOf(
+    "StructuredSerializeOptions",
+)
+
+private val MESSAGING_TYPES = listOf(
+    "MessageChannel",
+    "MessageEventTarget",
+    "MessagePort",
+)
+
+private val WEB_CRYPTO_TYPES = listOf(
+    "Algorithm",
+    "KeyAlgorithm",
+
+    "Crypto",
+    "CryptoKey",
+    "CryptoKeyPair",
+    "SubtleCrypto",
+
+    "JsonWebKey",
+
+    "AesCbcParams",
+    "AesCtrParams",
+    "AesDerivedKeyParams",
+    "AesGcmParams",
+    "AesKeyAlgorithm",
+    "AesKeyGenParams",
+    "Algorithm",
+    "EcKeyAlgorithm",
+    "EcKeyGenParams",
+    "EcKeyImportParams",
+    "EcdhKeyDeriveParams",
+    "EcdsaParams",
+    "HkdfParams",
+    "HmacImportParams",
+    "HmacKeyAlgorithm",
+    "HmacKeyGenParams",
+    "KeyAlgorithm",
+    "Pbkdf2Params",
+    "RsaHashedImportParams",
+    "RsaHashedKeyAlgorithm",
+    "RsaKeyAlgorithm",
+    "RsaKeyGenParams",
+    "RsaOaepParams",
+    "RsaPssParams",
+
+    "RsaOtherPrimesInfo",
+    "RsaHashedKeyGenParams",
+)
+
+private val USER_ACTIVATION_TYPES = listOf(
+    "UserActivation",
+)
+
+private val QUERY_TYPES = listOf(
+    "Cache",
+    "CacheStorage",
+
+    "CacheQueryOptions",
+    "MultiCacheQueryOptions",
+)
+
+private val CODECS_TYPES = listOf(
+    "AacEncoderConfig",
+    "AudioData",
+    "AudioDataCopyToOptions",
+    "AudioDataInit",
+    "AudioDecoder",
+    "AudioDecoderConfig",
+    "AudioDecoderInit",
+    "AudioDecoderSupport",
+    "AudioEncoder",
+    "AudioEncoderConfig",
+    "AudioEncoderInit",
+    "AudioEncoderSupport",
+    "AvcEncoderConfig",
+    "EncodedAudioChunk",
+    "EncodedAudioChunkInit",
+    "EncodedAudioChunkMetadata",
+    "EncodedVideoChunk",
+    "EncodedVideoChunkInit",
+    "EncodedVideoChunkMetadata",
+    "ImageDecodeOptions",
+    "ImageDecoder",
+    "ImageDecodeResult",
+    "ImageDecoderInit",
+    "ImageTrack",
+    "ImageTrackList",
+    "OpusEncoderConfig",
+    "PlaneLayout",
+    "SvcOutputMetadata",
+    "VideoColorSpace",
+    "VideoColorSpaceInit",
+    "VideoDecoder",
+    "VideoDecoderConfig",
+    "VideoDecoderInit",
+    "VideoDecoderSupport",
+    "VideoEncoder",
+    "VideoEncoderConfig",
+    "VideoEncoderEncodeOptions",
+    "VideoEncoderEncodeOptionsForAvc",
+    "VideoEncoderInit",
+    "VideoEncoderSupport",
+    "VideoFrame",
+    "VideoFrameBufferInit",
+    "VideoFrameCopyToOptions",
+    "VideoFrameInit",
+)
+
+private val FILE_SYSTEM_TYPES = listOf(
+    "WriteParams",
+)
+
+private val STREAMS_TYPES = listOf(
+    "ByteLengthQueuingStrategy",
+    "CountQueuingStrategy",
+    "GenericTransformStream",
+    "QueuingStrategy",
+    "QueuingStrategyInit",
+    "QueuingStrategySize",
+    "ReadableByteStreamController",
+    "ReadableStream",
+    "ReadableStreamBYOBReader",
+    "ReadableStreamBYOBReaderReadOptions",
+    "ReadableStreamBYOBRequest",
+    "ReadableStreamController",
+    "ReadableStreamDefaultController",
+    "ReadableStreamDefaultReadDoneResult",
+    "ReadableStreamDefaultReadValueResult",
+    "ReadableStreamDefaultReader",
+    "ReadableStreamGenericReader",
+    "ReadableStreamGetReaderOptions",
+    "ReadableStreamIteratorOptions",
+    "ReadableStreamReadResult",
+    "ReadableWritablePair",
+    "StreamPipeOptions",
+    "TransformStream",
+    "TransformStreamDefaultController",
+    "Transformer",
+    "UnderlyingByteSource",
+    "UnderlyingDefaultSource",
+    "UnderlyingSink",
+    "UnderlyingSource",
+    "WritableStream",
+    "WritableStreamDefaultController",
+    "WritableStreamDefaultWriter",
+)
+
+private val COMPRESSION_STREAMS_TYPES = listOf(
+    "CompressionStream",
+    "DecompressionStream",
+)
+
+private val PAYMENT_TYPES = listOf(
+    "PayerErrors",
+    "AddressErrors",
+)
+
+private val URL_TYPES = listOf(
+    "FragmentDirective",
+
+    "URL",
+    "URLSearchParams",
+
+    "URLPattern",
+    "URLPatternComponentResult",
+    "URLPatternInit",
+    "URLPatternOptions",
+    "URLPatternResult",
+)
+
+private val REPORTING_TYPES = listOf(
+    "CSPViolationReportBody",
+    "DeprecationReportBody",
+    "InterventionReportBody",
+    "Report",
+    "ReportBody",
+    "ReportError",
+    "ReportingObserver",
+    "ReportingObserverOptions",
+)
+
+private val POPOVER_TYPES = setOf(
+    "PopoverTargetAttributes",
+    "ShowPopoverOptions",
+    "TogglePopoverOptions",
+)
+
+private val SERIAL_TYPES = setOf(
+    "Serial",
+    "SerialInputSignals",
+    "SerialOptions",
+    "SerialOutputSignals",
+    "SerialPort",
+    "SerialPortFilter",
+    "SerialPortInfo",
+    "SerialPortRequestOptions",
+)
+
+internal fun htmlDeclarations(
+    source: String,
+): Sequence<ConversionResult> {
+    val content = source.replace(";\n     *", ";--\n     *")
+
+    val getStaticSource = { name: String ->
+        getStaticSource(name, content)
+    }
+
+    val enums = Regex("""\ndeclare namespace .+? \{[\s\S]*?\n}""")
+        .findAll(content)
+        .map { it.value.removePrefix("\ndeclare namespace ") }
+        .flatMap { src -> convertEnum(src) }
+
+    val interfaces = Regex("""\ninterface .+? \{[\s\S]*?\n}""")
+        .findAll(content)
+        .map { it.value.removePrefix("\n") }
+        .mapNotNull { src ->
+            convertInterface(src, getStaticSource)
+                ?.withComment(fullSource = content, source = src)
+        }
+        // custom
+        .filter { it.name != "EventCounts" }
+        // duplicates
+        .filter { it.name != "ClientQueryOptions" }
+        .filter { it.name != "FileSystemFileHandle" }
+
+    return interfaces
+        .withFinalSecurityMembers()
+        .withAriaUnions()
+        .plus(enums)
+        .plus(formTypes())
+        .plus(popoverTypes())
+        .plus(
+            ConversionResult(
+                RENDERING_CONTEXT_ID,
+                """
+                sealed /* opaque */
+                external interface $RENDERING_CONTEXT_ID<T: JsAny, O: JsAny?>
+                """.trimIndent(),
+                "web.rendering",
+            ),
+        )
+        .plus(
+            ConversionResult(
+                name = "EventCounts",
+                // language=kotlin
+                body = """
+                    open external class EventCounts
+                    private constructor():
+                    ReadonlyMap.Mixin<EventType<*>, Int>
+                """.trimIndent(),
+                pkg = "web.performance",
+            ),
+        )
+        .plus(
+            ConversionResult(
+                name = "NodeFilter",
+                body = "typealias NodeFilter = (node: Node) -> NodeFilterResult",
+                pkg = "web.dom",
+            ),
+        )
+        .plus(
+            sequenceOf(
+                "web.dom" to NODE_POSITION,
+                "web.dom" to NODE_TYPE,
+                "web.events" to EVENT_PHASE,
+                "web.html" to VIDEO_FRAME_REQUEST_ID,
+                "web.xr" to XR_FRAME_REQUEST_ID,
+                "web.geolocation" to GEOLOCATION_WATCH_ID,
+                "web.keyboard" to KEY_LOCATION,
+                "web.mouse" to DELTA_MODE,
+            ).map { (pkg, name) ->
+                val type = if (name.endsWith("Id")) "opaque" else "enum"
+
+                ConversionResult(
+                    name = name,
+                    body = """
+                    sealed /* $type */
+                    external interface $name
+                    """.trimIndent(),
+                    pkg = pkg,
+                )
+            },
+        )
+        .plus(
+            ConversionResult(
+                name = "XPathNSResolver",
+                body = "typealias XPathNSResolver = (prefix: String?) -> String?",
+                pkg = "web.xpath",
+            ),
+        )
+        .plus(
+            ConversionResult(
+                name = "ReadableStreamReader",
+                body = "typealias ReadableStreamReader = ReadableStreamGenericReader /* {\n    fun releaseLock()\n} */",
+                pkg = "web.streams",
+            ),
+        )
+        .plus(cryptoAlgorithms())
+        .plus(
+            sequenceOf(
+                "HTMLGeolocationElement",
+                "HTMLPermissionElement",
+                "HTMLUserMediaElement",
+                "HTMLMicrophoneElement",
+                "HTMLCameraElement",
+            ).map { name ->
+                val body = """
+                /**
+                 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/$name)
+                 */
+                open external class $name
+                protected constructor() :
+                    HTMLElement {
+                    // ...
+                }
+                """.trimIndent()
+
+                ConversionResult(
+                    name = name,
+                    body = body,
+                    pkg = "web.html",
+                )
+            },
+        )
+}
+
+private val COLLECTIONS_WITH_BOUNDS = setOf(
+    "NodeList",
+    "HTMLCollectionBase",
+    "HTMLCollection",
+)
+
+private fun convertEnum(
+    source: String,
+): Sequence<ConversionResult> {
+    val name = source.substringBefore(" ")
+    return when {
+        name == "CSS" -> emptySequence()
+        name == "WebAssembly" -> emptySequence()
+
+        name == "NodeFilter" -> {
+            val enumSource = source
+                .replace("\n    readonly ", "\n    const ")
+
+            sequenceOf(
+                convertEnum(
+                    name = "NodeFilterResult",
+                    source = enumSource,
+                    pkg = "web.dom",
+                    isBitmask = false,
+                    valueFilter = { value -> !value.startsWith("0x") },
+                ),
+                convertEnum(
+                    name = "WhatToShow",
+                    source = enumSource,
+                    pkg = "web.dom",
+                    valueFilter = { value -> value.startsWith("0x") },
+                ),
+            )
+        }
+
+        name.startsWith("GPU") -> sequenceOf(
+            convertEnum(
+                name = name,
+                source = source,
+                pkg = "web.gpu",
+            ),
+        )
+
+        else -> TODO("Unknown namespace: $name")
+    }
+}
+
+private fun convertEnum(
+    name: String,
+    source: String,
+    pkg: String,
+    isBitmask: Boolean = true,
+    valueFilter: (value: String) -> Boolean = { true },
+): ConversionResult {
+    val jsName = source.substringBefore(" ")
+    val constants = source
+        .substringAfter(" {\n")
+        .substringBefore("\n}")
+        .splitToSequence("\n")
+        .map { it.trim() }
+        .map { it.removePrefix("const ") }
+        .map { it.removeSuffix(";") }
+        .mapNotNull {
+            val (pname, pvalue) = it.split(": ")
+            if (!valueFilter(pvalue))
+                return@mapNotNull null
+
+            """
+            /**
+             * Value - `$pvalue`
+             */
+            val $pname: $name
+            """.trimIndent()
+        }
+        .joinToString("\n")
+
+    val comment = if (isBitmask) "flags" else "enum"
+    val jsNameAnnotation = if (name != jsName) "\n@JsName(\"$jsName\")" else ""
+    val parent = if (isBitmask) ":\nBitmask<$name>" else ""
+
+    val body = """
+    /* $comment */$jsNameAnnotation
+    external class $name
+    private constructor() $parent {
+        companion object {
+            $constants
+        }
+    }
+    """.trimIndent()
+
+    return ConversionResult(
+        name = name,
+        body = body,
+        pkg = pkg,
+    )
+}
+
+internal fun convertInterface(
+    source: String,
+    getStaticSource: (String) -> String?,
+    predefinedPkg: String? = null,
+): ConversionResult? {
+    val name = source
+        .substringAfter(" ")
+        .substringBefore(" ")
+        .substringBefore("<")
+
+    when {
+        name in KNOWN_MISSED_TYPES -> return null
+        name.endsWith("NameMap") -> return null
+        name.endsWith("Event") -> return null
+        name.endsWith("EventInit") -> return null
+        name.endsWith("EventMap") -> return null
+    }
+
+    if (("target: string" in source || "target?: string" in source) && (name.startsWith("HTML") || name == "Window")) {
+        var newSource = source
+            .replace("target: string", "target: WindowTarget")
+            .replace("target?: string", "target?: WindowTarget")
+
+        if (name == "Window") {
+            newSource = newSource.replace("name: string", "name: WindowName")
+        }
+
+        return convertInterface(
+            source = newSource,
+            getStaticSource = getStaticSource,
+            predefinedPkg = predefinedPkg,
+        )
+    }
+
+    when (name) {
+        "HTMLInputElement" if (" type: string;" in source) -> {
+            val newSource = source
+                .replace(" type: string;", " type: InputType;")
+
+            return convertInterface(
+                source = newSource,
+                getStaticSource = getStaticSource,
+                predefinedPkg = predefinedPkg,
+            )
+        }
+
+        "WebGLRenderingContextBase" -> {
+            val (extensionLines, lines) = source.splitToSequence("\n")
+                .partition { it.startsWith("    getExtension(extensionName: \"") }
+
+            if (extensionLines.isNotEmpty()) {
+                var extensions = extensionLines.asSequence()
+                    .map { it.removeSurrounding("    getExtension(extensionName: ", " | null;") }
+                    .map { it.split("): ") }
+                    .joinToString("\n\n") { (id, type) ->
+                        // language=kotlin
+                        """
+                        fun <T : $type> $name.getExtension(`_`: T? = null): T =
+                            getExtensionUnsafe($id)
+
+                        inline fun <T : $type> $name.getExtensionOrNull(`_`: T? = null): T? =
+                            getExtensionOrNullUnsafe($id)
+                        """.trimIndent()
+                    }
+
+                // language=kotlin
+                extensions = """
+                private fun <T: Any> $name.getExtensionUnsafe(
+                    name: String,
+                ): T =
+                    requireNotNull(getExtensionOrNullUnsafe(name)) {
+                        "WebGL extension with name '${'$'}name' not found"
+                    }
+                """.trimIndent()
+                    .plus("\n\n")
+                    .plus(extensions)
+
+                val result = convertInterface(
+                    source = lines.joinToString("\n")
+                        .replace(
+                            "getExtension(name: string): any;",
+                            "getExtensionOrNullUnsafe<T>(name: string): T | null;",
+                        ),
+                    getStaticSource = getStaticSource,
+                    predefinedPkg = predefinedPkg,
+                )!!
+
+                val newBody = result.body
+                    .replace(
+                        Regex("(fun.+getExtensionOrNullUnsafe)"),
+                        "@InternalApi\n@JsName(\"getExtension\")\n$1",
+                    )
+                    .plus("\n\n")
+                    .plus(extensions)
+
+                return result.copy(body = newBody)
+            }
+        }
+
+        "Global",
+        "GlobalDescriptor",
+            -> {
+            if ("<T extends ValueType = ValueType>" in source) {
+                val newSource = source
+                    .replace("<T extends ValueType = ValueType>", "<T>")
+                    .replace("value: T", "value: ValueType<T>")
+                    .replace(": ValueTypeMap[T]", ": T")
+
+                val newGetStaticSource: (String) -> String? = {
+                    getStaticSource(it)?.replace(": ValueTypeMap[T]", ": T")
+                }
+                return convertInterface(
+                    source = newSource,
+                    getStaticSource = newGetStaticSource,
+                    predefinedPkg = predefinedPkg,
+                )
+            }
+        }
+    }
+
+    val staticSource = getStaticSource(name)
+    val type = if (staticSource != null) "class" else "interface"
+
+    var declaration = source.substringBefore(" {\n")
+        .replace(", AnimationFrameProvider", "")
+        .replace(", WindowLocalStorage, WindowOrWorkerGlobalScope, WindowSessionStorage", "")
+        .replace(" = any, ", ", ")
+        .replace(" = any>", ">")
+        .replace("interface ", "$type ")
+
+    declaration = when (name) {
+        DOM_EXCEPTION,
+            -> declaration.replace(" extends Error", " :\nJsError")
+
+        "AbstractWorker",
+        "MessageEventTarget",
+        "GlobalEventHandlers",
+        "WindowEventHandlers",
+            -> "$declaration :\n$EVENT_TARGET_LIKE"
+
+        // Details - https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1845
+        "Screen",
+            -> "$declaration :\n$EVENT_TARGET"
+
+        in COLLECTIONS_WITH_BOUNDS,
+            -> declaration
+            .replaceFirst(" extends HTMLCollectionBase", " :\nHTMLCollectionBase<T>")
+            .replaceFirst(" extends ", " : ")
+            .replace(" extends ", " :\n")
+
+        "CountQueuingStrategy",
+            -> declaration
+            .replaceFirst(" extends QueuingStrategy", " :\nQueuingStrategy<Void>")
+
+        "HTMLFormControlsCollection",
+            -> declaration
+            .replaceFirst(" extends HTMLCollectionBase", " :\nHTMLCollectionBase<Element>")
+
+        "ElementDefinitionOptions",
+            -> declaration.replaceFirst("ElementDefinitionOptions", "ElementDefinitionOptions<T : HTMLElement>")
+
+        "Memory",
+        "Worklet",
+            -> declaration.replace(" extends ", " : ")
+
+        else -> {
+            declaration
+                .replace(" extends ", " :\n")
+                .replace("<ArrayBufferView>", "<ArrayBufferView<*>>")
+                .let { if (":" in it) it.replace(", ", ",\n") else it }
+        }
+    }
+
+    if (declaration.substringAfter(" ").startsWith("$name<")
+        && !name.endsWith("Callback")
+    ) {
+        val typeParameters = declaration
+            .substringAfter("<")
+            .substringBefore(">")
+            .let { "<$it>" }
+
+        var newTypeParameters = when (name + typeParameters) {
+            "DOMTokenList<T : JsAny>" -> typeParameters
+            "ElementDefinitionOptions<T : HTMLElement>" -> typeParameters
+            "Global<T>" -> typeParameters
+            "GlobalDescriptor<T>" -> typeParameters // out?
+            "HTMLCollection<T : Element>" -> "<out T : Element>"
+            "HTMLCollectionBase<T : Element>" -> "<out T : Element>"
+            "IDBRequest<T>" -> typeParameters // out?
+            "Memory<B : ArrayBufferLike>" -> "<out B : ArrayBufferLike>"
+            "NodeList<T : Node>" -> "<out T : Node>"
+            "QueuingStrategy<T>" -> "<in T>"
+            "QueuingStrategySize<T>" -> typeParameters // callback
+            "ReadableStream<R>" -> typeParameters  // !!! "<out R>"
+            "ReadableStreamDefaultController<R>" -> "<in R>"
+            "ReadableStreamDefaultReader<R>" -> typeParameters  // !!! "<out R>"
+            "ReadableStreamReadResult<T>" -> typeParameters // out?
+            "ReadableWritablePair<R, W>" -> typeParameters // out? in?
+            "SVGAnimatedEnumeration<T>" -> typeParameters
+            "SegmentIterator<T>" -> "<out T>"
+            "TransformStream<I, O>" -> typeParameters // !!! "<in I, out O>"
+            "TransformStreamDefaultController<O>" -> "<in O>"
+            "Transformer<I, O>" -> typeParameters // in? out?
+            "UnderlyingDefaultSource<R>" -> typeParameters // in?
+            "UnderlyingSink<W>" -> typeParameters // in?
+            "UnderlyingSource<R>" -> typeParameters // out?
+            "Worklet<M : WorkletModule>" -> "<in M : WorkletModule>"
+            "WritableStream<W>" -> "<in W>"
+            "WritableStreamDefaultWriter<W>" -> "<in W>"
+
+            else -> TODO("Unable to calculate bounds correction for: '$name$typeParameters'")
+        }
+
+        newTypeParameters = newTypeParameters
+            .removeSurrounding("<", ">")
+            .splitToSequence(", ")
+            .map { if (":" !in it) "$it : JsAny?" else it }
+            .joinToString(", ", "<", ">")
+
+        declaration = declaration.replace(typeParameters, newTypeParameters)
+    }
+
+    var memberSource = source
+        .substringAfter(" {\n")
+        .removeSuffix("}")
+        .removeSuffix(";\n")
+        .trimIndent()
+
+    if (memberSource.startsWith("("))
+        return null
+
+    if (memberSource == "[name: string]: string | undefined") {
+        declaration += " :\nRecord<String, String>"
+        memberSource = ""
+    }
+
+    if (memberSource == "new (...params: any[]): HTMLElement")
+        return ConversionResult(
+            name = name,
+            body = "typealias $name<T /* : HTMLElement */> = ConstructorFunction<Tuple, T>",
+            pkg = "web.components",
+        )
+
+    val arrayType = if ("readonly length: number;" in memberSource) {
+        val result = Regex("""\[index: number]: (\w+)""")
+            .find(memberSource)
+
+        if (result != null) {
+            when (val t = result.groupValues[1]) {
+                "string" -> "String"
+                else -> t
+            }
+        } else null
+    } else null
+
+    val iterableTypeParameter = IterableRegistry.typeParameter(name)
+    val listLikeMode = name in LIST_LIKE
+    if (listLikeMode) {
+        requireNotNull(arrayType)
+        requireNotNull(iterableTypeParameter)
+    }
+
+    if (arrayType != null && name != "Window" && !listLikeMode) {
+        declaration += if (":" in declaration && name !in COLLECTIONS_WITH_BOUNDS) "," else ":"
+        declaration += "\nArrayLike<$arrayType>"
+    }
+
+    val abortable = memberSource.substringAfter("signal?: AbortSignal", "-")
+        .removePrefix(" | null")
+        .let { it.startsWith(";") || it.isEmpty() }
+
+    val abortableLike = memberSource.substringAfter("readonly signal: AbortSignal", "-")
+        .let { it.startsWith(";") || it.isEmpty() }
+
+    val mapLikeParameters = if (iterableTypeParameter != null) {
+        mapLikeParameters(iterableTypeParameter)
+    } else null
+
+    if (iterableTypeParameter != null) {
+        val typeParameter = arrayType ?: iterableTypeParameter
+        val iterableDeclaration = when {
+            mapLikeParameters != null
+                -> {
+                val mapLikeType = when (name) {
+                    "URLSearchParams",
+                    "MediaKeyStatusMap",
+                        -> "ReadonlyMap.Mixin"
+
+                    else -> "MapLike.Mixin"
+                }
+
+                val result = "$mapLikeType<${mapLikeParameters.key}, ${mapLikeParameters.value}>"
+                if (name == "StylePropertyMapReadOnly") {
+                    "$result,\nReadonlySetLike.Mixin<${mapLikeParameters.key}>"
+                } else result
+            }
+
+            listLikeMode
+                -> "ListLike.Mixin<$typeParameter>"
+
+            else -> "JsIterable.Mixin<$typeParameter>"
+        }
+
+        declaration += if (":" in declaration && name != "NodeList" && name != "DOMTokenList") "," else ":"
+        declaration += "\n$iterableDeclaration"
+    }
+
+    when (name) {
+        "Window",
+        "WorkerGlobalScope",
+            -> declaration = declaration
+            .replaceFirst("\nEventTarget,", "\nEventTarget,\nGlobalScope,")
+            .also { require(it != declaration) }
+
+        "WorkletGlobalScope",
+            -> declaration = "$declaration:\nGlobalScope"
+    }
+
+    val additionalIterableParent = IterableRegistry.additionalParent(name)
+    sequenceOf(MarkerRegistry.additionalParents(name))
+        .filterNotNull()
+        .flatten()
+        .plus(additionalIterableParent)
+        .plus("Abortable".takeIf { abortable })
+        .plus("AbortableLike".takeIf { abortableLike })
+        .plus("StartInDirectory".takeIf { name == "FileSystemHandle" })
+        .plus(SERIALIZABLE.takeIf { IDLRegistry.isSerializable(name) })
+        .plus("HtmlSource".takeIf { name == "TrustedHTML" })
+        .filterNotNull()
+        .forEach { additionalParent ->
+            declaration += if (":" in declaration.replace(" : JsAny?", "")) "," else ":"
+            declaration += "\n$additionalParent"
+        }
+
+    when (name) {
+        "ElementInternals",
+            -> declaration += ",\n$VALIDATION_TARGET"
+
+        in WELL_KNOWN_FORM_CONTROL,
+            -> declaration += ",\n$FORM_CONTROL"
+
+        in JS_CLOSABLE_INHERITORS,
+            -> declaration += if (":" in declaration) ",\nJsCloseable" else ":\nJsCloseable"
+
+        "ReadableStream",
+        "WritableStream",
+            -> declaration += ",\nAsyncCloseableDisposable"
+    }
+
+    val hideForEach = when {
+        listLikeMode -> true
+        mapLikeParameters != null -> true
+        additionalIterableParent == null -> false
+        additionalIterableParent.startsWith("ReadonlyMap.Mixin<") -> true
+        additionalIterableParent.startsWith("MutableMapLike.Mixin<") -> true
+        additionalIterableParent.startsWith("MutableSetLike.Mixin<") -> true
+        else -> false
+    }
+
+    val typeProvider = TypeProvider(
+        parentType = name,
+        arrayType = arrayType,
+        hideForEach = hideForEach,
+    )
+
+    var mainConstructor: String
+    val additionalConstructors: String
+    if (staticSource != null) {
+        val constructors = getConstructors(name, staticSource, typeProvider)
+        val firstConstructor = constructors.firstOrNull()
+        mainConstructor = if (firstConstructor != null) {
+            val result = firstConstructor.removePrefix("constructor")
+            when {
+                result.isEmpty()
+                    -> "()"
+
+                "\n" !in result
+                    -> "(\n" + result.removeSurrounding("(", ")") + "\n)"
+
+                else -> result
+            }
+
+        } else ""
+
+        additionalConstructors = constructors
+            .drop(1)
+            .joinToString("\n")
+    } else {
+        mainConstructor = ""
+        additionalConstructors = ""
+    }
+
+    if (name == DOM_EXCEPTION) {
+        mainConstructor = mainConstructor.replace("name: String", "name: $DOM_EXCEPTION_NAME")
+    }
+
+    val isClass = type == "class"
+    val isHtmlElementClass = IDLRegistry.hasHtmlConstructor(name)
+    val isSvgElementClass = isClass && name.startsWith("SVG") && name.endsWith("Element")
+
+    if (isHtmlElementClass || isSvgElementClass) {
+        require(mainConstructor.isEmpty())
+        require(":\n" in declaration)
+
+        val modifier = if (isHtmlElementClass) "protected" else "private"
+        declaration = declaration.replaceFirst(":\n", "\n$modifier constructor():\n")
+    }
+
+    val hasPrivateConstructor = isClass
+            && (mainConstructor.isEmpty() && !IDLRegistry.hasEmptyConstructor(name))
+            && !isHtmlElementClass
+            && !isSvgElementClass
+
+    if (hasPrivateConstructor) {
+        mainConstructor = "\nprivate constructor()\n"
+    }
+
+    if (mainConstructor.isNotEmpty()) {
+        declaration = if (":\n" in declaration) {
+            val suffix = if ("()" in mainConstructor) "\n" else ""
+            declaration.replaceFirst(":\n", "$mainConstructor:$suffix")
+        } else declaration + mainConstructor
+    }
+
+    val extensionsCollector = BrowserSuspendExtensionsCollector.forParent(
+        parentName = name,
+        parentTypeParameters = declaration
+            .substringBefore("\n")
+            .substringAfter("<", "")
+            .substringBefore(">", "")
+            .removePrefix("in ")
+            .removePrefix("out ")
+            .replace(", in ", ", ")
+            .replace(", out ", ", ")
+            .ifEmpty { null },
+    )
+
+    var members = if (memberSource.isNotEmpty()) {
+        var result = memberSource
+            .splitToSequence(";\n")
+            .mapNotNull { convertMember(it, typeProvider, extensionsCollector) }
+            .map { if (isClass) withOpenModifier(it) else it }
+            .joinToString("\n")
+
+        result = when (name) {
+            DOM_EXCEPTION,
+                -> result
+                .replace("open val message: String", "override val message: String")
+                .replace("open val name: String", "val name: $DOM_EXCEPTION_NAME")
+                .splitToSequence("\n")
+                .filter { !it.endsWith(": Short") }
+                .joinToString("\n")
+
+            "URLSearchParams",
+            "MediaKeyStatusMap",
+                -> result
+                .replace("open val size: Int", "override val size: Int")
+                .replaceFirst("open fun get(", "override fun get(")
+                .replaceFirst("open fun has(", "override fun has(")
+
+            "StylePropertyMapReadOnly",
+                -> result
+                .replace("open val size: Int", "override val size: Int")
+                .replaceFirst("open fun has(", "override fun has(")
+                .plus("\noverride fun keys(): JsIterator<String>")
+
+            "GPUSupportedFeatures",
+            "WGSLLanguageFeatures",
+                -> result
+                .replaceFirst("open fun forEach(", "override fun forEach(")
+
+            // TODO: move to patches
+            "Node",
+                -> result
+                .replace("var textContent:", "val textContent:")
+
+            in WELL_KNOWN_FORM_CONTROL,
+                -> result.applyFormControlPatch().let {
+                if (name == "HTMLSelectElement") {
+                    it.replace("open fun remove()", "override fun remove()")
+                } else it
+            }
+
+            in JS_CLOSABLE_INHERITORS,
+                -> result.replace("open fun close()", "override fun close()")
+
+            "ElementInternals",
+                -> result.applyValidationTargetPatch()
+
+            "HTMLCollection",
+            "HTMLFormControlsCollection",
+                -> {
+                val itemType = when (name) {
+                    "HTMLCollection" -> "T"
+                    else -> "Element"
+                }
+
+                """
+                override val length: Int
+                override fun item(index: Int): $itemType?
+
+                """.trimIndent() + result
+            }
+
+            in LENGTH_REQUIRED,
+                -> result
+                .replace("open val length: Int", "override val length: Int")
+                // CSSStyleDeclarationBase
+                .replace("\nval length: Int", "override val length: Int")
+
+            "DOMMatrix",
+            "DOMPoint",
+            "DOMRect",
+                -> result
+                .replace("open var ", "override var ")
+
+            "Document",
+            "DocumentFragment",
+            "DocumentType",
+            "Attr",
+            "CharacterData",
+                -> result
+                .replace("open val ownerDocument:", "override val ownerDocument:")
+                .replace("open var textContent: String", "override var textContent: String")
+                .replace("open fun getElementById(", "override fun getElementById(")
+                .let {
+                    if (name == "Document") {
+                        it + """
+                        /**
+                         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/modelContext)
+                         */
+                        @ExperimentalWebApi
+                        open val modelContext: ModelContext
+                        """.trimIndent()
+                    } else it
+                }
+
+            "Element",
+                -> result
+                .replace("open val ownerDocument:", "override val ownerDocument:")
+                .replace("open var textContent: String", "override var textContent: String")
+                .replace("open fun getElementById(", "override fun getElementById(")
+                .plus("\n")
+                .plus(
+                    // language=kotlin
+                    """
+                    @JsName("data-testid")
+                    open var dataTestId: DataTestId?
+                    """.trimIndent(),
+                )
+
+            "HTMLOptionsCollection",
+                -> result
+                .replace("open var length: Int", "override var length: Int")
+
+            "SVGPathElement",
+                -> result
+                .replaceFirst("open val pathLength:", "override val pathLength:")
+                .replaceFirst("open fun getPointAtLength(", "override fun getPointAtLength(")
+                .replaceFirst("open fun getTotalLength(", "override fun getTotalLength(")
+
+            "CustomElementRegistry",
+                -> result
+                .replace("CustomElementConstructor", "CustomElementConstructor<T>")
+                .replace("ElementDefinitionOptions", "ElementDefinitionOptions<P>")
+                .replaceFirst("fun define(", "fun <T: P, P : HTMLElement> define(")
+                .replace("fun get(", "fun <T : HTMLElement> get(")
+                .replace("fun getName(", "fun <T : HTMLElement> getName(")
+                .replace("fun whenDefined(", "fun <T : HTMLElement> whenDefined(")
+                .replace("fun whenDefinedAsync(", "fun <T : HTMLElement> whenDefinedAsync(")
+                .replace(": String", ": TagName<T>")
+
+            "ElementDefinitionOptions",
+                -> result.replace(": String", ": TagName<T>")
+
+            "CanvasPathDrawingStyles",
+                -> result
+                .replace("Number[]", "ReadonlyArray<Double>")
+                .replace("<number>", "<Double>")
+
+            "RTCInboundRtpStreamStats",
+                -> result.replace("open var kind:", "override var kind:")
+
+            "CompressionStream",
+            "DecompressionStream",
+            "TextDecoderStream",
+            "TextEncoderStream",
+                -> result
+                .replace("open val readable:", "override val readable:")
+                .replace("open val writable:", "override val writable:")
+
+            "PerformanceEventTiming",
+            "PerformanceNavigationTiming",
+            "PerformancePaintTiming",
+            "PerformanceResourceTiming",
+            "LargestContentfulPaint",
+            "CSPViolationReportBody",
+                -> result
+                .replace("open fun toJSON()", "override fun toJSON()")
+
+            "QueuingStrategy",
+                -> result.replace("var ", "val ")
+
+            "ByteLengthQueuingStrategy",
+            "CountQueuingStrategy",
+                -> result.replace("open val ", "override val ")
+
+            "FileSystemDirectoryHandle",
+            "FileSystemFileHandle",
+                -> result.replace("open val kind:", "override val kind:")
+
+            "HTMLElement",
+                -> result
+                .plus("\n")
+                .plus(
+                    """
+                    /**
+                     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/editContext)
+                     */
+                    @ExperimentalWebApi
+                    open var editContext: EditContext?
+                    """.trimIndent(),
+                )
+
+            "HTMLScriptElement",
+                -> result
+                .replace("open var innerText:", "override var innerText:")
+                .replace("open var textContent: String", "override var textContent: String")
+
+            "Navigator",
+                -> result + "\n" + """
+            /**
+             * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/keyboard)
+             */
+            @ExperimentalWebApi
+            open val keyboard: Keyboard
+
+            /**
+             * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/presentation)
+             */
+            @ExperimentalWebApi
+            open val presentation: Presentation
+
+            /**
+             * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/usb)
+             */
+            @ExperimentalWebApi
+            open val usb: USB
+
+            /**
+             * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/xr)
+             */
+            open val xr: XRSystem
+            """.trimIndent()
+
+            "WorkerNavigator",
+                -> result + "\n" + """
+            /**
+             * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/usb)
+             */
+            @ExperimentalWebApi
+            open val usb: USB
+            """.trimIndent()
+
+            "Screen",
+                -> result + "\n" + """
+            /**
+             * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Screen/isExtended)
+             */
+            @ExperimentalWebApi
+            open val isExtended: Boolean
+            """.trimIndent()
+
+            "WebGLRenderingContextBase",
+                -> result.replace("fun getExtension(", "fun getExtension(\n")
+
+            else -> {
+                when {
+                    abortable
+                        -> result.replace(
+                        "${if (isClass) "open " else ""}var signal: AbortSignal?",
+                        "override var signal: AbortSignal?",
+                    )
+
+                    abortableLike
+                        -> result.replace(
+                        "${if (isClass) "open " else ""}val signal: AbortSignal",
+                        "override val signal: AbortSignal",
+                    )
+
+                    else -> result
+                }
+            }
+        }
+
+        result
+    } else ""
+
+    members = sequenceOf(additionalConstructors, members)
+        .filter { it.isNotEmpty() }
+        .joinToString("\n\n")
+
+    val annotations = if (IDLRegistry.isPlainObjectInterface(name)) {
+        val isInterface = declaration.startsWith("interface ")
+        require(isInterface) {
+            "JSO `$name` should be interface"
+        }
+
+        require("= definedExternally" !in members) {
+            "JSO `$name` should not contain default properties"
+        }
+
+        when {
+            name == "QueuingStrategy"
+                -> "// @JsPlainObject"
+
+            else -> "@JsPlainObject"
+        }
+    } else {
+        ""
+    }
+
+    val modifier = when {
+        isClass
+            -> "open"
+
+        IDLRegistry.isMixin(name)
+            -> "/* mixin */\n@SubclassOptInRequired(InternalApi::class)\n"
+
+        else -> ""
+    }
+
+    val companionExtensionsCollector = BrowserSuspendExtensionsCollector.forParent("$name.Companion", null)
+    val idDeclaration = RenderingContextRegistry.getIdDeclaration(name)
+    val companion = if (staticSource != null) {
+        val companionContent = getCompanion(name, staticSource, companionExtensionsCollector)
+        when {
+            name == DOM_EXCEPTION -> ""
+
+            idDeclaration != null -> {
+                require(companionContent.isEmpty())
+                "companion object"
+            }
+
+            else -> companionContent
+        }
+    } else {
+        require(idDeclaration == null)
+        ""
+    }
+
+    val additionalAliases = getAdditionalAliasNames(name)
+        ?.joinToString("\n") {
+            """
+            sealed /* enum */
+            interface $it
+            """.trimIndent()
+        }
+        ?: ""
+
+    val extensions = when {
+        idDeclaration != null -> idDeclaration
+        else -> ""
+    }
+
+    var body = sequenceOf(
+        annotations,
+        "$modifier external $declaration {",
+        members,
+        companion,
+        additionalAliases,
+        "}",
+        extensions,
+        extensionsCollector.getResult(),
+        companionExtensionsCollector.getResult(),
+    ).filter { it.isNotEmpty() }
+        .joinToString("\n")
+
+    if (memberSource == "new (options: any): AudioWorkletProcessor")
+        body = "typealias $name = JsClass<out AudioWorkletProcessor>"
+
+    when (name) {
+        "MediaList",
+            -> body = body.applyMediaListPatch()
+
+        "MediaQueryList",
+
+        "HTMLLinkElement",
+        "HTMLMetaElement",
+        "HTMLSourceElement",
+        "HTMLStyleElement",
+        "SVGStyleElement",
+            -> body = body.applyMediaQueryPatch()
+    }
+
+    val pkg = when {
+        predefinedPkg != null -> predefinedPkg
+
+        name in WEB_SERIALIZATION -> "web.serialization"
+
+        name == "Console" -> "web.console"
+
+        name == "RemotePlayback" -> "web.remoteplayback"
+
+        name.startsWith("WebGL")
+                || isWebglExtensionName(name)
+            -> "web.gl"
+
+        name.startsWith("Touch") -> "web.touch"
+        name in PARSING_TYPES -> "web.parsing"
+        name.startsWith("SVG") -> "web.svg"
+        name.startsWith("MathML") -> "web.mathml"
+
+        name.startsWith("CSS") -> "web.cssom"
+        name.startsWith("StyleSheet") -> "web.cssom"
+        name == "MediaList" -> "web.cssom"
+        name == "MediaQueryList" -> "web.cssom"
+        name.startsWith("FontFace") -> "web.fonts"
+
+        name in IMAGES_TYPES -> "web.images"
+
+        name.startsWith("Canvas") && name != "CanvasCaptureMediaStreamTrack" -> "web.canvas"
+        name in CANVAS_TYPES -> "web.canvas"
+
+        name in ANIMATION_TYPES -> "web.animations"
+
+        name.startsWith("Clipboard") -> "web.clipboard"
+
+        name == "History" -> "web.history"
+        name == "Location" -> "web.location"
+
+        name.startsWith("DeviceMotion") -> "web.device"
+
+        name.startsWith("FileSystem") -> "web.fs"
+        name in FILE_SYSTEM_TYPES -> "web.fs"
+        name in FEDCM_TYPES -> "web.fedcm"
+
+        name.startsWith("Blob") -> "web.blob"
+
+        name.startsWith("File") -> "web.file"
+        name.startsWith("Cookie") -> "web.cookie"
+        name.startsWith("Gamepad") -> "web.gamepad"
+
+        name.startsWith("Geolocation") -> "web.geolocation"
+        name.startsWith("Position") -> "web.geolocation"
+
+        name.startsWith("NavigatorBadge") -> "web.badging"
+        name.startsWith("NavigatorGPU") -> "web.gpu"
+        name.startsWith("NavigatorLocks") -> "web.locks"
+        name.startsWith("NavigatorStorage") -> "web.storage"
+
+        name.startsWith("Lock") -> "web.locks"
+        name.startsWith("Navigator") -> "web.navigator"
+        name.startsWith("Permission") -> "web.permissions"
+        name.startsWith("Screen") -> "web.screen"
+
+        name.startsWith("Speech") -> "web.speech"
+
+        name == "ShareData" -> "web.share"
+        name.startsWith("Storage") -> "web.storage"
+
+        name.startsWith("EventSource") -> "web.sse"
+        name in FORM_TYPES -> "web.form"
+        name in HTTP_TYPES -> "web.http"
+        name.startsWith("XMLHttp") -> "web.xhr"
+
+        name in ARIA_TYPES -> "web.aria"
+        name in SELECTION_TYPES -> "web.selection"
+
+        name == "EventModifierInit" -> "web.uievents"
+
+        name.startsWith("DocumentPictureInPicture") -> "web.dpip"
+        name.startsWith("Document") -> "web.dom"
+        name in RANGES_TYPES -> "web.ranges"
+        name.startsWith("Trusted") -> "web.trustedtypes"
+        name in GLOBAL_TYPES -> "web.globals"
+        name in DOM_TYPES -> "web.dom"
+        name in WEB_COMPONENTS_TYPES -> "web.components"
+        name in VALIDATION_TYPES -> "web.validation"
+        name in CSSOM_TYPES -> "web.cssom"
+        name in VIEW_TRANSITION_TYPES -> "web.viewtransition"
+        name in HIGHLIGHT_TYPES -> "web.highlight"
+        name in DOM_DATA_TYPES -> "web.data"
+        name in DOM_GEOMETRY_TYPES -> "web.geometry"
+        name == "XMLDocument" -> "web.xml"
+        name.startsWith("Sanitizer") -> "web.sanitizer"
+
+        name.startsWith("XPath") -> "web.xpath"
+
+        name in WEB_AUDIO_TYPES -> "web.audio"
+
+        name.startsWith("RTC") -> "web.rtc"
+        name.startsWith("MediaKey") -> "web.mediaencrypted"
+
+        name.startsWith("VTT") -> "web.vtt"
+        name.startsWith("TextTrack") -> "web.vtt"
+
+        name.startsWith("GPU") -> "web.gpu"
+        name == "WGSLLanguageFeatures" -> "web.gpu"
+
+        name.startsWith("MediaCapabilities") -> "web.mediacapabilities"
+        name in MEDIA_CAPABILITIES_TYPES -> "web.mediacapabilities"
+
+        name.startsWith("MediaDevice") -> "web.mediadevices"
+        name == "InputDeviceInfo" -> "web.mediadevices"
+        name == "DisplayMediaStreamOptions" -> "web.mediadevices"
+        name.startsWith("MediaRecorder") -> "web.mediarecorder"
+
+        name.startsWith("MediaStream") -> "web.mediastreams"
+        name.startsWith("MediaTrack") -> "web.mediastreams"
+        name.startsWith("Constrain") -> "web.mediastreams"
+        name in MEDIA_STREAM_TYPES -> "web.mediastreams"
+
+        name in MEDIA_SESSION_TYPES -> "web.mediasession"
+
+        name in MEDIA_SOURCE_TYPES -> "web.mediasource"
+
+        name in IMAGE_CAPTURE_TYPES -> "web.imagecapture"
+
+        name in WORKLETS_TYPES -> "web.worklets"
+        name in WORKERS_TYPES -> "web.workers"
+
+        name.startsWith("Notification") -> "web.notifications"
+        name.startsWith("ServiceWorker") -> "web.serviceworker"
+        name == "GetNotificationOptions" -> "web.serviceworker"
+        name == "NavigationPreloadState" -> "web.serviceworker"
+        name == "NavigationPreloadManager" -> "web.serviceworker"
+        name == "RegistrationOptions" -> "web.serviceworker"
+
+        name.startsWith("Navigation") -> "web.navigation"
+
+        name.startsWith("IntersectionObserver") -> "web.intersection"
+        name.startsWith("MutationObserver") -> "web.mutation"
+        name == "MutationRecord" -> "web.mutation"
+        name.startsWith("ResizeObserver") -> "web.resize"
+
+        name.startsWith("TextEncode") -> "web.encoding"
+        name.startsWith("TextDecode") -> "web.encoding"
+
+        name in STREAMS_TYPES -> "web.streams"
+        name in COMPRESSION_STREAMS_TYPES -> "web.compression"
+        name.startsWith("WebTransport") -> "web.transport"
+
+        name in WEB_AUTHN_TYPES -> "web.authn"
+        name in CREDENTIALS_TYPES -> "web.credentials"
+        name in ABORT_TYPES -> "web.abort"
+        name in ERROR_TYPES -> "web.errors"
+        name in SCHEDULING_TYPES -> "web.scheduling"
+        name in MESSAGING_TYPES -> "web.messaging"
+        name in WEB_CRYPTO_TYPES -> "web.crypto"
+
+        name.startsWith("IDB") -> "web.idb"
+        name.startsWith("Push") -> "web.push"
+
+        name.startsWith("Performance") -> "web.performance"
+        name == "LargestContentfulPaint" -> "web.performance"
+        name == "PaintTimingMixin" -> "web.performance"
+
+        name.startsWith("Window") -> "web.window"
+        name == "BarProp" -> "web.window"
+        name == "PictureInPictureWindow" -> "web.pip"
+        name == "VisualViewport" -> "web.viewport"
+        name.startsWith("CloseWatcher") -> "web.close"
+
+        name in EVENTS_TYPES -> "web.events"
+        name in SCROLL_TYPES -> "web.scroll"
+        name in FULLSCREEN_TYPES -> "web.fullscreen"
+
+        name == "BroadcastChannel" -> "web.broadcast"
+        name == "WebSocket" -> "web.sockets"
+
+        name in QUERY_TYPES -> "web.cache"
+        name in CODECS_TYPES -> "web.codecs"
+
+        name in USER_ACTIVATION_TYPES -> "web.useractivation"
+
+        name.startsWith("MIDI") -> "web.midi"
+        name.startsWith("WakeLock") -> "web.wakelock"
+
+        name in PAYMENT_TYPES -> "web.payment"
+        name.startsWith("Payment") -> "web.payment"
+
+        name in SERIAL_TYPES -> "web.serial"
+
+        name in URL_TYPES -> "web.url"
+        name == "Origin" -> "web.origin"
+        name in REPORTING_TYPES -> "web.reporting"
+        name in POPOVER_TYPES -> "web.popover"
+
+        else -> "web.html"
+    }
+
+    body = withPropertyParametersSupport(name, body)
+
+    return ConversionResult(
+        name = name,
+        body = body,
+        pkg = pkg,
+    )
+}
+
+internal fun withOpenModifier(
+    member: String,
+): String =
+    member
+        .splitToSequence("\n")
+        .joinToString("\n") { line ->
+            val shouldBeOpen = sequenceOf("val", "var", "fun")
+                .any { line.startsWith("$it ") }
+            if (shouldBeOpen) "open $line" else line
+        }
+
+private fun withPropertyParametersSupport(
+    name: String,
+    body: String,
+): String {
+    val parametersSource = sequenceOf("", " ")
+        .map { suffix ->
+            body.substringAfter("$name$suffix(", "")
+                .substringBefore(")", "")
+                .trim()
+        }
+        .filter { it.isNotEmpty() }
+        .firstOrNull()
+        ?: return body
+
+    val parameters = parametersSource
+        .removeSuffix(",")
+        .splitToSequence(",")
+        .map { it.substringBefore(" = ") }
+        .map { it.trim() }
+
+    var newBody = body
+
+    for (parameter in parameters) {
+        val property = sequenceOf("val", "var")
+            .map { "$it $parameter" }
+            .filter { it in newBody }
+            .take(1)
+            .map {
+                "/**\n" +
+                        newBody.substringBefore(it).substringAfterLast("/**\n") +
+                        it
+            }
+            .firstOrNull()
+            ?: continue
+
+        newBody = newBody
+            .replace("\n" + property, "")
+            .replaceFirst(parameter, property)
+    }
+
+    return newBody
+}
+
+internal fun getStaticSource(
+    name: String,
+    source: String,
+): String? {
+    val contentSourceList = sequenceOf("declare var", "var", "const")
+        .map { source.substringAfter("\n$it $name: {\n", "") }
+        .plus(source.substringAfter("\ninterface ${name}Constructor {\n", ""))
+        .filter { it.isNotEmpty() }
+        .toList()
+
+    val contentSource = when (name) {
+        "AudioWorkletProcessor" -> contentSourceList.first()
+        else -> {
+            require(contentSourceList.size <= 1)
+            contentSourceList.singleOrNull()
+                ?: return null
+        }
+    }
+
+    return contentSource
+        .substringBefore(";\n};")
+        .substringBefore(";\n}\n")
+        .trimIndent()
+        .removePrefix("prototype: $name;\n")
+        .removeSuffix("\nreadonly prototype: $name")
+        .takeIf { it.isNotEmpty() }
+}
+
+private fun getConstructors(
+    name: String,
+    source: String,
+    typeProvider: TypeProvider,
+): List<String> {
+    val constructorSources = source
+        .split(";\n")
+        .map { it.substringAfterLast("\n") }
+        .filter { it.startsWith("new(") || it.startsWith("new<") }
+        .map { it.substringAfter("(") }
+        .map { it.substringBefore("): $name") }
+
+    if (constructorSources.isEmpty())
+        return emptyList()
+
+    if (constructorSources.singleOrNull() == "")
+        return emptyList()
+
+    return constructorSources
+        .map { convertConstructor(it, typeProvider) }
+}
+
+private fun getCompanion(
+    name: String,
+    source: String,
+    extensionCollector: ExtensionsCollector,
+): String {
+    val content = source
+        .substringAfterLast("\nnew(")
+        .substringAfterLast("\nnew<")
+        .substringAfter(";\n", "")
+        .ifEmpty { return "" }
+
+    val typeProvider = TypeProvider(name)
+    val members = content
+        .splitToSequence(";\n")
+        .mapNotNull { convertMember(it, typeProvider, extensionCollector) }
+        .joinToString("\n")
+        .trim()
+        .ifEmpty { return "" }
+
+    return "companion object {\n$members\n}"
+}
+
+private fun convertConstructor(
+    parametersSource: String,
+    typeProvider: TypeProvider,
+): String {
+    if (parametersSource == "")
+        return ""
+
+    var parameters = convertFunctionParameters(parametersSource, typeProvider)
+
+    // FormData
+    parameters = parameters
+        .replace("form: HTMLFormElement", "form: EventTarget /* HTMLFormElement */")
+        .replace("submitter: HTMLElement", "submitter: EventTarget /* HTMLElement */")
+
+    return "constructor($parameters)"
+}
+
+internal fun convertMember(
+    source: String,
+    typeProvider: TypeProvider,
+    extensionsCollector: ExtensionsCollector,
+    outerComment: String? = null,
+): String? {
+    if ("\n" in source) {
+        val comment = source.substringBeforeLast("\n")
+            .replace(";--\n", ";\n") // RESTORE
+            .let(::formatComment)
+
+        if ("@deprecated" in comment)
+            return null
+
+        val member = convertMember(source.substringAfterLast("\n"), typeProvider, extensionsCollector, comment)
+            .takeIf { it?.trim()?.isNotEmpty() == true }
+            ?: return null
+
+        return comment + "\n" + member
+    }
+
+    when (source) {
+        "createElement<K extends keyof HTMLElementTagNameMap>(tagName: K, options?: ElementCreationOptions): HTMLElementTagNameMap[K]",
+            -> return """
+        fun <T: HTMLElement> createElement(
+            tagName: TagName<T>,
+            options: ElementCreationOptions = definedExternally,
+        ): T
+        """.trimIndent()
+
+        "createElementNS(namespaceURI: SVG_NAMESPACE, qualifiedName: string): SVGElement",
+            -> return """
+        fun <T : Element> createElementNS(
+            namespaceURI: TagNamespace<T>,
+            qualifiedName: TagName<T>,
+        ): T
+        """.trimIndent()
+
+        "createElementNS(namespaceURI: MATHML_NAMESPACE, qualifiedName: string): MathMLElement",
+            -> return null
+
+        "closest<K extends keyof HTMLElementTagNameMap>(selector: K): HTMLElementTagNameMap[K] | null",
+            -> return "fun <T: Element> closest(selector: TagName<T>): T?"
+
+        "closest<K extends keyof SVGElementTagNameMap>(selector: K): SVGElementTagNameMap[K] | null",
+            -> return null
+
+        "closest<K extends keyof MathMLElementTagNameMap>(selector: K): MathMLElementTagNameMap[K] | null",
+            -> return null
+
+        "closest<E extends Element = Element>(selectors: string): E | null",
+            -> return "fun closest(selector: String): Element?"
+
+        "getElementsByTagName<K extends keyof HTMLElementTagNameMap>(qualifiedName: K): HTMLCollection<HTMLElementTagNameMap[K]>",
+            -> return "fun <T: Element> getElementsByTagName(qualifiedName: TagName<T>): HTMLCollection<T>"
+
+        "getElementsByTagName<K extends keyof SVGElementTagNameMap>(qualifiedName: K): HTMLCollection<SVGElementTagNameMap[K]>",
+            -> return null
+
+        "getElementsByTagName<K extends keyof MathMLElementTagNameMap>(qualifiedName: K): HTMLCollection<MathMLElementTagNameMap[K]>",
+            -> return null
+
+        "getElementsByTagNameNS(namespaceURI: XHTML_NAMESPACE, localName: string): HTMLCollection<HTMLElement>",
+            -> return """
+        fun <T : Element> getElementsByTagNameNS(
+            namespaceURI: TagNamespace<T>,
+            localName: TagName<T>,
+        ): HTMLCollection<T>
+        """.trimIndent()
+
+        "getElementsByTagNameNS(namespaceURI: SVG_NAMESPACE, localName: string): HTMLCollection<SVGElement>",
+            -> return null
+
+        "getElementsByTagNameNS(namespaceURI: MATHML_NAMESPACE, localName: string): HTMLCollection<MathMLElement>",
+            -> return null
+
+        "getContext(contextId: string, options?: any): RenderingContext | null",
+            -> return """
+        fun <T : RenderingContext, O : JsAny?> getContext(
+            contextId: RenderingContextId<T, O>,
+            options: O? = definedExternally,
+        ): T?
+        """.trimIndent()
+
+        "getContext(contextId: OffscreenRenderingContextId, options?: any): OffscreenRenderingContext | null",
+            -> return """
+        fun <T : OffscreenRenderingContext, O : JsAny?> getContext(
+            contextId: RenderingContextId<T, O>,
+            options: O? = definedExternally,
+        ): T?
+        """.trimIndent()
+    }
+
+    when {
+        source.startsWith("createElement<") -> return null
+        source.startsWith("createElementNS") && ("namespaceURI:" in source) -> return null
+        source.startsWith("getElementsByTagName<") -> return null
+        source.startsWith("getElementsByTagNameNS(namespaceURI: \"") -> return null
+        source.startsWith("get location(") -> return null
+        source.startsWith("set location(") -> return null
+
+        source.startsWith("addEventListener<") -> return null
+        source.startsWith("addEventListener(") -> return null
+        source.startsWith("removeEventListener<") -> return null
+        source.startsWith("removeEventListener(") -> return null
+        source.startsWith("createEvent(") -> return null
+        source.startsWith("toString()") -> return null
+
+        source.startsWith("importScripts(") -> return null
+
+        // deprecated
+        source.startsWith("initStorageEvent(") -> return null
+    }
+
+    if ((source.startsWith("on") && "(this: " in source)) {
+        val handlerName = source.substringBefore(": ")
+            .removeSuffix("?")
+
+        val currentTarget = source
+            .substringAfter("(this: ", "")
+            .substringBefore(", ", "")
+            .takeIf { it != "T" }
+            ?: "MessageEventTarget"
+
+        val target = EventDataRegistry.getTarget(
+            currentTarget = currentTarget,
+            eventType = handlerName.removePrefix("on"),
+        )
+
+        var eventType = source
+            .substringAfter(": ")
+            .substringAfter("ev: ")
+            .substringBefore(")")
+
+        eventType += when (eventType) {
+            "MessageEvent" -> "<*>"
+            else -> ""
+        }
+
+        return sequenceOf(
+            "var $handlerName: $EVENT_HANDLER<$eventType, $currentTarget, $target>?",
+            VAR_PROPERTY_DE.takeIf { typeProvider.isDefined() },
+        ).filterNotNull()
+            .joinToString("\n")
+    }
+
+    if (source.startsWith("[index: number]:") && typeProvider.isArrayLike())
+        return null
+
+    if (source.startsWith("["))
+        return "    // $source"
+
+    if ("(" in source) {
+        val isFun = ": " !in source || source.indexOf(": ") > source.indexOf("(")
+
+        if (isFun) {
+            val result = convertFunction(source, typeProvider)
+                ?: return null
+
+            val finalCollector = EmptyExtensionsCollector
+                .takeIf { "request<T>(" in source && ": LockGrantedCallback<T>)" in source }
+                ?: extensionsCollector
+
+            return withSuspendExtensions(result, outerComment, finalCollector)
+                .joinToString("\n\n")
+        }
+    }
+
+    return convertProperty(source, typeProvider)
+}
+
+private val VAL_PROPERTY_DE = """
+get() = definedExternally
+""".trimIndent()
+
+private val VAR_PROPERTY_DE = """
+get() = definedExternally
+set(value) = definedExternally
+""".trimIndent()
+
+private fun convertProperty(
+    source: String,
+    typeProvider: TypeProvider,
+): String? {
+    val isVal = source.startsWith("readonly ")
+    val modifier = if (isVal) "val" else "var"
+
+    var (name, type) = source.removePrefix("readonly ").let {
+        it.substringBefore(": ", "") to it.substringAfter(": ", "")
+    }
+
+    val optional = type.endsWith(" | null") || type.endsWith(" | undefined")
+    type = type
+        .removeSuffix(" | null")
+        .removeSuffix(" | undefined")
+
+    val safeName = name.removeSuffix("?")
+    if (!typeProvider.accepted(safeName))
+        return null
+
+    // Window
+    if (safeName == "frames" && type == "WindowProxy")
+        type = "ArrayLike<Window>"
+
+    if (safeName == "formTarget" && type == "string")
+        type = "WindowName"
+
+    if (type == "null" || type == "undefined") {
+        if (name == "ownerDocument") {
+            type = "Void"
+        } else {
+            return null
+        }
+    }
+
+    type = when (type) {
+        "any" -> "JsAny?"
+        "string" -> "String"
+        "boolean" -> "Boolean"
+
+        "false",
+        "true",
+            -> "Boolean /* $type */"
+
+        "number",
+        "number | string",
+            -> typeProvider.numberType(safeName)
+
+        "string | DOMHighResTimeStamp",
+            -> "DOMHighResTimeStamp /* | String */"
+
+        "number | CSSNumericValue | string",
+            -> "JsAny /* $type */"
+
+        "TimelineRangeOffset | CSSNumericValue | CSSKeywordValue | string",
+            -> "JsAny /* $type */"
+
+        in TYPED_ARRAYS,
+            -> "$type<*>"
+
+        "\"file\"",
+        "\"directory\"",
+            -> "FileSystemHandleKind.${type.removeSurrounding("\"")}"
+
+        "GPUPipelineLayout | GPUAutoLayoutMode",
+            -> "JsAny /* $type */"
+
+        "GPUTexture | GPUTextureView",
+            -> "GPUObjectBase /* $type */"
+
+        "number[]",
+            -> typeProvider.numberArrayType(safeName)
+
+        // IntersectionObserverInit
+        "number | number[]",
+            -> "ReadonlyArray<Double>"
+
+        "(boolean | string)[]",
+            -> "ReadonlyArray<*>"
+
+        "boolean | string",
+        "string | string[]",
+        "string | (CSSNumericValue | CSSKeywordValue)[]",
+            -> "JsAny /* $type */"
+
+        "Promise<void>",
+            -> "Promise<Void>"
+
+        "QueuingStrategySize",
+            -> "QueuingStrategySize<Void>"
+
+        "CompositeOperationOrAuto | CompositeOperationOrAuto[]",
+            -> "ReadonlyArray<CompositeOperationOrAuto> /* | CompositeOperationOrAuto */"
+
+        "number | (number | null)[]",
+            -> "ReadonlyArray<Double?> /* | Double */"
+
+        "IDBObjectStore | IDBIndex",
+        "IDBObjectStore | IDBIndex | IDBCursor",
+            -> "JsAny /* $type */"
+
+        "IDBRequest",
+        "IDBRequest<any>",
+            -> "IDBRequest<*>"
+
+        "1 | 2 | 3",
+        "0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9",
+            -> "Int /* $type */"
+
+        "NodeList",
+        "HTMLCollection",
+            -> "$type<*>"
+
+        "BufferSource | Blob | string",
+        "Client | ServiceWorker | MessagePort",
+            -> "JsAny /* $type */"
+
+        "OnErrorEventHandler",
+            -> "JsFunction<*, *>? /* $type */"
+
+        "Element | Document" -> "ParentNode /* Element | Document */"
+
+        // Audio
+        "number[] | Float32Array",
+            -> "ReadonlyArray<Double> /* | Float32Array */"
+
+        "Record<string, number>",
+            -> "ReadonlyRecord<String, Double>"
+
+        "Record<string, string>",
+            -> "ReadonlyRecord<String, String>"
+
+        "Record<string, string | undefined>",
+            -> "ReadonlyRecord<String, String?>"
+
+        "Record<string, GPUSize64 | undefined>",
+            -> "ReadonlyRecord<String, GPUSize64?>"
+
+        "Record<string, GPUPipelineConstantValue>",
+            -> "ReadonlyRecord<String, GPUPipelineConstantValue>"
+
+        "Record<string, AuthenticationExtensionsPRFValues>",
+            -> "ReadonlyRecord<String, AuthenticationExtensionsPRFValues>"
+
+        "Record<string, AuthenticationExtensionsPRFValuesJSON>",
+            -> "ReadonlyRecord<String, AuthenticationExtensionsPRFValuesJSON>"
+
+        "BufferSource | string",
+            -> "BufferSource /* | String */"
+
+        "TrustedHTML | string",
+            -> "HtmlSource"
+
+        // TEMP
+        "DateTimeFormatPartTypes",
+            -> "String /* $type */"
+
+        "AudioContextLatencyCategory | number",
+            -> "JsAny /* $type */"
+
+        "TaskPriority | TaskSignal",
+            -> "JsAny /* $type */"
+
+        "Sanitizer | SanitizerConfig | SanitizerPresets",
+            -> "JsAny /* $type */"
+
+        // MediaStreamConstraints
+        "boolean | MediaTrackConstraints",
+            -> "MediaTrackConstraints /* | Boolean */"
+
+        "ReadableStream" -> "ReadableStream<*>"
+        "ReadableStream<string>" -> "ReadableStream<String>"
+        "ReadableStream<Uint8Array>" -> "ReadableStream<Uint8Array<*>>"
+        "WritableStream" -> "WritableStream<*>"
+        "WritableStream<string>" -> "WritableStream<String>"
+        "QueuingStrategySize<ArrayBufferView>" -> "QueuingStrategySize<ArrayBufferView<*>>"
+
+        "Promise<any>" -> "Promise<*>"
+        "ReadonlyArray<string>" -> "ReadonlyArray<String>"
+        "ReadonlyArray<number>" -> "ReadonlyArray<Double>"
+
+        "MediaList | string" -> "JsAny /* $type */"
+        "Element | ProcessingInstruction" -> "JsAny /* $type */"
+        "string | CanvasGradient | CanvasPattern" -> "JsAny /* $type */"
+        "string | ArrayBuffer" -> "JsAny /* $type */"
+        "HTMLCanvasElement | OffscreenCanvas" -> "EventTarget /* $type */"
+        "HTMLVideoElement | VideoFrame" -> "CanvasImageSource /* $type */"
+        "(WindowProxy & typeof globalThis)" -> "WindowProxy"
+
+        "HTMLCollection<HTMLAnchorElement | HTMLAreaElement>",
+            -> "HTMLCollection<HTMLElement /* HTMLAnchorElement | HTMLAreaElement */>"
+
+        "typeof FileReader.EMPTY | typeof FileReader.LOADING | typeof FileReader.DONE",
+            -> "ReadyState"
+
+        else -> when {
+            ") => " in type
+                -> type
+                .replace(" => ", " -> ")
+                .replace(") -> any", ") -> Unit")
+                .replace(
+                    ") -> void | PromiseLike<void>",
+                    ") -> PromiseLike<Void>?",
+                )
+                .replace(" -> void", " -> Unit")
+                .replace(": string", ": String")
+                .replace("<void>", "<Void>")
+                .replace("<undefined>", "<Void>")
+                .replace("<string>", "<String>")
+                .replace("<XRHitResult[]>", "<ReadonlyArray<XRHitResult>>")
+
+            type.startsWith("1 | 2 | 5 | 10")
+                -> "Int /* $type */"
+
+            type.startsWith("0x") -> typeProvider.numberType(name)
+            type.toIntOrNull() != null -> typeProvider.numberType(name)
+
+            (type.endsWith("[]") && " " !in type)
+                -> {
+                var arrayType = type.removeSuffix("[]")
+                arrayType = when (arrayType) {
+                    "string" -> "String"
+                    "boolean" -> "Boolean"
+                    "ValueType" -> "ValueType<*>"
+                    "URLPatternInput" -> "JsAny /* URLPatternInput */"
+                    else -> arrayType
+                }
+
+                "ReadonlyArray<$arrayType>"
+            }
+
+            (type.startsWith("(") && type.endsWith(" | null)[]"))
+                -> {
+                val arrayType = type
+                    .removePrefix("(")
+                    .removeSuffix(" | null)[]")
+
+                "ReadonlyArray<$arrayType?>"
+            }
+
+            type.startsWith("\"")
+                -> "String /* $type */"
+
+            else -> type
+        }
+    }
+
+    if (name.endsWith("?") || optional) {
+        name = safeName
+
+        if (type.startsWith("(") && !type.endsWith(")")) {
+            type = "($type)?"
+        } else if (!type.endsWith("?") && type != "Void") {
+            type += "?"
+        }
+    }
+
+    name = if (name == "is" || name == "as" || name == "break") {
+        "`$name`"
+    } else if (name.startsWith("\"") && name.endsWith("\"")) {
+        "`" + name.removeSurrounding("\"") + "`"
+    } else name
+
+    val mixinSugar = if (typeProvider.isDefined()) {
+        if (isVal) VAL_PROPERTY_DE else VAR_PROPERTY_DE
+    } else null
+
+    return sequenceOf(
+        typeProvider.getPropertyComment(name),
+        if (type == "Void") """@Suppress("WRONG_JS_INTEROP_TYPE")""" else null,
+        "$modifier $name: $type",
+        mixinSugar,
+    ).filterNotNull()
+        .joinToString("\n")
+}
+
+private fun convertFunction(
+    source: String,
+    typeProvider: TypeProvider,
+): String? {
+    val nameSource = source.substringBefore("(")
+    val name = nameSource.substringBefore("<")
+    var typeParameters = nameSource
+        .removePrefix(name)
+        .replace(" extends ", " : ")
+        .replace(": ArrayBufferView", ": ArrayBufferView<*>")
+        .replace(
+            ": Exclude<BufferSource, ArrayBuffer>",
+            ": ArrayBufferView<ArrayBuffer> /* Exclude<BufferSource, ArrayBuffer> */",
+        )
+        .replace(" | null", "?")
+
+    if (typeParameters.isNotEmpty() && "/* Exclude<" !in typeParameters) {
+        typeParameters = typeParameters
+            .removeSurrounding("<", ">")
+            .removeSuffix(" = any")
+            .splitToSequence(",")
+            .map { if (":" !in it) "$it : JsAny?" else it }
+            .joinToString(",", "<", ">")
+    }
+
+    if (!typeProvider.accepted(name))
+        return null
+
+    val parametersSource = source
+        .substringAfter("(")
+        .substringBefore("):")
+
+    val parameters = convertFunctionParameters(parametersSource, typeProvider)
+
+    var result = (": " + source.substringAfter("): "))
+        .removeSuffix(": void")
+        .replace(
+            ": [ReadableStream<R>, ReadableStream<R>]",
+            ": Tuple2<ReadableStream<R>, ReadableStream<R>>",
+        )
+        .replace(
+            "SVGCircleElement | SVGEllipseElement | SVGImageElement | SVGLineElement | SVGPathElement | SVGPolygonElement | SVGPolylineElement | SVGRectElement | SVGTextElement | SVGUseElement",
+            "SVGElement /* SVGCircleElement | SVGEllipseElement | SVGImageElement | SVGLineElement | SVGPathElement | SVGPolygonElement | SVGPolylineElement | SVGRectElement | SVGTextElement | SVGUseElement */",
+        )
+        .replace(
+            ": ReadableStreamReader<R>",
+            ": ReadableStreamReader",
+        )
+        .replace(": OffscreenRenderingContext", ": JsAny /* OffscreenRenderingContext */")
+        .replace(": RadioNodeList | Element | null", ": JsAny? /* RadioNodeList | Element */")
+        .replace(
+            ": RegistrationResponseJSON | AuthenticationResponseJSON",
+            ": JsAny /* RegistrationResponseJSON | AuthenticationResponseJSON */",
+        )
+        .replace(
+            ": Promise<XRReferenceSpace | XRBoundedReferenceSpace>",
+            ": Promise<XRSpace /* XRReferenceSpace | XRBoundedReferenceSpace */>",
+        )
+        .replace(": Promise<any>", ": Promise<*>")
+        // RemotePlayback.watchAvailability & RTCRtpScriptTransformer.generateKeyFrame (Long)
+        .replace(": Promise<number>", ": Promise<Int>")
+        .replace(": Promise<PlaneLayout[]>", ": Promise<ReadonlyArray<PlaneLayout>>")
+        .replace(": Promise<FontFace[]>", ": Promise<ReadonlyArray<FontFace>>")
+        .replace(": Promise<MediaDeviceInfo[]>", ": Promise<ReadonlyArray<MediaDeviceInfo>>")
+        .replace(": Promise<Notification[]>", ": Promise<ReadonlyArray<Notification>>")
+        .replace(": Promise<IDBDatabaseInfo[]>", ": Promise<ReadonlyArray<IDBDatabaseInfo>>")
+        .replace(": Promise<CookieStoreGetOptions[]>", ": Promise<ReadonlyArray<CookieStoreGetOptions>>")
+        .replace(": Promise<SerialPort[]>", ": Promise<ReadonlyArray<SerialPort>>")
+        .replace(": Promise<CryptoKeyPair | CryptoKey>", ": Promise<JsAny /* CryptoKeyPair | CryptoKey */>")
+        .replace(": Promise<CryptoKeyPair | CryptoKey>", ": Promise<JsAny /* CryptoKeyPair | CryptoKey */>")
+        .replace(": Promise<WritableStream>", ": Promise<WritableStream<*>>")
+        .replace("<string[]", "<ReadonlyArray<String>")
+        .replace(": StaticRange[]", ": ReadonlyArray<StaticRange>")
+        .replace(": CookieStoreGetOptions[]", ": ReadonlyArray<CookieStoreGetOptions>")
+        .replace(": (Gamepad | null)[]", ": ReadonlyArray<Gamepad?>")
+        .replace(": RelativeTimeFormatPart[]", ": ReadonlyArray<JsAny /* RelativeTimeFormatPart */>")
+        .replace(": PointerEvent[]", ": ReadonlyArray<PointerEvent>")
+        .replace(Regex(""": (\w+?)\[]"""), ": ReadonlyArray<$1>")
+        .replace(
+            """: { type: "element" | "literal"; value: string; }[]""",
+            ": ReadonlyArray<JsAny /* { type; value; } */>",
+        )
+        .replace(
+            ": `\${string}-\${string}-\${string}-\${string}-\${string}`",
+            ": String",
+        )
+        .replace(": IDBRequest<undefined>", ": IDBRequest<Void>")
+        .replace(": IDBRequest<any>", ": IDBRequest<*>")
+        .replace(": IDBRequest<number>", ": IDBRequest<Int>")
+        .replace(": IDBRequest<string>", ": IDBRequest<String>")
+        .replace(": IDBRequest<IDBValidKey[]>", ": IDBRequest<ReadonlyArray<IDBValidKey>>")
+        .replace(": IDBRequest<any[]>", ": IDBRequest<ReadonlyArray<*>>")
+        .replace(Regex(""": IDBRequest$"""), ": IDBRequest<*>")
+        .let {
+            if (it.startsWith(": number")) {
+                it.replace(": number", ": ${typeProvider.getReturnType(name)}")
+            } else it
+        }
+        .replace(": string", ": String")
+        .replace("<string>", "<String>")
+        .replace(": boolean", ": Boolean")
+        .replace("<boolean>", "<Boolean>")
+        .replace(": object", ": JsAny")
+        .replace(": any", ": JsAny?")
+        .replace("<void>", "<Void>")
+        .replace(" | null", "?")
+        .replace(" | undefined", "?")
+
+    // TEMP - adapter for https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/2197
+    if (result == ": Promise<Void>" && !typeProvider.optionalAsyncFunction(name)) {
+        result = " $result?"
+    }
+
+    var safeName = when (name) {
+        "continue", "is" -> "`$name`"
+        else -> name
+    }
+
+    val mixinSugar = if (typeProvider.isDefined()) {
+        sequenceOf(
+            ": Unit".takeIf { result.isEmpty() },
+            " = definedExternally",
+        ).filterNotNull()
+            .joinToString("")
+    } else ""
+
+    val jsName: String?
+    when {
+        name == "createComputePipeline" ||
+                name == "createRenderPipeline" -> {
+            jsName = """@JsName("$name")"""
+            safeName = "${name}Sync"
+        }
+
+        "successCallback: " in parameters -> {
+            jsName = """@JsName("$name")"""
+            safeName = "${name}WithCallbacks"
+        }
+
+        "callback: BlobCallback" in parameters -> {
+            jsName = """@JsName("$name")"""
+            safeName = "${name}WithCallback"
+        }
+
+        else -> jsName = null
+    }
+
+    val throwsAnnotation = typeProvider.getThrowsAnnotation(name)
+
+    return listOfNotNull(
+        throwsAnnotation,
+        jsName,
+        "fun $typeParameters$safeName($parameters)$result$mixinSugar",
+    ).joinToString("\n")
+}
+
+private fun convertFunctionParameters(
+    source: String,
+    typeProvider: TypeProvider,
+): String {
+    val parameters = getFunctionParameters(source, typeProvider)
+
+    return if (parameters.size > 1) {
+        parameters.joinToString(",\n", "\n", ",\n")
+    } else parameters.joinToString("\n")
+}
+
+private fun getFunctionParameters(
+    source: String,
+    typeProvider: TypeProvider,
+): List<String> {
+    if (source.startsWith("...")) {
+        return listOf(
+            source
+                .replace("...args", "...values")
+                .replace("...", "vararg ")
+                .removeSuffix("[]")
+                .replace(": any", ": JsAny?")
+                .replace(": string", ": String")
+                .replace(": (string | undefined)", ": String?"),
+        )
+    }
+
+    val parts = source.split(", ...")
+    if (parts.size > 1) {
+        require(parts.size == 2)
+        return listOf(parts[0], "..." + parts[1])
+            .flatMap { getFunctionParameters(it, typeProvider) }
+    }
+
+    return when (source) {
+        "init: Record<string, string>",
+            -> listOf(
+            "init: ReadonlyRecord<String, String>",
+        )
+
+        "items: Record<string, string | Blob | PromiseLike<string | Blob>>, options?: ClipboardItemOptions",
+            -> listOf(
+            "items: ReadonlyRecord<String, JsAny /* String | Blob | PromiseLike<String | Blob> */>",
+            "options: ClipboardItemOptions = definedExternally",
+        )
+
+        "transform: ReadableWritablePair<T, R>, options?: StreamPipeOptions",
+            -> listOf(
+            "transform: ReadableWritablePair<T, R>",
+            "options: StreamPipeOptions = definedExternally",
+        )
+
+        "transformer?: Transformer<I, O>, writableStrategy?: QueuingStrategy<I>, readableStrategy?: QueuingStrategy<O>",
+            -> listOf(
+            "transformer: Transformer<I, O> = definedExternally",
+            "writableStrategy: QueuingStrategy<I> = definedExternally",
+            "readableStrategy: QueuingStrategy<O> = definedExternally",
+        )
+
+        "inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<AudioParamName, Float32Array>",
+            -> listOf(
+            "inputs: ReadonlyArray<ReadonlyArray<Float32Array<*>>>",
+            "outputs: ReadonlyArray<ReadonlyArray<Float32Array<*>>>",
+            "parameters: ReadonlyRecord<AudioParamName, Float32Array<*>>",
+        )
+
+        "action: (item: AudioParam) => void",
+        "action: (item: CSSNumericValue) => void",
+        "action: (item: CSSTransformComponent) => void",
+        "action: (item: CSSUnparsedSegment) => void",
+        "action: (item: CSSStyleValue[]) => void",
+        "action: (item: T) => void",
+        "action: (item: string) => void",
+        "action: (item: FormDataEntryValue) => void",
+        "action: (item: MediaKeyStatus) => void",
+        "action: (item: MIDIInput) => void",
+        "action: (item: MIDIOutput) => void",
+        "action: (item: any) => void",
+            -> listOf(
+            source
+                .replace(": string", ": String")
+                .replace(": any", ": JsAny?")
+                .replace(": CSSStyleValue[]", ": ReadonlyArray<CSSStyleValue>")
+                .replace(" => void", " -> Unit"),
+        )
+
+        else -> source
+            .let { if (it.count { char -> char == ':' } == 1) sequenceOf(it) else it.splitToSequence(", ") }
+            .filter { it.isNotEmpty() }
+            .map {
+                var (pname, ptype) = it.split(": ")
+                ptype = getParameterType(pname.removeSuffix("?"), ptype, typeProvider)
+
+                if (pname.endsWith("?")) {
+                    pname = pname.removeSuffix("?")
+                    ptype += " = definedExternally"
+                }
+
+                pname = when {
+                    pname.endsWith("InitDict") ||
+                            pname.endsWith("EntryInit")
+                        -> "init"
+
+                    pname == "when"
+                        -> "`$pname`"
+
+                    else -> pname
+                }
+
+                "$pname: $ptype"
+            }
+            .toList()
+    }
+}
+
+internal fun getParameterType(
+    name: String,
+    source: String,
+    typeProvider: TypeProvider,
+): String {
+    if (source.endsWith(" | null") || source.endsWith(" | undefined")) {
+        val typeSource = source
+            .removeSuffix(" | null")
+            .removeSuffix(" | undefined")
+        var type = getParameterType(name, typeSource, typeProvider)
+        if ("? /* " !in type)
+            type += "?"
+
+        return type
+    }
+
+    return when {
+        source in TYPED_ARRAYS
+            -> "$source<*>"
+
+        source == """ReadonlyArray<"sign" | "verify">"""
+            -> """ReadonlyArray<KeyUsage /* "sign" | "verify" */>"""
+
+        source == """ReadonlyArray<"deriveBits" | "deriveKey">"""
+            -> """ReadonlyArray<KeyUsage /* "deriveBits" | "deriveKey" */>"""
+
+        source == "number | DOMPointInit | (number | DOMPointInit)[]"
+            -> "JsAny /* $source */"
+
+        source == "File | string | FormData"
+            -> "JsAny /* $source */"
+
+        source == "DateTimeFormatPartTypes"
+            -> "String /* $source */"
+
+        source == "ReadableStream<Uint8Array>"
+            -> "ReadableStream<Uint8Array<*>>"
+
+        source == "Iterable<string>"
+            -> "JsIterable<String>"
+
+        // URL
+        source == "string[][]"
+            -> "ReadonlyArray<Tuple2<String, String>>"
+
+        source == "Record<string, string>"
+            -> "ReadonlyRecord<String, String>"
+
+        source.startsWith("\"")
+            -> "String /* $source */"
+
+        source == "any"
+            -> "JsAny?"
+
+        source == "string"
+            -> "String"
+
+        source == "bigint"
+            -> "BigInt"
+
+        source == "number"
+            -> typeProvider.getParameterType(name)
+
+        source == "boolean"
+            -> "Boolean"
+
+        source == "Promise<any>"
+            -> "Promise<*>"
+
+        source == "ReadableStream"
+            -> "ReadableStream<*>"
+
+        source == "Partial<Record<DurationFormatUnit, number>>"
+            -> "ReadonlyRecord<DurationFormatUnit, JsInt>"
+
+        source == "Int32Array<ArrayBufferLike> | GLint[]"
+                || source == "Int32Array<ArrayBufferLike> | GLsizei[]"
+            -> source.replaceFirst("| ", "/* | ") + " */"
+
+        source.endsWith("[]") -> {
+            var atype = source.removeSuffix("[]")
+            if (atype == "any")
+                atype = "*"
+
+            if (atype == "string")
+                atype = "String"
+
+            if (atype == "number")
+                atype = "Double"
+
+            if (atype == "[string, string]")
+                atype = "Tuple2<String, String>"
+
+            "ReadonlyArray<$atype>"
+        }
+
+        else -> source
+    }
+}

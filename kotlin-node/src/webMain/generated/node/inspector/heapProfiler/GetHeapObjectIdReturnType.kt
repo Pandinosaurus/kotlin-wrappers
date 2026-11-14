@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package node.inspector.heapProfiler
+
+@kotlinx.js.JsPlainObject
+external interface GetHeapObjectIdReturnType {
+    /**
+     * Id of the heap snapshot object corresponding to the passed remote object id.
+     */
+    var heapSnapshotObjectId: HeapSnapshotObjectId
+}

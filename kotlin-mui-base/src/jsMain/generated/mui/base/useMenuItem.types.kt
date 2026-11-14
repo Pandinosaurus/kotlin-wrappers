@@ -1,0 +1,76 @@
+// Automatically generated - do not modify!
+
+package mui.base
+
+import react.Props
+import react.Ref
+import react.RefCallback
+import react.dom.events.MouseEventHandler
+import web.dom.Element
+import web.dom.ElementId
+
+external interface MenuItemMetadata {
+    var id: ElementId?
+
+    var disabled: Boolean
+
+    var label: String?
+}
+
+external interface UseMenuItemParameters {
+    var disabled: Boolean?
+
+    var id: ElementId?
+
+    var label: String?
+
+    var onClick: MouseEventHandler<*>?
+
+    var rootRef: Ref<Element>
+
+    /**
+     * If `true`, the menu item won't receive focus when the mouse moves over it.
+     *
+     * @default false
+     */
+    var disableFocusOnHover: Boolean?
+}
+
+external interface UseMenuItemReturnValue {
+    /**
+     * Resolver for the root slot's props.
+     * @param externalProps event handlers for the root slot
+     * @returns props that should be spread on the root slot
+     */
+    var getRootProps: (externalProps: Props?) -> Props
+
+    /**
+     * If `true`, the component is disabled.
+     */
+    var disabled: Boolean
+
+    /**
+     * If `true`, the component is being focused using keyboard.
+     */
+    var focusVisible: Boolean
+
+    /**
+     * If `true`, the component is being highlighted.
+     */
+    var highlighted: Boolean
+
+    /**
+     * 0-based index of the item in the menu.
+     */
+    var index: Int
+
+    /**
+     * The ref to the component's root DOM element.
+     */
+    var rootRef: RefCallback<Element>?
+
+    /**
+     * Total number of items in the menu.
+     */
+    var totalItemCount: Number
+}

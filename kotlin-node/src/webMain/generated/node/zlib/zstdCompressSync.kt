@@ -1,0 +1,17 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:zlib")
+
+package node.zlib
+
+import node.buffer.NonSharedBuffer
+
+/**
+ * Compress a chunk of data with `ZstdCompress`.
+ * @since v22.15.0
+ * @experimental
+ */
+external fun zstdCompressSync(
+    buf: InputType,
+    options: ZstdOptions = definedExternally,
+): NonSharedBuffer

@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("typescript")
+
+package typescript
+
+/**
+ * Parse the contents of a config file (tsconfig.json).
+ * @param jsonNode The contents of the config file to parse
+ * @param host Instance of ParseConfigHost used to enumerate files in folder.
+ * @param basePath A root directory to resolve relative path entries in the config
+ *    file to. e.g. outDir
+ */
+external fun parseJsonSourceFileConfigFileContent(
+    sourceFile: TsConfigSourceFile,
+    host: ParseConfigHost,
+    basePath: String,
+    existingOptions: CompilerOptions = definedExternally,
+    configFileName: String = definedExternally,
+    resolutionStack: js.array.ReadonlyArray<Path> = definedExternally,
+    extraFileExtensions: js.array.ReadonlyArray<FileExtensionInfo> = definedExternally,
+    extendedConfigCache: js.collections.ReadonlyMap<String, ExtendedConfigCacheEntry> = definedExternally,
+    existingWatchOptions: WatchOptions = definedExternally,
+): ParsedCommandLine

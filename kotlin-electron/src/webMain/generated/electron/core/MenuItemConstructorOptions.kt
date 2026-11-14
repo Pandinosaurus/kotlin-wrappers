@@ -1,0 +1,139 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface MenuItemConstructorOptions {
+    /**
+     * Will be called with `click(menuItem, window, event)` when the menu item is
+     * clicked.
+     */
+    var click: ((menuItem: MenuItem, window: BaseWindow?, event: KeyboardEvent) -> Unit)?
+
+    /**
+     * Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`,
+     * `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`,
+     * `zoomOut`, `toggleSpellChecker`, `togglefullscreen`, `window`, `minimize`,
+     * `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`,
+     * `showSubstitutions`, `toggleSmartQuotes`, `toggleSmartDashes`,
+     * `toggleTextReplacement`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`,
+     * `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`,
+     * `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `showAllTabs`,
+     * `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu`
+     * - Define the action of the menu item, when specified the `click` property will
+     * be ignored. See roles.
+     */
+    var role: (MenuItemConstructorOptionsRole)?
+    var type: (MenuItemConstructorOptionsType)?
+    var label: String?
+    var accessibilityLabel: String?
+
+    /**
+     * Available in macOS >= 14.4
+     *
+     * @platform darwin
+     */
+    var sublabel: String?
+
+    /**
+     * Hover text for this menu item.
+     *
+     * @platform darwin
+     */
+    var toolTip: String?
+
+    /**
+     * An Accelerator string.
+     */
+    var accelerator: String?
+
+    /**
+     * Can be a NativeImage or the file path of an icon.
+     */
+    var icon: (Any /* (NativeImage) | (string) */)?
+
+    /**
+     * If false, the menu item will be greyed out and unclickable.
+     */
+    var enabled: Boolean?
+
+    /**
+     * default is `true`, and when `false` will prevent the accelerator from triggering
+     * the item if the item is not visible.
+     *
+     * @platform darwin
+     */
+    var acceleratorWorksWhenHidden: Boolean?
+
+    /**
+     * If false, the menu item will be entirely hidden.
+     */
+    var visible: Boolean?
+
+    /**
+     * Should only be specified for `checkbox` or `radio` type menu items.
+     */
+    var checked: Boolean?
+
+    /**
+     * If false, the accelerator won't be registered with the system, but it will still
+     * be displayed. Defaults to true.
+     *
+     * @platform linux,win32
+     */
+    var registerAccelerator: Boolean?
+
+    /**
+     * The item to share when the `role` is `shareMenu`.
+     *
+     * @platform darwin
+     */
+    var sharingItem: SharingItem?
+
+    /**
+     * Should be specified for `submenu` type menu items. If `submenu` is specified,
+     * the `type: 'submenu'` can be omitted. If the value is not a `Menu` then it will
+     * be automatically converted to one using `Menu.buildFromTemplate`.
+     */
+    var submenu: (Any /* (MenuItemConstructorOptions[]) | (Menu) */)?
+
+    /**
+     * Unique within a single menu. If defined then it can be used as a reference to
+     * this item by the position attribute.
+     */
+    var id: String?
+
+    /**
+     * Inserts this item before the item with the specified id. If the referenced item
+     * doesn't exist the item will be inserted at the end of  the menu. Also implies
+     * that the menu item in question should be placed in the same “group” as the item.
+     */
+    var before: js.array.ReadonlyArray<String>?
+
+    /**
+     * Inserts this item after the item with the specified id. If the referenced item
+     * doesn't exist the item will be inserted at the end of the menu.
+     */
+    var after: js.array.ReadonlyArray<String>?
+
+    /**
+     * Provides a means for a single context menu to declare the placement of their
+     * containing group before the containing group of the item with the specified id.
+     */
+    var beforeGroupContaining: js.array.ReadonlyArray<String>?
+
+    /**
+     * Provides a means for a single context menu to declare the placement of their
+     * containing group after the containing group of the item with the specified id.
+     */
+    var afterGroupContaining: js.array.ReadonlyArray<String>?
+
+    /**
+     * A badge shown alongside the label, either a system-styled count (`alerts`,
+     * `updates`, `new-items`) or a custom string. Only available on macOS 14 and up.
+     * Not displayed in Dock menus.
+     *
+     * @platform darwin
+     */
+    var badge: MenuItemBadge?
+}

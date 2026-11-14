@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package node.inspector.heapProfiler
+
+/**
+ * Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes.
+ */
+@kotlinx.js.JsPlainObject
+external interface SamplingHeapProfileNode {
+    /**
+     * Function location.
+     */
+    var callFrame: node.inspector.runtime.CallFrame
+
+    /**
+     * Allocations size in bytes for the node excluding children.
+     */
+    var selfSize: Double
+
+    /**
+     * Child nodes.
+     */
+    var children: js.array.ReadonlyArray<SamplingHeapProfileNode>
+}

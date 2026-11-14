@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:crypto")
+
+package node.crypto
+
+/**
+ * Creates a predefined `DiffieHellmanGroup` key exchange object. The
+ * supported groups are listed in the documentation for `DiffieHellmanGroup`.
+ *
+ * The returned object mimics the interface of objects created by {@link createDiffieHellman}, but will not allow changing
+ * the keys (with `diffieHellman.setPublicKey()`, for example). The
+ * advantage of using this method is that the parties do not have to
+ * generate nor exchange a group modulus beforehand, saving both processor
+ * and communication time.
+ *
+ * Example (obtaining a shared secret):
+ *
+ * ```js
+ * const {
+ *   getDiffieHellman,
+ * } = await import('node:crypto');
+ * const alice = getDiffieHellman('modp14');
+ * const bob = getDiffieHellman('modp14');
+ *
+ * alice.generateKeys();
+ * bob.generateKeys();
+ *
+ * const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, 'hex');
+ * const bobSecret = bob.computeSecret(alice.getPublicKey(), null, 'hex');
+ *
+ * // aliceSecret and bobSecret should be the same
+ * console.log(aliceSecret === bobSecret);
+ * ```
+ * @since v0.7.5
+ */
+external fun getDiffieHellman(groupName: String): DiffieHellmanGroup

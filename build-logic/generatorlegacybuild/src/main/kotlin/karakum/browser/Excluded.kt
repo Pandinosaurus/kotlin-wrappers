@@ -1,0 +1,27 @@
+package karakum.browser
+
+internal val KNOWN_MISSED_TYPES = setOf(
+    "AnimationFrameProvider",
+    "AudioProcessingEventInit",
+    "AudioWorkletProcessorImpl",
+    "DecodeErrorCallback",
+    "DecodeSuccessCallback",
+    "EventListener",
+    "EventListenerObject",
+    "EventTarget",
+    "HTMLAllCollection",
+    "HTMLCollectionOf",
+    "HTMLOrSVGElement",
+    "ImportMeta",
+    "MimeTypeArray",
+    "NodeListOf",
+    "OnBeforeUnloadEventHandlerNonNull",
+    "OnErrorEventHandlerNonNull",
+    "Plugin",
+    "PluginArray",
+    "ReadableStreamReadDoneResult",
+    "ReadableStreamReadValueResult",
+    "WindowLocalStorage",
+    "WindowOrWorkerGlobalScope",
+    "WindowSessionStorage",
+) + DOM_GEOMETRY_ALIASES.map { it.first }

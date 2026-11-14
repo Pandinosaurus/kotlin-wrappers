@@ -1,0 +1,22 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@cesium/engine")
+
+package cesium.engine
+
+import cesium.core.Cartesian3
+import cesium.core.HeadingPitchRoll
+
+/**
+ * Representation of <Camera> from KML
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/KmlCamera.html">Online Documentation</a>
+ *
+ * @constructor
+ * @param [position] camera position
+ * @param [headingPitchRoll] camera orientation
+ * @see <a href="https://cesium.com/docs/cesiumjs-ref-doc/KmlCamera.html">Online Documentation</a>
+ */
+open external class KmlCamera(
+    position: Cartesian3,
+    headingPitchRoll: HeadingPitchRoll,
+)

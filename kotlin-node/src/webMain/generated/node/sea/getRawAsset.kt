@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:sea")
+
+package node.sea
+
+/**
+ * This method can be used to retrieve the assets configured to be bundled into the
+ * single-executable application at build time.
+ * An error is thrown when no matching asset can be found.
+ *
+ * Unlike `sea.getRawAsset()` or `sea.getAssetAsBlob()`, this method does not
+ * return a copy. Instead, it returns the raw asset bundled inside the executable.
+ *
+ * For now, users should avoid writing to the returned array buffer. If the
+ * injected section is not marked as writable or not aligned properly,
+ * writes to the returned array buffer is likely to result in a crash.
+ * @since v20.12.0
+ */
+external fun getRawAsset(key: AssetKey): js.buffer.ArrayBuffer

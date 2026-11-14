@@ -1,0 +1,122 @@
+// Automatically generated - do not modify!
+
+package web.codecs
+
+import js.closeable.JsCloseable
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.errors.DOMExceptionType.*
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+
+/**
+ * The **`VideoDecoder`** interface of the WebCodecs API decodes chunks of video.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder)
+ */
+open external class VideoDecoder(
+    init: VideoDecoderInit,
+) : EventTarget,
+    JsCloseable {
+    /**
+     * The **`decodeQueueSize`** read-only property of the VideoDecoder interface returns the number of pending decode requests in the queue.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/decodeQueueSize)
+     */
+    open val decodeQueueSize: Int
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/dequeue_event)
+     */
+    open var ondequeue: EventHandler<Event, VideoDecoder, VideoDecoder>?
+
+    /**
+     * The **`state`** read-only property of the VideoDecoder interface returns the current state of the underlying codec.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/state)
+     */
+    open val state: CodecState
+
+    /**
+     * The **`close()`** method of the VideoDecoder interface ends all pending work and releases system resources.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/close)
+     */
+    override fun close()
+
+    /**
+     * The **`configure()`** method of the VideoDecoder interface enqueues a control message to configure the video decoder for decoding chunks.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/configure)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotSupportedError::class)
+    open fun configure(config: VideoDecoderConfig)
+
+    /**
+     * The **`decode()`** method of the VideoDecoder interface enqueues a control message to decode a given chunk of video.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/decode)
+     */
+    @JsThrows(DataError::class)
+    @JsThrows(InvalidStateError::class)
+    open fun decode(chunk: EncodedVideoChunk)
+
+    /**
+     * The **`flush()`** method of the VideoDecoder interface returns a Promise that resolves once all pending messages in the queue have been completed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/flush)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsName("flush")
+    open fun flushAsync(): Promise<Void>
+
+    /**
+     * The **`reset()`** method of the VideoDecoder interface resets all states including configuration, control messages in the control message queue, and all pending callbacks.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/reset)
+     */
+    open fun reset()
+
+    companion object {
+        /**
+         * The **`isConfigSupported()`** static method of the VideoDecoder interface checks if the given config is supported (that is, if VideoDecoder objects can be successfully configured with the given config).
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/isConfigSupported_static)
+         */
+        @JsName("isConfigSupported")
+        fun isConfigSupportedAsync(config: VideoDecoderConfig): Promise<VideoDecoderSupport>
+    }
+}
+
+/**
+ * The **`flush()`** method of the VideoDecoder interface returns a Promise that resolves once all pending messages in the queue have been completed.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/flush)
+ */
+@JsThrows(InvalidStateError::class)
+suspend inline fun VideoDecoder.flush() {
+    flushAsync().await()
+}
+
+/**
+ * The **`isConfigSupported()`** static method of the VideoDecoder interface checks if the given config is supported (that is, if VideoDecoder objects can be successfully configured with the given config).
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/isConfigSupported_static)
+ */
+suspend inline fun VideoDecoder.Companion.isConfigSupported(config: VideoDecoderConfig): VideoDecoderSupport {
+    return isConfigSupportedAsync(
+        config = config,
+    ).await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/VideoDecoder/dequeue_event)
+ */
+inline val <C : VideoDecoder> C.dequeueEvent: EventInstance<Event, C, C>
+    get() = EventInstance(this, "dequeue")

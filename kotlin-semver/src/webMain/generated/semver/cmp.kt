@@ -1,0 +1,145 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: String,
+    operator: Operator,
+    v2: String,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: String,
+    operator: Operator,
+    v2: String,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: String,
+    operator: Operator,
+    v2: String,
+    optionsOrLoose: Options = definedExternally,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: String,
+    operator: Operator,
+    v2: SemVer,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: String,
+    operator: Operator,
+    v2: SemVer,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: String,
+    operator: Operator,
+    v2: SemVer,
+    optionsOrLoose: Options = definedExternally,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: SemVer,
+    operator: Operator,
+    v2: String,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: SemVer,
+    operator: Operator,
+    v2: String,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: SemVer,
+    operator: Operator,
+    v2: String,
+    optionsOrLoose: Options = definedExternally,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: SemVer,
+    operator: Operator,
+    v2: SemVer,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: SemVer,
+    operator: Operator,
+    v2: SemVer,
+    optionsOrLoose: Boolean = definedExternally,
+): Boolean
+
+/**
+ * Pass in a comparison string, and it'll call the corresponding semver comparison function.
+ * "===" and "!==" do simple string comparison, but are included for completeness.
+ * Throws if an invalid comparison string is provided.
+ */
+external fun cmp(
+    v1: SemVer,
+    operator: Operator,
+    v2: SemVer,
+    optionsOrLoose: Options = definedExternally,
+): Boolean

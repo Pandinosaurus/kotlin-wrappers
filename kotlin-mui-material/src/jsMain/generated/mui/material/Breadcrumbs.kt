@@ -1,0 +1,110 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/Breadcrumbs")
+
+package mui.material
+
+import mui.material.styles.Theme
+import mui.system.PropsWithSx
+import mui.system.SxProps
+import mui.types.PropsWithComponent
+import react.*
+import react.dom.html.HTMLAttributes
+import web.html.HTMLElement
+
+external interface BreadcrumbsProps :
+    BreadcrumbsOwnProps,
+    HTMLAttributes<HTMLElement>,
+    PropsWithComponent
+
+external interface BreadcrumbsOwnerState : BreadcrumbsProps {
+    var expanded: Boolean
+}
+
+external interface BreadcrumbsOwnProps :
+    PropsWithChildren,
+    PropsWithSx {
+    /**
+     * The content of the component.
+     */
+    override var children: ReactNode?
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    var classes: BreadcrumbsClasses?
+
+    /**
+     * The components used for each slot inside the Breadcumb.
+     * Either a string to use a HTML element or a component.
+     * @default {}
+     */
+    var slots: Slots?
+
+    interface Slots {
+        var CollapsedIcon: ElementType<*>?
+    }
+
+    /**
+     * The props used for each slot inside the Breadcumb.
+     * @default {}
+     */
+    var slotProps: SlotProps?
+
+    interface SlotProps {
+        var collapsedIcon: Props?
+    }
+
+    /**
+     * Override the default label for the expand button.
+     *
+     * For localization purposes, you can use the provided [translations](https://mui.com/material-ui/guides/localization/).
+     * @default 'Show path'
+     */
+    var expandText: String?
+
+    /**
+     * If max items is exceeded, the number of items to show after the ellipsis.
+     * @default 1
+     */
+    var itemsAfterCollapse: Int?
+
+    /**
+     * If max items is exceeded, the number of items to show before the ellipsis.
+     * @default 1
+     */
+    var itemsBeforeCollapse: Int?
+
+    /**
+     * Specifies the maximum number of breadcrumbs to display. When there are more
+     * than the maximum number, only the first `itemsBeforeCollapse` and last `itemsAfterCollapse`
+     * will be shown, with an ellipsis in between.
+     * @default 8
+     */
+    var maxItems: Int?
+
+    /**
+     * Custom separator node.
+     * @default '/'
+     */
+    var separator: ReactNode?
+
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    override var sx: SxProps<Theme>?
+}
+
+/**
+ *
+ * Demos:
+ *
+ * - [Breadcrumbs](https://mui.com/material-ui/react-breadcrumbs/)
+ *
+ * API:
+ *
+ * - [Breadcrumbs API](https://mui.com/material-ui/api/breadcrumbs/)
+ * - inherits [Typography API](https://mui.com/material-ui/api/typography/)
+ */
+@JsName("default")
+external val Breadcrumbs: FC<BreadcrumbsProps>

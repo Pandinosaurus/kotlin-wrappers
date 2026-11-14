@@ -1,0 +1,106 @@
+// Automatically generated - do not modify!
+
+package node.fs
+
+import node.buffer.NonSharedBuffer
+
+@seskar.js.JsAsync
+external suspend fun readdir(path: PathLike): js.array.ReadonlyArray<String>
+
+/**
+ * Reads the contents of a directory.
+ *
+ * The optional `options` argument can be a string specifying an encoding, or an
+ * object with an `encoding` property specifying the character encoding to use for
+ * the filenames. If the `encoding` is set to `'buffer'`, the filenames returned
+ * will be passed as `Buffer` objects.
+ *
+ * If `options.withFileTypes` is set to `true`, the returned array will contain `fs.Dirent` objects.
+ *
+ * ```js
+ * import { readdir } from 'node:fs/promises';
+ *
+ * try {
+ *   const files = await readdir(path);
+ *   for (const file of files)
+ *     console.log(file);
+ * } catch (err) {
+ *   console.error(err);
+ * }
+ * ```
+ * @since v10.0.0
+ * @return Fulfills with an array of the names of the files in the directory excluding `'.'` and `'..'`.
+ */
+@seskar.js.JsAsync
+external suspend fun readdir(
+    path: PathLike,
+    options: (ReaddirAsyncOptions)? = definedExternally,
+): js.array.ReadonlyArray<String>
+
+/**
+ * Reads the contents of a directory.
+ *
+ * The optional `options` argument can be a string specifying an encoding, or an
+ * object with an `encoding` property specifying the character encoding to use for
+ * the filenames. If the `encoding` is set to `'buffer'`, the filenames returned
+ * will be passed as `Buffer` objects.
+ *
+ * If `options.withFileTypes` is set to `true`, the returned array will contain `fs.Dirent` objects.
+ *
+ * ```js
+ * import { readdir } from 'node:fs/promises';
+ *
+ * try {
+ *   const files = await readdir(path);
+ *   for (const file of files)
+ *     console.log(file);
+ * } catch (err) {
+ *   console.error(err);
+ * }
+ * ```
+ * @since v10.0.0
+ * @return Fulfills with an array of the names of the files in the directory excluding `'.'` and `'..'`.
+ */
+@seskar.js.JsAsync
+external suspend fun readdir(
+    path: PathLike,
+    options: node.buffer.BufferEncoding? = definedExternally,
+): js.array.ReadonlyArray<String>
+
+@seskar.js.JsAsync
+external suspend fun readdir(
+    path: PathLike,
+    options: ReaddirBufferAsyncOptions,
+): js.array.ReadonlyArray<NonSharedBuffer>
+
+/**
+ * Asynchronous readdir(3) - read a directory.
+ * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
+ * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
+ */
+@seskar.js.JsAsync
+external suspend fun readdir(path: PathLike, options: String /* "buffer" */): js.array.ReadonlyArray<NonSharedBuffer>
+
+/**
+ * Asynchronous readdir(3) - read a directory.
+ * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
+ * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
+ */
+
+/**
+ * Asynchronous readdir(3) - read a directory.
+ * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
+ * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
+ */
+
+@seskar.js.JsAsync
+external suspend fun readdir(
+    path: PathLike,
+    options: ReaddirWithFileTypesAsyncOptions,
+): js.array.ReadonlyArray<Dirent<*>>
+
+@seskar.js.JsAsync
+external suspend fun readdir(
+    path: PathLike,
+    options: ReaddirBufferWithFileTypesAsyncOptions,
+): js.array.ReadonlyArray<Dirent<NonSharedBuffer>>

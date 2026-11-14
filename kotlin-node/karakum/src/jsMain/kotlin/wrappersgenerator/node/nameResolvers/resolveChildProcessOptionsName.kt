@@ -1,0 +1,99 @@
+package wrappersgenerator.node.nameResolvers
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.Context
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import js.reflect.invoke
+import typescript.*
+
+suspend fun resolveChildProcessOptionsName(node: Node, context: Context) = nullable {
+    val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+
+    val sourceFileName = ensureNotNull(node.getSourceFile()).fileName
+    ensure(sourceFileName.endsWith("child_process.d.ts"))
+
+    val parameter = ensureNotNull(
+        typeScriptService.getParent(node)
+            ?.let {
+                if (isParenthesizedTypeNode(it)) {
+                    typeScriptService.getParent(it)
+                } else it
+            }
+            ?.let {
+                if (isUnionTypeNode(it)) {
+                    typeScriptService.getParent(it)
+                } else it
+            }
+    )
+    ensure(isParameter(parameter))
+
+    val parameterNameNode = parameter.name
+    ensure(isIdentifier(parameterNameNode))
+    val parameterName = parameterNameNode.text
+
+    val signatureDeclaration = ensureNotNull(typeScriptService.getParent(parameter))
+    ensure(isFunctionDeclaration(signatureDeclaration))
+
+    val signatureName = ensureNotNull(signatureDeclaration.name)
+    val parentName = signatureName.text
+
+    nullable {
+        ensure(parentName == "exec")
+
+        nullable {
+            ensure(isIntersectionTypeNode(node))
+
+            val firstType = ensureNotNull(node.types.first())
+            ensure(isTypeLiteralNode(firstType))
+            ensure(firstType.members.any { member ->
+                nullable {
+                    ensure(isPropertySignature(member))
+
+                    val propertyName = member.name
+                    ensure(isIdentifier(propertyName))
+                    ensure(propertyName.text == "encoding")
+
+                    val propertyType = ensureNotNull(member.type)
+                    ensure(isUnionTypeNode(propertyType))
+
+                    val firstPropertyType = ensureNotNull(propertyType.types.first())
+                    ensure(isLiteralTypeNode(firstPropertyType))
+
+                    val firstPropertyTypeLiteral = firstPropertyType.literal
+                    ensure(isStringLiteral(firstPropertyTypeLiteral))
+                    ensure(firstPropertyTypeLiteral.text == "buffer")
+                } != null
+            })
+
+            "${parentName.replaceFirstChar { it.titlecase() }}Buffer${parameterName.replaceFirstChar { it.titlecase() }}"
+        } ?: nullable {
+            ensure(isIntersectionTypeNode(node))
+
+            val firstType = ensureNotNull(node.types.first())
+            ensure(isTypeReferenceNode(firstType))
+
+            val typeName = firstType.typeName
+            ensure(isIdentifier(typeName))
+            ensure(typeName.text == "ObjectEncodingOptions")
+
+            "${parentName.replaceFirstChar { it.titlecase() }}ObjectEncoding${parameterName.replaceFirstChar { it.titlecase() }}"
+        } ?: run {
+            "${parentName.replaceFirstChar { it.titlecase() }}String${parameterName.replaceFirstChar { it.titlecase() }}"
+        }
+    } ?: nullable {
+        ensure(parentName == "execFile")
+
+        ensure(isIntersectionTypeNode(node))
+
+        val firstType = ensureNotNull(node.types.first())
+        ensure(isTypeReferenceNode(firstType))
+
+        val typeName = firstType.typeName
+        ensure(isIdentifier(typeName))
+        ensure(typeName.text == "ObjectEncodingOptions")
+
+        "${parentName.replaceFirstChar { it.titlecase() }}ObjectEncoding${parameterName.replaceFirstChar { it.titlecase() }}"
+    } ?: run {
+        "${parentName.replaceFirstChar { it.titlecase() }}${parameterName.replaceFirstChar { it.titlecase() }}"
+    }
+}

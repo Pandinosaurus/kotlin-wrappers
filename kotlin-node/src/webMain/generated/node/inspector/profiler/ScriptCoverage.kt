@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+package node.inspector.profiler
+
+/**
+ * Coverage data for a JavaScript script.
+ */
+@kotlinx.js.JsPlainObject
+external interface ScriptCoverage {
+    /**
+     * JavaScript script id.
+     */
+    var scriptId: node.inspector.runtime.ScriptId
+
+    /**
+     * JavaScript script name or url.
+     */
+    var url: String
+
+    /**
+     * Functions contained in the script that has coverage data.
+     */
+    var functions: js.array.ReadonlyArray<FunctionCoverage>
+}

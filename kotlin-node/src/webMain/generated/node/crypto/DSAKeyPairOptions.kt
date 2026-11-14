@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+package node.crypto
+
+@kotlinx.js.JsPlainObject
+external interface DSAKeyPairOptions<PubF : KeyFormat, PrivF : KeyFormat> {
+    /**
+     * Key size in bits
+     */
+    var modulusLength: Double
+
+    /**
+     * Size of q in bits
+     */
+    var divisorLength: Double
+    var publicKeyEncoding: DSAKeyPairOptionsPublicKeyEncoding<PubF>
+    var privateKeyEncoding: DSAKeyPairOptionsPrivateKeyEncoding<PrivF>
+}

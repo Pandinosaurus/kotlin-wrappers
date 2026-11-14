@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:zlib")
+
+package node.zlib
+
+/**
+ * Creates and returns a new `Gzip` object.
+ * See `example`.
+ * @since v0.5.8
+ */
+external fun createGzip(options: ZlibOptions = definedExternally): Gzip

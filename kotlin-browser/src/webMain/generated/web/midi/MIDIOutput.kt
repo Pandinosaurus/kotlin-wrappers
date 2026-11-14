@@ -1,0 +1,32 @@
+// Automatically generated - do not modify!
+
+package web.midi
+
+import js.array.ReadonlyArray
+import js.numbers.JsDouble
+import web.errors.DOMExceptionType.InvalidStateError
+import web.errors.DOMExceptionType.NotAllowedError
+import web.errors.JsThrows
+import web.time.DOMHighResTimeStamp
+
+/**
+ * The **`MIDIOutput`** interface of the Web MIDI API provides methods to add messages to the queue of an output device, and to clear the queue of messages.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MIDIOutput)
+ */
+open external class MIDIOutput
+private constructor() :
+    MIDIPort {
+    /**
+     * The **`send()`** method of the MIDIOutput interface queues messages for the corresponding MIDI port. The message can be sent immediately, or with an optional timestamp to delay sending.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MIDIOutput/send)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NotAllowedError::class)
+    open fun send(
+        data: ReadonlyArray<JsDouble>,
+        timestamp: DOMHighResTimeStamp = definedExternally,
+    )
+}

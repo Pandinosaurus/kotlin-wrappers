@@ -1,0 +1,27 @@
+// Automatically generated - do not modify!
+
+package node.assert
+
+@kotlinx.js.JsPlainObject
+external interface AssertOptions {
+    /**
+     * If set to `'full'`, shows the full diff in assertion errors.
+     * @default 'simple'
+     */
+    var diff: AssertOptionsDiff?
+
+    /**
+     * If set to `true`, non-strict methods behave like their
+     * corresponding strict methods.
+     * @default true
+     */
+    var strict: Boolean?
+
+    /**
+     * If set to `true`, skips prototype and constructor
+     * comparison in deep equality checks.
+     * @since v24.9.0
+     * @default false
+     */
+    var skipPrototype: Boolean?
+}

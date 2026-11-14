@@ -1,0 +1,35 @@
+// Automatically generated - do not modify!
+
+package node.vm
+
+@kotlinx.js.JsPlainObject
+external interface CreateContextOptions {
+    /**
+     * Human-readable name of the newly created context.
+     * @default 'VM Context i' Where i is an ascending numerical index of the created context.
+     */
+    var name: String?
+
+    /**
+     * Corresponds to the newly created context for display purposes.
+     * The origin should be formatted like a `URL`, but with only the scheme, host, and port (if necessary),
+     * like the value of the `url.origin` property of a URL object.
+     * Most notably, this string should omit the trailing slash, as that denotes a path.
+     * @default ''
+     */
+    var origin: String?
+    var codeGeneration: (CreateContextOptionsCodeGeneration)?
+
+    /**
+     * If set to `afterEvaluate`, microtasks will be run immediately after the script has run.
+     */
+    var microtaskMode: String /* "afterEvaluate" */?
+
+    /**
+     * Used to specify how the modules should be loaded during the evaluation of this script when `import()` is called. This option is
+     * part of the experimental modules API. We do not recommend using it in a production environment. For detailed information, see
+     * [Support of dynamic `import()` in compilation APIs](https://nodejs.org/docs/latest-v24.x/api/vm.html#support-of-dynamic-import-in-compilation-apis).
+     * @experimental
+     */
+    var importModuleDynamically: Any? /* DynamicModuleLoader<Context> | typeof constants.USE_MAIN_CONTEXT_DEFAULT_LOADER | undefined */
+}

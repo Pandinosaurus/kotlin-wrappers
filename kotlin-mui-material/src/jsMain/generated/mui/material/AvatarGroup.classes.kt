@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/material/AvatarGroup")
+
+package mui.material
+
+import kotlinx.js.JsPlainObject
+import web.cssom.ClassName
+
+@JsPlainObject
+external interface AvatarGroupClasses {
+    /** Styles applied to the root element. */
+    val root: ClassName
+
+    /** Styles applied to the avatar elements. */
+    val avatar: ClassName
+}
+
+external val avatarGroupClasses: AvatarGroupClasses

@@ -1,0 +1,28 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface InputEvent {
+// Docs: https://electronjs.org/docs/api/structures/input-event
+    /**
+     * An array of modifiers of the event, can be `shift`, `control`, `ctrl`, `alt`,
+     * `meta`, `command`, `cmd`, `iskeypad`, `isautorepeat`, `leftbuttondown`,
+     * `middlebuttondown`, `rightbuttondown`, `capslock`, `numlock`, `left`, `right`.
+     */
+    var modifiers: js.array.ReadonlyArray<InputEventModifier>?
+
+    /**
+     * Can be `undefined`, `mouseDown`, `mouseUp`, `mouseMove`, `mouseEnter`,
+     * `mouseLeave`, `contextMenu`, `mouseWheel`, `rawKeyDown`, `keyDown`, `keyUp`,
+     * `char`, `gestureScrollBegin`, `gestureScrollEnd`, `gestureScrollUpdate`,
+     * `gestureFlingStart`, `gestureFlingCancel`, `gesturePinchBegin`,
+     * `gesturePinchEnd`, `gesturePinchUpdate`, `gestureTapDown`, `gestureShowPress`,
+     * `gestureTap`, `gestureTapCancel`, `gestureShortPress`, `gestureLongPress`,
+     * `gestureLongTap`, `gestureTwoFingerTap`, `gestureTapUnconfirmed`,
+     * `gestureDoubleTap`, `touchStart`, `touchMove`, `touchEnd`, `touchCancel`,
+     * `touchScrollStarted`, `pointerDown`, `pointerUp`, `pointerMove`,
+     * `pointerRawUpdate`, `pointerCancel` or `pointerCausedUaAction`.
+     */
+    var type: (InputEventType)
+}

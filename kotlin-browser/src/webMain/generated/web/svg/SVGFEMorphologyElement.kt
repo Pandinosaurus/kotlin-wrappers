@@ -1,0 +1,61 @@
+// Automatically generated - do not modify!
+
+package web.svg
+
+/**
+ * The **`SVGFEMorphologyElement`** interface corresponds to the <feMorphology> element.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement)
+ */
+open external class SVGFEMorphologyElement
+private constructor() :
+    SVGElement,
+    SVGFilterPrimitiveStandardAttributes {
+    /**
+     * The **`in1`** read-only property of the SVGFEMorphologyElement interface reflects the in attribute of the given <feMorphology> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement/in1)
+     */
+    open val in1: SVGAnimatedString
+
+    /**
+     * The **`operator`** read-only property of the SVGFEMorphologyElement interface reflects the operator attribute of the given <feMorphology> element. It takes one of the SVG_MORPHOLOGY_OPERATOR_* constants defined on this interface.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement/operator)
+     */
+    open val operator: SVGAnimatedEnumeration<Operator>
+
+    /**
+     * The **`radiusX`** read-only property of the SVGFEMorphologyElement interface reflects the X component of the radius attribute of the given <feMorphology> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement/radiusX)
+     */
+    open val radiusX: SVGAnimatedNumber
+
+    /**
+     * The **`radiusY`** read-only property of the SVGFEMorphologyElement interface reflects the Y component of the radius attribute of the given <feMorphology> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement/radiusY)
+     */
+    open val radiusY: SVGAnimatedNumber
+
+    companion object {
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement#svg_morphology_operator_unknown)
+         */
+        val SVG_MORPHOLOGY_OPERATOR_UNKNOWN: Operator
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement#svg_morphology_operator_erode)
+         */
+        val SVG_MORPHOLOGY_OPERATOR_ERODE: Operator
+
+        /**
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGFEMorphologyElement#svg_morphology_operator_dilate)
+         */
+        val SVG_MORPHOLOGY_OPERATOR_DILATE: Operator
+    }
+
+    sealed /* enum */
+    interface Operator
+}

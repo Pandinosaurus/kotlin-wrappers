@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package node.repl
+
+@kotlinx.js.JsPlainObject
+external interface REPLCommand {
+    /**
+     * Help text to be displayed when `.help` is entered.
+     */
+    var help: String?
+
+    /**
+     * The function to execute, optionally accepting a single string argument.
+     */
+    var action: REPLCommandAction
+}

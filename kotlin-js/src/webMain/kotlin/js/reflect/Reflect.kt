@@ -1,0 +1,187 @@
+package js.reflect
+
+import js.array.ReadonlyArray
+import js.array.Tuple
+import js.function.ConstructorFunction
+import js.objects.PropertyKey
+import js.objects.TypedPropertyDescriptor
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect)
+ */
+external object Reflect {
+    /**
+     * Constructs the target with the elements of specified array as the arguments
+     * and the specified constructor as the `new.target` value.
+     * @param target The constructor to invoke.
+     * @param argumentsList An array of argument values to be passed to the constructor.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/construct)
+     */
+    fun <T : JsAny, A : Tuple> construct(
+        target: ConstructorFunction<A, T>,
+        argumentsList: A,
+    ): T
+
+    fun <T : JsAny> construct(
+        target: JsClass<T>,
+        argumentsList: ReadonlyArray<JsAny?>,
+    ): T
+
+    /**
+     * Adds a property to an object, or modifies attributes of an existing property.
+     * @param target Object on which to add or modify the property. This can be a native JavaScript object
+     *        (that is, a user-defined object or a built in object) or a DOM object.
+     * @param propertyKey The property name.
+     * @param attributes Descriptor for the property. It can be for a data property or an accessor property.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/defineProperty)
+     */
+    fun defineProperty(
+        target: JsAny,
+        propertyKey: PropertyKey,
+        attributes: TypedPropertyDescriptor<*>,
+    ): Boolean
+
+    fun defineProperty(
+        target: JsAny,
+        propertyKey: String,
+        attributes: TypedPropertyDescriptor<*>,
+    ): Boolean
+
+    /**
+     * Removes a property from an object, equivalent to `delete target[propertyKey]`,
+     * except it won't throw if `target[propertyKey]` is non-configurable.
+     * @param target Object from which to remove the own property.
+     * @param propertyKey The property name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/deleteProperty)
+     */
+    fun deleteProperty(
+        target: JsAny,
+        propertyKey: PropertyKey,
+    ): Boolean
+
+    fun deleteProperty(
+        target: JsAny,
+        propertyKey: String,
+    ): Boolean
+
+    /**
+     * Gets the property of target, equivalent to `target[propertyKey]` when `receiver === target`.
+     * @param target Object that contains the property on itself or in its prototype chain.
+     * @param propertyKey The property name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/get)
+     */
+    fun get(
+        target: JsAny,
+        propertyKey: PropertyKey,
+    ): JsAny?
+
+    fun get(
+        target: JsAny,
+        propertyKey: String,
+    ): JsAny?
+
+    /**
+     * Gets the own property descriptor of the specified object.
+     * An own property descriptor is one that is defined directly on the object and is not inherited from the object's prototype.
+     * @param target Object that contains the property.
+     * @param propertyKey The property name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/getOwnPropertyDescriptor)
+     */
+    fun getOwnPropertyDescriptor(
+        target: JsAny,
+        propertyKey: PropertyKey,
+    ): TypedPropertyDescriptor<*>
+
+    fun getOwnPropertyDescriptor(
+        target: JsAny,
+        propertyKey: String,
+    ): TypedPropertyDescriptor<*>
+
+    /**
+     * Returns the prototype of an object.
+     * @param target The object that references the prototype.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/getPrototypeOf)
+     */
+    fun getPrototypeOf(target: JsAny): JsAny?
+
+    /**
+     * Equivalent to `propertyKey in target`.
+     * @param target Object that contains the property on itself or in its prototype chain.
+     * @param propertyKey Name of the property.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/has)
+     */
+    fun has(
+        target: JsAny,
+        propertyKey: PropertyKey,
+    ): Boolean
+
+    fun has(
+        target: JsAny,
+        propertyKey: String,
+    ): Boolean
+
+    /**
+     * Returns a value that indicates whether new properties can be added to an object.
+     * @param target Object to test.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/isExtensible)
+     */
+    fun isExtensible(target: JsAny): Boolean
+
+    /**
+     * Returns the string and symbol keys of the own properties of an object. The own properties of an object
+     * are those that are defined directly on that object, and are not inherited from the object's prototype.
+     * @param target Object that contains the own properties.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys)
+     */
+    fun ownKeys(target: JsAny): ReadonlyArray<PropertyKey>
+
+    /**
+     * Prevents the addition of new properties to an object.
+     * @param target Object to make non-extensible.
+     * @return Whether the object has been made non-extensible.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/preventExtensions)
+     */
+    fun preventExtensions(target: JsAny): Boolean
+
+    /**
+     * Sets the property of target, equivalent to `target[propertyKey] = value` when `receiver === target`.
+     * @param target Object that contains the property on itself or in its prototype chain.
+     * @param propertyKey Name of the property.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/set)
+     */
+    fun set(
+        target: JsAny,
+        propertyKey: PropertyKey,
+        value: JsAny?,
+    ): Boolean
+
+    fun set(
+        target: JsAny,
+        propertyKey: String,
+        value: JsAny?,
+    ): Boolean
+
+    /**
+     * Sets the prototype of a specified object o to object proto or null.
+     * @param target The object to change its prototype.
+     * @param proto The value of the new prototype or null.
+     * @return Whether setting the prototype was successful.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect/setPrototypeOf)
+     */
+    fun setPrototypeOf(
+        target: JsAny,
+        proto: JsAny?,
+    ): Boolean
+}

@@ -1,0 +1,86 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:dns")
+
+package node.dns
+
+/**
+ * Uses the DNS protocol to resolve a host name (e.g. `'nodejs.org'`) into an array
+ * of the resource records. The `callback` function has arguments `(err, records)`. When successful, `records` will be an array of resource
+ * records. The type and structure of individual results varies based on `rrtype`:
+ *
+ * <omitted>
+ *
+ * On error, `err` is an [`Error`](https://nodejs.org/docs/latest-v24.x/api/errors.html#class-error) object,
+ * where `err.code` is one of the `DNS error codes`.
+ * @since v0.1.27
+ * @param hostname Host name to resolve.
+ * @param [rrtype='A'] Resource record type.
+ */
+external fun resolve(
+    hostname: String,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<String>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.StringRecord,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<String>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.ANY,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<AnyRecord>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.CAA,
+    callback: (err: node.ErrnoException?, address: js.array.ReadonlyArray<CaaRecord>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.MX,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<MxRecord>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.NAPTR,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<NaptrRecord>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.SOA,
+    callback: (err: node.ErrnoException?, addresses: SoaRecord) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.SRV,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<SrvRecord>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.TLSA,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<TlsaRecord>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: ResourceRecordType.TXT,
+    callback: (err: node.ErrnoException?, addresses: js.array.ReadonlyArray<js.array.ReadonlyArray<String>>) -> Unit,
+)
+
+external fun resolve(
+    hostname: String,
+    rrtype: String,
+    callback: (
+        err: node.ErrnoException?,
+        addresses: Any, /* string[] | CaaRecord[] | MxRecord[] | NaptrRecord[] | SoaRecord | SrvRecord[] | TlsaRecord[] | string[][] | AnyRecord[] */
+    ) -> Unit,
+)

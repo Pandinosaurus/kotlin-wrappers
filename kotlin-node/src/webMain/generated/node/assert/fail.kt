@@ -1,0 +1,80 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:assert/strict")
+
+package node.assert
+
+/**
+ * Throws an `AssertionError` with the provided error message or a default
+ * error message. If the `message` parameter is an instance of an `Error` then
+ * it will be thrown instead of the `AssertionError`.
+ *
+ * ```js
+ * import assert from 'node:assert/strict';
+ *
+ * assert.fail();
+ * // AssertionError [ERR_ASSERTION]: Failed
+ *
+ * assert.fail('boom');
+ * // AssertionError [ERR_ASSERTION]: boom
+ *
+ * assert.fail(new TypeError('need array'));
+ * // TypeError: need array
+ * ```
+ *
+ * Using `assert.fail()` with more than two arguments is possible but deprecated.
+ * See below for further details.
+ * @since v0.1.21
+ * @param [message='Failed']
+ */
+external fun fail(): Nothing
+
+/**
+ * Throws an `AssertionError` with the provided error message or a default
+ * error message. If the `message` parameter is an instance of an `Error` then
+ * it will be thrown instead of the `AssertionError`.
+ *
+ * ```js
+ * import assert from 'node:assert/strict';
+ *
+ * assert.fail();
+ * // AssertionError [ERR_ASSERTION]: Failed
+ *
+ * assert.fail('boom');
+ * // AssertionError [ERR_ASSERTION]: boom
+ *
+ * assert.fail(new TypeError('need array'));
+ * // TypeError: need array
+ * ```
+ *
+ * Using `assert.fail()` with more than two arguments is possible but deprecated.
+ * See below for further details.
+ * @since v0.1.21
+ * @param [message='Failed']
+ */
+external fun fail(message: String = definedExternally): Nothing
+
+/**
+ * Throws an `AssertionError` with the provided error message or a default
+ * error message. If the `message` parameter is an instance of an `Error` then
+ * it will be thrown instead of the `AssertionError`.
+ *
+ * ```js
+ * import assert from 'node:assert/strict';
+ *
+ * assert.fail();
+ * // AssertionError [ERR_ASSERTION]: Failed
+ *
+ * assert.fail('boom');
+ * // AssertionError [ERR_ASSERTION]: boom
+ *
+ * assert.fail(new TypeError('need array'));
+ * // TypeError: need array
+ * ```
+ *
+ * Using `assert.fail()` with more than two arguments is possible but deprecated.
+ * See below for further details.
+ * @since v0.1.21
+ * @param [message='Failed']
+ */
+external fun fail(message: js.errors.JsError = definedExternally): Nothing

@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) instance.
+ *
+ * ```js
+ * util.types.isUint8Array(new ArrayBuffer());  // Returns false
+ * util.types.isUint8Array(new Uint8Array());  // Returns true
+ * util.types.isUint8Array(new Float64Array());  // Returns false
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isUint8Array")
+external fun isUint8ArrayRaw(value: Any?): Boolean /* object is Uint8Array */

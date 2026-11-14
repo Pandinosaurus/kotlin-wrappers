@@ -1,0 +1,23 @@
+// Automatically generated - do not modify!
+
+package node.dns
+
+@kotlinx.js.JsPlainObject
+external interface ResolverOptions {
+    /**
+     * Query timeout in milliseconds, or `-1` to use the default timeout.
+     */
+    var timeout: Double?
+
+    /**
+     * The number of tries the resolver will try contacting each name server before giving up.
+     * @default 4
+     */
+    var tries: Double?
+
+    /**
+     * The max retry timeout, in milliseconds.
+     * @default 0
+     */
+    var maxTimeout: Double?
+}

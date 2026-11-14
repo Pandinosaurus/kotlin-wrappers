@@ -1,12 +1,13 @@
 .DS_Store
 .gradle/
+.kotlin/
 build/
 
 **/.idea/*
-!.idea/icon.png
+!.idea/codeInsightSettings.xml
+!.idea/externalDependencies.xml
+!.idea/icon.svg
 !.idea/vcs.xml
 *.iml
 *.ipr
 *.iws
-
-ts/

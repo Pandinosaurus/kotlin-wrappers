@@ -1,0 +1,217 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import js.reflect.invoke
+import typescript.*
+
+private fun isInstanceType(node: Node) = nullable {
+    ensure(isTypeReferenceNode(node))
+
+    val name = node.typeName
+    ensure(isIdentifier(name))
+    ensure(name.text == "InstanceType")
+} != null
+
+private fun isTypeArgumentOfTypeWithTypeofBound(node: Node) = nullable {
+    nullable {
+        val typeReference = ensureNotNull(node.parent)
+        ensure(isTypeReferenceNode(typeReference))
+
+        nullable {
+            val typeName = typeReference.typeName
+            ensure(isIdentifier(typeName))
+            ensure(
+                typeName.text == "InstanceType"
+
+                        || typeName.text == "Server"
+                        || typeName.text == "ServerOptions"
+                        || typeName.text == "SecureServerOptions"
+                        || typeName.text == "RequestListener"
+
+                        || typeName.text == "Http2Server"
+                        || typeName.text == "Http2SecureServer"
+                        || typeName.text == "ServerHttp2Session"
+            )
+        } ?: nullable {
+            val typeName = typeReference.typeName
+            ensure(isQualifiedName(typeName))
+            ensure(
+                typeName.right.text == "ServerOptions"
+                        || typeName.right.text == "RequestListener"
+            )
+        }
+    } ?: nullable {
+        val expressionWithTypeArguments = ensureNotNull(node.parent)
+        ensure(isExpressionWithTypeArguments(expressionWithTypeArguments))
+
+        nullable {
+            val expression = expressionWithTypeArguments.expression
+            ensure(isIdentifier(expression))
+            ensure(
+                expression.text == "ServerSessionOptions"
+                        || expression.text == "SecureServerSessionOptions"
+            )
+        } ?: nullable {
+            val expression = expressionWithTypeArguments.expression
+            ensure(isPropertyAccessExpression(expression))
+
+            val expressionName = expression.name
+            ensure(isIdentifier(expressionName))
+            ensure(expressionName.text == "ServerOptions")
+        }
+    }
+} != null
+
+val convertHttpTypeParameter = createPlugin { node, context, render ->
+    nullable {
+        val sourceFileName = ensureNotNull(node.getSourceFile()).fileName
+
+        ensure(
+            sourceFileName.endsWith("http.d.ts")
+                    || sourceFileName.endsWith("https.d.ts")
+                    || sourceFileName.endsWith("http2.d.ts")
+        )
+
+        nullable {
+            ensure(isTypeParameterDeclaration(node))
+
+            ensureNotNull(
+                nullable {
+                    val classNode = ensureNotNull(node.parent)
+                    ensure(isClassDeclaration(classNode))
+                    ensure(classNode.name?.text == "Server")
+                } ?: nullable {
+                    val interfaceNode = ensureNotNull(node.parent)
+                    ensure(isInterfaceDeclaration(interfaceNode))
+                    ensure(
+                        interfaceNode.name.text == "Server"
+                                || interfaceNode.name.text == "ServerOptions"
+                                || interfaceNode.name.text == "SecureServerOptions"
+                                || interfaceNode.name.text == "Http2Server"
+                                || interfaceNode.name.text == "Http2SecureServer"
+                                || interfaceNode.name.text == "ServerHttp2Session"
+                                || interfaceNode.name.text == "ServerSessionOptions"
+                                || interfaceNode.name.text == "SecureServerSessionOptions"
+                    )
+                } ?: nullable {
+                    val typeAlias = ensureNotNull(node.parent)
+                    ensure(isTypeAliasDeclaration(typeAlias))
+                    ensure(typeAlias.name.text == "ServerOptions")
+                } ?: nullable {
+                    val function = ensureNotNull(node.parent)
+                    ensure(isFunctionDeclaration(function))
+                    ensure(
+                        function.name?.text == "createServer"
+                                || function.name?.text == "createSecureServer"
+                                || function.name?.text == "performServerHandshake"
+                    )
+                }
+            )
+
+            when {
+                node.name.text == "Request" -> "Request : IncomingMessage"
+                node.name.text == "Http1Request" -> "Http1Request : IncomingMessage"
+                node.name.text == "Http2Request" -> "Http2Request : Http2ServerRequest"
+                node.name.text == "Response" -> "Response : ServerResponse<*>"
+                node.name.text == "Http1Response" -> "Http1Response : ServerResponse<*>"
+                node.name.text == "Http2Response" -> "Http2Response : Http2ServerResponse<*>"
+                else -> null
+            }
+        } ?: nullable {
+            ensure(isTypeParameterDeclaration(node))
+
+            val typeAlias = ensureNotNull(node.parent)
+            ensure(isTypeAliasDeclaration(typeAlias))
+            ensure(typeAlias.name.text == "RequestListener")
+
+            when {
+                node.name.text == "Request" -> "Request /* : IncomingMessage */"
+                node.name.text == "Response" -> "Response /* : ServerResponse<*> */"
+                else -> null
+            }
+        } ?: nullable {
+            ensure(isTypeReferenceNode(node))
+            ensure(isInstanceType(node))
+
+            val firstTypeArgument = ensureNotNull(node.typeArguments?.getOrNull(0))
+
+            render(firstTypeArgument)
+        } ?: nullable {
+            ensure(isIntersectionTypeNode(node))
+
+            val firstType = ensureNotNull(node.types.getOrNull(0))
+            ensure(isTypeReferenceNode(firstType))
+            ensure(isInstanceType(firstType))
+
+            val firstTypeArgument = ensureNotNull(firstType.typeArguments?.getOrNull(0))
+
+            render(firstTypeArgument)
+        } ?: nullable {
+            ensure(isTypeReferenceNode(node))
+
+            val name = node.typeName
+            ensure(isIdentifier(name))
+            ensure(
+                name.text == "Request"
+                        || name.text == "Http1Request"
+                        || name.text == "Http2Request"
+
+                        || name.text == "Response"
+                        || name.text == "Http1Response"
+                        || name.text == "Http2Response"
+            )
+
+            ensure(!isTypeArgumentOfTypeWithTypeofBound(node))
+
+            val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+            val typeChecker = typeScriptService.program.getTypeChecker()
+
+            val symbol = ensureNotNull(typeChecker.getSymbolAtLocation(name))
+
+            val typeParameterDeclarations = ensureNotNull(symbol.declarations)
+            val typeParameterDeclaration =
+                ensureNotNull(typeParameterDeclarations.find { isTypeParameterDeclaration(it) })
+
+            ensureNotNull(
+                nullable {
+                    val classNode = ensureNotNull(typeParameterDeclaration.parent)
+                    ensure(isClassDeclaration(classNode))
+                    ensure(classNode.name?.text == "Server")
+                } ?: nullable {
+                    val interfaceNode = ensureNotNull(typeParameterDeclaration.parent)
+                    ensure(isInterfaceDeclaration(interfaceNode))
+                    ensure(
+                        interfaceNode.name.text == "ServerOptions"
+                                || interfaceNode.name.text == "SecureServerOptions"
+                                || interfaceNode.name.text == "Http2Server"
+                                || interfaceNode.name.text == "Http2SecureServer"
+                                || interfaceNode.name.text == "ServerHttp2Session"
+                                || interfaceNode.name.text == "ServerSessionOptions"
+                                || interfaceNode.name.text == "SecureServerSessionOptions"
+                    )
+                } ?: nullable {
+                    val typeAlias = ensureNotNull(typeParameterDeclaration.parent)
+                    ensure(isTypeAliasDeclaration(typeAlias))
+                    ensure(
+                        typeAlias.name.text == "ServerOptions"
+                                || typeAlias.name.text == "RequestListener"
+                    )
+                } ?: nullable {
+                    val function = ensureNotNull(typeParameterDeclaration.parent)
+                    ensure(isFunctionDeclaration(function))
+                    ensure(
+                        function.name?.text == "createServer"
+                                || function.name?.text == "createSecureServer"
+                    )
+                }
+            )
+
+            val parent = ensureNotNull(node.parent)
+            ensure(!isInstanceType(parent))
+
+            "JsClass<${render(node)}>"
+        }
+    }
+}

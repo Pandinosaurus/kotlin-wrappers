@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface TitleOptions {
+    /**
+     * The font family variant to display, can be `monospaced` or `monospacedDigit`.
+     * `monospaced` is available in macOS 10.15+ When left blank, the title uses the
+     * default system font.
+     */
+    var fontType: (TitleOptionsFontType)?
+}

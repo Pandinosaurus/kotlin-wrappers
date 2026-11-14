@@ -1,0 +1,90 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface Screen : node.events.EventEmitter {
+    /**
+     * Converts a screen DIP point to a screen physical point. The DPI scale is
+     * performed relative to the display containing the DIP point.
+     *
+     * Not currently supported on Wayland.
+     *
+     * @platform win32,linux
+     */
+    fun dipToScreenPoint(point: Point): Point
+
+    /**
+     * Converts a screen DIP rect to a screen physical rect. The DPI scale is performed
+     * relative to the display nearest to `window`. If `window` is null, scaling will
+     * be performed to the display nearest to `rect`.
+     *
+     * @platform win32
+     */
+    fun dipToScreenRect(
+        window: BrowserWindow?,
+        rect: Rectangle,
+    ): Rectangle
+
+    /**
+     * An array of displays that are currently available.
+     */
+    fun getAllDisplays(): js.array.ReadonlyArray<Display>
+
+    /**
+     * The current absolute position of the mouse pointer.
+     *
+     * Not supported on Wayland (Linux).
+     *
+     * > [!NOTE] The return value is a DIP point, not a screen physical point.
+     */
+    fun getCursorScreenPoint(): Point
+
+    /**
+     * The display that most closely intersects the provided bounds.
+     */
+    fun getDisplayMatching(rect: Rectangle): Display
+
+    /**
+     * The display nearest the specified point.
+     */
+    fun getDisplayNearestPoint(point: Point): Display
+
+    /**
+     * The primary display.
+     */
+    fun getPrimaryDisplay(): Display
+
+    /**
+     * Converts a screen physical point to a screen DIP point. The DPI scale is
+     * performed relative to the display containing the physical point.
+     *
+     * Not currently supported on Wayland - if used there it will return the point
+     * passed in with no changes.
+     *
+     * @platform win32,linux
+     */
+    fun screenToDipPoint(point: Point): Point
+
+    /**
+     * Converts a screen physical rect to a screen DIP rect. The DPI scale is performed
+     * relative to the display nearest to `window`. If `window` is null, scaling will
+     * be performed to the display nearest to `rect`.
+     *
+     * @platform win32
+     */
+    fun screenToDipRect(
+        window: BrowserWindow?,
+        rect: Rectangle,
+    ): Rectangle
+
+    @web.events.JsEvent("display-added")
+    val displayAddedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Display>>
+
+    @web.events.JsEvent("display-metrics-changed")
+    val displayMetricsChangedEvent:
+            node.events.EventInstance<js.array.Tuple3<Event<*>, Display, js.array.ReadonlyArray<String>>>
+
+    @web.events.JsEvent("display-removed")
+    val displayRemovedEvent: node.events.EventInstance<js.array.Tuple2<Event<*>, Display>>
+}

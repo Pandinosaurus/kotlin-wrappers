@@ -1,0 +1,88 @@
+// Automatically generated - do not modify!
+
+package web.dom
+
+import js.collections.ListLike
+import web.errors.DOMExceptionType.InvalidCharacterError
+import web.errors.DOMExceptionType.SyntaxError
+import web.errors.JsThrows
+
+/**
+ * The **`DOMTokenList`** interface represents a set of space-separated tokens. Such a set is returned by Element.classList or HTMLLinkElement.relList, and many others.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList)
+ */
+open external class DOMTokenList<T : JsAny>
+private constructor() :
+    ListLike.Mixin<T> {
+    /**
+     * The read-only **`length`** property of the DOMTokenList interface is an integer representing the number of objects stored in the object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/length)
+     */
+    override val length: Int
+
+    /**
+     * The **`value`** property of the DOMTokenList interface is a stringifier that returns the value of the list serialized as a string, or clears and sets the list to the given value.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/value)
+     */
+    open var value: T
+
+    /**
+     * The **`add()`** method of the DOMTokenList interface adds the given tokens to the list, omitting any that are already present.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/add)
+     */
+    @JsThrows(InvalidCharacterError::class)
+    @JsThrows(SyntaxError::class)
+    open fun add(vararg tokens: T)
+
+    /**
+     * The **`contains()`** method of the DOMTokenList interface returns a boolean value — true if the underlying list contains the given token, otherwise false.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/contains)
+     */
+    open fun contains(token: T): Boolean
+
+    /**
+     * The **`item()`** method of the DOMTokenList interface returns an item in the list, determined by its position in the list, its index.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/item)
+     */
+    open fun item(index: Int): T?
+
+    /**
+     * The **`remove()`** method of the DOMTokenList interface removes the specified tokens from the list.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/remove)
+     */
+    open fun remove(vararg tokens: T)
+
+    /**
+     * The **`replace()`** method of the DOMTokenList interface replaces an existing token with a new token. If the first token doesn't exist, replace() returns false immediately, without adding the new token to the token list.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/replace)
+     */
+    open fun replace(
+        token: T,
+        newToken: T,
+    ): Boolean
+
+    /**
+     * The **`supports()`** method of the DOMTokenList interface returns true if a given token is in the associated attribute's supported tokens. This method is intended to support feature detection.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/supports)
+     */
+    open fun supports(token: T): Boolean
+
+    /**
+     * The **`toggle()`** method of the DOMTokenList interface removes an existing token from the list and returns false. If the token doesn't exist it's added and the function returns true.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMTokenList/toggle)
+     */
+    open fun toggle(
+        token: T,
+        force: Boolean = definedExternally,
+    ): Boolean
+}

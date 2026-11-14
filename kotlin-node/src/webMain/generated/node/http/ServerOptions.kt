@@ -1,0 +1,150 @@
+// Automatically generated - do not modify!
+
+package node.http
+
+@kotlinx.js.JsPlainObject
+external interface ServerOptions<Request : IncomingMessage, Response : ServerResponse<*>> {
+    /**
+     * Specifies the `IncomingMessage` class to be used. Useful for extending the original `IncomingMessage`.
+     */
+    var IncomingMessage: JsClass<Request>?
+
+    /**
+     * Specifies the `ServerResponse` class to be used. Useful for extending the original `ServerResponse`.
+     */
+    var ServerResponse: JsClass<Response>?
+
+    /**
+     * Sets the timeout value in milliseconds for receiving the entire request from the client.
+     * @see Server.requestTimeout for more information.
+     * @default 300000
+     * @since v18.0.0
+     */
+    var requestTimeout: Double?
+
+    /**
+     * It joins the field line values of multiple headers in a request with `, ` instead of discarding the duplicates.
+     * @default false
+     * @since v18.14.0
+     */
+    var joinDuplicateHeaders: Boolean?
+
+    /**
+     * The number of milliseconds of inactivity a server needs to wait for additional incoming data,
+     * after it has finished writing the last response, before a socket will be destroyed.
+     * @see Server.keepAliveTimeout for more information.
+     * @default 5000
+     * @since v18.0.0
+     */
+    var keepAliveTimeout: Double?
+
+    /**
+     * An additional buffer time added to the
+     * `server.keepAliveTimeout` to extend the internal socket timeout.
+     * @since 24.6.0
+     * @default 1000
+     */
+    var keepAliveTimeoutBuffer: Double?
+
+    /**
+     * Sets the interval value in milliseconds to check for request and headers timeout in incomplete requests.
+     * @default 30000
+     */
+    var connectionsCheckingInterval: Double?
+
+    /**
+     * Sets the timeout value in milliseconds for receiving the complete HTTP headers from the client.
+     * See {@link Server.headersTimeout} for more information.
+     * @default 60000
+     * @since 18.0.0
+     */
+    var headersTimeout: Double?
+
+    /**
+     * Optionally overrides all `socket`s' `readableHighWaterMark` and `writableHighWaterMark`.
+     * This affects `highWaterMark` property of both `IncomingMessage` and `ServerResponse`.
+     * Default: @see stream.getDefaultHighWaterMark().
+     * @since v20.1.0
+     */
+    var highWaterMark: Double?
+
+    /**
+     * Use an insecure HTTP parser that accepts invalid HTTP headers when `true`.
+     * Using the insecure parser should be avoided.
+     * See --insecure-http-parser for more information.
+     * @default false
+     */
+    var insecureHTTPParser: Boolean?
+
+    /**
+     * Optionally overrides the value of `--max-http-header-size` for requests received by
+     * this server, i.e. the maximum length of request headers in bytes.
+     * @default 16384
+     * @since v13.3.0
+     */
+    var maxHeaderSize: Double?
+
+    /**
+     * If set to `true`, it disables the use of Nagle's algorithm immediately after a new incoming connection is received.
+     * @default true
+     * @since v16.5.0
+     */
+    var noDelay: Boolean?
+
+    /**
+     * If set to `true`, it forces the server to respond with a 400 (Bad Request) status code
+     * to any HTTP/1.1 request message that lacks a Host header (as mandated by the specification).
+     * @default true
+     * @since 20.0.0
+     */
+    var requireHostHeader: Boolean?
+
+    /**
+     * If set to `true`, it enables keep-alive functionality on the socket immediately after a new incoming connection is received,
+     * similarly on what is done in `socket.setKeepAlive([enable][, initialDelay])`.
+     * @default false
+     * @since v16.5.0
+     */
+    var keepAlive: Boolean?
+
+    /**
+     * If set to a positive number, it sets the initial delay before the first keepalive probe is sent on an idle socket.
+     * @default 0
+     * @since v16.5.0
+     */
+    var keepAliveInitialDelay: Double?
+
+    /**
+     * A list of response headers that should be sent only once.
+     * If the header's value is an array, the items will be joined using `; `.
+     */
+    var uniqueHeaders: js.array.ReadonlyArray<Any /* string | string[] */>?
+
+    /**
+     * A callback which receives an
+     * incoming request and returns a boolean, to control which upgrade attempts
+     * should be accepted. Accepted upgrades will fire an `'upgrade'` event (or
+     * their sockets will be destroyed, if no listener is registered) while
+     * rejected upgrades will fire a `'request'` event like any non-upgrade
+     * request.
+     * @since v24.9.0
+     * @default () => server.listenerCount('upgrade') > 0
+     */
+    var shouldUpgradeCallback: ((request: Request) -> Boolean)?
+
+    /**
+     * If set to `true`, an error is thrown when writing to an HTTP response which does not have a body.
+     * @default false
+     * @since v18.17.0, v20.2.0
+     */
+    var rejectNonStandardBodyWrites: Boolean?
+
+    /**
+     * If set to `true`, requests without `Content-Length` or `Transfer-Encoding` headers (indicating no body)
+     * will be initialized with an already-ended body stream, so they will never emit any stream events
+     * (like `'data'` or `'end'`). You can use `req.readableEnded` to detect this case.
+     * @default false
+     * @since v24.12.0
+     */
+    var optimizeEmptyRequests: Boolean?
+}

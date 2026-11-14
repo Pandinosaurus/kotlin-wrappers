@@ -1,0 +1,28 @@
+// Automatically generated - do not modify!
+
+package web.viewtransition
+
+import web.events.Event
+import web.events.EventType
+
+/**
+ * The **`PageRevealEvent`** event object is made available inside handler functions for the pagereveal event.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PageRevealEvent)
+ */
+open external class PageRevealEvent(
+    override val type: EventType<PageRevealEvent>,
+    init: PageRevealEventInit = definedExternally,
+) : Event {
+    /**
+     * The **`viewTransition`** read-only property of the PageRevealEvent interface contains a ViewTransition object representing the active view transition for the cross-document navigation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PageRevealEvent/viewTransition)
+     */
+    open val viewTransition: ViewTransition?
+
+    companion object
+}
+
+inline val PageRevealEvent.Companion.PAGE_REVEAL: EventType<PageRevealEvent>
+    get() = EventType("pagereveal")

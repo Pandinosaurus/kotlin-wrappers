@@ -1,0 +1,24 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:http2")
+
+package node.http2
+
+import node.buffer.NonSharedBuffer
+
+/**
+ * Returns a `Buffer` instance containing serialized representation of the given
+ * HTTP/2 settings as specified in the [HTTP/2](https://tools.ietf.org/html/rfc7540) specification. This is intended
+ * for use with the `HTTP2-Settings` header field.
+ *
+ * ```js
+ * import http2 from 'node:http2';
+ *
+ * const packed = http2.getPackedSettings({ enablePush: false });
+ *
+ * console.log(packed.toString('base64'));
+ * // Prints: AAIAAAAA
+ * ```
+ * @since v8.4.0
+ */
+external fun getPackedSettings(settings: Settings): NonSharedBuffer

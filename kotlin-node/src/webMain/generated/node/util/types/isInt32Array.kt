@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a built-in [`Int32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array) instance.
+ *
+ * ```js
+ * util.types.isInt32Array(new ArrayBuffer());  // Returns false
+ * util.types.isInt32Array(new Int32Array());  // Returns true
+ * util.types.isInt32Array(new Float64Array());  // Returns false
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isInt32Array")
+external fun isInt32ArrayRaw(value: Any?): Boolean /* object is Int32Array */

@@ -1,9 +1,13 @@
 plugins {
-    kotlin("js")
-    `kotlin-conventions`
-    `publish-conventions`
+    id("wrappersbuild.kotlin-library-conventions")
 }
 
-dependencies {
-    api(npmv("csstype"))
+kotlin {
+    sourceSets.webMain.dependencies {
+        api(projects.kotlinCssomCore)
+        api(projects.kotlinJs)
+        api(projects.kotlinBrowser)
+
+        devNpm(jspkg.csstype)
+    }
 }

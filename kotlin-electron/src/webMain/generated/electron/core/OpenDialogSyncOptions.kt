@@ -1,0 +1,42 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface OpenDialogSyncOptions {
+    var title: String?
+
+    /**
+     * Absolute directory path, absolute file path, or file name to use by default. If
+     * not provided, the dialog will default to the user's Downloads folder, or their
+     * home directory if Downloads doesn't exist.
+     */
+    var defaultPath: String?
+
+    /**
+     * Custom label for the confirmation button, when left empty the default label will
+     * be used.
+     */
+    var buttonLabel: String?
+    var filters: js.array.ReadonlyArray<FileFilter>?
+
+    /**
+     * Contains which features the dialog should use. The following values are
+     * supported:
+     */
+    var properties: js.array.ReadonlyArray<OpenDialogSyncOptionsProperty>?
+
+    /**
+     * Message to display above input boxes.
+     *
+     * @platform darwin
+     */
+    var message: String?
+
+    /**
+     * Create security scoped bookmarks when packaged for the Mac App Store.
+     *
+     * @platform darwin,mas
+     */
+    var securityScopedBookmarks: Boolean?
+}

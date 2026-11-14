@@ -1,0 +1,36 @@
+// Automatically generated - do not modify!
+
+package web.viewtransition
+
+import web.events.Event
+import web.events.EventType
+import web.navigation.NavigationActivation
+
+/**
+ * The **`PageSwapEvent`** event object is made available inside handler functions for the pageswap event.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PageSwapEvent)
+ */
+open external class PageSwapEvent(
+    override val type: EventType<PageSwapEvent>,
+    init: PageSwapEventInit = definedExternally,
+) : Event {
+    /**
+     * The **`activation`** read-only property of the PageSwapEvent interface contains a NavigationActivation object containing the navigation type and current and destination document history entries for a same-origin navigation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PageSwapEvent/activation)
+     */
+    open val activation: NavigationActivation?
+
+    /**
+     * The **`viewTransition`** read-only property of the PageRevealEvent interface contains a ViewTransition object representing the active view transition for the cross-document navigation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PageSwapEvent/viewTransition)
+     */
+    open val viewTransition: ViewTransition?
+
+    companion object
+}
+
+inline val PageSwapEvent.Companion.PAGE_SWAP: EventType<PageSwapEvent>
+    get() = EventType("pageswap")

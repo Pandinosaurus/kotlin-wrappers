@@ -1,0 +1,36 @@
+package wrappersgenerator.semver.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import js.reflect.invoke
+import typescript.*
+
+private val versionParts = setOf("major", "minor", "patch")
+
+val convertVersionPartTypes = createPlugin { node, _, _ ->
+    nullable {
+        ensure(node.kind == SyntaxKind.NumberKeyword)
+
+        val property = ensureNotNull(node.parent)
+        ensure(isPropertyDeclaration(property))
+
+        val propertyName = property.name
+        ensure(isIdentifier(propertyName))
+        ensure(propertyName.text in versionParts)
+
+        val classNode = ensureNotNull(property.parent)
+        ensure(isClassDeclaration(classNode))
+        ensure(classNode.name?.text == "SemVer")
+
+        "Int"
+    } ?: nullable {
+        ensure(node.kind == SyntaxKind.NumberKeyword)
+
+        val function = ensureNotNull(node.parent)
+        ensure(isFunctionDeclaration(function))
+        ensure(function.name?.text in versionParts)
+        ensure(function.type === node)
+
+        "Int"
+    }
+}

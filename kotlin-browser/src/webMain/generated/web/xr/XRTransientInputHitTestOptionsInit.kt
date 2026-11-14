@@ -1,0 +1,13 @@
+// Automatically generated - do not modify!
+
+package web.xr
+
+import js.array.ReadonlyArray
+import kotlinx.js.JsPlainObject
+
+@JsPlainObject
+external interface XRTransientInputHitTestOptionsInit {
+    var profile: String
+    var entityTypes: ReadonlyArray<XRHitTestTrackableType>?
+    var offsetRay: XRRay?
+}

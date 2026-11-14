@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package web.streams
+
+import js.internal.InternalApi
+
+/* mixin */
+@SubclassOptInRequired(InternalApi::class)
+external interface GenericTransformStream {
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CompressionStream/readable)
+     */
+    val readable: ReadableStream<*>
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CompressionStream/writable)
+     */
+    val writable: WritableStream<*>
+}

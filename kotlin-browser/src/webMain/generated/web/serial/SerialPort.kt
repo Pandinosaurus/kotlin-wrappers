@@ -1,0 +1,188 @@
+// Automatically generated - do not modify!
+
+package web.serial
+
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.errors.DOMExceptionType.InvalidStateError
+import web.errors.DOMExceptionType.NetworkError
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventHandler
+import web.events.EventInstance
+import web.events.EventTarget
+import web.streams.ReadableStream
+import web.streams.WritableStream
+
+/**
+ * The **`SerialPort`** interface of the Web Serial API provides access to a serial port on the host device.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort)
+ */
+open external class SerialPort
+private constructor() :
+    EventTarget {
+    /**
+     * The **`connected`** read-only property of the SerialPort interface returns a boolean value that indicates whether the port is logically connected to the device.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/connected)
+     */
+    open val connected: Boolean
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/connect_event)
+     */
+    open var onconnect: EventHandler<Event, SerialPort, Serial>?
+
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/disconnect_event)
+     */
+    open var ondisconnect: EventHandler<Event, SerialPort, Serial>?
+
+    /**
+     * The **`readable`** read-only property of the SerialPort interface returns a ReadableStream for receiving data from the device connected to the port. Chunks read from this stream are instances of Uint8Array. This property is non-null as long as the port is open and has not encountered a fatal error.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/readable)
+     */
+    open val readable: ReadableStream<*>?
+
+    /**
+     * The **`writable`** read-only property of the SerialPort interface returns a WritableStream for sending data to the device connected to the port. Chunks written to this stream must be instances of ArrayBuffer, TypedArray, or DataView. This property is non-null as long as the port is open and has not encountered a fatal error.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/writable)
+     */
+    open val writable: WritableStream<*>?
+
+    /**
+     * The **`close()`** method of the SerialPort interface returns a Promise that resolves when the port closes.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/close)
+     */
+    @JsName("close")
+    open fun closeAsync(): Promise<Void>
+
+    /**
+     * The **`forget()`** method of the SerialPort interface returns a Promise that resolves when access to the serial port is revoked.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/forget)
+     */
+    @JsName("forget")
+    open fun forgetAsync(): Promise<Void>
+
+    /**
+     * The **`getInfo()`** method of the SerialPort interface returns an object containing identifying information for the device available via the port.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/getInfo)
+     */
+    open fun getInfo(): SerialPortInfo
+
+    /**
+     * The **`getSignals()`** method of the SerialPort interface returns a Promise that resolves with an object containing the current state of the port's control signals.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/getSignals)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NetworkError::class)
+    @JsName("getSignals")
+    open fun getSignalsAsync(): Promise<SerialInputSignals>
+
+    /**
+     * The **`open()`** method of the SerialPort interface returns a Promise that resolves when the port is opened. By default the port is opened with 8 data bits, 1 stop bit and no parity checking. The baudRate parameter is required.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/open)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NetworkError::class)
+    @JsName("open")
+    open fun openAsync(options: SerialOptions): Promise<Void>
+
+    /**
+     * The **`setSignals()`** method of the SerialPort interface sets control signals on the port and returns a Promise that resolves when they are set.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/setSignals)
+     */
+    @JsThrows(InvalidStateError::class)
+    @JsThrows(NetworkError::class)
+    @JsName("setSignals")
+    open fun setSignalsAsync(signals: SerialOutputSignals = definedExternally): Promise<Void>
+}
+
+/**
+ * The **`close()`** method of the SerialPort interface returns a Promise that resolves when the port closes.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/close)
+ */
+suspend inline fun SerialPort.close() {
+    closeAsync().await()
+}
+
+/**
+ * The **`forget()`** method of the SerialPort interface returns a Promise that resolves when access to the serial port is revoked.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/forget)
+ */
+suspend inline fun SerialPort.forget() {
+    forgetAsync().await()
+}
+
+/**
+ * The **`getSignals()`** method of the SerialPort interface returns a Promise that resolves with an object containing the current state of the port's control signals.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/getSignals)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NetworkError::class)
+suspend inline fun SerialPort.getSignals(): SerialInputSignals {
+    return getSignalsAsync().await()
+}
+
+/**
+ * The **`open()`** method of the SerialPort interface returns a Promise that resolves when the port is opened. By default the port is opened with 8 data bits, 1 stop bit and no parity checking. The baudRate parameter is required.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/open)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NetworkError::class)
+suspend inline fun SerialPort.open(options: SerialOptions) {
+    openAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * The **`setSignals()`** method of the SerialPort interface sets control signals on the port and returns a Promise that resolves when they are set.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/setSignals)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NetworkError::class)
+suspend inline fun SerialPort.setSignals() {
+    setSignalsAsync().await()
+}
+
+/**
+ * The **`setSignals()`** method of the SerialPort interface sets control signals on the port and returns a Promise that resolves when they are set.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/setSignals)
+ */
+@JsThrows(InvalidStateError::class)
+@JsThrows(NetworkError::class)
+suspend inline fun SerialPort.setSignals(signals: SerialOutputSignals) {
+    setSignalsAsync(
+        signals = signals,
+    ).await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/connect_event)
+ */
+inline val <C : SerialPort> C.connectEvent: EventInstance<Event, C, Serial>
+    get() = EventInstance(this, "connect")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SerialPort/disconnect_event)
+ */
+inline val <C : SerialPort> C.disconnectEvent: EventInstance<Event, C, Serial>
+    get() = EventInstance(this, "disconnect")

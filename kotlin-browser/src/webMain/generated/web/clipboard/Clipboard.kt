@@ -1,0 +1,104 @@
+// Automatically generated - do not modify!
+
+package web.clipboard
+
+import js.promise.Promise
+import js.promise.await
+import js.string.JsStrings.toKotlinString
+import js.void.Void
+import web.errors.DOMExceptionType.NotAllowedError
+import web.errors.DOMExceptionType.NotFoundError
+import web.errors.JsThrows
+import web.events.EventTarget
+
+/**
+ * The **`Clipboard`** interface of the Clipboard API provides read and write access to the contents of the system clipboard. This allows a web application to implement cut, copy, and paste features.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard)
+ */
+open external class Clipboard
+private constructor() :
+    EventTarget {
+    /**
+     * The **`read()`** method of the Clipboard interface returns a Promise that fulfills with a copy of the clipboard's contents.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/read)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsName("read")
+    open fun readAsync(): Promise<ClipboardItems>
+
+    /**
+     * The **`readText()`** method of the Clipboard interface returns a Promise which fulfills with a copy of the textual contents of the system clipboard.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/readText)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsThrows(NotFoundError::class)
+    @JsName("readText")
+    open fun readTextAsync(): Promise<JsString>
+
+    /**
+     * The **`write()`** method of the Clipboard interface is used to write data such as images, text, and custom types, to the system clipboard.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/write)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsName("write")
+    open fun writeAsync(data: ClipboardItems): Promise<Void>
+
+    /**
+     * The **`writeText()`** method of the Clipboard interface writes the specified text to the system clipboard, returning a Promise that is resolved once the system clipboard has been updated.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/writeText)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsName("writeText")
+    open fun writeTextAsync(data: String): Promise<Void>
+}
+
+/**
+ * The **`read()`** method of the Clipboard interface returns a Promise that fulfills with a copy of the clipboard's contents.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/read)
+ */
+@JsThrows(NotAllowedError::class)
+suspend inline fun Clipboard.read(): ClipboardItems {
+    return readAsync().await()
+}
+
+/**
+ * The **`readText()`** method of the Clipboard interface returns a Promise which fulfills with a copy of the textual contents of the system clipboard.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/readText)
+ */
+@JsThrows(NotAllowedError::class)
+@JsThrows(NotFoundError::class)
+suspend inline fun Clipboard.readText(): String {
+    return readTextAsync().await().toKotlinString()
+}
+
+/**
+ * The **`write()`** method of the Clipboard interface is used to write data such as images, text, and custom types, to the system clipboard.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/write)
+ */
+@JsThrows(NotAllowedError::class)
+suspend inline fun Clipboard.write(data: ClipboardItems) {
+    writeAsync(
+        data = data,
+    ).await()
+}
+
+/**
+ * The **`writeText()`** method of the Clipboard interface writes the specified text to the system clipboard, returning a Promise that is resolved once the system clipboard has been updated.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Clipboard/writeText)
+ */
+@JsThrows(NotAllowedError::class)
+suspend inline fun Clipboard.writeText(data: String) {
+    writeTextAsync(
+        data = data,
+    ).await()
+}

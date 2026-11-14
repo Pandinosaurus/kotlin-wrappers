@@ -1,0 +1,80 @@
+// Automatically generated - do not modify!
+
+package web.html
+
+import web.dom.DOMTokenList
+import web.http.ReferrerPolicy
+import web.window.WindowTarget
+
+/**
+ * The **`HTMLAnchorElement`** interface represents hyperlink elements and provides special properties and methods (beyond those of the regular HTMLElement object interface that they inherit from) for manipulating the layout and presentation of such elements. This interface corresponds to <a> element; not to be confused with <link>, which is represented by HTMLLinkElement.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement)
+ */
+open external class HTMLAnchorElement
+protected constructor() :
+    HTMLElement,
+    HTMLHyperlinkElementUtils,
+    HyperlinkElementUtils {
+    /**
+     * The **`download`** property of the HTMLAnchorElement interface is a string indicating that the linked resource is intended to be downloaded rather than displayed in the browser. The value, if any, represents the proposed name of the file. It reflects the download attribute of the <a> element.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement/download)
+     */
+    open var download: String
+
+    /**
+     * The **`ping`** property of the HTMLAnchorElement interface is a space-separated list of URLs. When the link is followed, the browser will send POST requests with the body PING to the URLs.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement/ping)
+     */
+    open var ping: String
+
+    /**
+     * The **`HTMLAnchorElement.referrerPolicy`** property reflect the HTML referrerpolicy attribute of the <a> element defining which referrer is sent when fetching the resource.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement/referrerPolicy)
+     */
+    open var referrerPolicy: ReferrerPolicy
+
+    /**
+     * The **`HTMLAnchorElement.rel`** property reflects the rel attribute. It is a string containing a space-separated list of link types indicating the relationship between the resource represented by the <a> element and the current document.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement/rel)
+     */
+    open var rel: String
+
+    /**
+     * The read-only **`relList`** property of the HTMLAnchorElement returns a live DOMTokenList object containing the set of link types indicating the relationship between the resource represented by the <a> element and the current document.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement/relList)
+     */
+    open val relList: DOMTokenList<JsString>
+
+    /**
+     * The **`text`** property of the HTMLAnchorElement represents the text inside the element. This property represents the same information as Node.textContent.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement/text)
+     */
+    open var text: String
+
+    /* `HTMLHyperlinkElementUtils` overrides */
+
+    override var href: String
+    override var target: WindowTarget
+
+    /* `HyperlinkElementUtils` overrides */
+
+    override var hash: String
+    override var host: String
+    override var hostname: String
+    override var hreflang: String
+    override val origin: String
+    override var password: String
+    override var pathname: String
+    override var port: String
+    override var protocol: String
+    override var search: String
+    override var type: String
+    override var username: String
+}

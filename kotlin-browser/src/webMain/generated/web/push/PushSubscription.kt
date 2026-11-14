@@ -1,0 +1,69 @@
+// Automatically generated - do not modify!
+
+package web.push
+
+import js.buffer.ArrayBuffer
+import js.promise.Promise
+import js.promise.await
+import web.time.EpochTimeStamp
+
+/**
+ * The **`PushSubscription`** interface of the Push API provides a subscription's URL endpoint along with the public key and secrets that should be used for encrypting push messages to this subscription. This information must be passed to the application server, using any desired application-specific method.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription)
+ */
+open external class PushSubscription
+private constructor() {
+    /**
+     * The **`endpoint`** read-only property of the PushSubscription interface returns a string containing the endpoint associated with the push subscription.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription/endpoint)
+     */
+    open val endpoint: String
+
+    /**
+     * The **`expirationTime`** read-only property of the PushSubscription interface returns a DOMHighResTimeStamp of the subscription expiration time associated with the push subscription, if there is one, or null otherwise.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription/expirationTime)
+     */
+    open val expirationTime: EpochTimeStamp?
+
+    /**
+     * The **`options`** read-only property of the PushSubscription interface is an object containing the options used to create the subscription.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription/options)
+     */
+    open val options: PushSubscriptionOptions
+
+    /**
+     * The **`getKey()`** method of the PushSubscription interface returns an ArrayBuffer representing a client public key, which can then be sent to a server and used in encrypting push message data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription/getKey)
+     */
+    open fun getKey(name: PushEncryptionKeyName): ArrayBuffer?
+
+    /**
+     * The **`toJSON()`** method of the PushSubscription interface returns a JSON-serializable plain object representing the PushSubscription object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription/toJSON)
+     */
+    open fun toJSON(): PushSubscriptionJSON
+
+    /**
+     * The **`unsubscribe()`** method of the PushSubscription interface returns a Promise that resolves to a boolean value when the current subscription is successfully unsubscribed.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription/unsubscribe)
+     */
+    @JsName("unsubscribe")
+    open fun unsubscribeAsync(): Promise<JsBoolean>
+}
+
+/**
+ * The **`unsubscribe()`** method of the PushSubscription interface returns a Promise that resolves to a boolean value when the current subscription is successfully unsubscribed.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/PushSubscription/unsubscribe)
+ */
+suspend inline fun PushSubscription.unsubscribe(): Boolean {
+    return unsubscribeAsync().await().toBoolean()
+}

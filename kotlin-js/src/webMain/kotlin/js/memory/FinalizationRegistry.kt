@@ -1,0 +1,42 @@
+package js.memory
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry)
+ *
+ * @constructor
+ * Creates a finalization registry with an associated cleanup callback
+ * @param cleanupCallback The callback to call after an object in the registry has been reclaimed.
+ */
+open external class FinalizationRegistry<T : JsAny?>(
+    cleanupCallback: (heldValue: T) -> Unit,
+) {
+    /**
+     * Registers an object with the registry.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry/register)
+     *
+     * @param target The target object to register.
+     * @param heldValue The value to pass to the finalizer for this object. This cannot be the
+     * target object.
+     * @param unregisterToken The token to pass to the unregister method to unregister the target
+     * object. If provided (and not undefined), this must be an object. If not provided, the target
+     * cannot be unregistered.
+     */
+    open fun register(
+        target: JsAny,
+        heldValue: T,
+        unregisterToken: JsAny = definedExternally,
+    )
+
+    /**
+     * Unregisters an object from the registry.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry/unregister)
+     *
+     * @param unregisterToken The token that was used as the unregisterToken argument when calling
+     * register to register the target object.
+     */
+    open fun unregister(
+        unregisterToken: JsAny,
+    ): Boolean
+}

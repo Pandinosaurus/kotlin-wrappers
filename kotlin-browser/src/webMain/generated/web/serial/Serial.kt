@@ -1,0 +1,88 @@
+// Automatically generated - do not modify!
+
+package web.serial
+
+import js.array.ReadonlyArray
+import js.promise.Promise
+import js.promise.await
+import web.errors.DOMExceptionType.NotFoundError
+import web.errors.DOMExceptionType.SecurityError
+import web.errors.JsThrows
+import web.events.Event
+import web.events.EventInstance
+import web.events.EventTarget
+
+/**
+ * The **`Serial`** interface of the Web Serial API provides attributes and methods for finding and connecting to serial ports from a web page.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial)
+ */
+open external class Serial
+private constructor() :
+    EventTarget {
+    /**
+     * The **`getPorts()`** method of the Serial interface returns a Promise that resolves with an array of SerialPort objects representing serial ports connected to the host that the origin has permission to access.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial/getPorts)
+     */
+    @JsThrows(SecurityError::class)
+    @JsName("getPorts")
+    open fun getPortsAsync(): Promise<ReadonlyArray<SerialPort>>
+
+    /**
+     * The **`requestPort()`** method of the Serial interface presents the user with a dialog asking them to select a serial device to connect to. It returns a Promise that resolves with an instance of SerialPort representing the device chosen by the user.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial/requestPort)
+     */
+    @JsThrows(NotFoundError::class)
+    @JsThrows(SecurityError::class)
+    @JsName("requestPort")
+    open fun requestPortAsync(options: SerialPortRequestOptions = definedExternally): Promise<SerialPort>
+}
+
+/**
+ * The **`getPorts()`** method of the Serial interface returns a Promise that resolves with an array of SerialPort objects representing serial ports connected to the host that the origin has permission to access.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial/getPorts)
+ */
+@JsThrows(SecurityError::class)
+suspend inline fun Serial.getPorts(): ReadonlyArray<SerialPort> {
+    return getPortsAsync().await()
+}
+
+/**
+ * The **`requestPort()`** method of the Serial interface presents the user with a dialog asking them to select a serial device to connect to. It returns a Promise that resolves with an instance of SerialPort representing the device chosen by the user.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial/requestPort)
+ */
+@JsThrows(NotFoundError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun Serial.requestPort(): SerialPort {
+    return requestPortAsync().await()
+}
+
+/**
+ * The **`requestPort()`** method of the Serial interface presents the user with a dialog asking them to select a serial device to connect to. It returns a Promise that resolves with an instance of SerialPort representing the device chosen by the user.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial/requestPort)
+ */
+@JsThrows(NotFoundError::class)
+@JsThrows(SecurityError::class)
+suspend inline fun Serial.requestPort(options: SerialPortRequestOptions): SerialPort {
+    return requestPortAsync(
+        options = options,
+    ).await()
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial/connect_event)
+ */
+inline val <C : Serial> C.connectEvent: EventInstance<Event, C, Serial>
+    get() = EventInstance(this, "connect")
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Serial/disconnect_event)
+ */
+inline val <C : Serial> C.disconnectEvent: EventInstance<Event, C, Serial>
+    get() = EventInstance(this, "disconnect")

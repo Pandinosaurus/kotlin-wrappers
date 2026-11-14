@@ -1,0 +1,644 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@Suppress("INTERFACE_WITH_SUPERCLASS")
+external interface WebviewTag : web.html.HTMLElement {
+    /**
+     * Adjusts the current text selection starting and ending points in the focused
+     * frame by the given amounts. A negative amount moves the selection towards the
+     * beginning of the document, and a positive amount moves the selection towards the
+     * end of the document.
+     *
+     * See `webContents.adjustSelection` for examples.
+     */
+    fun adjustSelection(options: AdjustSelectionOptions)
+
+    /**
+     * Whether the guest page can go back.
+     */
+    fun canGoBack(): Boolean
+
+    /**
+     * Whether the guest page can go forward.
+     */
+    fun canGoForward(): Boolean
+
+    /**
+     * Whether the guest page can go to `offset`.
+     */
+    fun canGoToOffset(offset: Double): Boolean
+
+    /**
+     * Resolves with a NativeImage
+     *
+     * Captures a snapshot of the page within `rect`. Omitting `rect` will capture the
+     * whole visible page.
+     */
+    fun capturePage(rect: Rectangle = definedExternally): js.promise.Promise<NativeImage>
+
+    /**
+     * Centers the current text selection in page.
+     */
+    fun centerSelection()
+
+    /**
+     * Clears the navigation history.
+     */
+    fun clearHistory()
+
+    /**
+     * Closes the DevTools window of guest page.
+     */
+    fun closeDevTools()
+
+    /**
+     * Executes editing command `copy` in page.
+     */
+    fun copy()
+
+    /**
+     * Executes editing command `cut` in page.
+     */
+    fun cut()
+
+    /**
+     * Executes editing command `delete` in page.
+     */
+    fun delete()
+
+    /**
+     * Initiates a download of the resource at `url` without navigating.
+     */
+    fun downloadURL(
+        url: String,
+        options: DownloadURLOptions = definedExternally,
+    )
+
+    /**
+     * A promise that resolves with the result of the executed code or is rejected if
+     * the result of the code is a rejected promise.
+     *
+     * Evaluates `code` in page. If `userGesture` is set, it will create the user
+     * gesture context in the page. HTML APIs like `requestFullScreen`, which require
+     * user action, can take advantage of this option for automation.
+     */
+    fun executeJavaScript(
+        code: String,
+        userGesture: Boolean = definedExternally,
+    ): js.promise.Promise<Any?>
+
+    /**
+     * The request id used for the request.
+     *
+     * Starts a request to find all matches for the `text` in the web page. The result
+     * of the request can be obtained by subscribing to `found-in-page` event.
+     */
+    fun findInPage(
+        text: String,
+        options: FindInPageOptions = definedExternally,
+    ): Double
+
+    /**
+     * The title of guest page.
+     */
+    fun getTitle(): String
+
+    /**
+     * The URL of guest page.
+     */
+    fun getURL(): String
+
+    /**
+     * The user agent for guest page.
+     */
+    fun getUserAgent(): String
+
+    /**
+     * The WebContents ID of this `webview`.
+     */
+    fun getWebContentsId(): Double
+
+    /**
+     * the current zoom factor.
+     */
+    fun getZoomFactor(): Double
+
+    /**
+     * the current zoom level.
+     */
+    fun getZoomLevel(): Double
+
+    /**
+     * Makes the guest page go back.
+     */
+    fun goBack()
+
+    /**
+     * Makes the guest page go forward.
+     */
+    fun goForward()
+
+    /**
+     * Navigates to the specified absolute index.
+     */
+    fun goToIndex(index: Double)
+
+    /**
+     * Navigates to the specified offset from the "current entry".
+     */
+    fun goToOffset(offset: Double)
+
+    /**
+     * A promise that resolves with a key for the inserted CSS that can later be used
+     * to remove the CSS via `<webview>.removeInsertedCSS(key)`.
+     *
+     * Injects CSS into the current web page and returns a unique key for the inserted
+     * stylesheet.
+     */
+    fun insertCSS(css: String): js.promise.Promise<String>
+
+    /**
+     * Inserts `text` to the focused element.
+     */
+    fun insertText(text: String): js.promise.Promise<js.void.Void>
+
+    /**
+     * Starts inspecting element at position (`x`, `y`) of guest page.
+     */
+    fun inspectElement(
+        x: Double,
+        y: Double,
+    )
+
+    /**
+     * Opens the DevTools for the service worker context present in the guest page.
+     */
+    fun inspectServiceWorker()
+
+    /**
+     * Opens the DevTools for the shared worker context present in the guest page.
+     */
+    fun inspectSharedWorker()
+
+    /**
+     * Whether guest page has been muted.
+     */
+    fun isAudioMuted(): Boolean
+
+    /**
+     * Whether the renderer process has crashed.
+     */
+    fun isCrashed(): Boolean
+
+    /**
+     * Whether audio is currently playing.
+     */
+    fun isCurrentlyAudible(): Boolean
+
+    /**
+     * Whether DevTools window of guest page is focused.
+     */
+    fun isDevToolsFocused(): Boolean
+
+    /**
+     * Whether guest page has a DevTools window attached.
+     */
+    fun isDevToolsOpened(): Boolean
+
+    /**
+     * Whether guest page is still loading resources.
+     */
+    fun isLoading(): Boolean
+
+    /**
+     * Whether the main frame (and not just iframes or frames within it) is still
+     * loading.
+     */
+    fun isLoadingMainFrame(): Boolean
+
+    /**
+     * Whether the guest page is waiting for a first-response for the main resource of
+     * the page.
+     */
+    fun isWaitingForResponse(): Boolean
+
+    /**
+     * The promise will resolve when the page has finished loading (see
+     * `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
+     *
+     * Loads the `url` in the webview, the `url` must contain the protocol prefix, e.g.
+     * the `http://` or `file://`.
+     */
+    fun loadURL(
+        url: String,
+        options: LoadURLOptions = definedExternally,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * Opens a DevTools window for guest page.
+     */
+    fun openDevTools()
+
+    /**
+     * Executes editing command `paste` in page.
+     */
+    fun paste()
+
+    /**
+     * Executes editing command `pasteAndMatchStyle` in page.
+     */
+    fun pasteAndMatchStyle()
+
+    /**
+     * Prints `webview`'s web page. Same as `webContents.print([options])`.
+     */
+    fun print(options: WebviewTagPrintOptions = definedExternally): js.promise.Promise<js.void.Void>
+
+    /**
+     * Resolves with the generated PDF data.
+     *
+     * Prints `webview`'s web page as PDF, Same as `webContents.printToPDF(options)`.
+     */
+    fun printToPDF(options: PrintToPDFOptions): js.promise.Promise<js.typedarrays.Uint8Array<*>>
+
+    /**
+     * Executes editing command `redo` in page.
+     */
+    fun redo()
+
+    /**
+     * Reloads the guest page.
+     */
+    fun reload()
+
+    /**
+     * Reloads the guest page and ignores cache.
+     */
+    fun reloadIgnoringCache()
+
+    /**
+     * Resolves if the removal was successful.
+     *
+     * Removes the inserted CSS from the current web page. The stylesheet is identified
+     * by its key, which is returned from `<webview>.insertCSS(css)`.
+     */
+    fun removeInsertedCSS(key: String): js.promise.Promise<js.void.Void>
+
+    /**
+     * Executes editing command `replace` in page.
+     */
+    fun replace(text: String)
+
+    /**
+     * Executes editing command `replaceMisspelling` in page.
+     */
+    fun replaceMisspelling(text: String)
+
+    /**
+     * Scrolls to the bottom of the current `<webview>`.
+     */
+    fun scrollToBottom()
+
+    /**
+     * Scrolls to the top of the current `<webview>`.
+     */
+    fun scrollToTop()
+
+    /**
+     * Executes editing command `selectAll` in page.
+     */
+    fun selectAll()
+
+    /**
+     * Send an asynchronous message to renderer process via `channel`, you can also
+     * send arbitrary arguments. The renderer process can handle the message by
+     * listening to the `channel` event with the `ipcRenderer` module.
+     *
+     * See webContents.send for examples.
+     */
+    fun send(
+        channel: String,
+        vararg args: Any?,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * Sends an input `event` to the page.
+     *
+     * See webContents.sendInputEvent for detailed description of `event` object.
+     */
+    fun sendInputEvent(event: MouseInputEvent): js.promise.Promise<js.void.Void>
+
+    /**
+     * Sends an input `event` to the page.
+     *
+     * See webContents.sendInputEvent for detailed description of `event` object.
+     */
+    fun sendInputEvent(event: MouseWheelInputEvent): js.promise.Promise<js.void.Void>
+
+    /**
+     * Sends an input `event` to the page.
+     *
+     * See webContents.sendInputEvent for detailed description of `event` object.
+     */
+    fun sendInputEvent(event: KeyboardInputEvent): js.promise.Promise<js.void.Void>
+
+    /**
+     * Send an asynchronous message to renderer process via `channel`, you can also
+     * send arbitrary arguments. The renderer process can handle the message by
+     * listening to the `channel` event with the `ipcRenderer` module.
+     *
+     * See webContents.sendToFrame for examples.
+     */
+    fun sendToFrame(
+        frameId: js.array.Tuple2<Double, Double>,
+        channel: String,
+        vararg args: Any?,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * Set guest page muted.
+     */
+    fun setAudioMuted(muted: Boolean)
+
+    /**
+     * Overrides the user agent for the guest page.
+     */
+    fun setUserAgent(userAgent: String)
+
+    /**
+     * Sets the maximum and minimum pinch-to-zoom level.
+     */
+    fun setVisualZoomLevelLimits(
+        minimumLevel: Double,
+        maximumLevel: Double,
+    ): js.promise.Promise<js.void.Void>
+
+    /**
+     * Changes the zoom factor to the specified factor. Zoom factor is zoom percent
+     * divided by 100, so 300% = 3.0.
+     */
+    fun setZoomFactor(factor: Double)
+
+    /**
+     * Changes the zoom level to the specified level. The original size is 0 and each
+     * increment above or below represents zooming 20% larger or smaller to default
+     * limits of 300% and 50% of original size, respectively. The formula for this is
+     * `scale := 1.2 ^ level`.
+     *
+     * > [!NOTE] The zoom policy at the Chromium level is same-origin, meaning that the
+     * zoom level for a specific domain propagates across all instances of windows with
+     * the same domain. Differentiating the window URLs will make zoom work per-window.
+     */
+    fun setZoomLevel(level: Double)
+
+    /**
+     * Shows pop-up dictionary that searches the selected word on the page.
+     *
+     * @platform darwin
+     */
+    fun showDefinitionForSelection()
+
+    /**
+     * Stops any pending navigation.
+     */
+    fun stop()
+
+    /**
+     * Stops any `findInPage` request for the `webview` with the provided `action`.
+     */
+    fun stopFindInPage(action: WebviewTagStopFindInPageAction)
+
+    /**
+     * Executes editing command `undo` in page.
+     */
+    fun undo()
+
+    /**
+     * Executes editing command `unselect` in page.
+     */
+    fun unselect()
+
+    /**
+     * A `boolean`. When this attribute is present the guest page will be allowed to
+     * open new windows, whether through `window.open()` or a link opened into a new
+     * window (for example a modifier-clicked or `target="_blank"` link). Popups are
+     * disabled by default.
+     */
+    var allowpopups: Boolean
+
+    /**
+     * A `string` which is a list of strings which specifies the blink features to be
+     * disabled separated by `,`. The full list of supported feature strings can be
+     * found in the RuntimeEnabledFeatures.json5 file.
+     */
+    var disableblinkfeatures: String
+
+    /**
+     * A `boolean`. When this attribute is present the guest page will have web
+     * security disabled. Web security is enabled by default.
+     *
+     * This value can only be modified before the first navigation.
+     */
+    var disablewebsecurity: Boolean
+
+    /**
+     * A `string` which is a list of strings which specifies the blink features to be
+     * enabled separated by `,`. The full list of supported feature strings can be
+     * found in the RuntimeEnabledFeatures.json5 file.
+     */
+    var enableblinkfeatures: String
+
+    /**
+     * A `string` that sets the referrer URL for the guest page.
+     */
+    var httpreferrer: String
+
+    /**
+     * A `boolean`. When this attribute is present the guest page in `webview` will
+     * have node integration and can use node APIs like `require` and `process` to
+     * access low level system resources. Node integration is disabled by default in
+     * the guest page.
+     */
+    var nodeintegration: Boolean
+
+    /**
+     * A `boolean` for the experimental option for enabling NodeJS support in
+     * sub-frames such as iframes inside the `webview`. All your preloads will load for
+     * every iframe, you can use `process.isMainFrame` to determine if you are in the
+     * main frame or not. This option is disabled by default in the guest page.
+     */
+    var nodeintegrationinsubframes: Boolean
+
+    /**
+     * A `string` that sets the session used by the page. If `partition` starts with
+     * `persist:`, the page will use a persistent session available to all pages in the
+     * app with the same `partition`. if there is no `persist:` prefix, the page will
+     * use an in-memory session. By assigning the same `partition`, multiple pages can
+     * share the same session. If the `partition` is unset then default session of the
+     * app will be used.
+     *
+     * This value can only be modified before the first navigation, since the session
+     * of an active renderer process cannot change. Subsequent attempts to modify the
+     * value will fail with a DOM exception.
+     */
+    var partition: String
+
+    /**
+     * A `boolean`. When this attribute is present the guest page in `webview` will be
+     * able to use browser plugins. Plugins are disabled by default.
+     */
+    var plugins: Boolean
+
+    /**
+     * A `string` that specifies a script that will be loaded before other scripts run
+     * in the guest page. The protocol of script's URL must be `file:` (even when using
+     * `asar:` archives) because it will be loaded by Node's `require` under the hood,
+     * which treats `asar:` archives as virtual directories.
+     *
+     * When the guest page doesn't have node integration this script will still have
+     * access to all Node APIs, but global objects injected by Node will be deleted
+     * after this script has finished executing.
+     */
+    var preload: String
+
+    /**
+     * A `string` representing the visible URL. Writing to this attribute initiates
+     * top-level navigation.
+     *
+     * Assigning `src` its own value will reload the current page.
+     *
+     * The `src` attribute can also accept data URLs, such as `data:text/plain,Hello,
+     * world!`.
+     */
+    var src: String
+
+    /**
+     * A `string` that sets the user agent for the guest page before the page is
+     * navigated to. Once the page is loaded, use the `setUserAgent` method to change
+     * the user agent.
+     */
+    var useragent: String
+
+    /**
+     * A `string` which is a comma separated list of strings which specifies the web
+     * preferences to be set on the webview. The full list of supported preference
+     * strings can be found in BrowserWindow.
+     *
+     * The string follows the same format as the features string in `window.open`. A
+     * name by itself is given a `true` boolean value. A preference can be set to
+     * another value by including an `=`, followed by the value. Special values `yes`
+     * and `1` are interpreted as `true`, while `no` and `0` are interpreted as
+     * `false`.
+     *
+     * Security-critical preferences cannot be used to make the guest less secure than
+     * its embedder. When the embedder has any of `contextIsolation`, `javascript`,
+     * `nodeIntegration`, `nodeIntegrationInWorker`, `sandbox`,
+     * `nodeIntegrationInSubFrames` or `enableWebSQL` set to its more secure value, the
+     * guest inherits that value and the corresponding `webpreferences` entry is
+     * ignored.
+     */
+    var webpreferences: String
+
+    @web.events.JsEvent("load-commit")
+    val loadCommitEvent: web.events.EventInstance<LoadCommitEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-finish-load")
+    val didFinishLoadEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-fail-load")
+    val didFailLoadEvent: web.events.EventInstance<DidFailLoadEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-frame-finish-load")
+    val didFrameFinishLoadEvent: web.events.EventInstance<DidFrameFinishLoadEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-start-loading")
+    val didStartLoadingEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-stop-loading")
+    val didStopLoadingEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-attach")
+    val didAttachEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("dom-ready")
+    val domReadyEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("page-title-updated")
+    val pageTitleUpdatedEvent: web.events.EventInstance<PageTitleUpdatedEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("page-favicon-updated")
+    val pageFaviconUpdatedEvent: web.events.EventInstance<PageFaviconUpdatedEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("enter-html-full-screen")
+    val enterHtmlFullScreenEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("leave-html-full-screen")
+    val leaveHtmlFullScreenEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("console-message")
+    val consoleMessageEvent: web.events.EventInstance<ConsoleMessageEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("found-in-page")
+    val foundInPageEvent: web.events.EventInstance<FoundInPageEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("will-navigate")
+    val willNavigateEvent: web.events.EventInstance<WillNavigateEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("will-frame-navigate")
+    val willFrameNavigateEvent: web.events.EventInstance<WillFrameNavigateEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-start-navigation")
+    val didStartNavigationEvent: web.events.EventInstance<DidStartNavigationEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-redirect-navigation")
+    val didRedirectNavigationEvent: web.events.EventInstance<DidRedirectNavigationEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-navigate")
+    val didNavigateEvent: web.events.EventInstance<DidNavigateEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-frame-navigate")
+    val didFrameNavigateEvent: web.events.EventInstance<DidFrameNavigateEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-navigate-in-page")
+    val didNavigateInPageEvent: web.events.EventInstance<DidNavigateInPageEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("close")
+    val closeEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("ipc-message")
+    val ipcMessageEvent: web.events.EventInstance<IpcMessageEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("render-process-gone")
+    val renderProcessGoneEvent: web.events.EventInstance<RenderProcessGoneEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("destroyed")
+    val destroyedEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("media-started-playing")
+    val mediaStartedPlayingEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("media-paused")
+    val mediaPausedEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("did-change-theme-color")
+    val didChangeThemeColorEvent: web.events.EventInstance<DidChangeThemeColorEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("update-target-url")
+    val updateTargetUrlEvent: web.events.EventInstance<UpdateTargetUrlEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("devtools-open-url")
+    val devtoolsOpenUrlEvent: web.events.EventInstance<DevtoolsOpenUrlEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("devtools-search-query")
+    val devtoolsSearchQueryEvent: web.events.EventInstance<DevtoolsSearchQueryEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("devtools-opened")
+    val devtoolsOpenedEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("devtools-closed")
+    val devtoolsClosedEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+
+    @web.events.JsEvent("devtools-focused")
+    val devtoolsFocusedEvent: web.events.EventInstance<DOMEvent, WebviewTag, web.dom.Node>
+}

@@ -1,0 +1,21 @@
+// Automatically generated - do not modify!
+
+package node.inspector.runtime
+
+@kotlinx.js.JsPlainObject
+external interface AwaitPromiseParameterType {
+    /**
+     * Identifier of the promise.
+     */
+    var promiseObjectId: RemoteObjectId
+
+    /**
+     * Whether the result is expected to be a JSON object that should be sent by value.
+     */
+    var returnByValue: Boolean?
+
+    /**
+     * Whether preview should be generated for the result.
+     */
+    var generatePreview: Boolean?
+}

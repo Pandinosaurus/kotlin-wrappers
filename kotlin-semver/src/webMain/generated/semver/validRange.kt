@@ -1,0 +1,47 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("semver")
+
+package semver
+
+/**
+ * Return the valid range or null if it's not valid
+ */
+external fun validRange(range: String?): String?
+
+/**
+ * Return the valid range or null if it's not valid
+ */
+external fun validRange(
+    range: String?,
+    optionsOrLoose: Boolean = definedExternally,
+): String?
+
+/**
+ * Return the valid range or null if it's not valid
+ */
+external fun validRange(
+    range: String?,
+    optionsOrLoose: RangeOptions = definedExternally,
+): String?
+
+/**
+ * Return the valid range or null if it's not valid
+ */
+external fun validRange(range: Range?): String?
+
+/**
+ * Return the valid range or null if it's not valid
+ */
+external fun validRange(
+    range: Range?,
+    optionsOrLoose: Boolean = definedExternally,
+): String?
+
+/**
+ * Return the valid range or null if it's not valid
+ */
+external fun validRange(
+    range: Range?,
+    optionsOrLoose: RangeOptions = definedExternally,
+): String?

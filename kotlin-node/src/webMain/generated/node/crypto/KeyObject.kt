@@ -1,0 +1,136 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:crypto")
+
+package node.crypto
+
+import node.buffer.NonSharedBuffer
+
+/**
+ * Node.js uses a `KeyObject` class to represent a symmetric or asymmetric key,
+ * and each kind of key exposes different functions. The {@link createSecretKey}, {@link createPublicKey} and {@link createPrivateKey} methods are used to create `KeyObject`instances. `KeyObject`
+ * objects are not to be created directly using the `new`keyword.
+ *
+ * Most applications should consider using the new `KeyObject` API instead of
+ * passing keys as strings or `Buffer`s due to improved security features.
+ *
+ * `KeyObject` instances can be passed to other threads via `postMessage()`.
+ * The receiver obtains a cloned `KeyObject`, and the `KeyObject` does not need to
+ * be listed in the `transferList` argument.
+ * @since v11.6.0
+ */
+external class KeyObject {
+    /**
+     * For asymmetric keys, this property represents the type of the key. See the
+     * supported [asymmetric key types](https://nodejs.org/docs/latest-v24.x/api/crypto.html#asymmetric-key-types).
+     *
+     * This property is `undefined` for unrecognized `KeyObject` types and symmetric
+     * keys.
+     * @since v11.6.0
+     */
+    var asymmetricKeyType: KeyType?
+
+    /**
+     * This property exists only on asymmetric keys. Depending on the type of the key,
+     * this object contains information about the key. None of the information obtained
+     * through this property can be used to uniquely identify a key or to compromise
+     * the security of the key.
+     *
+     * For RSA-PSS keys, if the key material contains a `RSASSA-PSS-params` sequence,
+     * the `hashAlgorithm`, `mgf1HashAlgorithm`, and `saltLength` properties will be
+     * set.
+     *
+     * Other key details might be exposed via this API using additional attributes.
+     * @since v15.7.0
+     */
+    var asymmetricKeyDetails: AsymmetricKeyDetails?
+
+    fun export(options: KeyExportOptions<KeyFormat.der> = definedExternally): NonSharedBuffer
+
+    fun export(options: JwkKeyExportOptions = definedExternally): JsonWebKey
+
+    /**
+     * Returns `true` or `false` depending on whether the keys have exactly the same
+     * type, value, and parameters. This method is not [constant time](https://en.wikipedia.org/wiki/Timing_attack).
+     * @since v17.7.0, v16.15.0
+     * @param otherKeyObject A `KeyObject` with which to compare `keyObject`.
+     */
+    fun equals(otherKeyObject: KeyObject): Boolean
+
+    /**
+     * For secret keys, this property represents the size of the key in bytes. This
+     * property is `undefined` for asymmetric keys.
+     * @since v11.6.0
+     */
+    var symmetricKeySize: Double?
+
+    /**
+     * Converts a `KeyObject` instance to a `CryptoKey`.
+     * @since 22.10.0
+     */
+    fun toCryptoKey(
+        algorithm: web.crypto.AlgorithmIdentifier,
+        extractable: Boolean,
+        keyUsages: js.array.ReadonlyArray<web.crypto.KeyUsage>,
+    ): web.crypto.CryptoKey
+
+    /**
+     * Converts a `KeyObject` instance to a `CryptoKey`.
+     * @since 22.10.0
+     */
+    fun toCryptoKey(
+        algorithm: web.crypto.RsaHashedImportParams,
+        extractable: Boolean,
+        keyUsages: js.array.ReadonlyArray<web.crypto.KeyUsage>,
+    ): web.crypto.CryptoKey
+
+    /**
+     * Converts a `KeyObject` instance to a `CryptoKey`.
+     * @since 22.10.0
+     */
+    fun toCryptoKey(
+        algorithm: web.crypto.EcKeyImportParams,
+        extractable: Boolean,
+        keyUsages: js.array.ReadonlyArray<web.crypto.KeyUsage>,
+    ): web.crypto.CryptoKey
+
+    /**
+     * Converts a `KeyObject` instance to a `CryptoKey`.
+     * @since 22.10.0
+     */
+    fun toCryptoKey(
+        algorithm: web.crypto.HmacImportParams,
+        extractable: Boolean,
+        keyUsages: js.array.ReadonlyArray<web.crypto.KeyUsage>,
+    ): web.crypto.CryptoKey
+
+    /**
+     * Depending on the type of this `KeyObject`, this property is either`'secret'` for secret (symmetric) keys, `'public'` for public (asymmetric) keys
+     * or `'private'` for private (asymmetric) keys.
+     * @since v11.6.0
+     */
+    var type: KeyObjectType
+
+    companion object {
+        /**
+         * Example: Converting a `CryptoKey` instance to a `KeyObject`:
+         *
+         * ```js
+         * const { KeyObject } = await import('node:crypto');
+         * const { subtle } = globalThis.crypto;
+         *
+         * const key = await subtle.generateKey({
+         *   name: 'HMAC',
+         *   hash: 'SHA-256',
+         *   length: 256,
+         * }, true, ['sign', 'verify']);
+         *
+         * const keyObject = KeyObject.from(key);
+         * console.log(keyObject.symmetricKeySize);
+         * // Prints: 32 (symmetric key size in bytes)
+         * ```
+         * @since v15.0.0
+         */
+        fun from(key: web.crypto.CryptoKey): KeyObject
+    }
+}

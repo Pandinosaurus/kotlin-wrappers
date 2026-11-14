@@ -1,0 +1,29 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("vscode")
+
+package vscode
+
+/**
+ * Specifies the location where a [QuickInputButton] should be rendered.
+ *
+ * [Online Documentation](https://code.visualstudio.com/api/references/vscode-api#QuickInputButtonLocation)
+ */
+/* enum */
+external class QuickInputButtonLocation
+private constructor() {
+    /**
+     * The button is rendered in the title bar.
+     */
+    val Title: QuickInputButtonLocation // 1
+
+    /**
+     * The button is rendered inline to the right of the input box.
+     */
+    val Inline: QuickInputButtonLocation // 2
+
+    /**
+     * The button is rendered at the far end inside the input box.
+     */
+    val Input: QuickInputButtonLocation // 3
+}

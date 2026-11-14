@@ -1,0 +1,45 @@
+// Automatically generated - do not modify!
+
+package vscode
+
+import js.array.ReadonlyArray
+import kotlinx.js.JsPlainObject
+
+/**
+ * Provides additional metadata about how a [DocumentPasteEditProvider] works.
+ *
+ * [Online Documentation](https://code.visualstudio.com/api/references/vscode-api#DocumentPasteProviderMetadata)
+ */
+@JsPlainObject
+external interface DocumentPasteProviderMetadata {
+    /**
+     * List of [kinds][DocumentDropOrPasteEditKind] that the provider may return in [provideDocumentPasteEdits][DocumentPasteEditProvider.provideDocumentPasteEdits].
+     *
+     * This is used to filter out providers when a specific [kind][DocumentDropOrPasteEditKind] of edit is requested.
+     *
+     * [Online Documentation](https://code.visualstudio.com/api/references/vscode-api#DocumentPasteProviderMetadata.providedPasteEditKinds)
+     */
+    val providedPasteEditKinds: ReadonlyArray<DocumentDropOrPasteEditKind>
+
+    /**
+     * Mime types that [prepareDocumentPaste][DocumentPasteEditProvider.prepareDocumentPaste] may add on copy.
+     *
+     * [Online Documentation](https://code.visualstudio.com/api/references/vscode-api#DocumentPasteProviderMetadata.copyMimeTypes)
+     */
+    val copyMimeTypes: ReadonlyArray<JsString>?
+
+    /**
+     * Mime types that [provideDocumentPasteEdits][DocumentPasteEditProvider.provideDocumentPasteEdits] should be invoked for.
+     *
+     * This can either be an exact mime type such as `image/png`, or a wildcard pattern such as `image/​*`.
+     *
+     * Use `text/uri-list` for resources dropped from the explorer or other tree views in the workbench.
+     *
+     * Use `files` to indicate that the provider should be invoked if any [files][DataTransferFile] are present in the [DataTransfer].
+     * Note that [DataTransferFile] entries are only created when pasting content from outside the editor, such as
+     * from the operating system.
+     *
+     * [Online Documentation](https://code.visualstudio.com/api/references/vscode-api#DocumentPasteProviderMetadata.pasteMimeTypes)
+     */
+    val pasteMimeTypes: ReadonlyArray<JsString>?
+}

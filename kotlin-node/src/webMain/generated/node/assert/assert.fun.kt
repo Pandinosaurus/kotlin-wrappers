@@ -1,0 +1,32 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:assert/strict")
+
+package node.assert
+
+/**
+ * An alias of {@link assert.ok}.
+ * @since v0.5.9
+ * @param value The input that is checked for being truthy.
+ */
+@JsName("default")
+external fun assert(value: Any?) /* asserts value */
+
+/**
+ * An alias of {@link assert.ok}.
+ * @since v0.5.9
+ * @param value The input that is checked for being truthy.
+ */
+@JsName("default")
+external fun assert(value: Any?, message: String = definedExternally) /* asserts value */
+
+/**
+ * An alias of {@link assert.ok}.
+ * @since v0.5.9
+ * @param value The input that is checked for being truthy.
+ */
+@JsName("default")
+external fun assert(
+    value: Any?,
+    message: js.errors.JsError = definedExternally,
+) /* asserts value */

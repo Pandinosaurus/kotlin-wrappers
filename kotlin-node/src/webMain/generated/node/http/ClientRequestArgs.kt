@@ -1,0 +1,47 @@
+// Automatically generated - do not modify!
+
+package node.http
+
+import node.dns.LookupOptions
+import node.net.LookupFunction
+
+@kotlinx.js.JsPlainObject
+external interface ClientRequestArgs : LookupOptions {
+    var _defaultAgent: Agent?
+    var agent: Any? /* Agent | boolean | undefined */
+    var auth: String?
+    var createConnection: (
+        (
+        options: ClientRequestArgs,
+        oncreate: (err: js.errors.JsError?, socket: node.stream.Duplex) -> Unit,
+    ) -> node.stream.Duplex?
+    )?
+    var defaultPort: Any?
+
+    /* number | string | undefined */
+    @Suppress("VAR_TYPE_MISMATCH_ON_OVERRIDE")
+    override var family: Double?
+    var headers: Any? /* OutgoingHttpHeaders | readonly string[] | undefined */
+    var host: String?
+    var hostname: String?
+    var insecureHTTPParser: Boolean?
+    var localAddress: String?
+    var localPort: Double?
+    var lookup: LookupFunction?
+
+    /**
+     * @default 16384
+     */
+    var maxHeaderSize: Double?
+    var method: String?
+    var path: String?
+    var port: Any? /* number | string | null | undefined */
+    var protocol: String?
+    var setDefaultHeaders: Boolean?
+    var setHost: Boolean?
+    var signal: web.abort.AbortSignal?
+    var socketPath: String?
+    var timeout: Double?
+    var uniqueHeaders: js.array.ReadonlyArray<Any /* string | string[] */>?
+    var joinDuplicateHeaders: Boolean?
+}

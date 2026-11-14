@@ -1,0 +1,31 @@
+package wrappersgenerator.typescript.nameResolvers
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.Context
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import js.reflect.invoke
+import typescript.*
+
+suspend fun resolveInterfaceMethodReturnTypeNullableUnionName(node: Node, context: Context) = nullable {
+    val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+
+    val union = ensureNotNull(typeScriptService.getParent(node))
+    ensure(isUnionTypeNode(union))
+    ensure(union.types.size > 1)
+
+    val unionSecondType = union.types[1]
+    ensure(unionSecondType.kind == SyntaxKind.UndefinedKeyword)
+
+    val method = ensureNotNull(typeScriptService.getParent(union))
+    ensure(isMethodSignature(method))
+
+    val methodNameNode = method.name
+    ensure(isIdentifier(methodNameNode))
+    val methodName = methodNameNode.text
+
+    val interfaceNode = ensureNotNull(typeScriptService.getParent(method))
+    ensure(isInterfaceDeclaration(interfaceNode))
+    val parentName = interfaceNode.name.text
+
+    "${parentName.replaceFirstChar { it.titlecase() }}${methodName.replaceFirstChar { it.titlecase() }}Result"
+}

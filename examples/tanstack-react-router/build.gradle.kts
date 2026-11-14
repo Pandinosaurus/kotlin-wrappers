@@ -1,0 +1,13 @@
+plugins {
+    id("examplesbuild.kotlin-conventions")
+}
+
+kotlin {
+    sourceSets.webMain.dependencies {
+        implementation(kotlinWrappers.js)
+        implementation(kotlinWrappers.react)
+        implementation(kotlinWrappers.reactUse)
+        implementation(kotlinWrappers.reactDom)
+        implementation(kotlinWrappers.tanstack.reactRouter)
+    }
+}

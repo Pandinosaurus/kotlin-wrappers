@@ -1,0 +1,699 @@
+package karakum.browser
+
+import karakum.common.GENERATOR_COMMENT
+import karakum.common.Suppress.*
+import karakum.common.fileSuppress
+import karakum.common.writeCode
+import karakum.events.EventDataRegistry
+import java.io.File
+
+private val DEFAULT_IMPORTS = Imports(
+    "js.array.ArrayLike",
+    "js.array.ReadonlyArray",
+    "js.array.Tuple",
+    "js.array.Tuple2",
+    "js.buffer.AllowSharedBufferSource",
+    "js.buffer.ArrayBuffer",
+    "js.buffer.ArrayBufferLike",
+    "js.buffer.ArrayBufferView",
+    "js.buffer.BufferSource",
+    "js.closeable.JsCloseable",
+    "js.collections.AsyncMapLike",
+    "js.collections.JsSet",
+    "js.collections.ListLike",
+    "js.collections.MapLike",
+    "js.collections.MutableMapLike",
+    "js.collections.MutableSetLike",
+    "js.collections.ReadonlyMap",
+    "js.collections.ReadonlySet",
+    "js.collections.ReadonlySetLike",
+    "js.date.Date",
+    "js.disposable.internal.AsyncCloseableDisposable",
+    "js.errors.JsError",
+    "js.errors.JsErrorLike",
+    "js.errors.JsErrorName",
+    "js.function.ConstructorFunction",
+    "js.function.JsFunction",
+    "js.globals.GlobalScope",
+    "js.internal.InternalApi",
+    "js.intl.DateTimeFormatOptions",
+    "js.intl.Locale",
+    "js.intl.Localizable",
+    "js.intl.UnicodeBCP47LocaleIdentifier",
+    "js.iterable.AsyncIterable",
+    "js.iterable.AsyncIterator",
+    "js.iterable.JsIterable",
+    "js.iterable.JsIterator",
+    "js.numbers.BigInt",
+    "js.numbers.Bitmask",
+    "js.numbers.Int53",
+    "js.numbers.JsByte",
+    "js.numbers.JsDouble",
+    "js.numbers.JsFloat",
+    "js.numbers.JsFloat16",
+    "js.numbers.JsInt",
+    "js.numbers.JsInt53",
+    "js.numbers.JsNumbers.toKotlinInt",
+    "js.numbers.JsShort",
+    "js.numbers.JsUByte",
+    "js.numbers.JsUInt",
+    "js.numbers.JsUInt53",
+    "js.numbers.JsUShort",
+    "js.numbers.UInt53",
+    "js.objects.PropertyKey",
+    "js.objects.ReadonlyRecord",
+    "js.objects.Record",
+    "js.objects.unsafeJso",
+    "js.promise.Promise",
+    "js.promise.PromiseLike",
+    "js.promise.PromiseResult",
+    "js.promise.await",
+    "js.reflect.JsClass",
+    "js.reflect.JsExternalInheritorsOnly",
+    "js.reflect.unsafeCast",
+    "js.serialization.Serializable",
+    "js.serialization.Transferable",
+    "js.string.JsStrings.toKotlinString",
+    "js.temporal.Instant",
+    "js.temporal.PlainDate",
+    "js.temporal.PlainDateTime",
+    "js.temporal.PlainMonthDay",
+    "js.temporal.PlainTime",
+    "js.temporal.PlainYearMonth",
+    "js.typedarrays.BigInt64Array",
+    "js.typedarrays.Float32Array",
+    "js.typedarrays.Float64Array",
+    "js.typedarrays.Int32Array",
+    "js.typedarrays.TypedArray",
+    "js.typedarrays.Uint32Array",
+    "js.typedarrays.Uint8Array",
+    "js.typedarrays.Uint8ClampedArray",
+    "js.union.JsUnion",
+    "js.void.Void",
+
+    "kotlinx.js.JsPlainObject",
+
+    "web.abort.AbortController",
+    "web.abort.AbortSignal",
+    "web.abort.Abortable",
+    "web.abort.AbortableLike",
+    "web.abort.unsafeAbortable",
+    "web.animations.Animatable",
+    "web.animations.Animation",
+    "web.animations.DocumentTimeline",
+    "web.animations.Keyframe",
+    "web.animations.KeyframeAnimationOptions",
+    "web.animations.PropertyIndexedKeyframes",
+    "web.aria.ARIAMixin",
+    "web.aria.ARIANotifyMixin",
+    "web.autofill.AutoFill",
+    "web.autofill.AutoFillBase",
+    "web.badging.NavigatorBadge",
+    "web.blob.Blob",
+    "web.blob.BlobPart",
+    "web.blob.BlobPropertyBag",
+    "web.bluetooth.BluetoothServiceUUID",
+    "web.buffer.BinaryType",
+    "web.canvas.CanvasImageSource",
+    "web.canvas.CanvasRenderingContext2D",
+    "web.canvas.OffscreenCanvas",
+    "web.canvas.OffscreenCanvasRenderingContext2D",
+    "web.codecs.EncodedVideoChunkType",
+    "web.codecs.VideoFrame",
+    "web.command.Command",
+    "web.command.CommandEvent",
+    "web.components.CustomElementCallbacks",
+    "web.components.CustomElementRegistry",
+    "web.components.ElementInternals",
+    "web.components.HTMLSlotElement",
+    "web.components.HTMLTemplateElement",
+    "web.components.ShadowRoot",
+    "web.components.ShadowRootInit",
+    "web.components.Slottable",
+    "web.cookie.CookieStore",
+    "web.cookie.CookieStoreManager",
+    "web.cookie.ExtendableCookieChangeEvent",
+    "web.coroutines.await",
+    "web.credentials.Credential",
+    "web.crypto.Algorithm",
+    "web.csp.SecurityPolicyViolationEventDisposition",
+    "web.cssom.CSSAnimation",
+    "web.cssom.CSSNumberish",
+    "web.cssom.CSSNumericValue",
+    "web.cssom.CSSStyleDeclaration",
+    "web.cssom.CSSStyleProperties",
+    "web.cssom.CSSStyleSheet",
+    "web.cssom.ClassName",
+    "web.cssom.ElementCSSInlineStyle",
+    "web.cssom.LinkStyle",
+    "web.cssom.MediaQuery",
+    "web.cssom.StylePropertyMapReadOnly",
+    "web.data.DataTransfer",
+    "web.dnd.DragEvent",
+    "web.dom.DOMStringList",
+    "web.dom.DOMTokenList",
+    "web.dom.Document",
+    "web.dom.DocumentFragment",
+    "web.dom.DocumentOrShadowRoot",
+    "web.dom.DocumentVisibilityState",
+    "web.dom.Element",
+    "web.dom.ElementId",
+    "web.dom.GetHTMLOptions",
+    "web.dom.HTMLOrSVGImageElement",
+    "web.dom.HTMLOrSVGOrMathMLElement",
+    "web.dom.HTMLOrSVGScriptElement",
+    "web.dom.Node",
+    "web.dom.NodeList",
+    "web.dom.ParentNode",
+    "web.dom.TagName",
+    "web.dom.TagNamespace",
+    "web.dom.Text",
+    "web.dpip.DocumentPictureInPicture",
+    "web.editcontext.EditContext",
+    "web.errors.DOMException",
+    "web.errors.DOMExceptionType.IndexSizeError",
+    "web.errors.DOMExceptionType.HierarchyRequestError",
+    "web.errors.DOMExceptionType.WrongDocumentError",
+    "web.errors.DOMExceptionType.InvalidCharacterError",
+    "web.errors.DOMExceptionType.NoModificationAllowedError",
+    "web.errors.DOMExceptionType.NotFoundError",
+    "web.errors.DOMExceptionType.NotSupportedError",
+    "web.errors.DOMExceptionType.InUseAttributeError",
+    "web.errors.DOMExceptionType.InvalidStateError",
+    "web.errors.DOMExceptionType.SyntaxError",
+    "web.errors.DOMExceptionType.InvalidModificationError",
+    "web.errors.DOMExceptionType.NamespaceError",
+    "web.errors.DOMExceptionType.InvalidAccessError",
+    "web.errors.DOMExceptionType.SecurityError",
+    "web.errors.DOMExceptionType.NetworkError",
+    "web.errors.DOMExceptionType.AbortError",
+    "web.errors.DOMExceptionType.URLMismatchError",
+    "web.errors.DOMExceptionType.TimeoutError",
+    "web.errors.DOMExceptionType.InvalidNodeTypeError",
+    "web.errors.DOMExceptionType.DataCloneError",
+    "web.errors.DOMExceptionType.EncodingError",
+    "web.errors.DOMExceptionType.NotReadableError",
+    "web.errors.DOMExceptionType.UnknownError",
+    "web.errors.DOMExceptionType.ConstraintError",
+    "web.errors.DOMExceptionType.DataError",
+    "web.errors.DOMExceptionType.TransactionInactiveError",
+    "web.errors.DOMExceptionType.ReadOnlyError",
+    "web.errors.DOMExceptionType.VersionError",
+    "web.errors.DOMExceptionType.OperationError",
+    "web.errors.DOMExceptionType.NotAllowedError",
+    "web.errors.ErrorEvent",
+    "web.errors.JsThrows",
+    "web.errors.QuotaExceededError",
+    "web.events.AddEventListenerOptions",
+    "web.events.Event",
+    "web.events.EventHandler",
+    "web.events.EventInit",
+    "web.events.EventInstance",
+    "web.events.EventTarget",
+    "web.events.EventTargetLike",
+    "web.events.EventType",
+    "web.events.ProgressEvent",
+    "web.experimental.ExperimentalWebApi",
+    "web.fedcm.NavigatorLogin",
+    "web.file.File",
+    "web.file.FileList",
+    "web.focus.FocusEvent",
+    "web.form.FormControl",
+    "web.form.FormData",
+    "web.form.FormDataEvent",
+    "web.form.FormEncType",
+    "web.form.FormMethod",
+    "web.form.SubmitEvent",
+    "web.fs.FileSystemDirectoryHandle",
+    "web.fs.FileSystemEntry",
+    "web.fullscreen.FullscreenOptions",
+    "web.function.VoidFunction",
+    "web.gamepad.Gamepad",
+    "web.geometry.DOMMatrix",
+    "web.geometry.DOMMatrixReadOnly",
+    "web.geometry.DOMPoint",
+    "web.geometry.DOMPointReadOnly",
+    "web.geometry.DOMRect",
+    "web.geometry.DOMRectList",
+    "web.geometry.DOMRectReadOnly",
+    "web.gl.GLenum",
+    "web.gl.TexImageSource",
+    "web.gl.WebGL2RenderingContext",
+    "web.gl.WebGLFramebuffer",
+    "web.gl.WebGLRenderingContext",
+    "web.gl.WebGLTexture",
+    "web.globals.GlobalEventHandlers",
+    "web.gpu.GPUCanvasContext",
+    "web.gpu.GPUCopyExternalImageSource",
+    "web.gpu.NavigatorGPU",
+    "web.highlight.HighlightRegistry",
+    "web.html.HTMLCanvasElement",
+    "web.html.HTMLCollection",
+    "web.html.HTMLElement",
+    "web.html.HTMLFormElement",
+    "web.html.HTMLImageElement",
+    "web.html.HTMLLabelElement",
+    "web.html.HTMLMediaElement",
+    "web.html.HTMLScriptElement",
+    "web.html.HTMLVideoElement",
+    "web.html.HtmlSource",
+    "web.html.HyperlinkElementUtils",
+    "web.html.MediaProvider",
+    "web.html.SetHTMLUnsafeOptions",
+    "web.http.BodyInit",
+    "web.http.CrossOrigin",
+    "web.http.FetchPriority",
+    "web.http.Headers",
+    "web.http.ReferrerPolicy",
+    "web.http.Request",
+    "web.http.RequestCredentials",
+    "web.http.RequestMethod",
+    "web.http.Response",
+    "web.images.ColorSpaceConversion",
+    "web.images.ImageBitmap",
+    "web.images.ImageBitmapRenderingContext",
+    "web.images.ImageBitmapSource",
+    "web.images.ImageData",
+    "web.images.ImageDataSettings",
+    "web.images.PredefinedColorSpace",
+    "web.input.CompositionEvent",
+    "web.input.InputEvent",
+    "web.keyboard.KeyCode",
+    "web.keyboard.Keyboard",
+    "web.keyboard.KeyboardEvent",
+    "web.keyboard.ModifierKeyCode",
+    "web.location.Location",
+    "web.locks.NavigatorLocks",
+    "web.mathml.MathMLElement",
+    "web.mcp.ModelContext",
+    "web.mediacapabilities.MediaCapabilities",
+    "web.mediaencrypted.MediaEncryptedEvent",
+    "web.mediaencrypted.MediaKeySystemAccess",
+    "web.mediaencrypted.MediaKeys",
+    "web.mediaencrypted.MediaKeysRequirement",
+    "web.mediasession.MediaSession",
+    "web.mediasource.TimeRanges",
+    "web.mediastreams.MediaStream",
+    "web.mediastreams.MediaStreamConstraints",
+    "web.mediastreams.MediaStreamTrack",
+    "web.mediastreams.MediaTrackCapabilities",
+    "web.mediastreams.MediaTrackConstraints",
+    "web.mediastreams.MediaTrackSupportedConstraints",
+    "web.mediastreams.OverconstrainedError",
+    "web.messaging.MessageEvent",
+    "web.messaging.MessageEventSource",
+    "web.messaging.MessageEventTarget",
+    "web.messaging.MessagePort",
+    "web.mouse.MouseEvent",
+    "web.mouse.MouseEventInit",
+    "web.mouse.WheelEvent",
+    "web.navigation.NavigationActivation",
+    "web.notifications.Notification",
+    "web.notifications.NotificationOptions",
+    "web.observable.Observable",
+    "web.origin.OriginSource",
+    "web.permissions.PermissionState",
+    "web.permissions.Permissions",
+    "web.pip.PictureInPictureEvent",
+    "web.pip.PictureInPictureWindow",
+    "web.pointer.PointerEvent",
+    "web.popover.Popover",
+    "web.popover.PopoverTargetAttributes",
+    "web.popover.ShowPopoverOptions",
+    "web.popover.ToggleEvent",
+    "web.popover.TogglePopoverOptions",
+    "web.presentation.Presentation",
+    "web.push.PushManager",
+    "web.push.PushManagerAttribute",
+    "web.push.PushSubscriptionChangeEvent",
+    "web.ranges.AbstractRange",
+    "web.ranges.Range",
+    "web.ranges.StaticRange",
+    "web.remoteplayback.RemotePlayback",
+    "web.rendering.OffscreenRenderingContext",
+    "web.rendering.RenderingContext",
+    "web.rendering.RenderingContextId",
+    "web.scroll.ScrollIntoViewOptions",
+    "web.scroll.ScrollToOptions",
+    "web.selection.Selection",
+    "web.selection.SelectionDirection",
+    "web.serial.Serial",
+    "web.serialization.StructuredSerializeOptions",
+    "web.serviceworker.ExtendableEvent",
+    "web.serviceworker.ExtendableEventInit",
+    "web.serviceworker.ServiceWorkerContainer",
+    "web.share.ShareData",
+    "web.storage.NavigatorStorage",
+    "web.streams.GenericTransformStream",
+    "web.streams.ReadableStream",
+    "web.streams.WritableStream",
+    "web.svg.SVGElement",
+    "web.svg.SVGImageElement",
+    "web.svg.SVGScriptElement",
+    "web.time.DOMHighResTimeStamp",
+    "web.time.EpochTimeStamp",
+    "web.touch.TouchEvent",
+    "web.trustedtypes.TrustedHTML",
+    "web.trustedtypes.TrustedScriptURL",
+    "web.uievents.EventModifierInit",
+    "web.uievents.UIEvent",
+    "web.uievents.UIEventInit",
+    "web.url.FragmentDirective",
+    "web.url.URL",
+    "web.url.URLLike",
+    "web.url.URLSearchParams",
+    "web.url.URLSource",
+    "web.usb.USB",
+    "web.validation.ValidationTarget",
+    "web.validation.ValidityState",
+    "web.validation.ValidityStateFlags",
+    "web.vibration.VibratePattern",
+    "web.viewtransition.PageRevealEvent",
+    "web.viewtransition.PageSwapEvent",
+    "web.viewtransition.StartViewTransitionOptions",
+    "web.viewtransition.ViewTransition",
+    "web.viewtransition.ViewTransitionUpdateCallback",
+    "web.vtt.TextTrack",
+    "web.vtt.TextTrackKind",
+    "web.vtt.TextTrackList",
+    "web.window.Window",
+    "web.window.WindowEventHandlers",
+    "web.window.WindowName",
+    "web.window.WindowProxy",
+    "web.window.WindowTarget",
+    "web.workers.AbstractWorker",
+    "web.workers.Worker",
+    "web.workers.WorkerType",
+    "web.worklets.Worklet",
+    "web.worklets.WorkletGlobalScope",
+    "web.xml.XMLDocument",
+    "web.xr.XRSessionEvent",
+    "web.xr.XRSystem",
+
+    // overrides
+    "web.aria.AriaNotificationOptions",
+    "web.cssom.StylePropertyMap",
+    "web.cssom.StyleSheetList",
+    "web.fonts.FontFaceSet",
+    "web.xpath.XPathExpression",
+    "web.xpath.XPathNSResolver",
+    "web.xpath.XPathResult",
+)
+
+private fun File.parts(): Pair<String, String> {
+    val parts = readText()
+        .split("\n/////////////////////////////\n")
+    return parts[2] to parts[4]
+}
+
+fun generateKotlinDeclarations(
+    idlDir: File,
+    eventsSourceFile: File,
+    definitionsDir: File,
+    webDefinitionsFile: File,
+    webworkerDefinitionsFile: File,
+    serviceworkerDefinitionsFile: File,
+    audioWorkletDefinitionsFile: File,
+    webXrDefinitionsFile: File,
+    mdnContentDir: File,
+    sourceDir: File,
+) {
+    IDLRegistry.rootDirectory = idlDir
+    EventDataRegistry.sourceFile = eventsSourceFile
+    MDN.root = mdnContentDir
+
+    val webDefinitionsParts = webDefinitionsFile.parts()
+    val webworkerDefinitionsParts = webworkerDefinitionsFile.parts()
+    val serviceworkerDefinitionsParts = serviceworkerDefinitionsFile.parts()
+    val audioWorkletDefinitionsParts = audioWorkletDefinitionsFile.parts()
+    val webXrContent = webXrContent(webXrDefinitionsFile.readText())
+
+    IterableRegistry.fill(
+        definitionsDir,
+        webDefinitionsParts.second,
+        webworkerDefinitionsParts.second,
+        serviceworkerDefinitionsParts.second,
+    )
+
+    val webDefinitionsContent = webDefinitionsParts.first
+        .withTrustedTypes()
+
+    RenderingContextRegistry.fill(webDefinitionsContent)
+
+    val content = webDefinitionsContent.applyPatches()
+
+    MarkerRegistry.fill(content)
+
+    val webWorkerContent = webWorkerContent(webworkerDefinitionsParts.first)
+    val serviceWorkerContent = serviceWorkerContent(serviceworkerDefinitionsParts.first)
+    val (mainEventDeclarations, knownEventTypes) = eventDeclarations(
+        content + "\n\n" + webXrContent,
+        webWorkerContent,
+        serviceWorkerContent,
+    )
+    val eventDeclarations = mainEventDeclarations.asSequence()
+        .withFinalSecurityMembers()
+        .plus(webWorkersEventDeclarations(webWorkerContent))
+        .plus(serviceWorkersEventDeclarations(content, serviceWorkerContent))
+        .toList()
+
+    for ((name, body, optPkg) in eventDeclarations) {
+        val pkg = optPkg ?: EVENT_INFO_MAP.getValue(name.substringBefore("."))
+            .fqn
+            .substringBeforeLast(".")
+
+        val targetDir = sourceDir
+            .resolve(pkg.replace(".", "/"))
+            .also { it.mkdirs() }
+
+        targetDir.resolve("$name.kt")
+            .also { check(!it.exists()) { "Duplicated file: ${it.name}" } }
+            .writeCode(fileContent(body = body, pkg = pkg))
+    }
+
+    val aliases = listOf<ConversionResult>()
+        .plus(htmlFactories(content))
+        .plus(htmlDeclarations(content))
+        .plus(domExceptionTypes())
+        .plus(htmlUnions())
+        .plus(jsUnions())
+        .plus(browserConstants(content))
+        .plus(browserTypes(content))
+        .plus(browserFunctions(content))
+        .plus(browserFunctionTypes(content))
+        .plus(cssObject(content))
+        .plus(keyboardTypes())
+        .plus(mouseButtonTypes())
+        .plus(windowTypes())
+        .plus(tagNames(content))
+        .plus(decoratorsDeclarations(definitionsDir))
+        .plus(dateDeclarations(definitionsDir))
+        .plus(intlDeclarations(definitionsDir))
+        .plus(typedArraysDeclarations())
+        .plus(atomicsDeclarations(definitionsDir))
+        .plus(webAssemblyDeclarations(content))
+        .plus(webWorkersDeclarations(webworkerDefinitionsParts.first))
+        .plus(serviceWorkersDeclarations(serviceworkerDefinitionsParts.first))
+        .plus(workerFunctions(serviceWorkerContent))
+        .plus(audioWorkletDeclarations(audioWorkletDefinitionsParts.first))
+        .plus(webXrDeclarations(webXrContent))
+        .plus(webglDeclarations(content))
+        .withEventInstances(knownEventTypes)
+        .withMixinOverrides()
+
+    for ((name, body, pkg) in aliases) {
+        pkg!!
+
+        val suppresses = buildList {
+            if (name == "Locale")
+                add(VIRTUAL_MEMBER_HIDDEN)
+
+            if (Mixins.isUnsafeMixin(name, body) || name == LOCALIZABLE)
+                add(NON_ABSTRACT_MEMBER_OF_EXTERNAL_INTERFACE)
+
+            if (name == "ChildNode" || name == "ParentNode")
+                add(INTERFACE_WITH_SUPERCLASS)
+        }
+
+        val annotations = fileSuppress(suppresses)
+
+        val imports = when (name) {
+            "setInterval",
+            "setTimeout",
+                -> """
+            import kotlin.time.Duration
+            import kotlin.time.DurationUnit.MILLISECONDS
+            """.trimIndent()
+
+            "Navigator" -> """
+            import web.mediadevices.MediaDevices
+            import web.mediaencrypted.MediaKeySystemAccess
+            import web.mediaencrypted.MediaKeySystemConfiguration
+            import web.clipboard.Clipboard
+            import web.credentials.CredentialsContainer
+            import web.geolocation.Geolocation
+            import web.gamepad.Gamepad
+            import web.midi.MIDIOptions
+            import web.midi.MIDIAccess
+            import web.useractivation.UserActivation
+            import web.wakelock.WakeLock
+            """.trimIndent()
+
+            "CredentialCreationOptions",
+            "CredentialRequestOptions",
+                -> """
+            import web.authn.PublicKeyCredentialCreationOptions
+            import web.authn.PublicKeyCredentialRequestOptions
+            """.trimIndent()
+
+            "GlobalEventHandlers",
+            "WindowEventHandlers",
+            "FileReader",
+                -> """
+            import web.cssom.TransitionEvent
+            import web.animations.AnimationEvent
+            import web.clipboard.ClipboardEvent
+            import web.csp.SecurityPolicyViolationEvent
+            import web.gamepad.GamepadEvent
+            import web.history.HashChangeEvent
+            import web.history.PageTransitionEvent
+            import web.history.PopStateEvent
+            import web.storage.StorageEvent
+            import web.promise.PromiseRejectionEvent
+            """.trimIndent()
+
+            "WorkerNavigator",
+                -> """
+            import web.navigator.*
+            """.trimIndent()
+
+            // TEMP
+            "Window",
+            "Document",
+            "DocumentOrShadowRoot",
+            "Text",
+            "Element",
+            "HTMLElement",
+            "SVGElement",
+            "OffscreenCanvas",
+            "HTMLCanvasElement",
+            "HTMLDetailsElement",
+            "HTMLMediaElement",
+            "HTMLFormElement",
+            "HTMLInputElement",
+            "HTMLSelectElement",
+            "HTMLTextAreaElement",
+            "HTMLTrackElement",
+            "HTMLButtonElement",
+            "MathMLElement",
+            "WorkerGlobalScope",
+            "ServiceWorkerGlobalScope",
+            "DedicatedWorkerGlobalScope",
+                -> """
+            import web.cssom.ContentVisibilityAutoStateChangeEvent
+            import web.cssom.TransitionEvent
+            import web.popover.ToggleEvent
+            import web.dom.*
+            import web.window.*
+            import web.animations.AnimationEvent
+            import web.gl.WebGLContextEvent
+            import web.clipboard.ClipboardEvent
+            import web.csp.SecurityPolicyViolationEvent
+            import web.device.DeviceMotionEvent
+            import web.device.DeviceOrientationEvent
+            import web.gamepad.GamepadEvent
+            import web.history.HashChangeEvent
+            import web.history.PageTransitionEvent
+            import web.history.PopStateEvent
+            import web.storage.StorageEvent
+            import web.promise.PromiseRejectionEvent
+            import web.push.PushEvent
+            import web.rtc.RTCTransformEvent
+            import web.cssom.StyleSheetList
+            import web.fonts.FontFaceSource
+            import web.html.*
+            import web.xpath.XPathEvaluatorBase
+            import web.workers.WorkerGlobalScope
+            """.trimIndent()
+
+            "VisualViewport.events",
+                -> """
+            import web.dom.*
+            """.trimIndent()
+
+            else -> ""
+        }
+
+        val targetDir = sourceDir
+            .resolve(pkg.replace(".", "/"))
+            .also { it.mkdirs() }
+
+        targetDir.resolve("$name.kt")
+            .also { check(!it.exists()) { "Duplicated file: ${it.name}" } }
+            .writeCode(
+                fileContent(
+                    annotations = annotations,
+                    imports = imports,
+                    body = toCommonBody(body),
+                    pkg = pkg,
+                ),
+            )
+    }
+}
+
+private fun toCommonBody(
+    body: String,
+): String =
+    body.replace("<String>", "<JsString>")
+        .replace("<String,", "<JsString,")
+        .replace(", String>", ", JsString>")
+        .replace(", String?>", ", JsString?>")
+        .replace("<Double>", "<JsDouble>")
+        .replace("<Double,", "<JsDouble,")
+        .replace(", Double>", ", JsDouble>")
+        .replace("<Double?>", "<JsDouble?>")
+        .replace("<Int>", "<JsInt>")
+        .replace("<Int,", "<JsInt,")
+        .replace(", Int>", ", JsInt>")
+        .replace("<Boolean>", "<JsBoolean>")
+        // Body
+        .replace("): Any?", "): JsAny?")
+        .replace(
+            "override fun get(key: String): String?",
+            "override fun get(key: JsString): JsString?",
+        )
+        .replace(
+            "override fun has(key: String): Boolean",
+            "override fun has(key: JsString): Boolean",
+        )
+        .replace(
+            "override fun forEach(action: (item: String) -> Unit)",
+            "override fun forEach(action: (item: JsString) -> Unit)",
+        )
+        .replace(
+            "override fun forEach(action: (value: String, key: String) -> Unit)",
+            "override fun forEach(action: (value: JsString, key: JsString) -> Unit)",
+        )
+        .replace(
+            "override fun forEach(action: (value: FormDataEntryValue, key: String) -> Unit)",
+            "override fun forEach(action: (value: FormDataEntryValue, key: JsString) -> Unit)",
+        )
+
+private fun fileContent(
+    annotations: String = "",
+    imports: String = "",
+    body: String,
+    pkg: String,
+): String {
+    val result = sequenceOf(
+        "// $GENERATOR_COMMENT",
+        annotations,
+        "package $pkg",
+        DEFAULT_IMPORTS.forContent(annotations, body),
+        imports,
+        body,
+    ).filter { it.isNotEmpty() }
+        .joinToString("\n\n")
+
+    return result
+}

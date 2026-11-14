@@ -1,0 +1,8 @@
+// Automatically generated - do not modify!
+
+package typescript
+
+@kotlinx.js.JsPlainObject
+external interface OrganizeImportsArgs : CombinedCodeFixScope {
+    var mode: OrganizeImportsMode?
+}

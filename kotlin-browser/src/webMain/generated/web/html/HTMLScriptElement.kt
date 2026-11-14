@@ -1,0 +1,119 @@
+// Automatically generated - do not modify!
+
+package web.html
+
+import web.dom.DOMTokenList
+import web.dom.HTMLOrSVGScriptElement
+import web.http.CrossOrigin
+import web.http.FetchPriority
+import web.http.ReferrerPolicy
+
+/**
+ * HTML <script> elements expose the **`HTMLScriptElement`** interface, which provides special properties and methods for manipulating the behavior and execution of <script> elements (beyond the inherited HTMLElement interface).
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement)
+ */
+open external class HTMLScriptElement
+protected constructor() :
+    HTMLElement,
+    HTMLOrSVGScriptElement {
+    /**
+     * The **`async`** property of the HTMLScriptElement interface is a boolean value that controls how the script should be executed. For classic scripts, if the async property is set to true, the external script will be fetched in parallel to parsing and evaluated as soon as it is available. For module scripts, if the async property is set to true, the script and all their dependencies will be fetched in parallel to parsing and evaluated as soon as they are available.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/async)
+     */
+    open var async: Boolean
+
+    /**
+     * The read-only **`blocking`** property of the HTMLScriptElement returns a live DOMTokenList object containing the operations that should be blocked on the fetching of an external resource. It reflects the <script> element's blocking content attribute.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/blocking)
+     */
+    open val blocking: DOMTokenList<Blocking>
+
+    /**
+     * The **`crossOrigin`** property of the HTMLScriptElement interface reflects the Cross-Origin Resource Sharing settings for the script element. For classic scripts from other origins, this controls if full error information will be exposed. For module scripts, it controls the script itself and any script it imports. See CORS settings attributes for details.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/crossOrigin)
+     */
+    open var crossOrigin: CrossOrigin?
+
+    /**
+     * The **`defer`** property of the HTMLScriptElement interface is a boolean value that controls how the script should be executed. For classic scripts, if the defer property is set to true, the external script will be executed after the document has been parsed, but before firing DOMContentLoaded event. For module scripts, the defer property has no effect.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/defer)
+     */
+    open var defer: Boolean
+
+    /**
+     * The **`fetchPriority`** property of the HTMLScriptElement interface represents a hint to the browser indicating how it should prioritize fetching an external script relative to other external scripts. It reflects the <script> element's fetchpriority content attribute.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/fetchPriority)
+     */
+    open var fetchPriority: FetchPriority
+
+    /**
+     * The **`innerText`** property of the HTMLScriptElement interface represents the text content of the <script> element. It behaves in the same way as the textContent and text properties.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/innerText)
+     */
+    override var innerText: String
+
+    /**
+     * The **`integrity`** property of the HTMLScriptElement interface is a string that contains inline metadata that a browser can use to verify that a fetched resource has been delivered without unexpected manipulation.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/integrity)
+     */
+    open var integrity: String
+
+    /**
+     * The **`noModule`** property of the HTMLScriptElement interface is a boolean value that indicates whether the script should be executed in browsers that support ES modules. Practically, this can be used to serve fallback scripts to older browsers that do not support JavaScript modules.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/noModule)
+     */
+    open var noModule: Boolean
+
+    /**
+     * The **`referrerPolicy`** property of the HTMLScriptElement interface reflects the HTML referrerpolicy of the <script> element, which defines how the referrer is set when fetching the script and any scripts it imports.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/referrerPolicy)
+     */
+    open var referrerPolicy: ReferrerPolicy
+
+    /**
+     * The **`src`** property of the HTMLScriptElement interface is a string representing the URL of an external script; this can be used as an alternative to embedding a script directly within a document.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/src)
+     */
+    open var src: String
+
+    /**
+     * The **`text`** property of the HTMLScriptElement interface represents the inline text content of the <script> element. It behaves in the same way as the textContent and innerText property.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/text)
+     */
+    open var text: String
+
+    /**
+     * The **`textContent`** property of the HTMLScriptElement interface represents the inline text content of the <script> element. It behaves in the same way as the text and innerText properties.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/textContent)
+     */
+    override var textContent: String
+
+    /**
+     * The **`type`** property of the HTMLScriptElement interface is a string that reflects the type of the script.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/type)
+     */
+    open var type: String
+
+    companion object {
+        /**
+         * The **`supports()`** static method of the HTMLScriptElement interface provides a simple and consistent method to feature-detect what types of scripts are supported by the user agent.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLScriptElement/supports_static)
+         */
+        fun supports(type: String): Boolean
+    }
+}

@@ -1,0 +1,22 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is a boolean object, e.g. created
+ * by `new Boolean()`.
+ *
+ * ```js
+ * util.types.isBooleanObject(false);  // Returns false
+ * util.types.isBooleanObject(true);   // Returns false
+ * util.types.isBooleanObject(new Boolean(false)); // Returns true
+ * util.types.isBooleanObject(new Boolean(true));  // Returns true
+ * util.types.isBooleanObject(Boolean(false)); // Returns false
+ * util.types.isBooleanObject(Boolean(true));  // Returns false
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isBooleanObject")
+external fun isBooleanObjectRaw(value: Any?): Boolean /* object is Boolean */

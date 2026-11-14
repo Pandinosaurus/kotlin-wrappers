@@ -1,0 +1,201 @@
+package karakum.cesium
+
+import karakum.common.TYPED_ARRAYS
+
+internal const val JS_FUNCTION = "Function"
+
+private const val HTML_ELEMENT = "HTMLElement"
+private const val PROMISE = "Promise"
+
+private val CLASS_REGEX = Regex("""[\w\d]+""")
+private const val CALL_DELIMITER = "."
+
+private val WHITE_LIST = setOf(
+    "binarySearchComparator",
+    "createElevationBandMaterialBand",
+    "createElevationBandMaterialEntry",
+    "exportKmlModelCallback",
+    "mergeSortComparator",
+
+    "GeoJsonDataSource.describe",
+    "SingleTileImageryProvider.fromUrlOptions",
+)
+
+private val STANDARD_TYPE_MAP = mapOf(
+    "any" to "JsAny",
+    "object" to "JsAny",
+
+    "boolean" to "Boolean",
+    "number" to "Double",
+    "string" to "String",
+
+    "void" to "Unit",
+    "undefined" to "Void",
+
+    "Error" to "JsError",
+
+    JS_FUNCTION to "JsFunction<*, *>",
+    "TypedArray" to "TypedArray<*, *, *, *>",
+
+    "DataView" to "DataView<*>",
+    "any[] | Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array" to
+            "ReadonlyArray<JsAny>",
+    "Int8Array[] | Uint8Array[] | Int16Array[] | Uint16Array[] | Int32Array[] | Uint32Array[] | Float32Array[] | Float64Array[]" to
+            "ReadonlyArray<TypedArray<*, *, *, *>> /* Int8Array[] | Uint8Array[] | Int16Array[] | Uint16Array[] | Int32Array[] | Uint32Array[] | Float32Array[] | Float64Array[] */",
+
+    "CameraEventType | any[] | undefined" to "CameraEventType?",
+    "any[] | GeometryInstance" to "GeometryInstance",
+    "GeometryInstance[] | GeometryInstance" to "ReadonlyArray<GeometryInstance>",
+    "(Cartesian3 | undefined)[]" to "ReadonlyArray<Cartesian3?>",
+    "(Cartographic | undefined)[]" to "ReadonlyArray<Cartographic?>",
+
+    "Promise<HTMLImageElement | HTMLCanvasElement> | undefined" to "$PROMISE<$HTML_ELEMENT>?",
+    "Promise<ImageBitmap | HTMLImageElement> | undefined" to "$PROMISE<CanvasImageSource>?",
+    "HTMLCanvasElement | Promise<HTMLCanvasElement>" to "PromiseResult<HTMLCanvasElement>",
+    "HTMLImageElement | HTMLCanvasElement | Promise<HTMLImageElement | HTMLCanvasElement>" to "PromiseResult<$HTML_ELEMENT /* HTMLImageElement | HTMLCanvasElement */>",
+    "ArcGISTiledElevationTerrainProvider | Promise<ArcGISTiledElevationTerrainProvider>" to "PromiseResult<ArcGISTiledElevationTerrainProvider>",
+    "Promise<ImageryTypes | CompressedTextureBuffer> | undefined" to "$PROMISE<JsAny /* ImageryTypes | CompressedTextureBuffer */>?",
+    "boolean | Promise<boolean>" to "PromiseResult<Boolean>",
+    "Promise<void>" to "$PROMISE<Void>",
+    "undefined | Promise<void>" to "$PROMISE<Void>?",
+    "Cartesian2 | Cartesian3" to "Cartesian3",
+
+    "Entity | Entity.ConstructorOptions" to "Entity",
+    "HeadingPitchRollValues | DirectionUp" to "CameraOrientation",
+
+    "Resource | string" to "Resource",
+    "string | Resource" to "Resource",
+    "Credit | string" to "Credit",
+    "string | number" to "String",
+
+    "Property | string | undefined" to "Property?",
+    "Property | Cartesian3 | undefined" to "Property?",
+
+    "Element | string" to "Element",
+    "string | HTMLCanvasElement" to "HTMLCanvasElement",
+
+    "string | string[]" to "ReadonlyArray<String>",
+    "number | number[]" to "ReadonlyArray<Double>",
+    "number[] | Cartesian3[]" to "ReadonlyArray<Cartesian3 /* or number */>",
+    "number[] | TypedArray" to "ReadonlyArray<Double> /* | TypedArray */",
+    "number[] | Float32Array | Float64Array" to "ReadonlyArray<Double> /* | Float32Array | Float64Array */",
+    "(string | number | undefined)[]" to "ReadonlyArray<JsAny? /* string | number | undefined */>",
+    "Record<string, unknown>[]" to "ReadonlyArray<ReadonlyRecord<JsString, *>>",
+
+    "Event" to "DefaultEvent",
+    PACKABLE to "$PACKABLE<*>",
+    "CzmlDataSource.UpdaterFunction" to "UpdaterFunction",
+
+    """"default" | "low-power" | "high-performance"""" to "WebGLPowerPreference",
+
+    "Map<number_object>" to "ReadonlyMap<Int, JsAny>",
+
+    "BufferPrimitiveCollection<T>" to "BufferPrimitiveCollection<T>",
+    "BufferPrimitiveCollection<BufferPrimitive>" to "BufferPrimitiveCollection<*>",
+)
+
+internal fun kotlinType(
+    type: String,
+    name: String? = null,
+): String {
+    if (type in WHITE_LIST)
+        return type
+
+    if (type in TYPED_ARRAYS)
+        return "$type<*>"
+
+    if (type.startsWith("Event<")) {
+        val payloadType = type.removeSurrounding("Event<", ">")
+        return "Event<" + eventPayload(payloadType) + ">"
+    }
+
+    if (type.startsWith("Record<") && !type.endsWith("[]"))
+        return "Readonly$type"
+
+    if (type == "number") {
+        return if (isInteger(name)) "Int" else "Double"
+    }
+
+    if (type == JS_FUNCTION && name == "listener")
+        return "() -> Unit"
+
+    if (type == "any" && name == "orientation")
+        return "CameraOrientation"
+
+    STANDARD_TYPE_MAP[type]
+        ?.also { return it }
+
+    if (type.isClassLike())
+        return fixClassName(type)
+
+    if (type.endsWith(" | Function"))
+        return kotlinType(type.removeSuffix(" | Function"), name) + " /* | Function */"
+
+    if (type.endsWith(" | false"))
+        return kotlinType(type.removeSuffix(" | false"), name) + " /* | false */"
+
+    if (type.endsWith(" | undefined") && type.indexOf("|") == type.lastIndexOf("|"))
+        return kotlinType(type.removeSuffix(" | undefined"), name) + "?"
+
+    if (type.startsWith("undefined | "))
+        return kotlinType(type.removePrefix("undefined | "), name) + "?"
+
+    if (type.endsWith("[]") && "|" !in type)
+        return "ReadonlyArray<${kotlinType(type.removeSuffix("[]"))}>"
+
+    val promiseResult = type.removeSurrounding("Promise<", ">")
+    if (promiseResult != type)
+        return "$PROMISE<${kotlinType(promiseResult)}>"
+
+    val placeholder = when (type) {
+        "Uint16Array | Uint32Array",
+        "Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array",
+        "Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array",
+            -> "TypedArray<*, *, *, *>"
+
+        "Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array | number[] | Promise<Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array | number[]> | undefined",
+            -> "PromiseResult<TypedArray<*, *, *, *>>"
+
+        "number[] | Cartesian3[] | Quaternion[]",
+            -> "ReadonlyArray<JsAny>"
+
+        "Cartesian3[] | Quaternion[]",
+            -> "ReadonlyArray<JsAny>"
+
+        "string[] | number[]",
+            -> "ReadonlyArray<JsAny>"
+
+        else -> if (type.endsWith(" | undefined")) "JsAny?" else "JsAny"
+    }
+
+    return "$placeholder /* $type */"
+}
+
+private fun fixClassName(type: String): String =
+    if (CALL_DELIMITER in type) {
+        val (parent, alias) = type.split(CALL_DELIMITER)
+        parent + CALL_DELIMITER + applyCallbackFix(alias)
+    } else type
+
+private fun eventPayload(type: String): String {
+    if (type.isClassLike())
+        return fixClassName(type)
+
+    return when (type) {
+        "(arg0: this, arg1: RequestErrorEvent) => void",
+            -> "Tuple2<DataSource /* this */, RequestErrorEvent>"
+
+        "(arg0: this, arg1: boolean) => void",
+            -> "Tuple2<DataSource /* this */, JsBoolean>"
+
+        else -> TODO()
+    }
+}
+
+private fun String.isClassLike(): Boolean =
+    if (CALL_DELIMITER in this) {
+        val types = split(CALL_DELIMITER)
+        types.size == 2 && types[0].isClassLike() && applyCallbackFix(types[1]).isClassLike()
+    } else {
+        CLASS_REGEX.matches(this) && get(0) == get(0).uppercaseChar()
+    }

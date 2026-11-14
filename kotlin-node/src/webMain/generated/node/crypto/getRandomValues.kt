@@ -1,0 +1,14 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:crypto")
+
+package node.crypto
+
+/**
+ * A convenient alias for {@link webcrypto.getRandomValues}. This
+ * implementation is not compliant with the Web Crypto spec, to write
+ * web-compatible code use {@link webcrypto.getRandomValues} instead.
+ * @since v17.4.0
+ * @return Returns `typedArray`.
+ */
+external fun <T : js.buffer.BufferSource> getRandomValues(typedArray: T): T

@@ -1,0 +1,25 @@
+// Automatically generated - do not modify!
+
+package node.test
+
+@seskar.js.JsAsync
+external suspend fun suite(
+    name: String = definedExternally,
+    options: TestOptions = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.void.Void
+
+@seskar.js.JsAsync
+external suspend fun suite(
+    name: String = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.void.Void
+
+@seskar.js.JsAsync
+external suspend fun suite(
+    options: TestOptions = definedExternally,
+    fn: SuiteFn = definedExternally,
+): js.void.Void
+
+@seskar.js.JsAsync
+external suspend fun suite(fn: SuiteFn = definedExternally): js.void.Void

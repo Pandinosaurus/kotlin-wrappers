@@ -1,0 +1,55 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface PopupOptions {
+    /**
+     * Default is the focused window.
+     */
+    var window: BaseWindow?
+
+    /**
+     * Provide the relevant frame if you want certain OS-level features such as Writing
+     * Tools on macOS to function correctly. Typically, this should be `params.frame`
+     * from the `context-menu` event on a WebContents, or the `focusedFrame` property
+     * of a WebContents.
+     */
+    var frame: WebFrameMain?
+
+    /**
+     * Default is the current mouse cursor position. Must be declared if `y` is
+     * declared.
+     */
+    var x: Double?
+
+    /**
+     * Default is the current mouse cursor position. Must be declared if `x` is
+     * declared.
+     */
+    var y: Double?
+
+    /**
+     * The index of the menu item to be positioned under the mouse cursor at the
+     * specified coordinates. Default is -1.
+     *
+     * @platform darwin
+     */
+    var positioningItem: Double?
+
+    /**
+     * This should map to the `menuSourceType` provided by the `context-menu` event. It
+     * is not recommended to set this value manually, only provide values you receive
+     * from other APIs or leave it `undefined`. Can be `none`, `mouse`, `keyboard`,
+     * `touch`, `touchMenu`, `longPress`, `longTap`, `touchHandle`, `stylus`,
+     * `adjustSelection`, or `adjustSelectionReset`.
+     *
+     * @platform win32,linux
+     */
+    var sourceType: (PopupOptionsSourceType)?
+
+    /**
+     * Called when menu is closed.
+     */
+    var callback: (() -> Unit)?
+}

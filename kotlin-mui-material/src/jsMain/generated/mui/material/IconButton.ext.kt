@@ -1,0 +1,49 @@
+// Automatically generated - do not modify!
+
+package mui.material
+
+import seskar.js.JsRawValue
+import seskar.js.JsValue
+
+sealed /* union */
+external interface IconButtonColor {
+    companion object {
+        @JsValue("inherit")
+        val inherit: IconButtonColor
+
+        @JsValue("default")
+        val default: IconButtonColor
+
+        @JsValue("primary")
+        val primary: IconButtonColor
+
+        @JsValue("secondary")
+        val secondary: IconButtonColor
+
+        @JsValue("error")
+        val error: IconButtonColor
+
+        @JsValue("info")
+        val info: IconButtonColor
+
+        @JsValue("success")
+        val success: IconButtonColor
+
+        @JsValue("warning")
+        val warning: IconButtonColor
+    }
+}
+
+sealed /* union */
+external interface IconButtonEdge {
+    companion object {
+        @JsValue("start")
+        val start: IconButtonEdge
+
+        @JsValue("end")
+        val end: IconButtonEdge
+
+        @JsRawValue("false")
+        val `false`: IconButtonEdge
+    }
+}

@@ -1,0 +1,11 @@
+// Automatically generated - do not modify!
+
+package node.inspector.heapProfiler
+
+@kotlinx.js.JsPlainObject
+external interface StartSamplingParameterType {
+    /**
+     * Average sample interval in bytes. Poisson distribution is used for the intervals. The default value is 32768 bytes.
+     */
+    var samplingInterval: Double?
+}

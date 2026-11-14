@@ -1,0 +1,19 @@
+// Automatically generated - do not modify!
+
+package node.vm
+
+@kotlinx.js.JsPlainObject
+external interface CreateContextOptionsCodeGeneration {
+    /**
+     * If set to false any calls to eval or function constructors (Function, GeneratorFunction, etc)
+     * will throw an EvalError.
+     * @default true
+     */
+    var strings: Boolean?
+
+    /**
+     * If set to false any attempt to compile a WebAssembly module will throw a WebAssembly.CompileError.
+     * @default true
+     */
+    var wasm: Boolean?
+}

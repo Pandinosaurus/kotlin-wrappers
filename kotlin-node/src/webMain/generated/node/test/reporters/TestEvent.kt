@@ -1,0 +1,47 @@
+// Automatically generated - do not modify!
+
+package node.test.reporters
+
+typealias TestEvent = Any /* {
+    type: "test:coverage";
+    data: EventData.TestCoverage;
+} | {
+    type: "test:complete";
+    data: EventData.TestComplete;
+} | {
+    type: "test:dequeue";
+    data: EventData.TestDequeue;
+} | {
+    type: "test:diagnostic";
+    data: EventData.TestDiagnostic;
+} | {
+    type: "test:enqueue";
+    data: EventData.TestEnqueue;
+} | {
+    type: "test:fail";
+    data: EventData.TestFail;
+} | {
+    type: "test:pass";
+    data: EventData.TestPass;
+} | {
+    type: "test:plan";
+    data: EventData.TestPlan;
+} | {
+    type: "test:start";
+    data: EventData.TestStart;
+} | {
+    type: "test:stderr";
+    data: EventData.TestStderr;
+} | {
+    type: "test:stdout";
+    data: EventData.TestStdout;
+} | {
+    type: "test:summary";
+    data: EventData.TestSummary;
+} | {
+    type: "test:watch:drained";
+    data: undefined;
+} | {
+    type: "test:watch:restarted";
+    data: undefined;
+} */

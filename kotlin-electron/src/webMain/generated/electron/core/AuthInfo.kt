@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface AuthInfo {
+    var isProxy: Boolean
+    var scheme: String
+    var host: String
+    var port: Double
+    var realm: String
+}

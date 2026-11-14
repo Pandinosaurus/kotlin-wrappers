@@ -1,0 +1,17 @@
+package js.errors
+
+import js.array.ReadonlyArray
+import js.serialization.Serializable
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/AggregateError)
+ */
+open external class AggregateError(
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/AggregateError/errors)
+     */
+    val errors: ReadonlyArray<JsError>,
+    override val message: String? = definedExternally,
+    options: ErrorOptions? = definedExternally,
+) : JsError,
+    Serializable

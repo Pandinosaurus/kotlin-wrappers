@@ -1,0 +1,25 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/base/Snackbar")
+
+@file:Suppress(
+    "VIRTUAL_MEMBER_HIDDEN",
+)
+
+package mui.base
+
+import react.FC
+
+/**
+ *
+ * Demos:
+ *
+ * - [Snackbar](https://mui.com/base-ui/react-snackbar/)
+ * - [Snackbar](https://mui.com/joy-ui/react-snackbar/)
+ * - [Snackbar](https://mui.com/material-ui/react-snackbar/)
+ *
+ * API:
+ *
+ * - [Snackbar API](https://mui.com/base-ui/react-snackbar/components-api/#snackbar)
+ */
+external val Snackbar: FC<SnackbarProps>

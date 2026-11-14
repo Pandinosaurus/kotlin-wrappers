@@ -1,0 +1,46 @@
+package js.temporal
+
+import js.reflect.unsafeCast
+import js.union.JsUnion
+
+/**
+ * When the name of a unit is provided to a Temporal API as a string, it is
+ * usually singular, e.g. 'day' or 'hour'. But plural unit names like 'days'
+ * or 'hours' are aso accepted too.
+ */
+@JsUnion
+sealed /* union */
+external interface PluralUnit<T : DateTimeUnit<T>> :
+    LargestUnit<T>,
+    SmallestUnit<T>,
+    TotalUnit<T>
+
+inline val PluralUnit.Companion.years: PluralUnit<DateUnit.year>
+    get() = unsafeCast("years")
+
+inline val PluralUnit.Companion.months: PluralUnit<DateUnit.month>
+    get() = unsafeCast("months")
+
+inline val PluralUnit.Companion.weeks: PluralUnit<DateUnit.week>
+    get() = unsafeCast("weeks")
+
+inline val PluralUnit.Companion.days: PluralUnit<DateUnit.day>
+    get() = unsafeCast("days")
+
+inline val PluralUnit.Companion.hours: PluralUnit<TimeUnit.hour>
+    get() = unsafeCast("hours")
+
+inline val PluralUnit.Companion.minutes: PluralUnit<TimeUnit.minute>
+    get() = unsafeCast("minutes")
+
+inline val PluralUnit.Companion.seconds: PluralUnit<TimeUnit.second>
+    get() = unsafeCast("seconds")
+
+inline val PluralUnit.Companion.milliseconds: PluralUnit<TimeUnit.millisecond>
+    get() = unsafeCast("milliseconds")
+
+inline val PluralUnit.Companion.microseconds: PluralUnit<TimeUnit.microsecond>
+    get() = unsafeCast("microseconds")
+
+inline val PluralUnit.Companion.nanoseconds: PluralUnit<TimeUnit.nanosecond>
+    get() = unsafeCast("nanoseconds")

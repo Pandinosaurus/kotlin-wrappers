@@ -1,0 +1,16 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@kotlinx.js.JsPlainObject
+external interface NavigationEntry {
+// Docs: https://electronjs.org/docs/api/structures/navigation-entry
+    /**
+     * A base64 encoded data string containing Chromium page state including
+     * information like the current scroll position or form values. It is committed by
+     * Chromium before a navigation event and on a regular interval.
+     */
+    var pageState: String?
+    var title: String
+    var url: String
+}

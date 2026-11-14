@@ -1,0 +1,20 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("@mui/base/TextareaAutosize")
+
+package mui.base
+
+import react.FC
+
+/**
+ *
+ * Demos:
+ *
+ * - [Textarea Autosize](https://mui.com/base-ui/react-textarea-autosize/)
+ * - [Textarea Autosize](https://mui.com/material-ui/react-textarea-autosize/)
+ *
+ * API:
+ *
+ * - [TextareaAutosize API](https://mui.com/base-ui/react-textarea-autosize/components-api/#textarea-autosize)
+ */
+external val TextareaAutosize: FC<TextareaAutosizeProps>

@@ -1,0 +1,32 @@
+package wrappersgenerator.testing.library.user.event.nameResolvers
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.Context
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import js.reflect.invoke
+import typescript.Node
+import typescript.isFunctionDeclaration
+import typescript.isIdentifier
+import typescript.isParameter
+
+suspend fun resolveDirectOptionsParameterName(node: Node, context: Context) = nullable {
+    val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+
+    val parameter = ensureNotNull(typeScriptService.getParent(node))
+    ensure(isParameter(parameter))
+
+    val parameterNameNode = parameter.name
+    ensure(isIdentifier(parameterNameNode))
+    val parameterName = parameterNameNode.text
+
+    val function = ensureNotNull(typeScriptService.getParent(parameter))
+    ensure(isFunctionDeclaration(function))
+
+    val functionNameNode = ensureNotNull(function.name)
+    val functionName = functionNameNode.text
+
+    val sourceFileName = ensureNotNull(function.getSourceFile()).fileName
+    ensure(sourceFileName.endsWith("directApi.d.ts"))
+
+    "Direct${functionName.replaceFirstChar { it.titlecase() }}${parameterName.replaceFirstChar { it.titlecase() }}"
+}

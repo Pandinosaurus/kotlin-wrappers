@@ -1,0 +1,18 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:util/types")
+
+package node.util.types
+
+/**
+ * Returns `true` if the value is an `arguments` object.
+ *
+ * ```js
+ * function foo() {
+ *   util.types.isArgumentsObject(arguments);  // Returns true
+ * }
+ * ```
+ * @since v10.0.0
+ */
+@JsName("isArgumentsObject")
+external fun isArgumentsObjectRaw(value: Any?): Boolean /* object is IArguments */

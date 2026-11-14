@@ -1,0 +1,15 @@
+// Automatically generated - do not modify!
+
+package web.midi
+
+import js.collections.ReadonlyMap
+
+/**
+ * The **`MIDIInputMap`** read-only interface of the Web MIDI API provides the set of MIDI input ports that are currently available.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MIDIInputMap)
+ */
+open external class MIDIInputMap
+private constructor() :
+    ReadonlyMap.Mixin<JsString, MIDIInput>

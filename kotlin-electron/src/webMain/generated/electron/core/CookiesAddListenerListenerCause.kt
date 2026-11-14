@@ -1,0 +1,31 @@
+// Automatically generated - do not modify!
+
+package electron.core
+
+@js.union.JsUnion
+sealed /* union */
+external interface CookiesAddListenerListenerCause
+
+inline val CookiesAddListenerListenerCause.Companion.inserted: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("inserted")
+
+inline val CookiesAddListenerListenerCause.Companion.insertedNoChangeOverwrite: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("inserted-no-change-overwrite")
+
+inline val CookiesAddListenerListenerCause.Companion.insertedNoValueChangeOverwrite: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("inserted-no-value-change-overwrite")
+
+inline val CookiesAddListenerListenerCause.Companion.explicit: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("explicit")
+
+inline val CookiesAddListenerListenerCause.Companion.overwrite: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("overwrite")
+
+inline val CookiesAddListenerListenerCause.Companion.expired: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("expired")
+
+inline val CookiesAddListenerListenerCause.Companion.evicted: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("evicted")
+
+inline val CookiesAddListenerListenerCause.Companion.expiredOverwrite: CookiesAddListenerListenerCause
+    get() = js.reflect.unsafeCast("expired-overwrite")

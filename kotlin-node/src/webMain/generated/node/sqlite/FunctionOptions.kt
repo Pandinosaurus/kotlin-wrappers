@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+package node.sqlite
+
+@kotlinx.js.JsPlainObject
+external interface FunctionOptions {
+    /**
+     * If `true`, the [`SQLITE_DETERMINISTIC`](https://www.sqlite.org/c3ref/c_deterministic.html) flag is
+     * set on the created function.
+     * @default false
+     */
+    var deterministic: Boolean?
+
+    /**
+     * If `true`, the [`SQLITE_DIRECTONLY`](https://www.sqlite.org/c3ref/c_directonly.html) flag is set on
+     * the created function.
+     * @default false
+     */
+    var directOnly: Boolean?
+
+    /**
+     * If `true`, integer arguments to `function`
+     * are converted to `BigInt`s. If `false`, integer arguments are passed as
+     * JavaScript numbers.
+     * @default false
+     */
+    var useBigIntArguments: Boolean?
+
+    /**
+     * If `true`, `function` may be invoked with any number of
+     * arguments (between zero and
+     * [`SQLITE_MAX_FUNCTION_ARG`](https://www.sqlite.org/limits.html#max_function_arg)). If `false`,
+     * `function` must be invoked with exactly `function.length` arguments.
+     * @default false
+     */
+    var varargs: Boolean?
+}

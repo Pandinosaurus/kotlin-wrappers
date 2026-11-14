@@ -1,0 +1,46 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:http2")
+
+package node.http2
+
+import node.http.IncomingMessage
+import node.http.ServerResponse
+
+/**
+ * Returns a `net.Server` instance that creates and manages `Http2Session` instances.
+ *
+ * Since there are no browsers known that support [unencrypted HTTP/2](https://http2.github.io/faq/#does-http2-require-encryption), the use of {@link createSecureServer} is necessary when
+ * communicating
+ * with browser clients.
+ *
+ * ```js
+ * import http2 from 'node:http2';
+ *
+ * // Create an unencrypted HTTP/2 server.
+ * // Since there are no browsers known that support
+ * // unencrypted HTTP/2, the use of `http2.createSecureServer()`
+ * // is necessary when communicating with browser clients.
+ * const server = http2.createServer();
+ *
+ * server.on('stream', (stream, headers) => {
+ *   stream.respond({
+ *     'content-type': 'text/html; charset=utf-8',
+ *     ':status': 200,
+ *   });
+ *   stream.end('<h1>Hello World</h1>');
+ * });
+ *
+ * server.listen(8000);
+ * ```
+ * @since v8.4.0
+ * @param onRequestHandler See `Compatibility API`
+ */
+external fun createServer(
+    onRequestHandler: (request: Http2ServerRequest, response: Http2ServerResponse<*>) -> Unit = definedExternally,
+): Http2Server<*, *, *, *>
+
+external fun <Http1Request : IncomingMessage, Http1Response : ServerResponse<*>, Http2Request : Http2ServerRequest, Http2Response : Http2ServerResponse<*>> createServer(
+    options: ServerOptions<Http1Request, Http1Response, Http2Request, Http2Response>,
+    onRequestHandler: (request: Http2Request, response: Http2Response) -> Unit = definedExternally,
+): Http2Server<Http1Request, Http1Response, Http2Request, Http2Response>

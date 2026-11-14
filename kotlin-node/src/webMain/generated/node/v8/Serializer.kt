@@ -1,0 +1,71 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:v8")
+
+package node.v8
+
+import node.buffer.NonSharedBuffer
+
+/**
+ * @since v8.0.0
+ */
+open external class Serializer {
+    /**
+     * Writes out a header, which includes the serialization format version.
+     */
+    fun writeHeader()
+
+    /**
+     * Serializes a JavaScript value and adds the serialized representation to the
+     * internal buffer.
+     *
+     * This throws an error if `value` cannot be serialized.
+     */
+    fun writeValue(value: Any?): Boolean
+
+    /**
+     * Returns the stored internal buffer. This serializer should not be used once
+     * the buffer is released. Calling this method results in undefined behavior
+     * if a previous write has failed.
+     */
+    fun releaseBuffer(): NonSharedBuffer
+
+    /**
+     * Marks an `ArrayBuffer` as having its contents transferred out of band.
+     * Pass the corresponding `ArrayBuffer` in the deserializing context to `deserializer.transferArrayBuffer()`.
+     * @param id A 32-bit unsigned integer.
+     * @param arrayBuffer An `ArrayBuffer` instance.
+     */
+    fun transferArrayBuffer(
+        id: Number,
+        arrayBuffer: js.buffer.ArrayBuffer,
+    )
+
+    /**
+     * Write a raw 32-bit unsigned integer.
+     * For use inside of a custom `serializer._writeHostObject()`.
+     */
+    fun writeUint32(value: Number)
+
+    /**
+     * Write a raw 64-bit unsigned integer, split into high and low 32-bit parts.
+     * For use inside of a custom `serializer._writeHostObject()`.
+     */
+    fun writeUint64(
+        hi: Number,
+        lo: Number,
+    )
+
+    /**
+     * Write a JS `number` value.
+     * For use inside of a custom `serializer._writeHostObject()`.
+     */
+    fun writeDouble(value: Number)
+
+    /**
+     * Write raw bytes into the serializer's internal buffer. The deserializer
+     * will require a way to compute the length of the buffer.
+     * For use inside of a custom `serializer._writeHostObject()`.
+     */
+    fun writeRawBytes(buffer: js.buffer.ArrayBufferView<*>)
+}

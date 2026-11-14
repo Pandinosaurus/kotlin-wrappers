@@ -1,0 +1,29 @@
+// Automatically generated - do not modify!
+
+package web.cssom
+
+/**
+ * The **`CSSScale`** interface of the CSS Typed Object Model API represents the scale() and scale3d() values of the individual transform property in CSS.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSScale)
+ */
+open external class CSSScale(
+    /**
+     * The **`x`** property of the CSSScale interface gets and sets the abscissa or x-axis of the translating vector.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSScale/x)
+     */
+    open var x: CSSNumberish,
+    /**
+     * The **`y`** property of the CSSScale interface gets and sets the ordinate or y-axis of the translating vector.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSScale/y)
+     */
+    open var y: CSSNumberish,
+    /**
+     * The **`z`** property of the CSSScale interface represents the z-component of the translating vector. A positive value moves the element towards the viewer, and a negative value farther away.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CSSScale/z)
+     */
+    open var z: CSSNumberish = definedExternally,
+) : CSSTransformComponent

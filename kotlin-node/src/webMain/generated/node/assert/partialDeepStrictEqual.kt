@@ -1,0 +1,55 @@
+// Automatically generated - do not modify!
+
+@file:JsModule("node:assert/strict")
+
+package node.assert
+
+/**
+ * Tests for partial deep equality between the `actual` and `expected` parameters.
+ * "Deep" equality means that the enumerable "own" properties of child objects
+ * are recursively evaluated also by the following rules. "Partial" equality means
+ * that only properties that exist on the `expected` parameter are going to be
+ * compared.
+ *
+ * This method always passes the same test cases as `assert.deepStrictEqual()`,
+ * behaving as a super set of it.
+ * @since v22.13.0
+ */
+external fun partialDeepStrictEqual(
+    actual: Any?,
+    expected: Any?,
+)
+
+/**
+ * Tests for partial deep equality between the `actual` and `expected` parameters.
+ * "Deep" equality means that the enumerable "own" properties of child objects
+ * are recursively evaluated also by the following rules. "Partial" equality means
+ * that only properties that exist on the `expected` parameter are going to be
+ * compared.
+ *
+ * This method always passes the same test cases as `assert.deepStrictEqual()`,
+ * behaving as a super set of it.
+ * @since v22.13.0
+ */
+external fun partialDeepStrictEqual(
+    actual: Any?,
+    expected: Any?,
+    message: String = definedExternally,
+)
+
+/**
+ * Tests for partial deep equality between the `actual` and `expected` parameters.
+ * "Deep" equality means that the enumerable "own" properties of child objects
+ * are recursively evaluated also by the following rules. "Partial" equality means
+ * that only properties that exist on the `expected` parameter are going to be
+ * compared.
+ *
+ * This method always passes the same test cases as `assert.deepStrictEqual()`,
+ * behaving as a super set of it.
+ * @since v22.13.0
+ */
+external fun partialDeepStrictEqual(
+    actual: Any?,
+    expected: Any?,
+    message: js.errors.JsError = definedExternally,
+)

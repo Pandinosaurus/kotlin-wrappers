@@ -1,0 +1,12 @@
+// Automatically generated - do not modify!
+
+package node.querystring
+
+@kotlinx.js.JsPlainObject
+external interface StringifyOptions {
+    /**
+     * The function to use when converting URL-unsafe characters to percent-encoding in the query string.
+     * @default `querystring.escape()`
+     */
+    var encodeURIComponent: ((str: String) -> String)?
+}

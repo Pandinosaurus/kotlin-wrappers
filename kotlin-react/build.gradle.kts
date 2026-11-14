@@ -1,12 +1,18 @@
 plugins {
-    kotlin("js")
-    `kotlin-conventions`
-    `publish-conventions`
+    id("wrappersbuild.kotlin-library-conventions")
 }
 
-dependencies {
-    api(project(":kotlin-extensions"))
-    api(project(":kotlin-csstype"))
+kotlin {
+    sourceSets.webMain.dependencies {
+        api(projects.kotlinBrowser)
+        api(projects.kotlinCsstype)
+        api(libs.coroutines.core)
 
-    api(npmv("react"))
+        npm(jspkg.react)
+    }
+
+    sourceSets.webTest.dependencies {
+        implementation(libs.kotlin.test)
+        implementation(libs.coroutines.test)
+    }
 }

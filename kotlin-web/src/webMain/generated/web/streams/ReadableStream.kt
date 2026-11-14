@@ -1,0 +1,184 @@
+// Automatically generated - do not modify!
+
+package web.streams
+
+import js.array.ReadonlyArray
+import js.array.Tuple2
+import js.disposable.internal.AsyncCloseableDisposable
+import js.errors.JsError
+import js.iterable.AsyncIterable
+import js.iterable.AsyncIterator
+import js.iterable.JsIterable
+import js.promise.Promise
+import js.promise.PromiseLike
+import js.promise.await
+import js.serialization.Transferable
+import js.void.Void
+import web.abort.unsafeAbortable
+import web.coroutines.await
+import web.http.BodyInit
+
+/**
+ * The **`ReadableStream`** interface of the Streams API represents a readable stream of byte data. The Fetch API offers a concrete instance of a ReadableStream through the body property of a Response object.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream)
+ */
+open external class ReadableStream<R : JsAny?>(
+    underlyingSource: UnderlyingByteSource,
+    strategy: QueuingStrategy<R> = definedExternally,
+) : BodyInit,
+    Transferable,
+    AsyncIterable.Mixin<R>,
+    AsyncCloseableDisposable {
+    constructor(
+        underlyingSource: UnderlyingDefaultSource<R>,
+        strategy: QueuingStrategy<R> = definedExternally,
+    )
+
+    constructor(
+        underlyingSource: UnderlyingSource<R> = definedExternally,
+        strategy: QueuingStrategy<R> = definedExternally,
+    )
+
+    /**
+     * The **`locked`** read-only property of the ReadableStream interface returns whether or not the readable stream is locked to a reader.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/locked)
+     */
+    open val locked: Boolean
+
+    /**
+     * The **`cancel()`** method of the ReadableStream interface returns a Promise that resolves when the stream is canceled.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/cancel)
+     */
+    @JsName("cancel")
+    open fun cancelAsync(reason: JsError? = definedExternally): Promise<Void>
+
+    /**
+     * The **`getReader()`** method of the ReadableStream interface creates a reader and locks the stream to it. While the stream is locked, no other reader can be acquired until this one is released.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/getReader)
+     */
+    open fun getReader(): ReadableStreamDefaultReader<R>
+    open fun getReader(options: ReadableStreamGetReaderOptions = definedExternally): ReadableStreamReader
+
+    /**
+     * The **`pipeThrough()`** method of the ReadableStream interface provides a chainable way of piping the current stream through a transform stream or any other writable/readable pair.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/pipeThrough)
+     */
+    open fun <T : JsAny?> pipeThrough(
+        transform: ReadableWritablePair<T, R>,
+        options: StreamPipeOptions = definedExternally,
+    ): ReadableStream<T>
+
+    /**
+     * The **`pipeTo()`** method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream and returns a Promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/pipeTo)
+     */
+    @JsName("pipeTo")
+    open fun pipeToAsync(
+        destination: WritableStream<R>,
+        options: StreamPipeOptions = definedExternally,
+    ): Promise<Void>
+
+    /**
+     * The **`tee()`** method of the ReadableStream interface tees the current readable stream, returning a two-element array containing the two resulting branches as new ReadableStream instances.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/tee)
+     */
+    open fun tee(): Tuple2<ReadableStream<R>, ReadableStream<R>>
+    open fun values(options: ReadableStreamIteratorOptions = definedExternally): AsyncIterator<R>
+
+    companion object {
+        /**
+         * The **`ReadableStream.from()`** static method returns a ReadableStream from a provided iterable or async iterable object.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/from_static)
+         */
+        fun <R : JsAny?> from(source: AsyncIterable<R>): ReadableStream<R>
+
+        /**
+         * The **`ReadableStream.from()`** static method returns a ReadableStream from a provided iterable or async iterable object.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/from_static)
+         */
+        fun <R : JsAny?> from(source: JsIterable<R>): ReadableStream<R>
+
+        /**
+         * The **`ReadableStream.from()`** static method returns a ReadableStream from a provided iterable or async iterable object.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/from_static)
+         */
+        fun <R : JsAny?> from(source: JsIterable<PromiseLike<R>>): ReadableStream<R>
+
+        /**
+         * The **`ReadableStream.from()`** static method returns a ReadableStream from a provided iterable or async iterable object.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/from_static)
+         */
+        fun <R : JsAny?> from(source: ReadonlyArray<R>): ReadableStream<R>
+
+        /**
+         * The **`ReadableStream.from()`** static method returns a ReadableStream from a provided iterable or async iterable object.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/from_static)
+         */
+        fun <R : JsAny?> from(source: ReadonlyArray<PromiseLike<R>>): ReadableStream<R>
+    }
+}
+
+/**
+ * The **`cancel()`** method of the ReadableStream interface returns a Promise that resolves when the stream is canceled.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/cancel)
+ */
+suspend inline fun <R : JsAny?> ReadableStream<R>.cancel() {
+    cancelAsync().await()
+}
+
+/**
+ * The **`cancel()`** method of the ReadableStream interface returns a Promise that resolves when the stream is canceled.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/cancel)
+ */
+suspend inline fun <R : JsAny?> ReadableStream<R>.cancel(reason: JsError?) {
+    cancelAsync(
+        reason = reason,
+    ).await()
+}
+
+/**
+ * The **`pipeTo()`** method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream and returns a Promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/pipeTo)
+ */
+suspend fun <R : JsAny?> ReadableStream<R>.pipeTo(
+    destination: WritableStream<R>,
+) {
+    await { signal ->
+        pipeToAsync(
+            destination = destination,
+            options = unsafeAbortable(signal),
+        )
+    }
+}
+
+/**
+ * The **`pipeTo()`** method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream and returns a Promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/pipeTo)
+ */
+suspend fun <R : JsAny?> ReadableStream<R>.pipeTo(
+    destination: WritableStream<R>,
+    options: StreamPipeOptions,
+) {
+    await { signal ->
+        pipeToAsync(
+            destination = destination,
+            options = unsafeAbortable(options, signal),
+        )
+    }
+}

@@ -1,0 +1,89 @@
+// Automatically generated - do not modify!
+
+package web.fs
+
+import js.numbers.UInt53
+import js.promise.Promise
+import js.promise.await
+import js.void.Void
+import web.errors.DOMExceptionType.NotAllowedError
+import web.errors.JsThrows
+import web.errors.QuotaExceededError
+import web.streams.WritableStream
+
+/**
+ * The **`FileSystemWritableFileStream`** interface of the File System API is a WritableStream object with additional convenience methods, which operates on a single file on disk. The interface is accessed through the FileSystemFileHandle.createWritable() method.
+ * Available only in secure contexts.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemWritableFileStream)
+ */
+open external class FileSystemWritableFileStream
+private constructor() :
+    WritableStream<FileSystemWriteChunkType> {
+    /**
+     * The **`seek()`** method of the FileSystemWritableFileStream interface updates the current file cursor offset to the position (in bytes) specified when calling the method.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemWritableFileStream/seek)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsName("seek")
+    open fun seekAsync(position: UInt53): Promise<Void>
+
+    /**
+     * The **`truncate()`** method of the FileSystemWritableFileStream interface resizes the file associated with the stream to the specified size in bytes.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemWritableFileStream/truncate)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsThrows.Typed(QuotaExceededError::class)
+    @JsName("truncate")
+    open fun truncateAsync(size: UInt53): Promise<Void>
+
+    /**
+     * The **`write()`** method of the FileSystemWritableFileStream interface writes content into the file the method is called on, at the current file cursor offset.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemWritableFileStream/write)
+     */
+    @JsThrows(NotAllowedError::class)
+    @JsThrows.Typed(QuotaExceededError::class)
+    @JsName("write")
+    open fun writeAsync(data: FileSystemWriteChunkType): Promise<Void>
+}
+
+/**
+ * The **`seek()`** method of the FileSystemWritableFileStream interface updates the current file cursor offset to the position (in bytes) specified when calling the method.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemWritableFileStream/seek)
+ */
+@JsThrows(NotAllowedError::class)
+suspend inline fun FileSystemWritableFileStream.seek(position: UInt53) {
+    seekAsync(
+        position = position,
+    ).await()
+}
+
+/**
+ * The **`truncate()`** method of the FileSystemWritableFileStream interface resizes the file associated with the stream to the specified size in bytes.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemWritableFileStream/truncate)
+ */
+@JsThrows(NotAllowedError::class)
+@JsThrows.Typed(QuotaExceededError::class)
+suspend inline fun FileSystemWritableFileStream.truncate(size: UInt53) {
+    truncateAsync(
+        size = size,
+    ).await()
+}
+
+/**
+ * The **`write()`** method of the FileSystemWritableFileStream interface writes content into the file the method is called on, at the current file cursor offset.
+ *
+ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/FileSystemWritableFileStream/write)
+ */
+@JsThrows(NotAllowedError::class)
+@JsThrows.Typed(QuotaExceededError::class)
+suspend inline fun FileSystemWritableFileStream.write(data: FileSystemWriteChunkType) {
+    writeAsync(
+        data = data,
+    ).await()
+}

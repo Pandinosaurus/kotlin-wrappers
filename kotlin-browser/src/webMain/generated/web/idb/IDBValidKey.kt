@@ -1,0 +1,37 @@
+// Automatically generated - do not modify!
+
+package web.idb
+
+import js.array.ReadonlyArray
+import js.buffer.BufferSource
+import js.date.Date
+import js.internal.InternalApi
+import js.reflect.unsafeCast
+
+@SubclassOptInRequired(InternalApi::class)
+external interface IDBValidKey
+
+inline fun IDBValidKey(
+    value: Int,
+): IDBValidKey =
+    unsafeCast(value)
+
+inline fun IDBValidKey(
+    value: String,
+): IDBValidKey =
+    unsafeCast(value)
+
+inline fun IDBValidKey(
+    value: Date,
+): IDBValidKey =
+    unsafeCast(value)
+
+inline fun IDBValidKey(
+    value: BufferSource,
+): IDBValidKey =
+    unsafeCast(value)
+
+inline fun IDBValidKey(
+    value: ReadonlyArray<IDBValidKey>,
+): IDBValidKey =
+    unsafeCast(value)

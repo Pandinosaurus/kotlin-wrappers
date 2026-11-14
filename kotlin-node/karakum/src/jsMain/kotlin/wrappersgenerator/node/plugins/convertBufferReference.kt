@@ -1,0 +1,49 @@
+package wrappersgenerator.node.plugins
+
+import arrow.core.raise.nullable
+import io.github.sgrishchenko.karakum.extension.createPlugin
+import io.github.sgrishchenko.karakum.extension.ifPresent
+import io.github.sgrishchenko.karakum.extension.plugins.typeScriptServiceKey
+import js.reflect.invoke
+import typescript.isIdentifier
+import typescript.isTypeReferenceNode
+
+val convertBufferReference = createPlugin { node, context, render ->
+    nullable {
+        ensure(isTypeReferenceNode(node))
+
+        val typeName = node.typeName
+        ensure(isIdentifier(typeName))
+        ensure(
+            typeName.text == "Buffer"
+                    || typeName.text == "BufferEncoding"
+        )
+
+        val typeScriptService = ensureNotNull(context.lookupService(typeScriptServiceKey))
+        val typeChecker = typeScriptService.program.getTypeChecker()
+
+        val symbol = ensureNotNull(typeChecker.getSymbolAtLocation(typeName))
+        val declarations = symbol.declarations ?: emptyArray()
+
+        ensure(declarations.any { declaration ->
+            nullable {
+                val sourceFileName = ensureNotNull(declaration.getSourceFile()).fileName
+                sourceFileName.endsWith("buffer.d.ts")
+            } != null
+        })
+
+        val typeArguments = if (typeName.text == "Buffer") {
+            val typeArguments = node.typeArguments
+
+            typeArguments
+                ?.map { typeArgument -> render(typeArgument) }
+                ?.filter { it.isNotEmpty() }
+                ?.joinToString(separator = ", ")
+                ?: "*"
+        } else {
+            ""
+        }
+
+        "node.buffer.${render(node.typeName)}${ifPresent(typeArguments) { "<${it}>" }}"
+    }
+}
